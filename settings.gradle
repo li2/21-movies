@@ -1,0 +1,9 @@
+include ':app',
+        ':common',
+        ':view',
+        ':network',
+        ':persistence',
+        ':oauth',
+        ':biometric',
+        ':location',
+        ':barcode'

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="baseUrl" translatable="false">"https://1bca215c-b263-499b-89b9-0fe7f118e860.mock.pstmn.io/api/"</string>
+    <string name="fabric_api_key" translatable="false">30db228191dfe9c1b04215fa7692e468571bc2d1</string>
+</resources>
