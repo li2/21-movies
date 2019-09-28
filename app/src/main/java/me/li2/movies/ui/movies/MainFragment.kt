@@ -26,8 +26,7 @@ class MainFragment : BaseFragment() {
     }
 
     private fun setupTabs() {
-        val adapter = MoviesTabAdapter(requireContext(), childFragmentManager)
-        vp_main.adapter = adapter
+        vp_main.adapter = MoviesTabAdapter(requireContext(), childFragmentManager)
         tablayout_main.setupWithViewPager(vp_main)
     }
 }

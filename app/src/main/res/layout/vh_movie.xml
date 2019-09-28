@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="movieItem"
+            type="me.li2.movies.ui.movies.MovieItem" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="4dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?selectableItemBackground">
+
+            <ImageView
+                android:id="@+id/iv_poster"
+                android:layout_width="96dp"
+                android:layout_height="128dp"
+                android:src="@{movieItem.trailerUrl}"
+                app:centerCrop="@{true}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:placeHolder="@{@drawable/ic_film}"
+                tools:ignore="ContentDescription"
+                tools:scaleType="centerCrop"
+                tools:src="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                style="@style/TextAppearance.MaterialComponents.Headline5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:text="@{movieItem.name}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_poster"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Movie Name" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                style="@style/TextAppearance.MaterialComponents.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@{movieItem.runningTime + `, ` + movieItem.type}"
+                app:layout_constraintStart_toStartOf="@id/tv_name"
+                app:layout_constraintTop_toBottomOf="@id/tv_name"
+                tools:text="1h 20m, Adventure" />
+
+            <TextView
+                android:id="@+id/tv_rate"
+                style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:drawableStart="@drawable/ic_star"
+                android:drawablePadding="4dp"
+                android:gravity="center_vertical"
+                android:text="@{`` + movieItem.rate}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tv_name"
+                app:layout_constraintTop_toBottomOf="@id/tv_time"
+                app:layout_constraintVertical_bias="1.0"
+                tools:text="4.5" />
+
+            <TextView
+                android:id="@+id/tv_full_rate"
+                style="@style/TextAppearance.MaterialComponents.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="@string/movie_full_rate"
+                app:layout_constraintBottom_toBottomOf="@id/tv_rate"
+                app:layout_constraintStart_toEndOf="@id/tv_rate"
+                app:layout_constraintTop_toTopOf="@id/tv_rate" />
+
+            <androidx.constraintlayout.widget.Group
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="@{movieItem.rate != null}"
+                app:constraint_referenced_ids="tv_rate,tv_full_rate" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

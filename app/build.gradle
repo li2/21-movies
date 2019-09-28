@@ -108,6 +108,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+
     packagingOptions {
         pickFirst("META-INF/atomicfu.kotlin_module")
         pickFirst("META-INF/kotlinx-coroutines-core.kotlin_module")
@@ -164,7 +168,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$androidx_lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-reactivestreams:$androidx_lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-runtime:$androidx_lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:1.0.0-alpha02"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:1.0.0-alpha05"
     //Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
@@ -176,6 +180,7 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:$androidx_fragment_version"
     implementation "androidx.paging:paging-runtime:$androidx_paging_version"
     implementation "androidx.recyclerview:recyclerview:$androidx_recyclerview_version"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha02"
 
 
     //MARK: The following are Kotlin libs -------------------------------------------------------------------

@@ -4,21 +4,46 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="java.util.List" />
+
+        <import type="me.li2.movies.ui.movies.MovieItem" />
+
         <variable
-            name="title"
-            type="String" />
+            name="isLoading"
+            type="Boolean" />
+
+        <variable
+            name="movies"
+            type="List&lt;MovieItem&gt;" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/srl_movies"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="14sp"
-            android:gravity="center"
-            android:text="@{title}"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:isRefreshing="@{isLoading}">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_movies"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:clipToPadding="false"
+                app:movies="@{movies}"
+                tools:listitem="@layout/vh_movie"
+                tools:spanCount="1" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

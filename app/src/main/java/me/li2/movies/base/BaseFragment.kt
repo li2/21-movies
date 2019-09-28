@@ -10,14 +10,21 @@ import org.kodein.di.android.x.kodein
 abstract class BaseFragment : Fragment(), KodeinAware {
 
     override val kodein by kodein()
+
     protected val compositeDisposable = CompositeDisposable()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initUi(view, savedInstanceState)
+        initViewModel()
+        renderUI()
     }
 
     open fun initUi(view: View, savedInstanceState: Bundle?) {}
+
+    open fun initViewModel() {}
+
+    open fun renderUI() {}
 
     override fun onDestroyView() {
         compositeDisposable.clear()

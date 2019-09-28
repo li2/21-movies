@@ -9,8 +9,8 @@ class MoviesTabAdapter(private val context: Context, fragmentManager: FragmentMa
     : FragmentPagerAdapter(fragmentManager) {
 
     override fun getItem(position: Int) = when (position) {
-        0 -> MoviesFragment.newInstance(MoviesTabType.NOT_SHOWING)
-        1 -> MoviesFragment.newInstance(MoviesTabType.COMING_SOON)
+        0 -> MoviesFragment.newInstance(MoviesType.NOT_SHOWING)
+        1 -> MoviesFragment.newInstance(MoviesType.COMING_SOON)
         else -> throw IllegalStateException("Index unsupported")
     }
 

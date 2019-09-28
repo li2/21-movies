@@ -3,4 +3,5 @@
     <string name="not_showing">Not Showing</string>
     <string name="comming_soon">Coming Soon</string>
     <string name="movies">Movies</string>
+    <string name="movie_full_rate">/10</string>
 </resources>
