@@ -7,8 +7,8 @@
 
     <fragment
         android:id="@+id/blankFragment"
-        android:name="me.li2.movies.ui.MainFragment"
-        android:label="Blank"
+        android:name="me.li2.movies.ui.movies.MainFragment"
+        android:label="@string/movies"
         tools:layout="@layout/fragment_main">
     </fragment>
 

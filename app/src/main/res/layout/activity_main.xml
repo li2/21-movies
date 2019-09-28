@@ -11,11 +11,13 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:elevation="4dp"
-            app:elevation="4dp"
+            android:background="@color/primary"
+            android:elevation="0dp"
+            app:elevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:titleTextColor="@color/white"
             tools:targetApi="lollipop" />
 
         <fragment

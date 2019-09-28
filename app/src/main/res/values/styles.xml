@@ -7,5 +7,12 @@
         <!--Fixed issue that materialdatetimepicker buttons have the accent color as a background
              Fixed MaterialButton wired shadow when set semi-transparent background-->
         <item name="viewInflaterClass">androidx.appcompat.app.AppCompatViewInflater</item>
+        <item name="android:windowBackground">@color/background</item>
     </style>
+
+    <style name="MainTabText" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">14sp</item>
+        <item name="textAllCaps">true</item>
+    </style>
+
 </resources>
