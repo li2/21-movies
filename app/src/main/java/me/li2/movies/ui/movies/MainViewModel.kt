@@ -21,27 +21,21 @@ class MainViewModel : BaseViewModel() {
     private val comingSoonMoviesLiveData: MutableLiveData<Resource<List<MovieItem>>> = MutableLiveData()
     internal val comingSoonMovies: LiveData<Resource<List<MovieItem>>> = comingSoonMoviesLiveData
 
-    fun getMovies(type: MoviesType) {
-        if (type == NOT_SHOWING) {
-            notShowingMoviesLiveData.postLoading()
-        } else {
-            comingSoonMoviesLiveData.postLoading()
+    fun getMovies(type: MoviesType, forceRefresh: Boolean = false) {
+        val moviesLiveData = if (type == NOT_SHOWING) notShowingMoviesLiveData else comingSoonMoviesLiveData
+        if (!forceRefresh) {
+            moviesLiveData.value?.data?.let { movies ->
+                moviesLiveData.postSuccess(movies)
+                return
+            }
         }
+        moviesLiveData.postLoading()
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 sleep(1000)
-                val result = repository.getMovies(type)
-                if (type == NOT_SHOWING) {
-                    notShowingMoviesLiveData.postSuccess(result)
-                } else {
-                    comingSoonMoviesLiveData.postSuccess(result)
-                }
+                moviesLiveData.postSuccess(repository.getMovies(type))
             } catch (exception: Exception) {
-                if (type == NOT_SHOWING) {
-                    notShowingMoviesLiveData.postError(exception)
-                } else {
-                    comingSoonMoviesLiveData.postError(exception)
-                }
+                moviesLiveData.postError(exception)
             }
         }
     }

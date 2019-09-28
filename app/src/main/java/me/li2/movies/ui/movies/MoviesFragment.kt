@@ -14,6 +14,8 @@ import me.li2.movies.R
 import me.li2.movies.arch.Resource.Status.*
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.FragmentMoviesBinding
+import me.li2.movies.ui.movies.MoviesType.COMING_SOON
+import me.li2.movies.ui.movies.MoviesType.NOT_SHOWING
 import me.li2.movies.util.navController
 import me.li2.movies.util.observeOnView
 import me.li2.movies.util.toast
@@ -28,7 +30,7 @@ class MoviesFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        type = arguments?.getParcelable(ARG_KEY_MOVIE_TYPE) ?: MoviesType.COMING_SOON
+        type = arguments?.getParcelable(ARG_KEY_MOVIE_TYPE) ?: COMING_SOON
     }
 
     override fun onCreateView(inflater: LayoutInflater,
@@ -49,7 +51,7 @@ class MoviesFragment : BaseFragment() {
         }
 
         srl_movies.setOnRefreshListener {
-            viewModel.getMovies(type)
+            viewModel.getMovies(type, true)
         }
     }
 
@@ -58,7 +60,7 @@ class MoviesFragment : BaseFragment() {
     }
 
     override fun renderUI() = with(viewModel) {
-        observeOnView(if (type == MoviesType.NOT_SHOWING) notShowingMovies else comingSoonMovies) {
+        observeOnView(if (type == NOT_SHOWING) notShowingMovies else comingSoonMovies) {
             when (it.status) {
                 SUCCESS -> bindMovies(it.data, false)
                 LOADING -> bindMovies(it.data, true)
