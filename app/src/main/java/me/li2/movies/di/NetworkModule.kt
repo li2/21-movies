@@ -1,10 +1,11 @@
 package me.li2.movies.di
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import com.serjltt.moshi.adapters.Wrapped
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import me.li2.movies.data.remote.StatusCodeInterceptor
 import me.li2.movies.data.remote.Api
+import me.li2.movies.data.remote.StatusCodeInterceptor
 import me.li2.movies.util.Constants
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -20,8 +21,8 @@ import java.util.concurrent.TimeUnit
 
 val networkModule = Kodein.Module("network module") {
 
-    bind<Api>() with multiton { timeout: Long, debug: Boolean ->
-        Network.getRetrofitAdapter(Constants.BASE_URL, timeout, debug)
+    bind<Api>() with multiton { timeoutAndDebug: Pair<Long, Boolean> ->
+        Network.getRetrofitAdapter(Constants.BASE_URL, timeoutAndDebug.first, timeoutAndDebug.second)
     }
 }
 
@@ -47,6 +48,7 @@ object Network {
 
     private fun getMoshiConverterFactory(): MoshiConverterFactory =
             MoshiConverterFactory.create(Moshi.Builder()
+                    .add(Wrapped.ADAPTER_FACTORY)
                     .add(KotlinJsonAdapterFactory())
                     .build())
 }

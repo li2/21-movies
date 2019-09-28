@@ -6,9 +6,9 @@ import kotlinx.android.parcel.Parcelize
 import timber.log.Timber.e
 
 @Parcelize
-enum class MoviesType : Parcelable {
-    NOT_SHOWING,
-    COMING_SOON
+enum class MoviesType(val value: String) : Parcelable {
+    NOT_SHOWING("notShowing"),
+    COMING_SOON("comingSoon")
 }
 
 @Parcelize

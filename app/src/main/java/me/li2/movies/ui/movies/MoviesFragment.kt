@@ -19,6 +19,7 @@ import me.li2.movies.ui.movies.MoviesType.NOT_SHOWING
 import me.li2.movies.util.navController
 import me.li2.movies.util.observeOnView
 import me.li2.movies.util.toast
+import timber.log.Timber.e
 
 class MoviesFragment : BaseFragment() {
 
@@ -67,6 +68,7 @@ class MoviesFragment : BaseFragment() {
                 ERROR -> {
                     binding.isLoading = false
                     toast(it.exception.toString())
+                    e(it.exception, "failed to get movies")
                 }
             }
         }

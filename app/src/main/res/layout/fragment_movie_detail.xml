@@ -162,7 +162,7 @@
                     android:gravity="center_vertical"
                     android:text="@{`` + movieItem.rate}"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/tv_rate_movie"
+                    app:layout_constraintEnd_toStartOf="@id/btn_rate_movie"
                     app:layout_constraintHorizontal_chainStyle="spread"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/cb_read"
@@ -182,7 +182,7 @@
                     app:layout_constraintTop_toTopOf="@id/tv_rate" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/tv_rate_movie"
+                    android:id="@+id/btn_rate_movie"
                     style="@style/TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"

@@ -11,7 +11,6 @@ import me.li2.movies.ui.movies.MoviesType.NOT_SHOWING
 import me.li2.movies.util.postError
 import me.li2.movies.util.postLoading
 import me.li2.movies.util.postSuccess
-import java.lang.Thread.sleep
 
 class MainViewModel : BaseViewModel() {
 
@@ -22,7 +21,8 @@ class MainViewModel : BaseViewModel() {
     internal val comingSoonMovies: LiveData<Resource<List<MovieItem>>> = comingSoonMoviesLiveData
 
     fun getMovies(type: MoviesType, forceRefresh: Boolean = false) {
-        val moviesLiveData = if (type == NOT_SHOWING) notShowingMoviesLiveData else comingSoonMoviesLiveData
+        val moviesLiveData =
+                if (type == NOT_SHOWING) notShowingMoviesLiveData else comingSoonMoviesLiveData
         if (!forceRefresh) {
             moviesLiveData.value?.data?.let { movies ->
                 moviesLiveData.postSuccess(movies)
@@ -32,7 +32,6 @@ class MainViewModel : BaseViewModel() {
         moviesLiveData.postLoading()
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                sleep(1000)
                 moviesLiveData.postSuccess(repository.getMovies(type))
             } catch (exception: Exception) {
                 moviesLiveData.postError(exception)

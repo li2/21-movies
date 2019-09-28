@@ -9,16 +9,15 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
 import com.google.android.exoplayer2.ui.PlayerView
+import com.jakewharton.rxbinding3.view.clicks
 import im.ene.toro.exoplayer.Playable
 import im.ene.toro.media.PlaybackInfo
+import io.reactivex.rxkotlin.plusAssign
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.FragmentMovieDetailBinding
-import me.li2.movies.util.hideStatusBar
-import me.li2.movies.util.ifSupportLollipop
-import me.li2.movies.util.setToolbar
-import me.li2.movies.util.showStatusBar
+import me.li2.movies.util.*
 import me.li2.movies.util.video.VideoPlayerAware
 
 class MovieDetailFragment : BaseFragment(), VideoPlayerAware {
@@ -44,6 +43,11 @@ class MovieDetailFragment : BaseFragment(), VideoPlayerAware {
         activity?.setToolbar(toolbar)
         activity?.hideStatusBar()
         binding.movieItem = args.movieItem
+
+        compositeDisposable += btn_rate_movie.clicks().throttleFirstShort().subscribe {
+            // todo
+            toast("todo: rate movie clicks")
+        }
     }
 
     override fun onStart() {

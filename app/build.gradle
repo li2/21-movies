@@ -212,6 +212,7 @@ dependencies {
     api "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$retrofit_kotlinx_coroutines_version"
     implementation "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:$retrofit_kotlinx_serialization_converter"
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttp3_version"
+    implementation "com.serjltt.moshi:moshi-lazy-adapters:$moshi_lazy_adapters"
 
 
     //MARK: The following are Rx libs -----------------------------------------------------------------------

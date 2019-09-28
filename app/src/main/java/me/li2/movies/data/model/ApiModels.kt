@@ -12,11 +12,25 @@ Postman mock server error response
 }
 */
 data class ResponseAPI(
-    @Json(name = "error")
-    val error: Error?
-)
+        @Json(name = "error")
+        val error: Error?)
 
 data class Error(
-    @Json(name = "message")
-    val message: String?
-)
+        @Json(name = "message")
+        val message: String?)
+
+data class MovieAPI(
+        @Json(name = "id")
+        val id: Long,
+        @Json(name = "name")
+        val name: String,
+        @Json(name = "runningTime")
+        val runningTime: String,
+        @Json(name = "type")
+        val type: String,
+        @Json(name = "description")
+        val description: String,
+        @Json(name = "rate")
+        val rate: Float?,
+        @Json(name = "trailerUrl")
+        val trailerUrl: String)
