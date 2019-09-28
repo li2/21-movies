@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import io.reactivex.rxkotlin.plusAssign
 import kotlinx.android.synthetic.main.fragment_movies.*
 import me.li2.movies.R
@@ -41,8 +42,9 @@ class MoviesFragment : BaseFragment() {
         binding.executePendingBindings()
 
         moviesAdapter?.run {
-            compositeDisposable += itemClicks.subscribe {
-                navController().navigate(MainFragmentDirections.showMovieDetail(it))
+            compositeDisposable += itemClicks.subscribe { (imageView, movieItem) ->
+                val extras = FragmentNavigatorExtras(imageView to getString(R.string.transition_name_movie) + movieItem.id)
+                navController().navigate(MainFragmentDirections.showMovieDetail(movieItem), extras)
             }
         }
 

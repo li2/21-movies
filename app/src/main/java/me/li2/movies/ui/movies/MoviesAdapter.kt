@@ -3,6 +3,7 @@ package me.li2.movies.ui.movies
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -15,7 +16,7 @@ import me.li2.movies.databinding.VhMovieBinding
 import me.li2.movies.util.throttleFirstShort
 
 class MoviesAdapter : ListAdapter<MovieItem, MovieVH>(DIFF_CALLBACK) {
-    private val itemClicksPublish = PublishSubject.create<MovieItem>()
+    private val itemClicksPublish = PublishSubject.create<Pair<ImageView, MovieItem>>()
     internal val itemClicks = itemClicksPublish.toFlowable(BackpressureStrategy.LATEST).toObservable()!!
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -39,8 +40,8 @@ class MoviesAdapter : ListAdapter<MovieItem, MovieVH>(DIFF_CALLBACK) {
 
 class MovieVH(private val binding: VhMovieBinding) : RecyclerView.ViewHolder(binding.root) {
     @SuppressLint("CheckResult")
-    fun bindData(data: MovieItem, itemClicks: PublishSubject<MovieItem>) {
+    fun bindData(data: MovieItem, itemClicks: PublishSubject<Pair<ImageView, MovieItem>>) {
         binding.movieItem = data
-        binding.root.clicks().throttleFirstShort().map { data }.subscribe(itemClicks)
+        binding.root.clicks().throttleFirstShort().map { Pair(binding.ivPoster, data) }.subscribe(itemClicks)
     }
 }

@@ -22,23 +22,25 @@
 
             <ImageView
                 android:id="@+id/iv_poster"
-                android:layout_width="96dp"
+                android:layout_width="100dp"
                 android:layout_height="128dp"
                 android:src="@{movieItem.trailerUrl}"
+                android:transitionName="@{@string/transition_name_movie + movieItem.id}"
                 app:centerCrop="@{true}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:placeHolder="@{@drawable/ic_film}"
                 tools:ignore="ContentDescription"
                 tools:scaleType="centerCrop"
-                tools:src="@tools:sample/avatars" />
+                tools:src="@tools:sample/avatars"
+                tools:targetApi="lollipop" />
 
             <TextView
                 android:id="@+id/tv_name"
-                style="@style/TextAppearance.MaterialComponents.Headline5"
+                style="?attr/textAppearanceHeadline5"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:text="@{movieItem.name}"
@@ -49,7 +51,7 @@
 
             <TextView
                 android:id="@+id/tv_time"
-                style="@style/TextAppearance.MaterialComponents.Caption"
+                style="?attr/textAppearanceCaption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -60,7 +62,7 @@
 
             <TextView
                 android:id="@+id/tv_rate"
-                style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                style="?attr/textAppearanceSubtitle1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -77,7 +79,7 @@
 
             <TextView
                 android:id="@+id/tv_full_rate"
-                style="@style/TextAppearance.MaterialComponents.Caption"
+                style="?attr/textAppearanceCaption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"

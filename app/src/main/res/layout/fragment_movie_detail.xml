@@ -12,11 +12,16 @@
         <variable
             name="buffering"
             type="Boolean" />
+
+        <variable
+            name="isDescriptionExpanded"
+            type="Boolean" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true">
 
         <!--set AppBarLayout height the same with ViewPager-->
         <com.google.android.material.appbar.AppBarLayout
@@ -31,7 +36,6 @@
                 app:contentScrim="?attr/colorPrimary"
                 app:expandedTitleGravity="bottom"
                 app:expandedTitleMarginStart="16dp"
-                app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Title.Inverse"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
                 app:titleEnabled="true">
 
@@ -45,7 +49,8 @@
                     app:layout_collapseParallaxMultiplier="0.5"
                     app:resize_mode="fill"
                     app:show_timeout="2000"
-                    app:use_controller="true" />
+                    app:use_controller="true"
+                    tools:targetApi="lollipop" />
 
                 <ProgressBar
                     style="?android:attr/progressBarStyle"
@@ -77,13 +82,128 @@
             android:id="@+id/sv_movie_detail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="56dp"
-            android:fillViewport="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    style="?attr/textAppearanceHeadline4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:text="@{movieItem.name}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:targetApi="lollipop"
+                    tools:text="Movie Name" />
+
+                <View
+                    android:id="@+id/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/divider"
+                    app:layout_constraintTop_toBottomOf="@id/tv_name" />
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    style="?attr/textAppearanceSubtitle1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="@{movieItem.runningTime + `, ` + movieItem.type}"
+                    app:layout_constraintStart_toStartOf="@id/tv_name"
+                    app:layout_constraintTop_toBottomOf="@id/divider"
+                    tools:text="1h 20m, Adventure" />
+
+                <TextView
+                    android:id="@+id/tv_description"
+                    style="?attr/textAppearanceBody1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:ellipsize="end"
+                    android:maxLines="@{isDescriptionExpanded ? 20 : 2}"
+                    android:text="@{movieItem.description}"
+                    app:layout_constraintEnd_toEndOf="@id/tv_name"
+                    app:layout_constraintStart_toStartOf="@id/tv_time"
+                    app:layout_constraintTop_toBottomOf="@id/tv_time"
+                    tools:maxLines="2"
+                    tools:text="Life is a struggle for single father Chris Gardner (Will Smith). Evicted from their apartment, he and his young son (Jaden Christopher Syre Smith) find themselves alone with no place to go. Even though Chris eventually lands a job as an intern at a prestigious brokerage firm, the position pays no money. The pair must live in shelters and endure many hardships, but Chris refuses to give in to despair as he struggles to create a better life for himself and his son." />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cb_read"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="14dp"
+                    android:button="@android:color/transparent"
+                    android:checked="@={isDescriptionExpanded}"
+                    android:gravity="center"
+                    android:text="@{isDescriptionExpanded ? @string/read_less : @string/read_more}"
+                    android:textAllCaps="true"
+                    android:textAppearance="?textAppearanceHeadline6"
+                    android:textColor="@color/primary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_description"
+                    tools:text="Read More" />
+
+                <TextView
+                    android:id="@+id/tv_rate"
+                    style="?attr/textAppearanceHeadline5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="12dp"
+                    android:drawableStart="@drawable/ic_star_36dp"
+                    android:drawablePadding="4dp"
+                    android:gravity="center_vertical"
+                    android:text="@{`` + movieItem.rate}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/tv_rate_movie"
+                    app:layout_constraintHorizontal_chainStyle="spread"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cb_read"
+                    app:layout_constraintVertical_bias="1.0"
+                    tools:text="4.5" />
+
+                <TextView
+                    android:id="@+id/tv_full_rate"
+                    style="?attr/textAppearanceSubtitle1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="4dp"
+                    android:gravity="center"
+                    android:text="@string/movie_full_rate"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_rate"
+                    app:layout_constraintStart_toEndOf="@id/tv_rate"
+                    app:layout_constraintTop_toTopOf="@id/tv_rate" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/tv_rate_movie"
+                    style="@style/TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/rate_movie"
+                    android:textColor="@color/primary"
+                    app:icon="@drawable/ic_star_36dp"
+                    app:iconTint="@color/primary"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_rate"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tv_rate"
+                    app:layout_constraintTop_toTopOf="@id/tv_rate"
+                    app:layout_constraintVertical_bias="1.0" />
+
+                <View
+                    android:id="@+id/divider2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/divider"
+                    app:layout_constraintTop_toBottomOf="@id/tv_rate" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.navArgs
+import androidx.transition.TransitionInflater
 import com.google.android.exoplayer2.ui.PlayerView
 import im.ene.toro.exoplayer.Playable
 import im.ene.toro.media.PlaybackInfo
@@ -14,6 +16,7 @@ import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.FragmentMovieDetailBinding
 import me.li2.movies.util.hideStatusBar
+import me.li2.movies.util.ifSupportLollipop
 import me.li2.movies.util.setToolbar
 import me.li2.movies.util.showStatusBar
 import me.li2.movies.util.video.VideoPlayerAware
@@ -34,6 +37,10 @@ class MovieDetailFragment : BaseFragment(), VideoPlayerAware {
     }
 
     override fun initUi(view: View, savedInstanceState: Bundle?) {
+        ifSupportLollipop {
+            sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+            ViewCompat.setTransitionName(video_player, getString(R.string.transition_name_movie) + args.movieItem.id)
+        }
         activity?.setToolbar(toolbar)
         activity?.hideStatusBar()
         binding.movieItem = args.movieItem

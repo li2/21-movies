@@ -17,6 +17,7 @@ data class MovieItem(
         val name: String,
         val runningTime: String,
         val type: String,
+        val description: String,
         val rate: Float?,
         val trailerUrl: String) : Parcelable {
 
