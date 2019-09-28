@@ -29,7 +29,7 @@ class MainViewModel : BaseViewModel() {
         }
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                sleep(3000)
+                sleep(1000)
                 val result = repository.getMovies(type)
                 if (type == NOT_SHOWING) {
                     notShowingMoviesLiveData.postSuccess(result)

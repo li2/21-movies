@@ -249,6 +249,9 @@ dependencies {
     //MARK: The following are 3rd View libs -----------------------------------------------------------------
     //Glide
     implementation "com.github.bumptech.glide:glide:$glide_version"
+    implementation "im.ene.toro3:toro:$toro_video_list_version"
+    implementation "im.ene.toro3:toro-ext-exoplayer:$toro_video_list_version"
+    implementation "com.google.android.exoplayer:exoplayer:$google_exoplayer_version"
 }
 
 apply plugin: 'kotlin-allopen'

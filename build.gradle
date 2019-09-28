@@ -111,8 +111,8 @@ allprojects {
         //Barcode scanner
         zxing_core_version = "3.3.2"
         zxing_android_version = "3.6.0"
-        //Spinner
-        material_spinner_version = "2.0.0"
+        toro_video_list_version = "3.6.2.2903"
+        google_exoplayer_version = "2.9.3"
     }
 }
 

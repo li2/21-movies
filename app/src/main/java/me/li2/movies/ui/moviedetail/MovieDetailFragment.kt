@@ -1,0 +1,61 @@
+package me.li2.movies.ui.moviedetail
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.navArgs
+import com.google.android.exoplayer2.ui.PlayerView
+import im.ene.toro.exoplayer.Playable
+import im.ene.toro.media.PlaybackInfo
+import kotlinx.android.synthetic.main.fragment_movie_detail.*
+import me.li2.movies.R
+import me.li2.movies.base.BaseFragment
+import me.li2.movies.databinding.FragmentMovieDetailBinding
+import me.li2.movies.util.hideStatusBar
+import me.li2.movies.util.setToolbar
+import me.li2.movies.util.showStatusBar
+import me.li2.movies.util.video.VideoPlayerAware
+
+class MovieDetailFragment : BaseFragment(), VideoPlayerAware {
+
+    private lateinit var binding: FragmentMovieDetailBinding
+    private val args by navArgs<MovieDetailFragmentArgs>()
+    override var videoPlaybackInfo: PlaybackInfo = PlaybackInfo()
+    override var videoPlayerHelper: Playable? = null
+    override fun getVideoPlayerView(): PlayerView = video_player
+
+    override fun onCreateView(inflater: LayoutInflater,
+                              container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_detail, container, false)
+        return binding.root
+    }
+
+    override fun initUi(view: View, savedInstanceState: Bundle?) {
+        activity?.setToolbar(toolbar)
+        activity?.hideStatusBar()
+        binding.movieItem = args.movieItem
+    }
+
+    override fun onStart() {
+        super.onStart()
+        args.movieItem.getTrailerUri()?.let { startVideoPlay(it) }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        pauseVideoPlay()
+    }
+
+    override fun onDestroyView() {
+        stopVideoPlay()
+        activity?.showStatusBar()
+        super.onDestroyView()
+    }
+
+    override fun onVideoLoading(isLoading: Boolean) {
+        binding.buffering = isLoading
+    }
+}

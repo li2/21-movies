@@ -1,7 +1,6 @@
 package me.li2.movies
 
 import android.os.Bundle
-import android.view.View
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
@@ -9,6 +8,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
 import me.li2.movies.base.BaseActivity
+import me.li2.movies.util.setToolbar
 
 class MainActivity : BaseActivity(), LifecycleOwner, NavController.OnDestinationChangedListener {
 
@@ -17,19 +17,8 @@ class MainActivity : BaseActivity(), LifecycleOwner, NavController.OnDestination
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        initToolBar()
+        setToolbar(toolbar)
         initNavigation()
-    }
-
-    private fun initToolBar() {
-        setSupportActionBar(toolbar)
-        toolbar.visibility = View.VISIBLE
-        supportActionBar?.apply {
-            title = ""
-            setDisplayHomeAsUpEnabled(true)
-            setDisplayShowHomeEnabled(true)
-            setHomeButtonEnabled(true)
-        }
     }
 
     private fun initNavigation() {
@@ -40,8 +29,12 @@ class MainActivity : BaseActivity(), LifecycleOwner, NavController.OnDestination
 
     override fun onSupportNavigateUp() = navController.navigateUp()
 
-    override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
+    override fun onDestinationChanged(controller: NavController,
+                                      destination: NavDestination,
+                                      arguments: Bundle?) {
         when (destination.id) {
+            R.id.movieDetailFragment -> supportActionBar?.hide()
+            else -> setToolbar(toolbar)
         }
     }
 }

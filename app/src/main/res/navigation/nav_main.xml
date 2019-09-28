@@ -9,6 +9,20 @@
         android:id="@+id/mainFragment"
         android:name="me.li2.movies.ui.movies.MainFragment"
         android:label="@string/movies"
-        tools:layout="@layout/fragment_main"/>
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/showMovieDetail"
+            app:destination="@id/movieDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/movieDetailFragment"
+        android:name="me.li2.movies.ui.moviedetail.MovieDetailFragment"
+        android:label=" "
+        tools:layout="@layout/fragment_movie_detail">
+        <argument
+            android:name="movieItem"
+            app:argType="me.li2.movies.ui.movies.MovieItem" />
+    </fragment>
 
 </navigation>

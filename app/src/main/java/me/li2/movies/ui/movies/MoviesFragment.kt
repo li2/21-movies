@@ -13,6 +13,7 @@ import me.li2.movies.R
 import me.li2.movies.arch.Resource.Status.*
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.FragmentMoviesBinding
+import me.li2.movies.util.navController
 import me.li2.movies.util.observeOnView
 import me.li2.movies.util.toast
 
@@ -41,14 +42,18 @@ class MoviesFragment : BaseFragment() {
 
         moviesAdapter?.run {
             compositeDisposable += itemClicks.subscribe {
-
+                navController().navigate(MainFragmentDirections.showMovieDetail(it))
             }
         }
 
-        srl_movies.setOnRefreshListener { viewModel.getMovies(type) }
+        srl_movies.setOnRefreshListener {
+            viewModel.getMovies(type)
+        }
     }
 
-    override fun initViewModel() = with(viewModel) { getMovies(type) }
+    override fun initViewModel() = with(viewModel) {
+        getMovies(type)
+    }
 
     override fun renderUI() = with(viewModel) {
         observeOnView(if (type == MoviesType.NOT_SHOWING) notShowingMovies else comingSoonMovies) {
