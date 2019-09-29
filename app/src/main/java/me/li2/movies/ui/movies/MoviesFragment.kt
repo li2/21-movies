@@ -63,8 +63,8 @@ class MoviesFragment : BaseFragment() {
     override fun renderUI() = with(viewModel) {
         observeOnView(if (type == NOT_SHOWING) notShowingMovies else comingSoonMovies) {
             when (it.status) {
-                SUCCESS -> bindMovies(it.data, false)
                 LOADING -> bindMovies(it.data, true)
+                SUCCESS -> bindMovies(it.data, false)
                 ERROR -> {
                     binding.isLoading = false
                     toast(it.exception.toString())

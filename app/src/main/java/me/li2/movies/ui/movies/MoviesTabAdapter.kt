@@ -16,7 +16,7 @@ class MoviesTabAdapter(private val context: Context, fragmentManager: FragmentMa
 
     override fun getPageTitle(position: Int): String = when (position) {
         0 -> context.getString(R.string.not_showing)
-        1 -> context.getString(R.string.comming_soon)
+        1 -> context.getString(R.string.coming_soon)
         else -> throw IllegalStateException("Index unsupported")
     }
 

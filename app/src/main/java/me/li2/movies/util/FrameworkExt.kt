@@ -70,8 +70,9 @@ fun Fragment.ifCameraPermissionGranted(onGranted: () -> Unit) {
     }
 }
 
-fun ifSupportLollipop(executor: () -> Unit) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+fun ifSupportLollipopAndBelowQ(executor: () -> Unit) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
+            && Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
         executor()
     }
 }

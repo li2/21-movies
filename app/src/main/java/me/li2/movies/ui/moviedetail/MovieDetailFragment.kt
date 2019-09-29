@@ -36,7 +36,9 @@ class MovieDetailFragment : BaseFragment(), VideoPlayerAware {
     }
 
     override fun initUi(view: View, savedInstanceState: Bundle?) {
-        ifSupportLollipop {
+        // A known issue that shared element view is being stucked at fixed position on Android 10.
+        // https://stackoverflow.com/q/58145382/2722270
+        ifSupportLollipopAndBelowQ {
             sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
             ViewCompat.setTransitionName(video_player, getString(R.string.transition_name_movie) + args.movieItem.id)
         }
