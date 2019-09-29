@@ -27,6 +27,15 @@
             android:name="io.fabric.ApiKey"
             android:value="30db228191dfe9c1b04215fa7692e468571bc2d1" />
 
+        <uses-library
+            android:name="android.test.base"
+            android:required="false" />
+        <uses-library
+            android:name="android.test.runner"
+            android:required="false" />
+        <uses-library
+            android:name="android.test.mock"
+            android:required="false" />
     </application>
 
 </manifest>

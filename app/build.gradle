@@ -129,34 +129,20 @@ dependencies {
 
     //MARK: The following are Test libs ---------------------------------------------------------------------
 
-    //Unit Test
-    testImplementation "org.assertj:assertj-core:$assertJcore_version"
-    testImplementation "org.robolectric:robolectric:$robolectric_version"
-    testImplementation "androidx.arch.core:core-testing:$androidx_arch_testing_version"
-    testImplementation "com.google.truth:truth:$truth_version"
-    //Required -- JUnit 4 framework
+    //JUnit4 framework
     testImplementation "junit:junit:$junit_version"
-    //Optional -- Robolectric environment, note this should provide the robolectric artifact
-    testImplementation "androidx.test:core:$testRunner_version_x"
     //Mockito
-    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlin_version"
     testImplementation "org.mockito:mockito-core:$mockito_core_version"
-
-    androidTestImplementation "android.arch.core:core-testing:$core_testing_version"
-    //optional - Test helpers
-    androidTestImplementation "android.arch.navigation:navigation-testing:1.0.0-alpha08"
-    androidTestImplementation "androidx.test:runner:$testRunner_version_x"
-    androidTestImplementation "androidx.test.ext:truth:$androidx_truth_version"
-    androidTestImplementation "androidx.test.ext:junit:$testRunner_version_x"
-    //Mockito
-    androidTestImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlin_version"
     androidTestImplementation "org.mockito:mockito-android:$mockito_core_version"
     //Core library
-    androidTestImplementation "androidx.test:core:$testRunner_version_x"
-    androidTestImplementation "androidx.test:rules:$testRunner_version_x"
-    //Espresso dependencies
+    debugImplementation "androidx.test:core:$androidx_test_version"
+    debugImplementation "androidx.test:runner:$androidx_test_version"
+    debugImplementation "androidx.test:rules:$androidx_test_version"
+    debugImplementation "androidx.fragment:fragment-testing:1.1.0"
+    //Espresso
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoCore_version"
-    androidTestImplementation "androidx.test.espresso:espresso-idling-resource:$espressoCore_version"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoCore_version"
+    androidTestImplementation "androidx.test.espresso:espresso-intents:$espressoCore_version"
 
 
     //MARK: The following are AndroidX libs -----------------------------------------------------------------
