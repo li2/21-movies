@@ -40,10 +40,16 @@ class MovieDetailFragment : BaseFragment(), VideoPlayerAware {
         // https://stackoverflow.com/q/58145382/2722270
         ifSupportLollipopAndBelowQ {
             sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
-            ViewCompat.setTransitionName(video_player, getString(R.string.transition_name_movie) + args.movieItem.id)
+            ViewCompat.setTransitionName(video_player, getString(R.string.transition_name_movie) + args.movieItem?.id)
         }
-        activity?.setToolbar(toolbar)
-        activity?.hideStatusBar()
+        if (isTablet()) {
+            toolbar.hide()
+            binding.isTablet = true
+        } else {
+            activity?.setToolbar(toolbar)
+            activity?.hideStatusBar()
+            binding.isTablet = false
+        }
         binding.movieItem = args.movieItem
 
         compositeDisposable += btn_rate_movie.clicks().throttleFirstShort().subscribe {
@@ -54,7 +60,7 @@ class MovieDetailFragment : BaseFragment(), VideoPlayerAware {
 
     override fun onStart() {
         super.onStart()
-        args.movieItem.getTrailerUri()?.let { startVideoPlay(it) }
+        args.movieItem?.getTrailerUri()?.let { startVideoPlay(it) }
     }
 
     override fun onStop() {

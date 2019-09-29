@@ -9,6 +9,8 @@ import androidx.databinding.BindingAdapter
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.appbar.CollapsingToolbarLayout
 
 object ViewBindingAdapter {
     @JvmStatic
@@ -21,6 +23,18 @@ object ViewBindingAdapter {
     @BindingAdapter("app:isRefreshing")
     fun showLoadingSwipeRefreshLayout(srl: SwipeRefreshLayout, value: Boolean) {
         srl.isRefreshing = value
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:collapsingScrollEnabled")
+    fun setCollapsingToolbarLayoutScrollEnabled(collapsingToolbarLayout: CollapsingToolbarLayout, enabled: Boolean?) {
+        val lp = collapsingToolbarLayout.layoutParams as AppBarLayout.LayoutParams
+        if (enabled.orFalse()) {
+            lp.scrollFlags = AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL or AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED
+        } else {
+            lp.scrollFlags = AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP
+        }
+        collapsingToolbarLayout.layoutParams = lp
     }
 
     @JvmStatic

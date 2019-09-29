@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import io.reactivex.rxkotlin.plusAssign
+import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_movies.*
 import me.li2.movies.R
 import me.li2.movies.arch.Resource.Status.*
@@ -16,6 +17,7 @@ import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.FragmentMoviesBinding
 import me.li2.movies.ui.movies.MoviesType.COMING_SOON
 import me.li2.movies.ui.movies.MoviesType.NOT_SHOWING
+import me.li2.movies.util.isTablet
 import me.li2.movies.util.navController
 import me.li2.movies.util.observeOnView
 import me.li2.movies.util.toast
@@ -47,7 +49,11 @@ class MoviesFragment : BaseFragment() {
         moviesAdapter?.run {
             compositeDisposable += itemClicks.subscribe { (imageView, movieItem) ->
                 val extras = FragmentNavigatorExtras(imageView to getString(R.string.transition_name_movie) + movieItem.id)
-                navController().navigate(MainFragmentDirections.showMovieDetail(movieItem), extras)
+                if (this@MoviesFragment.isTablet()) {
+                    nav_host_land?.navController()?.navigate(R.id.movieDetailFragment, bundleOf("movieItem" to movieItem), null, extras)
+                } else {
+                    navController().navigate(MainFragmentDirections.showMovieDetail(movieItem), extras)
+                }
             }
         }
 

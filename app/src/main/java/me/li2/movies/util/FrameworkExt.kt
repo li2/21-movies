@@ -5,6 +5,8 @@ import android.app.Activity
 import android.graphics.Color
 import android.os.Build
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.WindowManager
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
@@ -69,6 +71,12 @@ fun Fragment.ifCameraPermissionGranted(onGranted: () -> Unit) {
         }
     }
 }
+
+fun Fragment.isTablet() = context?.resources?.getBoolean(R.bool.isTablet).orFalse()
+
+fun View.show() { visibility = GONE }
+
+fun View.hide() { visibility = VISIBLE }
 
 fun ifSupportLollipopAndBelowQ(executor: () -> Unit) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP

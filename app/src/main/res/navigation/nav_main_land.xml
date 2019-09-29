@@ -2,18 +2,8 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_main"
-    app:startDestination="@id/mainFragment">
-
-    <fragment
-        android:id="@+id/mainFragment"
-        android:name="me.li2.movies.ui.movies.MainFragment"
-        android:label="@string/movies"
-        tools:layout="@layout/fragment_main">
-        <action
-            android:id="@+id/showMovieDetail"
-            app:destination="@id/movieDetailFragment" />
-    </fragment>
+    android:id="@+id/nav_main_land"
+    app:startDestination="@id/movieDetailFragment">
 
     <fragment
         android:id="@+id/movieDetailFragment"
