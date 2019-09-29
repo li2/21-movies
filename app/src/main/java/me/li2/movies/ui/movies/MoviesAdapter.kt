@@ -22,7 +22,6 @@ class MoviesAdapter : ListAdapter<MovieItem, MovieVH>(DIFF_CALLBACK) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
             MovieVH(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.vh_movie, parent, false))
 
-    @SuppressLint("CheckResult")
     override fun onBindViewHolder(vh: MovieVH, position: Int) {
         vh.bindData(getItem(position), itemClicksPublish)
     }
