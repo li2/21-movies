@@ -36,14 +36,14 @@ fun Activity.setToolbar(toolbar: Toolbar, title: String = "", @DrawableRes iconI
 fun Activity.showStatusBar() {
     window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
     window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+    ifSupportLollipop {
         window.statusBarColor = ContextCompat.getColor(this, R.color.primary_dark)
     }
 }
 
 fun Activity.hideStatusBar() {
     window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+    ifSupportLollipop {
         window.statusBarColor = Color.TRANSPARENT
     }
 }
@@ -74,9 +74,9 @@ fun Fragment.ifCameraPermissionGranted(onGranted: () -> Unit) {
 
 fun Fragment.isTablet() = context?.resources?.getBoolean(R.bool.isTablet).orFalse()
 
-fun View.show() { visibility = GONE }
+fun View.show() { visibility = VISIBLE }
 
-fun View.hide() { visibility = VISIBLE }
+fun View.hide() { visibility = GONE }
 
 fun ifSupportLollipop(executor: () -> Unit) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
