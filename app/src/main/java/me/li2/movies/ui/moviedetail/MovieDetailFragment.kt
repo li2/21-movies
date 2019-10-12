@@ -1,5 +1,6 @@
 package me.li2.movies.ui.moviedetail
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -24,9 +25,13 @@ class MovieDetailFragment : BaseFragment(), VideoPlayerAware {
 
     private lateinit var binding: FragmentMovieDetailBinding
     private val args by navArgs<MovieDetailFragmentArgs>()
-    override var videoPlaybackInfo: PlaybackInfo = PlaybackInfo()
+
+    override val videoUri: Uri?
+        get() = args.movieItem?.trailerUri
+    override val videoPlayerView: PlayerView
+        get() = video_player
+    override val initialPlaybackInfo: PlaybackInfo = PlaybackInfo()
     override var videoPlayerHelper: Playable? = null
-    override fun getVideoPlayerView(): PlayerView = video_player
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
@@ -36,6 +41,8 @@ class MovieDetailFragment : BaseFragment(), VideoPlayerAware {
     }
 
     override fun initUi(view: View, savedInstanceState: Bundle?) {
+        viewLifecycleOwner.lifecycle.addObserver(this)
+
         // A known issue that shared element view is being stucked at fixed position on Android 10.
         // https://stackoverflow.com/q/58145382/2722270
         ifSupportLollipopAndBelowQ {
@@ -58,18 +65,7 @@ class MovieDetailFragment : BaseFragment(), VideoPlayerAware {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        args.movieItem?.getTrailerUri()?.let { startVideoPlay(it) }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        pauseVideoPlay()
-    }
-
     override fun onDestroyView() {
-        stopVideoPlay()
         activity?.showStatusBar()
         super.onDestroyView()
     }

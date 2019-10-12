@@ -3,7 +3,6 @@ package me.li2.movies.ui.movies
 import android.net.Uri
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
-import timber.log.Timber.e
 
 @Parcelize
 enum class MoviesType(val value: String) : Parcelable {
@@ -19,12 +18,4 @@ data class MovieItem(
         val type: String,
         val description: String,
         val rate: Float?,
-        val trailerUrl: String) : Parcelable {
-
-    fun getTrailerUri() = try {
-        Uri.parse(trailerUrl)
-    } catch (exception: Exception) {
-        e(exception, "Video uri parse failed: $this")
-        null
-    }
-}
+        val trailerUri: Uri?) : Parcelable

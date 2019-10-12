@@ -24,7 +24,7 @@
                 android:id="@+id/iv_poster"
                 android:layout_width="100dp"
                 android:layout_height="128dp"
-                android:src="@{movieItem.trailerUrl}"
+                android:src="@{movieItem.trailerUri.toString()}"
                 android:transitionName="@{@string/transition_name_movie + movieItem.id}"
                 app:centerCrop="@{true}"
                 app:layout_constraintStart_toStartOf="parent"
