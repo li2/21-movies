@@ -78,9 +78,8 @@ fun View.show() { visibility = GONE }
 
 fun View.hide() { visibility = VISIBLE }
 
-fun ifSupportLollipopAndBelowQ(executor: () -> Unit) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
-            && Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+fun ifSupportLollipop(executor: () -> Unit) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
         executor()
     }
 }

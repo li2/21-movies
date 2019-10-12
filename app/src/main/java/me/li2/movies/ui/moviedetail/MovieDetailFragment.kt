@@ -43,12 +43,11 @@ class MovieDetailFragment : BaseFragment(), VideoPlayerAware {
     override fun initUi(view: View, savedInstanceState: Bundle?) {
         viewLifecycleOwner.lifecycle.addObserver(this)
 
-        // A known issue that shared element view is being stucked at fixed position on Android 10.
-        // https://stackoverflow.com/q/58145382/2722270
-        ifSupportLollipopAndBelowQ {
+        ifSupportLollipop {
             sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
             ViewCompat.setTransitionName(video_player, getString(R.string.transition_name_movie) + args.movieItem?.id)
         }
+
         if (isTablet()) {
             toolbar.hide()
             binding.isTablet = true
@@ -57,6 +56,7 @@ class MovieDetailFragment : BaseFragment(), VideoPlayerAware {
             activity?.hideStatusBar()
             binding.isTablet = false
         }
+
         binding.movieItem = args.movieItem
 
         compositeDisposable += btn_rate_movie.clicks().throttleFirstShort().subscribe {
