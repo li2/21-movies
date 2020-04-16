@@ -7,8 +7,8 @@ import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
+import me.li2.android.view.navigation.setToolbar
 import me.li2.movies.base.BaseActivity
-import me.li2.movies.util.setToolbar
 
 class MainActivity : BaseActivity(), LifecycleOwner, NavController.OnDestinationChangedListener {
 

@@ -11,9 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jakewharton.rxbinding3.view.clicks
 import io.reactivex.BackpressureStrategy
 import io.reactivex.subjects.PublishSubject
+import me.li2.android.common.rx.throttleFirstShort
 import me.li2.movies.R
 import me.li2.movies.databinding.VhMovieBinding
-import me.li2.movies.util.throttleFirstShort
 
 class MoviesAdapter : ListAdapter<MovieItem, MovieVH>(DIFF_CALLBACK) {
     private val itemClicksPublish = PublishSubject.create<Pair<ImageView, MovieItem>>()

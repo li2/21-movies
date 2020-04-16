@@ -1,6 +1,7 @@
 package me.li2.movies.data.model
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
 /*
 Postman mock server error response
@@ -11,14 +12,18 @@ Postman mock server error response
     }
 }
 */
+
+@JsonClass(generateAdapter = true)
 data class ResponseAPI(
         @Json(name = "error")
         val error: Error?)
 
+@JsonClass(generateAdapter = true)
 data class Error(
         @Json(name = "message")
         val message: String?)
 
+@JsonClass(generateAdapter = true)
 data class MovieAPI(
         @Json(name = "id")
         val id: Long,

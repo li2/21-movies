@@ -1,4 +1,4 @@
-# The Vista Movies Demo App
+# ABC Cinemas
 
 This App is build on **Android Architecture Components (MVVM)** in **Kotlin** with following features:
 

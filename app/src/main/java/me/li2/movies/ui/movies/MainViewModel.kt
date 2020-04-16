@@ -5,12 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import me.li2.movies.arch.Resource
+import me.li2.android.common.arch.Resource
+import me.li2.android.common.arch.postError
+import me.li2.android.common.arch.postLoading
+import me.li2.android.common.arch.postSuccess
 import me.li2.movies.base.BaseViewModel
 import me.li2.movies.ui.movies.MoviesType.NOT_SHOWING
-import me.li2.movies.util.postError
-import me.li2.movies.util.postLoading
-import me.li2.movies.util.postSuccess
 
 class MainViewModel : BaseViewModel() {
 

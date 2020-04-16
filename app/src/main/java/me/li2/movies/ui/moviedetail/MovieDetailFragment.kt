@@ -15,10 +15,17 @@ import im.ene.toro.exoplayer.Playable
 import im.ene.toro.media.PlaybackInfo
 import io.reactivex.rxkotlin.plusAssign
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
+import me.li2.android.common.rx.throttleFirstShort
+import me.li2.android.view.navigation.setToolbar
+import me.li2.android.view.popup.toast
+import me.li2.android.view.system.hideStatusBar
+import me.li2.android.view.system.showStatusBar
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.FragmentMovieDetailBinding
-import me.li2.movies.util.*
+import me.li2.movies.util.hide
+import me.li2.movies.util.ifSupportLollipop
+import me.li2.movies.util.isTablet
 import me.li2.movies.util.video.VideoPlayerAware
 
 class MovieDetailFragment : BaseFragment(), VideoPlayerAware {
@@ -60,7 +67,6 @@ class MovieDetailFragment : BaseFragment(), VideoPlayerAware {
         binding.movieItem = args.movieItem
 
         compositeDisposable += btn_rate_movie.clicks().throttleFirstShort().subscribe {
-            // todo
             toast("todo: rate movie clicks")
         }
     }

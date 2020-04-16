@@ -11,7 +11,6 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
 import org.kodein.di.conf.ConfigurableKodein
 import org.kodein.di.generic.instance
-import rx_activity_result2.RxActivityResult
 
 class App : MultiDexApplication(), KodeinAware {
     override val kodein = ConfigurableKodein(mutable = true)
@@ -25,7 +24,6 @@ class App : MultiDexApplication(), KodeinAware {
         setupKodein()
         constants.init()
         setupFabric()
-        setupRxActivityResult()
     }
 
     private fun setupKodein() {
@@ -42,10 +40,6 @@ class App : MultiDexApplication(), KodeinAware {
 
     private fun setupFabric() {
         Fabric.with(this, Crashlytics())
-    }
-
-    private fun setupRxActivityResult() {
-        RxActivityResult.register(this)
     }
 
     companion object {

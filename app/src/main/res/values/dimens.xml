@@ -2,5 +2,5 @@
 <resources>
     <dimen name="toolbar_elevation">4dp</dimen>
     <dimen name="sample_spacing">8dp</dimen>
-    <dimen name="movies_item_margin">8dp</dimen>
+    <dimen name="movies_item_margin">4dp</dimen>
 </resources>

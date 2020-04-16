@@ -7,7 +7,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 @JvmSuppressWildcards
-interface Api {
+interface AbcApi {
     @Wrapped(path = [DATA_WRAPPER])
     @GET("movies")
     fun getMoviesAsync(@Query("type") type: String): Deferred<List<MovieAPI>>
