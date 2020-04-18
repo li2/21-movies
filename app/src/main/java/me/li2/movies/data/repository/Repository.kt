@@ -3,6 +3,7 @@ package me.li2.movies.data.repository
 import me.li2.movies.App
 import me.li2.movies.data.local.DBDataSource
 import me.li2.movies.data.model.MapperUI
+import me.li2.movies.data.model.TmdbMoviesListAPI
 import me.li2.movies.data.remote.RemoteDataSource
 import me.li2.movies.ui.movies.MovieItem
 import me.li2.movies.ui.movies.MoviesType
@@ -18,4 +19,7 @@ class Repository : KodeinAware {
     suspend fun getMovies(type: MoviesType): List<MovieItem> =
             remoteDataSource.getMoviesAsync(type).await()
                     .map { MapperUI.toMovieUI(it) }
+
+    suspend fun getUpcomingMovies(page: Int): TmdbMoviesListAPI =
+            remoteDataSource.getUpcomingMoviesAsync(page).await()
 }

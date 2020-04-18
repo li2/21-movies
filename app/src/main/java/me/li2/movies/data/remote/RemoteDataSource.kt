@@ -10,8 +10,11 @@ class RemoteDataSource : KodeinAware {
 
     override val kodein by kodein(App.context)
     private val abcApi: AbcApi by instance(arg = TIMEOUT)
+    private val tmdbApi: TmdbApi by instance()
 
     fun getMoviesAsync(type: MoviesType) = abcApi.getMoviesAsync(type.value)
+
+    fun getUpcomingMoviesAsync(page: Int) = tmdbApi.getUpcomingMoviesAsync(page)
 
     companion object {
         const val TIMEOUT = 6000L

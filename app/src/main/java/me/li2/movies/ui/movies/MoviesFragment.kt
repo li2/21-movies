@@ -59,6 +59,7 @@ class MoviesFragment : BaseFragment() {
 
         srl_movies.setOnRefreshListener {
             viewModel.getMovies(type, true)
+            viewModel.getUpcomingMovies(1)
         }
     }
 

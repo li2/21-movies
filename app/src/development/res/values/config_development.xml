@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="baseUrl" translatable="false">"https://1bca215c-b263-499b-89b9-0fe7f118e860.mock.pstmn.io/api/"</string>
+    <string name="tmdbUrl" translatable="false">"https://api.themoviedb.org/3/"</string>
     <string name="fabric_api_key" translatable="false">xxx</string>
 </resources>

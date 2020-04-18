@@ -38,4 +38,14 @@ class MainViewModel : BaseViewModel() {
             }
         }
     }
+
+    fun getUpcomingMovies(page: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                repository.getUpcomingMovies(page)
+            } catch (exception: Exception) {
+
+            }
+        }
+    }
 }
