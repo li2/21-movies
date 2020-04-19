@@ -1,0 +1,64 @@
+package me.li2.movies.ui.home
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
+import me.li2.android.common.arch.Resource.Status.*
+import me.li2.android.common.arch.observeOnView
+import me.li2.android.common.number.orZero
+import me.li2.android.view.popup.toast
+import me.li2.movies.R
+import me.li2.movies.base.BaseFragment
+import me.li2.movies.databinding.HomeFragmentBinding
+import me.li2.movies.ui.home.top.TopItemUI
+import me.li2.movies.util.*
+import timber.log.Timber.e
+
+
+class HomeFragment : BaseFragment() {
+    private lateinit var binding: HomeFragmentBinding
+    private val viewModel by activityViewModels<HomeViewModel>()
+
+    override fun onCreateView(inflater: LayoutInflater,
+                              container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        binding = DataBindingUtil.inflate(inflater, R.layout.home_fragment, container, false)
+        return binding.root
+    }
+
+    override fun initUi(view: View, savedInstanceState: Bundle?) {
+        binding.executePendingBindings()
+        binding.topItemsViewPager.ignorePullToRefresh(binding.swipeRefreshLayout)
+        binding.topItemsPagerIndicator.setViewPager2(binding.topItemsViewPager)
+        val offsetPx = 32.dpToPx(requireContext())
+        val pageMarginPx = 16.dpToPx(requireContext())
+        binding.topItemsViewPager.showPartialLeftAndRightPages(offsetPx, pageMarginPx, CardPageTransformer(0.93f))
+    }
+
+    override fun initViewModel() = with(viewModel) {
+        getTopItems()
+    }
+
+    override fun renderUI() = with(viewModel) {
+        observeOnView(topItemsLiveData) {
+            when (it.status) {
+                LOADING -> bindTopItems(it.data, true)
+                SUCCESS -> bindTopItems(it.data, false)
+                ERROR -> {
+                    binding.isLoading = false
+                    toast(it.exception.toString())
+                    e(it.exception, "failed to get movies")
+                }
+            }
+        }
+    }
+
+    private fun bindTopItems(topItems: List<TopItemUI>?, isLoading: Boolean) {
+        binding.topItems = topItems
+        binding.isLoading = isLoading
+        binding.topItemsPagerIndicator.count = topItems?.size.orZero()
+    }
+}

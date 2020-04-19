@@ -3,7 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_main"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="me.li2.movies.ui.home.HomeFragment"
+        tools:layout="@layout/home_fragment"
+        android:label=" " />
 
     <fragment
         android:id="@+id/mainFragment"

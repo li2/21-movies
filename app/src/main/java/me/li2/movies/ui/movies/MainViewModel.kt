@@ -10,6 +10,7 @@ import me.li2.android.common.arch.postError
 import me.li2.android.common.arch.postLoading
 import me.li2.android.common.arch.postSuccess
 import me.li2.movies.base.BaseViewModel
+import me.li2.movies.data.model.MapperUI
 import me.li2.movies.ui.movies.MoviesType.NOT_SHOWING
 
 class MainViewModel : BaseViewModel() {
@@ -39,10 +40,10 @@ class MainViewModel : BaseViewModel() {
         }
     }
 
-    fun getUpcomingMovies(page: Int) {
+    fun getUpcomingMovies() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                repository.getUpcomingMovies(page)
+                repository.getUpcomingMovies(1).results.take(5).map { MapperUI.toTopItemUI(it) }
             } catch (exception: Exception) {
 
             }

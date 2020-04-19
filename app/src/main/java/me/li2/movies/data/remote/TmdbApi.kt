@@ -15,6 +15,12 @@ interface TmdbApi {
         /**
          * @see <a href="https://developers.themoviedb.org/3/getting-started/images">Images</a>
          */
-        fun imageUrl(path: String) = "https://image.tmdb.org/t/p/w500/$path"
+        fun imageUrl(path: String?): String? {
+            return if (!path.isNullOrEmpty()) {
+                "https://image.tmdb.org/t/p/w500/$path"
+            } else {
+                null
+            }
+        }
     }
 }
