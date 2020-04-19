@@ -39,7 +39,7 @@ class MoviesFragmentTest {
 
         // Verify that performing a click prompts the correct Navigation action
         onView(withId(R.id.rv_movies))
-                .perform(RecyclerViewActions.actionOnItemAtPosition<MovieVH>(0, click()))
+                .perform(RecyclerViewActions.actionOnItemAtPosition<MovieItemViewHolder>(0, click()))
         // todo IllegalStateException: No view holder at position: 0
         verify(mockNavController).navigate(R.id.showMovieDetail)
     }

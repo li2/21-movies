@@ -47,7 +47,7 @@ class MoviesFragment : BaseFragment() {
         binding.executePendingBindings()
 
         moviesAdapter?.run {
-            compositeDisposable += itemClicks.subscribe { (imageView, movieItem) ->
+            compositeDisposable += movieClicks.subscribe { (imageView, movieItem) ->
                 val extras = FragmentNavigatorExtras(imageView to getString(R.string.transition_name_movie) + movieItem.id)
                 if (this@MoviesFragment.isTablet()) {
                     nav_host_land?.navController()?.navigate(R.id.movieDetailFragment, bundleOf("movieItem" to movieItem), null, extras)

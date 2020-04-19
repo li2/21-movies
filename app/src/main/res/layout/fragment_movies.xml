@@ -40,7 +40,7 @@
                 android:background="@color/white"
                 android:clipToPadding="false"
                 app:movies="@{movies}"
-                tools:listitem="@layout/vh_movie"
+                tools:listitem="@layout/movie_item_view"
                 tools:spanCount="1" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
