@@ -6,18 +6,26 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import io.reactivex.BackpressureStrategy
 import io.reactivex.subjects.PublishSubject
+import me.li2.movies.util.CarouselPagerHelper
 
-class TopItemsAdapter : ListAdapter<TopItemUI, TopItemViewHolder>(DIFF_CALLBACK) {
+class TopItemsAdapter : ListAdapter<TopItemUI, TopItemViewHolder>(DIFF_CALLBACK), CarouselPagerHelper {
+
     private val itemClicksPublish = PublishSubject.create<Pair<ImageView, TopItemUI>>()
     internal val itemClicks = itemClicksPublish.toFlowable(BackpressureStrategy.LATEST).toObservable()!!
+
+    override val carouselDatasetSize: Int
+        get() = currentList.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopItemViewHolder {
         return TopItemViewHolder.newInstance(parent, itemClicksPublish)
     }
 
     override fun onBindViewHolder(viewHolder: TopItemViewHolder, position: Int) {
-        viewHolder.bind(getItem(position), position)
+        val dataPosition = getCarouselDataPosition(position)
+        viewHolder.bind(getItem(dataPosition), dataPosition)
     }
+
+    override fun getItemCount() = getCarouselDisplayedSize()
 
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<TopItemUI>() {
