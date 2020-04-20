@@ -12,6 +12,8 @@ import me.li2.android.common.arch.Resource.Status.*
 import me.li2.android.common.arch.observeOnView
 import me.li2.android.common.number.orZero
 import me.li2.android.view.popup.toast
+import me.li2.android.view.system.hideStatusBar
+import me.li2.android.view.system.showStatusBar
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.HomeFragmentBinding
@@ -37,19 +39,27 @@ class HomeFragment : BaseFragment(), ViewPager2AutoScrollHelper {
     }
 
     override fun onDestroyView() {
+        activity?.showStatusBar()
         stopViewPagerAutoScrollTask()
         super.onDestroyView()
     }
 
     override fun initUi(view: View, savedInstanceState: Bundle?) {
+        activity?.hideStatusBar()
         binding.executePendingBindings()
         binding.topItemsViewPager.ignorePullToRefresh(binding.swipeRefreshLayout)
         binding.topItemsPagerIndicator.setViewPager2(binding.topItemsViewPager)
-        val offsetPx = 32.dpToPx(requireContext())
-        val pageMarginPx = 16.dpToPx(requireContext())
-        binding.topItemsViewPager.showPartialLeftAndRightPages(offsetPx, pageMarginPx, CardPageTransformer(0.93f))
+
+        val offsetPx = 48.dpToPx(requireContext())
+        val pageMarginPx = 18.dpToPx(requireContext())
+        binding.topItemsViewPager.showPartialLeftAndRightPages(offsetPx, pageMarginPx, CardPageTransformer(0.85f))
+
         startViewPagerAutoScrollTask()
         disableViewPagerAutoScrollOnTouch()
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.getTopItems(true)
+        }
     }
 
     override fun initViewModel() = with(viewModel) {

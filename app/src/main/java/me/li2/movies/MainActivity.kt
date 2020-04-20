@@ -33,6 +33,7 @@ class MainActivity : BaseActivity(), LifecycleOwner, NavController.OnDestination
                                       destination: NavDestination,
                                       arguments: Bundle?) {
         when (destination.id) {
+            R.id.homeFragment,
             R.id.movieDetailFragment -> supportActionBar?.hide()
             else -> setToolbar(toolbar)
         }
