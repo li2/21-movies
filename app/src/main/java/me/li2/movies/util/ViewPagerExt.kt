@@ -7,6 +7,7 @@ import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.SCROLL_STATE_IDLE
 
+
 /**
  * For ViewPager wrapped inside a SwipeRefreshLayout, to avoid SwipeRefreshLayout being refreshed
  * when swipe ViewPager to the left/right. This mostly happens when ViewPage is the top of my fragment.
@@ -16,7 +17,6 @@ import androidx.viewpager2.widget.ViewPager2.SCROLL_STATE_IDLE
 fun ViewPager2.ignorePullToRefresh(swipeRefreshLayout: SwipeRefreshLayout) {
     this.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
         override fun onPageScrollStateChanged(state: Int) {
-            super.onPageScrollStateChanged(state)
             if (!swipeRefreshLayout.isRefreshing) {
                 swipeRefreshLayout.isEnabled = state == SCROLL_STATE_IDLE
             }

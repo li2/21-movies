@@ -10,7 +10,6 @@ fun PageIndicatorView.setViewPager2(viewPager2: ViewPager2) {
 
     viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
-            super.onPageSelected(position)
             val realPosition = position % adapter.currentList.size
             setSelected(realPosition)
         }

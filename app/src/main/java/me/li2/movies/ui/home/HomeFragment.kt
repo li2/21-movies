@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
+import io.reactivex.disposables.Disposable
+import io.reactivex.subjects.BehaviorSubject
 import me.li2.android.common.arch.Resource.Status.*
 import me.li2.android.common.arch.observeOnView
 import me.li2.android.common.number.orZero
@@ -16,17 +18,27 @@ import me.li2.movies.databinding.HomeFragmentBinding
 import me.li2.movies.ui.home.top.TopItemUI
 import me.li2.movies.util.*
 import timber.log.Timber.e
+import java.util.concurrent.TimeUnit
 
-
-class HomeFragment : BaseFragment() {
+class HomeFragment : BaseFragment(), ViewPager2AutoScrollHelper {
     private lateinit var binding: HomeFragmentBinding
     private val viewModel by activityViewModels<HomeViewModel>()
+
+    override val autoScrollViewPager get() = binding.topItemsViewPager
+    override val viewPagerAutoScrollPeriod = Pair(5L, TimeUnit.SECONDS)
+    override val shouldViewPagerAutoScroll = BehaviorSubject.createDefault(true)
+    override var viewPagerAutoScrollTask: Disposable? = null
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.home_fragment, container, false)
         return binding.root
+    }
+
+    override fun onDestroyView() {
+        stopViewPagerAutoScrollTask()
+        super.onDestroyView()
     }
 
     override fun initUi(view: View, savedInstanceState: Bundle?) {
@@ -36,6 +48,8 @@ class HomeFragment : BaseFragment() {
         val offsetPx = 32.dpToPx(requireContext())
         val pageMarginPx = 16.dpToPx(requireContext())
         binding.topItemsViewPager.showPartialLeftAndRightPages(offsetPx, pageMarginPx, CardPageTransformer(0.93f))
+        startViewPagerAutoScrollTask()
+        disableViewPagerAutoScrollOnTouch()
     }
 
     override fun initViewModel() = with(viewModel) {

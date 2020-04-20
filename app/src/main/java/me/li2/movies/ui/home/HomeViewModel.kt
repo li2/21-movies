@@ -29,7 +29,7 @@ class HomeViewModel : BaseViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val topItems = repository.getUpcomingMovies(1).results
-                        .take(5)
+                        .take(10)
                         .map {
                             MapperUI.toTopItemUI(it)
                         }
