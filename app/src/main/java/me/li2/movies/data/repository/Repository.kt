@@ -20,6 +20,15 @@ class Repository : KodeinAware {
             remoteDataSource.getMoviesAsync(type).await()
                     .map { MapperUI.toMovieUI(it) }
 
-    suspend fun getUpcomingMovies(page: Int): TmdbMoviesListAPI =
+    suspend fun getTopMovies(page: Int): TmdbMoviesListAPI =
+            remoteDataSource.getTopMoviesAsync(page).await()
+
+    suspend fun getNowPlayingMoviesAsync(page: Int): TmdbMoviesListAPI =
+            remoteDataSource.getNowPlayingMoviesAsync(page).await()
+
+    suspend fun getUpcomingMoviesAsync(page: Int): TmdbMoviesListAPI =
             remoteDataSource.getUpcomingMoviesAsync(page).await()
+
+    suspend fun getPopularMoviesAsync(page: Int): TmdbMoviesListAPI =
+            remoteDataSource.getPopularMoviesAsync(page).await()
 }

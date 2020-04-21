@@ -1,4 +1,4 @@
-package me.li2.movies.ui.home.top
+package me.li2.movies.ui.home.centre
 
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -7,26 +7,19 @@ import androidx.recyclerview.widget.ListAdapter
 import io.reactivex.BackpressureStrategy
 import io.reactivex.subjects.PublishSubject
 import me.li2.movies.ui.home.MovieItemUI
-import me.li2.movies.util.CarouselPagerHelper
 
-class TopItemsAdapter : ListAdapter<MovieItemUI, TopItemViewHolder>(DIFF_CALLBACK), CarouselPagerHelper {
+class CentreItemsAdapter : ListAdapter<MovieItemUI, CentreItemViewHolder>(DIFF_CALLBACK) {
 
     private val itemClicksPublish = PublishSubject.create<Pair<ImageView, MovieItemUI>>()
     internal val itemClicks = itemClicksPublish.toFlowable(BackpressureStrategy.LATEST).toObservable()!!
 
-    override val carouselDatasetSize: Int
-        get() = currentList.size
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopItemViewHolder {
-        return TopItemViewHolder.newInstance(parent, itemClicksPublish)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CentreItemViewHolder {
+        return CentreItemViewHolder.newInstance(parent, itemClicksPublish)
     }
 
-    override fun onBindViewHolder(viewHolder: TopItemViewHolder, position: Int) {
-        val dataPosition = getCarouselDataPosition(position)
-        viewHolder.bind(getItem(dataPosition), dataPosition)
+    override fun onBindViewHolder(viewHolder: CentreItemViewHolder, position: Int) {
+        viewHolder.bind(getItem(position), position)
     }
-
-    override fun getItemCount() = getCarouselDisplayedSize()
 
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<MovieItemUI>() {

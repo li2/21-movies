@@ -7,9 +7,17 @@ import retrofit2.http.Query
 
 interface TmdbApi {
 
+    @GET("movie/top_rated")
+    fun getTopMoviesAsync(@Query("page") page: Int): Deferred<TmdbMoviesListAPI>
+
+    @GET("movie/now_playing")
+    fun getNowPlayingMoviesAsync(@Query("page") page: Int): Deferred<TmdbMoviesListAPI>
+
     @GET("movie/upcoming")
     fun getUpcomingMoviesAsync(@Query("page") page: Int): Deferred<TmdbMoviesListAPI>
 
+    @GET("movie/popular")
+    fun getPopularMoviesAsync(@Query("page") page: Int): Deferred<TmdbMoviesListAPI>
 
     companion object {
         /**

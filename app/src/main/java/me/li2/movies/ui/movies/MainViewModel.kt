@@ -43,7 +43,7 @@ class MainViewModel : BaseViewModel() {
     fun getUpcomingMovies() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                repository.getUpcomingMovies(1).results.take(5).map { MapperUI.toTopItemUI(it) }
+                repository.getTopMovies(1).results.take(5).map { MapperUI.toMovieItemUI(it) }
             } catch (exception: Exception) {
 
             }

@@ -14,7 +14,13 @@ class RemoteDataSource : KodeinAware {
 
     fun getMoviesAsync(type: MoviesType) = abcApi.getMoviesAsync(type.value)
 
+    fun getTopMoviesAsync(page: Int) = tmdbApi.getTopMoviesAsync(page)
+
+    fun getNowPlayingMoviesAsync(page: Int) = tmdbApi.getNowPlayingMoviesAsync(page)
+
     fun getUpcomingMoviesAsync(page: Int) = tmdbApi.getUpcomingMoviesAsync(page)
+
+    fun getPopularMoviesAsync(page: Int) = tmdbApi.getPopularMoviesAsync(page)
 
     companion object {
         const val TIMEOUT = 6000L

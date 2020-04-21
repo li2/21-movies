@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="item"
+            type="me.li2.movies.ui.home.MovieItemUI" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        app:cardElevation="8dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?selectableItemBackground">
+
+            <ImageView
+                android:id="@+id/iv_poster"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:src="@{item.posterUrl}"
+                android:transitionName="@{@string/transition_name_movie + item.id}"
+                app:centerCrop="@{true}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:placeHolder="@{@drawable/ic_film}"
+                tools:ignore="ContentDescription"
+                tools:scaleType="centerCrop"
+                app:layout_constraintDimensionRatio="H,2:3"
+                tools:srcCompat="@tools:sample/backgrounds/scenic"
+                tools:targetApi="lollipop" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

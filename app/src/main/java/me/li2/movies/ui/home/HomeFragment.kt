@@ -8,7 +8,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.BehaviorSubject
-import me.li2.android.common.arch.Resource.Status.*
+import me.li2.android.common.arch.Resource
+import me.li2.android.common.arch.Resource.Status.ERROR
+import me.li2.android.common.arch.Resource.Status.LOADING
 import me.li2.android.common.arch.observeOnView
 import me.li2.android.common.number.orZero
 import me.li2.android.view.popup.toast
@@ -17,7 +19,6 @@ import me.li2.android.view.system.showStatusBar
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.HomeFragmentBinding
-import me.li2.movies.ui.home.top.TopItemUI
 import me.li2.movies.util.*
 import timber.log.Timber.e
 import java.util.concurrent.TimeUnit
@@ -58,31 +59,66 @@ class HomeFragment : BaseFragment(), ViewPager2AutoScrollHelper {
         disableViewPagerAutoScrollOnTouch()
 
         binding.swipeRefreshLayout.setOnRefreshListener {
-            viewModel.getTopItems(true)
+            viewModel.getHomeData(true)
         }
     }
 
     override fun initViewModel() = with(viewModel) {
-        getTopItems()
+        getHomeData()
     }
 
     override fun renderUI() = with(viewModel) {
-        observeOnView(topItemsLiveData) {
-            when (it.status) {
-                LOADING -> bindTopItems(it.data, true)
-                SUCCESS -> bindTopItems(it.data, false)
-                ERROR -> {
-                    binding.isLoading = false
-                    toast(it.exception.toString())
-                    e(it.exception, "failed to get movies")
-                }
-            }
+        observeOnView(topMoviesLiveData) {
+            bindTopItems(it)
+        }
+
+        observeOnView(nowPlayingMoviesLiveData) {
+            bindNowPlayingItems(it)
+        }
+
+        observeOnView(upcomingMoviesLiveData) {
+            bindUpcomingItems(it)
+        }
+
+        observeOnView(popularMoviesLiveData) {
+            bindPopularItems(it)
         }
     }
 
-    private fun bindTopItems(topItems: List<TopItemUI>?, isLoading: Boolean) {
-        binding.topItems = topItems
-        binding.isLoading = isLoading
-        binding.topItemsPagerIndicator.count = topItems?.size.orZero()
+    private fun bindTopItems(resource: Resource<List<MovieItemUI>>) {
+        binding.topItems = resource.data
+        binding.isLoading = resource.status == LOADING
+        binding.topItemsPagerIndicator.count = resource.data?.size.orZero()
+        if (resource.status == ERROR) {
+            toast(resource.exception.toString())
+            e(resource.exception, "failed to get top movies")
+        }
+    }
+
+    private fun bindNowPlayingItems(resource: Resource<List<MovieItemUI>>) {
+        binding.nowPlayingItems = resource.data
+        binding.isLoading = resource.status == LOADING
+        if (resource.status == ERROR) {
+            toast(resource.exception.toString())
+            e(resource.exception, "failed to get upcoming movies")
+        }
+    }
+
+    private fun bindUpcomingItems(resource: Resource<List<MovieItemUI>>) {
+        binding.upcomingItems = resource.data
+        binding.isLoading = resource.status == LOADING
+        if (resource.status == ERROR) {
+            toast(resource.exception.toString())
+            e(resource.exception, "failed to get upcoming movies")
+        }
+    }
+
+    private fun bindPopularItems(resource: Resource<List<MovieItemUI>>) {
+        binding.popularItems = resource.data
+        binding.isLoading = resource.status == LOADING
+        if (resource.status == ERROR) {
+            toast(resource.exception.toString())
+            e(resource.exception, "failed to get popular movies")
+        }
     }
 }

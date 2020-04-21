@@ -7,7 +7,7 @@
 
         <import type="java.util.List" />
 
-        <import type="me.li2.movies.ui.home.top.TopItemUI" />
+        <import type="me.li2.movies.ui.home.MovieItemUI" />
 
         <variable
             name="isLoading"
@@ -15,7 +15,19 @@
 
         <variable
             name="topItems"
-            type="List&lt;TopItemUI&gt;" />
+            type="List&lt;MovieItemUI&gt;" />
+
+        <variable
+            name="nowPlayingItems"
+            type="List&lt;MovieItemUI&gt;" />
+
+        <variable
+            name="upcomingItems"
+            type="List&lt;MovieItemUI&gt;" />
+
+        <variable
+            name="popularItems"
+            type="List&lt;MovieItemUI&gt;" />
     </data>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -98,14 +110,94 @@
                 </com.google.android.material.appbar.AppBarLayout>
 
                 <TextView
+                    android:id="@+id/nowPlayingTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:text="a\nb\nc\nd\ne\nf\ng\nh\ni\nj\nk\nl\nm\nn\n\n\nk\nk\nk\nk"
-                    android:textAppearance="?textAppearanceBody2"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="Now Playing"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    android:textColor="?attr/colorOnPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/topItemsViewPager" />
+                    app:layout_constraintTop_toBottomOf="@id/topItemsViewPager"
+                    tools:ignore="HardcodedText" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/nowPlayingMoviesRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:clipToPadding="false"
+                    app:centreItems="@{nowPlayingItems}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/nowPlayingTextView"
+                    tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/home_centre_item_view"
+                    tools:orientation="horizontal"
+                    tools:spanCount="1" />
+
+                <TextView
+                    android:id="@+id/upcomingTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="Upcoming"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    android:textColor="?attr/colorOnPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/nowPlayingMoviesRecyclerView"
+                    tools:ignore="HardcodedText" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/upcomingMoviesRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:clipToPadding="false"
+                    app:centreItems="@{upcomingItems}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/upcomingTextView"
+                    tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/home_centre_item_view"
+                    tools:orientation="horizontal"
+                    tools:spanCount="1" />
+
+                <TextView
+                    android:id="@+id/popularTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="Popular"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    android:textColor="?attr/colorOnPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/upcomingMoviesRecyclerView"
+                    tools:ignore="HardcodedText" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/popularMoviesRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:clipToPadding="false"
+                    app:centreItems="@{popularItems}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/popularTextView"
+                    tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/home_centre_item_view"
+                    tools:orientation="horizontal"
+                    tools:spanCount="1" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

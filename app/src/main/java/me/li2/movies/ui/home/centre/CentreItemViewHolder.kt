@@ -1,4 +1,4 @@
-package me.li2.movies.ui.home.top
+package me.li2.movies.ui.home.centre
 
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -7,12 +7,12 @@ import io.reactivex.subjects.PublishSubject
 import me.li2.android.common.rx.throttleFirstShort
 import me.li2.movies.R
 import me.li2.movies.base.BaseViewHolder
-import me.li2.movies.databinding.HomeTopItemViewBinding
+import me.li2.movies.databinding.HomeCentreItemViewBinding
 import me.li2.movies.ui.home.MovieItemUI
 
-class TopItemViewHolder(binding: HomeTopItemViewBinding,
-                        private val itemClicks: PublishSubject<Pair<ImageView, MovieItemUI>>)
-    : BaseViewHolder<MovieItemUI, HomeTopItemViewBinding>(binding) {
+class CentreItemViewHolder(binding: HomeCentreItemViewBinding,
+                           private val itemClicks: PublishSubject<Pair<ImageView, MovieItemUI>>)
+    : BaseViewHolder<MovieItemUI, HomeCentreItemViewBinding>(binding) {
 
     override fun bind(item: MovieItemUI, position: Int) {
         binding.item = item
@@ -25,8 +25,8 @@ class TopItemViewHolder(binding: HomeTopItemViewBinding,
 
     companion object {
         fun newInstance(parent: ViewGroup,
-                        itemClicks: PublishSubject<Pair<ImageView, MovieItemUI>>): TopItemViewHolder {
-            return TopItemViewHolder(newBindingInstance(parent, R.layout.home_top_item_view) as HomeTopItemViewBinding, itemClicks)
+                        itemClicks: PublishSubject<Pair<ImageView, MovieItemUI>>): CentreItemViewHolder {
+            return CentreItemViewHolder(newBindingInstance(parent, R.layout.home_centre_item_view) as HomeCentreItemViewBinding, itemClicks)
         }
     }
 }

@@ -2,7 +2,7 @@ package me.li2.movies.data.model
 
 import android.net.Uri
 import me.li2.movies.data.remote.TmdbApi
-import me.li2.movies.ui.home.top.TopItemUI
+import me.li2.movies.ui.home.MovieItemUI
 import me.li2.movies.ui.movies.MovieItem
 import timber.log.Timber.e
 
@@ -25,7 +25,7 @@ object MapperUI {
             trailerUri = urlToUri(api.trailerUrl))
 
 
-    fun toTopItemUI(api: TmdbMovieAPI) = TopItemUI(
+    fun toMovieItemUI(api: TmdbMovieAPI) = MovieItemUI(
             id = api.id,
             title = api.title,
             releaseDate = api.releaseDate,

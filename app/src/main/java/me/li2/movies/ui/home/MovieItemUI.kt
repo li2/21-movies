@@ -1,10 +1,10 @@
-package me.li2.movies.ui.home.top
+package me.li2.movies.ui.home
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class TopItemUI(
+data class MovieItemUI(
         val id: Int,
         val title: String,
         val releaseDate: String,

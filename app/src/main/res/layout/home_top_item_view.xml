@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="me.li2.movies.ui.home.top.TopItemUI" />
+            type="me.li2.movies.ui.home.MovieItemUI" />
     </data>
 
     <androidx.cardview.widget.CardView
