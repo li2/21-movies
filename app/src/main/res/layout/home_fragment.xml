@@ -98,11 +98,9 @@
                         <ImageView
                             android:id="@+id/toolbar_title"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:paddingTop="12dp"
-                            android:paddingBottom="12dp"
+                            android:layout_height="22dp"
                             android:scaleType="fitStart"
-                            android:src="@drawable/ic_logo_actionbar"
+                            android:src="?attr/icLogo"
                             tools:ignore="ContentDescription" />
 
                     </androidx.appcompat.widget.Toolbar>

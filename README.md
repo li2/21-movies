@@ -1,4 +1,4 @@
-# ABC Cinemas
+# 21 CINEMAS
 
 This App is build on **Android Architecture Components (MVVM)** in **Kotlin** with following features:
 
