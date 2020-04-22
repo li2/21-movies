@@ -86,14 +86,14 @@ android {
     productFlavors {
         development {
             dimension "environment"
-            resValue "string", "app_name", "21 Cinemas Dev"
+            resValue "string", "app_name", "21 Cinemas"
             applicationIdSuffix ".dev"
         }
 
         uat {
             dimension "environment"
             applicationIdSuffix ".uat"
-            resValue "string", "app_name", "21 Cinemas UAT"
+            resValue "string", "app_name", "21 Cinemas"
             applicationIdSuffix ".uat"
         }
 

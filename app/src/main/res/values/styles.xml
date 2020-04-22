@@ -16,7 +16,10 @@
         <!--Fixed issue that materialdatetimepicker buttons have the accent color as a background
              Fixed MaterialButton wired shadow when set semi-transparent background-->
         <item name="viewInflaterClass">androidx.appcompat.app.AppCompatViewInflater</item>
+    </style>
 
+    <style name="SplashTheme" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
 
     <style name="MainTabText" parent="TextAppearance.Design.Tab">
