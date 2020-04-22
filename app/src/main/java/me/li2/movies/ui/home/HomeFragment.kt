@@ -100,7 +100,7 @@ class HomeFragment : BaseFragment(), ViewPager2AutoScrollHelper {
         binding.isLoading = resource.status == LOADING
         if (resource.status == ERROR) {
             toast(resource.exception.toString())
-            e(resource.exception, "failed to get upcoming movies")
+            e(resource.exception, "failed to get now playing movies")
         }
     }
 
