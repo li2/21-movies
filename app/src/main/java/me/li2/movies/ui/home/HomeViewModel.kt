@@ -11,7 +11,7 @@ import me.li2.android.common.arch.postLoading
 import me.li2.android.common.arch.postSuccess
 import me.li2.movies.base.BaseViewModel
 import me.li2.movies.data.model.MapperUI
-import me.li2.movies.data.model.TmdbMoviesListAPI
+import me.li2.movies.data.model.TmdbMovieListAPI
 
 class HomeViewModel : BaseViewModel() {
 
@@ -29,7 +29,7 @@ class HomeViewModel : BaseViewModel() {
 
     private fun getMovies(mutableLiveData: MutableLiveData<Resource<List<MovieItemUI>>>,
                           forceRefresh: Boolean = false,
-                          api: suspend () -> TmdbMoviesListAPI) {
+                          api: suspend () -> TmdbMovieListAPI) {
         if (!forceRefresh) {
             mutableLiveData.value?.data?.let { items ->
                 mutableLiveData.postSuccess(items)

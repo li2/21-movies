@@ -6,7 +6,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
-class RemoteDataSource : KodeinAware {
+class TmdbDataSource : KodeinAware {
 
     override val kodein by kodein(App.context)
     private val abcApi: AbcApi by instance(arg = TIMEOUT)
@@ -21,6 +21,12 @@ class RemoteDataSource : KodeinAware {
     fun getUpcomingMoviesAsync(page: Int) = tmdbApi.getUpcomingMoviesAsync(page)
 
     fun getPopularMoviesAsync(page: Int) = tmdbApi.getPopularMoviesAsync(page)
+
+    fun getMovieDetailAsync(movieId: Int) = tmdbApi.getMovieDetailAsync(movieId)
+
+    fun getMovieVideosAsync(movieId: Int) = tmdbApi.getMovieVideosAsync(movieId)
+
+    fun getMovieReviewsAsync(movieId: Int, page: Int) = tmdbApi.getMovieReviewsAsync(movieId, page)
 
     companion object {
         const val TIMEOUT = 6000L
