@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="movieItem"
+            type="me.li2.movies.data.model.MovieItemUI" />
+
+        <variable
+            name="movieDetail"
+            type="me.li2.movies.data.model.MovieDetailUI" />
+
+        <variable
+            name="youtubeUrl"
+            type="String" />
+
+        <variable
+            name="isOverviewExpanded"
+            type="Boolean" />
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="256dp"
+            app:elevation="0dp">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/collapsingToolbarLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?android:attr/colorBackground"
+                app:contentScrim="?android:attr/colorBackground"
+                app:expandedTitleGravity="start|center_vertical"
+                app:expandedTitleMarginStart="16dp"
+                app:expandedTitleTextAppearance="?attr/textAppearanceHeadline5"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+                app:title="@{movieItem.title}"
+                app:titleEnabled="true"
+                tools:title="Movie Title">
+
+                <ImageView
+                    android:id="@+id/backdropImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@{movieItem.backdropUrl}"
+                    tools:ignore="ContentDescription"
+                    tools:src="@tools:sample/backgrounds/scenic[9]" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gradient_transparent_background" />
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    style="@style/ToolbarStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_marginTop="24dp"
+                    android:background="@android:color/transparent"
+                    app:layout_collapseMode="pin"
+                    tools:targetApi="lollipop" />
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            app:behavior_overlapTop="64dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/posterImageView"
+                    android:layout_width="0dp"
+                    android:layout_height="156dp"
+                    android:layout_marginStart="16dp"
+                    android:elevation="16dp"
+                    android:src="@{movieItem.posterUrl}"
+                    app:centerCrop="@{true}"
+                    app:layout_constraintDimensionRatio="H,3:2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription"
+                    tools:scaleType="centerCrop"
+                    tools:srcCompat="@tools:sample/backgrounds/scenic[9]"
+                    tools:targetApi="lollipop" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/youtubeButton"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:elevation="16dp"
+                    android:src="@drawable/ic_play_circle_outline"
+                    android:tint="?attr/colorError"
+                    android:visibility="@{youtubeUrl != null}"
+                    app:layout_constraintBottom_toBottomOf="@id/posterImageView"
+                    app:layout_constraintEnd_toEndOf="@id/posterImageView"
+                    app:layout_constraintStart_toStartOf="@id/posterImageView"
+                    app:layout_constraintTop_toTopOf="@id/posterImageView" />
+
+                <TextView
+                    android:id="@+id/dateTimeTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@{movieItem.releaseDate + `  ` + movieDetail.runtime}"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/posterImageView"
+                    app:layout_constraintTop_toBottomOf="@id/divider"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="2020-01-01 1h 20m" />
+
+                <TextView
+                    android:id="@+id/genresTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:maxLines="2"
+                    android:text="@{movieDetail.genres}"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    app:layout_constraintEnd_toEndOf="@id/dateTimeTextView"
+                    app:layout_constraintStart_toStartOf="@id/dateTimeTextView"
+                    app:layout_constraintTop_toBottomOf="@id/dateTimeTextView"
+                    tools:targetApi="lollipop"
+                    tools:text="Comedy, Thriller, Drama" />
+
+                <TextView
+                    android:id="@+id/productionCountryTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:maxLines="2"
+                    android:text="@{movieDetail.productionCountry}"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    app:layout_constraintEnd_toEndOf="@id/dateTimeTextView"
+                    app:layout_constraintStart_toStartOf="@id/dateTimeTextView"
+                    app:layout_constraintTop_toBottomOf="@id/genresTextView"
+                    tools:targetApi="lollipop"
+                    tools:text="New Zealand" />
+
+                <TextView
+                    android:id="@+id/spokenLanguagesTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:maxLines="2"
+                    android:text="@{movieDetail.spokenLanguages}"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    app:layout_constraintEnd_toEndOf="@id/dateTimeTextView"
+                    app:layout_constraintStart_toStartOf="@id/dateTimeTextView"
+                    app:layout_constraintTop_toBottomOf="@id/productionCountryTextView"
+                    tools:targetApi="lollipop"
+                    tools:text="English, 中文, 한국어" />
+
+                <TextView
+                    android:id="@+id/movieOverviewLabelTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Storyline"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    app:layout_constraintStart_toStartOf="@id/posterImageView"
+                    app:layout_constraintTop_toBottomOf="@id/posterImageView"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/movieOverviewTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:ellipsize="end"
+                    android:maxLines="@{isOverviewExpanded ? 20 : 5}"
+                    android:text="@{movieItem.overview}"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    app:layout_constraintEnd_toEndOf="@id/dateTimeTextView"
+                    app:layout_constraintStart_toStartOf="@id/movieOverviewLabelTextView"
+                    app:layout_constraintTop_toBottomOf="@id/movieOverviewLabelTextView"
+                    tools:maxLines="4"
+                    tools:text="Life is a struggle for single father Chris Gardner (Will Smith). Evicted from their apartment, he and his young son (Jaden Christopher Syre Smith) find themselves alone with no place to go. Even though Chris eventually lands a job as an intern at a prestigious brokerage firm, the position pays no money. The pair must live in shelters and endure many hardships, but Chris refuses to give in to despair as he struggles to create a better life for himself and his son." />
+
+                <TextView
+                    android:id="@+id/movieOverviewExpandTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@{isOverviewExpanded ? `touch to collapse` : `touch to expand`}"
+                    android:textAppearance="?attr/textAppearanceCaption"
+                    app:layout_constraintBottom_toBottomOf="@id/movieOverviewLabelTextView"
+                    app:layout_constraintEnd_toEndOf="@id/movieOverviewTextView"
+                    app:layout_constraintStart_toEndOf="@id/movieOverviewLabelTextView"
+                    tools:text="touch to expand" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/rateLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:padding="8dp"
+                    android:background="?attr/colorBackgroundFloating"
+                    app:layout_constraintTop_toBottomOf="@id/movieOverviewTextView">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/voteAverageTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_star"
+                        android:drawablePadding="4dp"
+                        android:gravity="center_vertical"
+                        android:text="@{movieItem.voteAverage}"
+                        android:textAppearance="?attr/textAppearanceHeadline6"
+                        app:drawableTint="?attr/colorPrimary"
+                        app:layout_constraintEnd_toStartOf="@id/rateMovieButton"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="1.0"
+                        tools:text="4.5" />
+
+                    <TextView
+                        android:id="@+id/voteTotalTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:gravity="center"
+                        android:text="@string/movie_full_rate"
+                        android:textAppearance="?attr/textAppearanceSubtitle2"
+                        app:layout_constraintBottom_toBottomOf="@id/voteAverageTextView"
+                        app:layout_constraintStart_toEndOf="@id/voteAverageTextView"
+                        app:layout_constraintTop_toTopOf="@id/voteAverageTextView" />
+
+                    <TextView
+                        android:id="@+id/voteCountTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@{movieItem.voteCount}"
+                        android:textAppearance="?attr/textAppearanceBody2"
+                        app:layout_constraintEnd_toEndOf="@id/voteTotalTextView"
+                        app:layout_constraintStart_toStartOf="@id/voteAverageTextView"
+                        app:layout_constraintTop_toBottomOf="@id/voteAverageTextView"
+                        tools:text="763,302" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/rateMovieButton"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:text="@string/rate_movie"
+                        android:textColor="?android:attr/textColorPrimary"
+                        app:icon="@drawable/ic_star_outline"
+                        app:iconTint="?android:attr/textColorPrimary"
+                        app:layout_constraintBottom_toBottomOf="@id/voteAverageTextView"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/voteAverageTextView"
+                        app:layout_constraintTop_toTopOf="@id/voteAverageTextView" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="?attr/colorDivider"
+                    app:layout_constraintTop_toBottomOf="@id/rateLayout" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>

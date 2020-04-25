@@ -1,82 +1,79 @@
 package me.li2.movies.ui.moviedetail
 
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
-import com.google.android.exoplayer2.ui.PlayerView
 import com.jakewharton.rxbinding3.view.clicks
-import im.ene.toro.exoplayer.Playable
-import im.ene.toro.media.PlaybackInfo
+import io.reactivex.Observable
 import io.reactivex.rxkotlin.plusAssign
-import kotlinx.android.synthetic.main.fragment_movie_detail.*
+import me.li2.android.common.arch.observeOnView
+import me.li2.android.common.logic.orFalse
 import me.li2.android.common.rx.throttleFirstShort
-import me.li2.android.view.navigation.setToolbar
-import me.li2.android.view.popup.toast
-import me.li2.android.view.system.hideStatusBar
-import me.li2.android.view.system.showStatusBar
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
-import me.li2.movies.databinding.FragmentMovieDetailBinding
-import me.li2.movies.util.hide
+import me.li2.movies.databinding.MovieDetailFragmentBinding
 import me.li2.movies.util.ifSupportLollipop
-import me.li2.movies.util.isTablet
-import me.li2.movies.util.video.VideoPlayerAware
+import me.li2.movies.util.themedSnackbar
+import me.li2.movies.util.watchYoutubeVideo
 
-class MovieDetailFragment : BaseFragment(), VideoPlayerAware {
+class MovieDetailFragment : BaseFragment() {
 
-    private lateinit var binding: FragmentMovieDetailBinding
+    private lateinit var binding: MovieDetailFragmentBinding
+    private val viewModel by viewModels<MovieDetailViewModel>()
     private val args by navArgs<MovieDetailFragmentArgs>()
-
-    override val videoUri: Uri?
-        get() = args.movieItem?.trailerUri
-    override val videoPlayerView: PlayerView
-        get() = video_player
-    override val initialPlaybackInfo: PlaybackInfo = PlaybackInfo()
-    override var videoPlayerHelper: Playable? = null
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_detail, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.movie_detail_fragment, container, false)
         return binding.root
     }
 
     override fun initUi(view: View, savedInstanceState: Bundle?) {
-        viewLifecycleOwner.lifecycle.addObserver(this)
-
-        ifSupportLollipop {
-            sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
-            ViewCompat.setTransitionName(video_player, getString(R.string.transition_name_movie) + args.movieItem?.id)
-        }
-
-        if (isTablet()) {
-            toolbar.hide()
-            binding.isTablet = true
-        } else {
-            activity?.setToolbar(toolbar)
-            activity?.hideStatusBar()
-            binding.isTablet = false
-        }
-
         binding.movieItem = args.movieItem
 
-        compositeDisposable += btn_rate_movie.clicks().throttleFirstShort().subscribe {
-            toast("todo: rate movie clicks")
+        ifSupportLollipop {
+            sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.explode)
+            ViewCompat.setTransitionName(binding.posterImageView, getString(R.string.transition_name_movie) + args.movieItem.id)
+        }
+
+        compositeDisposable += Observable.merge(binding.movieOverviewTextView.clicks().throttleFirstShort(),
+                binding.movieOverviewExpandTextView.clicks().throttleFirstShort())
+                .subscribe {
+                    binding.isOverviewExpanded = !binding.isOverviewExpanded.orFalse()
+                }
+
+        compositeDisposable += binding.youtubeButton.clicks().throttleFirstShort().subscribe {
+            binding.youtubeUrl?.let {
+                requireContext().watchYoutubeVideo(it)
+            }
+        }
+
+        compositeDisposable += binding.rateMovieButton.clicks().throttleFirstShort().subscribe {
+            themedSnackbar("todo: rate movie clicks")
         }
     }
 
-    override fun onDestroyView() {
-        activity?.showStatusBar()
-        super.onDestroyView()
+    override fun initViewModel() = with(viewModel) {
+        val movieId = args.movieItem.id
+        getMovieDetail(movieId)
+        getMovieReviews(movieId)
+        getYouTubeUrl(movieId)
     }
 
-    override fun onVideoLoading(isLoading: Boolean) {
-        binding.buffering = isLoading
+    override fun renderUI() = with(viewModel) {
+        observeOnView(movieDetailLiveData) {
+            binding.movieDetail = it.data
+        }
+
+        observeOnView(youtubeUrlLiveData) {
+            binding.youtubeUrl = it.data
+        }
     }
 }

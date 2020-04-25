@@ -8,6 +8,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
 import me.li2.android.view.navigation.setToolbar
+import me.li2.android.view.system.hideStatusBar
 import me.li2.movies.base.BaseActivity
 
 class MainActivity : BaseActivity(), LifecycleOwner, NavController.OnDestinationChangedListener {
@@ -19,6 +20,7 @@ class MainActivity : BaseActivity(), LifecycleOwner, NavController.OnDestination
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setToolbar(toolbar)
+        hideStatusBar()
         initNavigation()
     }
 

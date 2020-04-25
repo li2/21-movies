@@ -11,6 +11,7 @@ import me.li2.android.common.arch.postLoading
 import me.li2.android.common.arch.postSuccess
 import me.li2.movies.base.BaseViewModel
 import me.li2.movies.data.model.MapperUI
+import me.li2.movies.data.model.MovieItemUI
 import me.li2.movies.data.model.TmdbMovieListAPI
 
 class HomeViewModel : BaseViewModel() {
@@ -39,7 +40,10 @@ class HomeViewModel : BaseViewModel() {
         mutableLiveData.postLoading()
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val movies = api().results.take(10).map { MapperUI.toMovieItemUI(it) }
+                val movies = api().results.take(13).takeLast(10)
+                        .map {
+                            MapperUI.toMovieItemUI(it)
+                        }
                 mutableLiveData.postSuccess(movies)
             } catch (exception: Exception) {
                 mutableLiveData.postError(exception)
@@ -52,6 +56,7 @@ class HomeViewModel : BaseViewModel() {
             repository.getTopMovies(1)
         }
 
+/* todo weiyi uncomment
         getMovies(nowPlayingMoviesMutableLiveData, forceRefresh) {
             repository.getNowPlayingMoviesAsync(1)
         }
@@ -63,5 +68,6 @@ class HomeViewModel : BaseViewModel() {
         getMovies(popularMoviesMutableLiveData, forceRefresh) {
             repository.getPopularMoviesAsync(1)
         }
+*/
     }
 }

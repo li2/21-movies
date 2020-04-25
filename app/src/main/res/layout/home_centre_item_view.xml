@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="me.li2.movies.ui.home.MovieItemUI" />
+            type="me.li2.movies.data.model.MovieItemUI" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -16,7 +16,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="?selectableItemBackground">
 
             <ImageView

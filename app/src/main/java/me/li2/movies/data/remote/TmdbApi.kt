@@ -26,10 +26,10 @@ interface TmdbApi {
     @GET("movie/{movieId}")
     fun getMovieDetailAsync(@Path("movieId") movieId: Int): Deferred<TmdbMovieDetailAPI>
 
-    @GET("/movie/{movie_id}/videos")
+    @GET("movie/{movieId}/videos")
     fun getMovieVideosAsync(@Path("movieId") movieId: Int): Deferred<TmdbMovieVideoListAPI>
 
-    @GET("/movie/{movie_id}/reviews")
+    @GET("movie/{movieId}/reviews")
     fun getMovieReviewsAsync(@Path("movieId") movieId: Int,
                              @Query("page") page: Int): Deferred<TmdbMovieReviewListAPI>
 
@@ -43,6 +43,10 @@ interface TmdbApi {
 
         fun youtubeTrailerUrl(key: String?): String? {
             return if (!key.isNullOrEmpty()) "https://www.youtube.com/watch?v=$key" else null
+        }
+
+        fun imdbUrl(imdbId: String?): String? {
+            return if (!imdbId.isNullOrEmpty()) "https://www.imdb.com/title/$imdbId" else null
         }
     }
 }

@@ -1,9 +1,9 @@
 package me.li2.movies.data.model
 
 import android.net.Uri
+import me.li2.android.common.number.NumberFormatUtils.formatNumber
 import me.li2.android.common.number.orZero
 import me.li2.movies.data.remote.TmdbApi
-import me.li2.movies.ui.home.MovieItemUI
 import me.li2.movies.ui.movies.MovieItem
 import timber.log.Timber.e
 
@@ -31,9 +31,21 @@ object MapperUI {
             title = api.title,
             releaseDate = api.releaseDate,
             posterUrl = TmdbApi.imageUrl(api.posterPath),
-            voteAverage = api.voteAverage,
-            voteCount = api.voteCount,
+            backdropUrl = TmdbApi.imageUrl(api.backdropPath),
+            voteAverage = api.voteAverage.toString(),
+            voteCount = formatNumber(api.voteCount.toDouble(), "###,###", ','),
             overview = api.overview)
+
+    private fun toDisplayRuntime(runtime: Int?): String {
+        val hours = runtime.orZero() / 60
+        val minutes = runtime.orZero() % 60
+        return when {
+            hours > 0 && minutes > 0 -> "${hours}h ${minutes}m"
+            hours > 0 && minutes == 0 -> "${hours}h"
+            hours == 0 && minutes > 0 -> "${minutes}m"
+            else -> null
+        }.orEmpty()
+    }
 
     fun toMovieDetailUI(api: TmdbMovieDetailAPI) = MovieDetailUI(
             id = api.id,
@@ -41,9 +53,12 @@ object MapperUI {
             overview = api.overview.orEmpty(),
             tagline = api.tagline.orEmpty(),
             releaseDate = api.releaseDate,
-            runtime = api.runtime.orZero(),
+            runtime = toDisplayRuntime(api.runtime),
+            genres = api.genres.joinToString(separator = ", ") { it.name },
+            productionCountry = api.productionCountries.firstOrNull()?.name.orEmpty(),
             originalLanguage = api.originalLanguage,
-            spokenLanguages = api.spokenLanguages.map { it.name },
+            spokenLanguages = api.spokenLanguages.joinToString(separator = ", ") { it.name },
+            imdbUrl = TmdbApi.imdbUrl(api.imdbId),
             posterUrl = TmdbApi.imageUrl(api.posterPath),
             backdropUrl = TmdbApi.imageUrl(api.backdropPath),
             popularity = api.popularity,

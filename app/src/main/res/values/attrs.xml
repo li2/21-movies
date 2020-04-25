@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--Colors-->
-    <attr name="colorUnselected" format="reference|color" />
     <attr name="colorTransparent" format="reference|color" />
+    <attr name="colorUnselected" format="reference|color" />
+    <attr name="colorDivider" format="reference|color" />
 
     <!--Drawables-->
     <attr name="icLogo" format="reference" />
-
 </resources>

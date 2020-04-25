@@ -8,29 +8,27 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="me.li2.movies.ui.home.HomeFragment"
-        tools:layout="@layout/home_fragment"
-        android:label=" " />
-
-    <fragment
-        android:id="@+id/mainFragment"
-        android:name="me.li2.movies.ui.movies.MainFragment"
-        android:label="@string/app_name"
-        tools:layout="@layout/fragment_main">
+        android:label=" "
+        tools:layout="@layout/home_fragment">
         <action
             android:id="@+id/showMovieDetail"
             app:destination="@id/movieDetailFragment" />
     </fragment>
 
     <fragment
+        android:id="@+id/mainFragment"
+        android:name="me.li2.movies.ui.movies.MainFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_main" />
+
+    <fragment
         android:id="@+id/movieDetailFragment"
         android:name="me.li2.movies.ui.moviedetail.MovieDetailFragment"
         android:label=" "
-        tools:layout="@layout/fragment_movie_detail">
+        tools:layout="@layout/movie_detail_fragment">
         <argument
             android:name="movieItem"
-            android:defaultValue="@null"
-            app:argType="me.li2.movies.ui.movies.MovieItem"
-            app:nullable="true" />
+            app:argType="me.li2.movies.data.model.MovieItemUI" />
     </fragment>
 
 </navigation>

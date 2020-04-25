@@ -1,4 +1,4 @@
-package me.li2.movies.ui.home
+package me.li2.movies.data.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
@@ -9,6 +9,7 @@ data class MovieItemUI(
         val title: String,
         val releaseDate: String,
         val posterUrl: String?,
-        val voteAverage: Double,
-        val voteCount: Int,
+        val backdropUrl: String?,
+        val voteAverage: String,
+        val voteCount: String,
         val overview: String): Parcelable

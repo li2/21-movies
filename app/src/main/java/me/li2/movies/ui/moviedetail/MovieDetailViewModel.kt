@@ -40,7 +40,7 @@ class MovieDetailViewModel : BaseViewModel() {
         }
     }
 
-    fun getMovieReviews(movieId: Int, page: Int) {
+    fun getMovieReviews(movieId: Int, page: Int = 1) {
         movieReviewsMutableLiveData.postLoading()
         io({
             movieReviewsMutableLiveData.postError(it)

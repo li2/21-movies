@@ -7,7 +7,7 @@
 
         <import type="java.util.List" />
 
-        <import type="me.li2.movies.ui.home.MovieItemUI" />
+        <import type="me.li2.movies.data.model.MovieItemUI" />
 
         <variable
             name="isLoading"
@@ -125,7 +125,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/nowPlayingMoviesRecyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="192dp"
                     android:layout_marginTop="8dp"
                     android:clipToPadding="false"
                     app:centreItems="@{nowPlayingItems}"
@@ -155,7 +155,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/upcomingMoviesRecyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="192dp"
                     android:layout_marginTop="8dp"
                     android:clipToPadding="false"
                     app:centreItems="@{upcomingItems}"
@@ -185,7 +185,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/popularMoviesRecyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="192dp"
                     android:layout_marginTop="8dp"
                     android:clipToPadding="false"
                     app:centreItems="@{popularItems}"

@@ -4,10 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="item"
-            type="me.li2.movies.ui.home.MovieItemUI" />
+            type="me.li2.movies.data.model.MovieItemUI" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -63,13 +62,15 @@
                 app:layout_constraintTop_toTopOf="@id/guideline"
                 tools:text="Movie Name" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_rate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:drawableStart="@drawable/ic_star"
-                android:drawablePadding="4dp"
+                android:gravity="center"
+                app:drawableTint="?attr/colorPrimary"
+                android:drawablePadding="8dp"
                 android:text="@{`` + item.voteAverage + ` · ` + item.releaseDate}"
                 android:textAppearance="?attr/textAppearanceBody2"
                 android:textColor="?android:attr/textColorPrimary"

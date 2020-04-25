@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import io.reactivex.BackpressureStrategy
 import io.reactivex.subjects.PublishSubject
-import me.li2.movies.ui.home.MovieItemUI
+import me.li2.movies.data.model.MovieItemUI
 
 class CentreItemsAdapter : ListAdapter<MovieItemUI, CentreItemViewHolder>(DIFF_CALLBACK) {
 

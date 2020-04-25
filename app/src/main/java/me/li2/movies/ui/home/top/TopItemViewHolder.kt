@@ -8,7 +8,7 @@ import me.li2.android.common.rx.throttleFirstShort
 import me.li2.movies.R
 import me.li2.movies.base.BaseViewHolder
 import me.li2.movies.databinding.HomeTopItemViewBinding
-import me.li2.movies.ui.home.MovieItemUI
+import me.li2.movies.data.model.MovieItemUI
 
 class TopItemViewHolder(binding: HomeTopItemViewBinding,
                         private val itemClicks: PublishSubject<Pair<ImageView, MovieItemUI>>)

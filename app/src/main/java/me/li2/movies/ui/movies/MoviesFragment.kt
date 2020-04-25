@@ -9,7 +9,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import io.reactivex.rxkotlin.plusAssign
-import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_movies.*
 import me.li2.android.common.arch.Resource.Status.*
 import me.li2.android.common.arch.observeOnView
@@ -20,7 +19,6 @@ import me.li2.movies.databinding.FragmentMoviesBinding
 import me.li2.movies.ui.movies.MoviesType.COMING_SOON
 import me.li2.movies.ui.movies.MoviesType.NOT_SHOWING
 import me.li2.movies.util.isTablet
-import me.li2.movies.util.navController
 import timber.log.Timber.e
 
 class MoviesFragment : BaseFragment() {
@@ -45,14 +43,14 @@ class MoviesFragment : BaseFragment() {
 
     override fun initUi(view: View, savedInstanceState: Bundle?) {
         binding.executePendingBindings()
-
+        // todo weiyi delete remove this class
         moviesAdapter?.run {
             compositeDisposable += movieClicks.subscribe { (imageView, movieItem) ->
                 val extras = FragmentNavigatorExtras(imageView to getString(R.string.transition_name_movie) + movieItem.id)
                 if (this@MoviesFragment.isTablet()) {
-                    nav_host_land?.navController()?.navigate(R.id.movieDetailFragment, bundleOf("movieItem" to movieItem), null, extras)
+//                    nav_host_land?.navController()?.navigate(R.id.movieDetailFragment, bundleOf("movieItem" to movieItem), null, extras)
                 } else {
-                    navController().navigate(MainFragmentDirections.showMovieDetail(movieItem), extras)
+//                    navController().navigate(MainFragmentDirections.showMovieDetail(movieItem), extras)
                 }
             }
         }

@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.HORIZONTAL
 import androidx.viewpager2.widget.ViewPager2
 import me.li2.android.view.list.LinearSpacingDecoration
+import me.li2.movies.data.model.MovieItemUI
 import me.li2.movies.ui.home.centre.CentreItemsAdapter
 import me.li2.movies.ui.home.top.TopItemsAdapter
 import me.li2.movies.util.dpToPx
