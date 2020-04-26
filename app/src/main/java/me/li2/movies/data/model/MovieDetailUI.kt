@@ -11,7 +11,7 @@ data class MovieDetailUI(
         val tagline: String,
         val releaseDate: String,
         val runtime: String,
-        val genres: String,
+        val genres: List<GenreUI>,
         val productionCountry: String,
         val originalLanguage: String,
         val spokenLanguages: String,
@@ -21,4 +21,9 @@ data class MovieDetailUI(
         val popularity: Double,
         val voteAverage: Double,
         val voteCount: Int
-) : Parcelable
+) : Parcelable {
+    fun getDisplayGenres() = genres.joinToString(separator = ", ") { it.name }
+}
+
+@Parcelize
+data class GenreUI(val id: Int, val name: String) : Parcelable

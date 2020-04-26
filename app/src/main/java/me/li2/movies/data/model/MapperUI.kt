@@ -47,6 +47,8 @@ object MapperUI {
         }.orEmpty()
     }
 
+    private fun toGenreUI(api: Genre) = GenreUI(api.id, api.name)
+
     fun toMovieDetailUI(api: TmdbMovieDetailAPI) = MovieDetailUI(
             id = api.id,
             title = api.title,
@@ -54,7 +56,7 @@ object MapperUI {
             tagline = api.tagline.orEmpty(),
             releaseDate = api.releaseDate,
             runtime = toDisplayRuntime(api.runtime),
-            genres = api.genres.joinToString(separator = ", ") { it.name },
+            genres = api.genres.map { toGenreUI(it) },
             productionCountry = api.productionCountries.firstOrNull()?.name.orEmpty(),
             originalLanguage = api.originalLanguage,
             spokenLanguages = api.spokenLanguages.joinToString(separator = ", ") { it.name },

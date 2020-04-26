@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.chip.Chip xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.MaterialComponents.Chip.Action"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textAppearance="?attr/textAppearanceBody2"
+    android:textColor="?android:attr/textColorPrimary"
+    app:chipBackgroundColor="?attr/colorBackgroundFloating"
+    app:closeIcon="@drawable/ic_navigate_next"
+    app:closeIconEnabled="true"
+    app:closeIconTint="?android:attr/textColorPrimary"
+    tools:text="Drama" />

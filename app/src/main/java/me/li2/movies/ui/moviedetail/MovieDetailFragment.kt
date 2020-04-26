@@ -15,11 +15,11 @@ import io.reactivex.rxkotlin.plusAssign
 import me.li2.android.common.arch.observeOnView
 import me.li2.android.common.logic.orFalse
 import me.li2.android.common.rx.throttleFirstShort
+import me.li2.android.view.popup.toast
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.MovieDetailFragmentBinding
 import me.li2.movies.util.ifSupportLollipop
-import me.li2.movies.util.themedSnackbar
 import me.li2.movies.util.watchYoutubeVideo
 
 class MovieDetailFragment : BaseFragment() {
@@ -56,7 +56,11 @@ class MovieDetailFragment : BaseFragment() {
         }
 
         compositeDisposable += binding.rateMovieButton.clicks().throttleFirstShort().subscribe {
-            themedSnackbar("todo: rate movie clicks")
+            toast("todo: rate movie clicks")
+        }
+
+        compositeDisposable += binding.genresGroupView.genreClicks().subscribe { genre ->
+            toast("todo: genre ${genre.name} clicks")
         }
     }
 
