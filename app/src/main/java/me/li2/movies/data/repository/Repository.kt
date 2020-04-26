@@ -20,15 +20,17 @@ class Repository : KodeinAware {
 
     suspend fun getTopMovies(page: Int) = tmdbDataSource.getTopMoviesAsync(page).await()
 
-    suspend fun getNowPlayingMoviesAsync(page: Int) = tmdbDataSource.getNowPlayingMoviesAsync(page).await()
+    suspend fun getNowPlayingMovies(page: Int) = tmdbDataSource.getNowPlayingMoviesAsync(page).await()
 
-    suspend fun getUpcomingMoviesAsync(page: Int) = tmdbDataSource.getUpcomingMoviesAsync(page).await()
+    suspend fun getUpcomingMovies(page: Int) = tmdbDataSource.getUpcomingMoviesAsync(page).await()
 
-    suspend fun getPopularMoviesAsync(page: Int) = tmdbDataSource.getPopularMoviesAsync(page).await()
+    suspend fun getPopularMovies(page: Int) = tmdbDataSource.getPopularMoviesAsync(page).await()
 
-    suspend fun getMovieDetailAsync(movieId: Int) = tmdbDataSource.getMovieDetailAsync(movieId).await()
+    suspend fun getMovieDetail(movieId: Int) = tmdbDataSource.getMovieDetailAsync(movieId).await()
 
-    suspend fun getMovieVideosAsync(movieId: Int) = tmdbDataSource.getMovieVideosAsync(movieId).await()
+    suspend fun getMovieVideos(movieId: Int) = tmdbDataSource.getMovieVideosAsync(movieId).await()
 
-    suspend fun getMovieReviewsAsync(movieId: Int, page: Int) = tmdbDataSource.getMovieReviewsAsync(movieId, page).await()
+    suspend fun getMovieReviews(movieId: Int, page: Int) = tmdbDataSource.getMovieReviewsAsync(movieId, page).await()
+    
+    suspend fun getMovieRecommendations(movieId: Int, page: Int) = tmdbDataSource.getMovieRecommendationsAsync(movieId, page).await()
 }

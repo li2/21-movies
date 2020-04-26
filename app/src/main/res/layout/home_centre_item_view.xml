@@ -26,6 +26,7 @@
                 android:src="@{item.posterUrl}"
                 android:transitionName="@{@string/transition_name_movie + item.id}"
                 app:centerCrop="@{true}"
+                android:background="?attr/colorBackgroundFloating"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

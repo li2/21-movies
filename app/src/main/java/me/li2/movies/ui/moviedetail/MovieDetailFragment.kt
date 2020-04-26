@@ -38,6 +38,7 @@ class MovieDetailFragment : BaseFragment() {
     }
 
     override fun initUi(view: View, savedInstanceState: Bundle?) {
+        binding.executePendingBindings()
         binding.movieItem = args.movieItem
 
         ifSupportLollipop {
@@ -75,6 +76,7 @@ class MovieDetailFragment : BaseFragment() {
         getMovieDetail(movieId)
         getMovieReviews(movieId)
         getYouTubeUrl(movieId)
+        getMovieRecommendations(movieId)
     }
 
     override fun renderUI() = with(viewModel) {
@@ -91,6 +93,11 @@ class MovieDetailFragment : BaseFragment() {
 
         observeOnView(youtubeUrlLiveData) {
             binding.youtubeUrl = it.data
+            bindLoadingStatus(it)
+        }
+
+        observeOnView(recommendationsLiveData) {
+            binding.recommendations = it.data
             bindLoadingStatus(it)
         }
     }

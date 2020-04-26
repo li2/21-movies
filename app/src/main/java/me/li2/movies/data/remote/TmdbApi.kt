@@ -33,6 +33,10 @@ interface TmdbApi {
     fun getMovieReviewsAsync(@Path("movieId") movieId: Int,
                              @Query("page") page: Int): Deferred<TmdbMovieReviewListAPI>
 
+    @GET("movie/{movieId}/recommendations")
+    fun getMovieRecommendationsAsync(@Path("movieId") movieId: Int,
+                                     @Query("page") page: Int): Deferred<TmdbMovieListAPI>
+
     companion object {
         /**
          * @see <a href="https://developers.themoviedb.org/3/getting-started/images">Images</a>

@@ -28,6 +28,8 @@ class TmdbDataSource : KodeinAware {
 
     fun getMovieReviewsAsync(movieId: Int, page: Int) = tmdbApi.getMovieReviewsAsync(movieId, page)
 
+    fun getMovieRecommendationsAsync(movieId: Int, page: Int) = tmdbApi.getMovieRecommendationsAsync(movieId, page)
+
     companion object {
         const val TIMEOUT = 6000L
     }
