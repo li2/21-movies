@@ -6,17 +6,19 @@
         <item name="colorPrimaryDark">@color/background</item>
         <item name="colorAccent">@color/accent</item>
         <item name="colorTransparent">@android:color/transparent</item>
-        <item name="colorUnselected">@color/background_light</item>
+        <item name="colorUnselected">@color/background_floating</item>
         <item name="colorDivider">@color/divider</item>
         <item name="colorError">@color/error</item>
         <item name="android:windowBackground">@color/background</item>
         <item name="android:colorBackground">@color/background</item>
-        <item name="colorBackgroundFloating">@color/background_light</item>
+        <item name="colorBackgroundFloating">@color/background_floating</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorSecondary">@color/white_50</item>
         <item name="android:textColorLink">@color/primary</item>
+
         <!--Drawables-->
         <item name="icLogo">@drawable/ic_logo</item>
+        <item name="android:listDivider">@drawable/list_divider</item>
     </style>
 
     <style name="SplashTheme" parent="AppTheme">

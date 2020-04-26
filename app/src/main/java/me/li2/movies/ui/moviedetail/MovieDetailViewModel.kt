@@ -12,7 +12,7 @@ import me.li2.android.common.arch.postSuccess
 import me.li2.movies.base.BaseViewModel
 import me.li2.movies.data.model.MapperUI
 import me.li2.movies.data.model.MovieDetailUI
-import me.li2.movies.data.model.MovieReviewUI
+import me.li2.movies.data.model.MovieReviewListUI
 import me.li2.movies.util.io
 import me.li2.movies.util.ioWithLiveData
 
@@ -21,8 +21,8 @@ class MovieDetailViewModel : BaseViewModel() {
     private val movieDetailMutableLiveData: MutableLiveData<Resource<MovieDetailUI>> = MutableLiveData()
     internal val movieDetailLiveData: LiveData<Resource<MovieDetailUI>> = movieDetailMutableLiveData
 
-    private val movieReviewsMutableLiveData: MutableLiveData<Resource<List<MovieReviewUI>>> = MutableLiveData()
-    internal val movieReviewsLiveData: LiveData<Resource<List<MovieReviewUI>>> = movieReviewsMutableLiveData
+    private val movieReviewsMutableLiveData: MutableLiveData<Resource<MovieReviewListUI>> = MutableLiveData()
+    internal val movieReviewsLiveData: LiveData<Resource<MovieReviewListUI>> = movieReviewsMutableLiveData
 
     private val youtubeUrlMutableLiveData: MutableLiveData<Resource<String?>> = MutableLiveData()
     internal val youtubeUrlLiveData: LiveData<Resource<String?>> = youtubeUrlMutableLiveData

@@ -5,6 +5,7 @@
     style="@style/Widget.MaterialComponents.Chip.Action"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:elevation="4dp"
     android:textAppearance="?attr/textAppearanceBody2"
     android:textColor="?android:attr/textColorPrimary"
     app:chipBackgroundColor="?attr/colorBackgroundFloating"

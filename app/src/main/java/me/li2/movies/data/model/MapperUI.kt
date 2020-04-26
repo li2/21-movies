@@ -67,9 +67,13 @@ object MapperUI {
             voteAverage = api.voteAverage,
             voteCount = api.voteCount)
 
-    fun toMovieReviewsUI(api: TmdbMovieReviewListAPI) = api.results.map {
-        MovieReviewUI(author = it.author, content = it.content)
-    }
+    fun toMovieReviewsUI(api: TmdbMovieReviewListAPI) = MovieReviewListUI(
+            reviews = api.results.map {
+                MovieReviewUI(id = it.id, author = it.author, content = it.content)
+            },
+            page = api.page,
+            totalPages = api.totalPages,
+            totalResults = api.totalResults)
 
     fun toYoutubeUrl(api: TmdbMovieVideoListAPI): String? {
         val key = api.results.firstOrNull { it.site.equals("youtube", true) }?.key

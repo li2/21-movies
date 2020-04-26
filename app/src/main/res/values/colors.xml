@@ -7,8 +7,7 @@
     <color name="white">#FFFFFF</color>
     <color name="white_50">#80FFFFFF</color>
     <color name="error">#F44336</color>
-    <color name="background">#2e2e2e</color>
-    <color name="background_dark">#171616</color>
-    <color name="background_light">#525252</color>
-    <color name="divider">#80525252</color>
+    <color name="background">#4d4b48</color>
+    <color name="background_floating">#3f3d3c</color>
+    <color name="divider">#3f3d3c</color>
 </resources>

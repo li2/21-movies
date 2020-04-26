@@ -12,6 +12,7 @@ import androidx.transition.TransitionInflater
 import com.jakewharton.rxbinding3.view.clicks
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.plusAssign
+import me.li2.android.common.arch.Resource
 import me.li2.android.common.arch.observeOnView
 import me.li2.android.common.logic.orFalse
 import me.li2.android.common.rx.throttleFirstShort
@@ -21,6 +22,7 @@ import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.MovieDetailFragmentBinding
 import me.li2.movies.util.ifSupportLollipop
 import me.li2.movies.util.watchYoutubeVideo
+import timber.log.Timber.e
 
 class MovieDetailFragment : BaseFragment() {
 
@@ -62,6 +64,10 @@ class MovieDetailFragment : BaseFragment() {
         compositeDisposable += binding.genresGroupView.genreClicks().subscribe { genre ->
             toast("todo: genre ${genre.name} clicks")
         }
+
+        compositeDisposable += binding.reviewsCountTextView.clicks().throttleFirstShort().subscribe {
+            toast("todo: show all reviews")
+        }
     }
 
     override fun initViewModel() = with(viewModel) {
@@ -74,10 +80,29 @@ class MovieDetailFragment : BaseFragment() {
     override fun renderUI() = with(viewModel) {
         observeOnView(movieDetailLiveData) {
             binding.movieDetail = it.data
+            bindLoadingStatus(it)
+        }
+
+        observeOnView(movieReviewsLiveData) {
+            binding.reviews = it.data?.reviews?.take(MAXIMUM_REVIEWS)
+            binding.reviewsCount = it.data?.totalResults
+            bindLoadingStatus(it)
         }
 
         observeOnView(youtubeUrlLiveData) {
             binding.youtubeUrl = it.data
+            bindLoadingStatus(it)
         }
+    }
+
+    private fun bindLoadingStatus(resource: Resource<*>) {
+        if (resource.status == Resource.Status.ERROR) {
+            toast(resource.exception.toString())
+            e(resource.exception)
+        }
+    }
+
+    companion object {
+        const val MAXIMUM_REVIEWS = 4
     }
 }

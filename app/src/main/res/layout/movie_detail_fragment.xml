@@ -5,6 +5,12 @@
 
     <data>
 
+        <import type="java.util.List" />
+
+        <import type="me.li2.movies.data.model.MovieReviewUI" />
+
+        <import type="me.li2.movies.ui.moviedetail.MovieDetailFragment" />
+
         <variable
             name="movieItem"
             type="me.li2.movies.data.model.MovieItemUI" />
@@ -16,6 +22,14 @@
         <variable
             name="youtubeUrl"
             type="String" />
+
+        <variable
+            name="reviews"
+            type="List&lt;MovieReviewUI&gt;" />
+
+        <variable
+            name="reviewsCount"
+            type="Integer" />
 
         <variable
             name="isOverviewExpanded"
@@ -88,21 +102,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
+                <androidx.cardview.widget.CardView
                     android:id="@+id/posterImageView"
                     android:layout_width="0dp"
                     android:layout_height="156dp"
                     android:layout_marginStart="16dp"
-                    android:elevation="16dp"
-                    android:src="@{movieItem.posterUrl}"
-                    app:centerCrop="@{true}"
+                    app:cardCornerRadius="2dp"
+                    app:cardElevation="16dp"
                     app:layout_constraintDimensionRatio="H,3:2"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="ContentDescription"
-                    tools:scaleType="centerCrop"
-                    tools:srcCompat="@tools:sample/backgrounds/scenic[9]"
-                    tools:targetApi="lollipop" />
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@{movieItem.posterUrl}"
+                        app:centerCrop="@{true}"
+                        tools:ignore="ContentDescription"
+                        tools:scaleType="centerCrop"
+                        tools:srcCompat="@tools:sample/backgrounds/scenic[9]"
+                        tools:targetApi="lollipop" />
+
+                </androidx.cardview.widget.CardView>
 
                 <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/youtubeButton"
@@ -129,7 +150,6 @@
                     android:textAppearance="?attr/textAppearanceBody2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/posterImageView"
-                    app:layout_constraintTop_toBottomOf="@id/divider"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="2020-01-01 1h 20m" />
 
@@ -213,76 +233,84 @@
                     app:layout_constraintStart_toEndOf="@id/movieOverviewLabelTextView"
                     tools:text="touch to expand" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <androidx.cardview.widget.CardView
                     android:id="@+id/rateLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="32dp"
                     android:layout_marginEnd="16dp"
-                    android:background="?attr/colorBackgroundFloating"
-                    android:padding="8dp"
+                    android:backgroundTint="?attr/colorBackgroundFloating"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="4dp"
                     app:layout_constraintTop_toBottomOf="@id/movieOverviewTextView">
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/voteAverageTextView"
-                        android:layout_width="wrap_content"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/ic_star"
-                        android:drawablePadding="4dp"
-                        android:gravity="center_vertical"
-                        android:text="@{movieItem.voteAverage}"
-                        android:textAppearance="?attr/textAppearanceHeadline6"
-                        app:drawableTint="?attr/colorPrimary"
-                        app:layout_constraintEnd_toStartOf="@id/rateMovieButton"
-                        app:layout_constraintHorizontal_chainStyle="spread"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="1.0"
-                        tools:text="4.5" />
+                        android:padding="8dp">
 
-                    <TextView
-                        android:id="@+id/voteTotalTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:gravity="center"
-                        android:text="@string/movie_full_rate"
-                        android:textAppearance="?attr/textAppearanceSubtitle2"
-                        app:layout_constraintBottom_toBottomOf="@id/voteAverageTextView"
-                        app:layout_constraintStart_toEndOf="@id/voteAverageTextView"
-                        app:layout_constraintTop_toTopOf="@id/voteAverageTextView" />
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/voteAverageTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableStart="@drawable/ic_star"
+                            android:drawablePadding="4dp"
+                            android:gravity="center_vertical"
+                            android:text="@{movieItem.voteAverage}"
+                            android:textAppearance="?attr/textAppearanceHeadline6"
+                            app:drawableTint="?attr/colorPrimary"
+                            app:layout_constraintEnd_toStartOf="@id/rateMovieButton"
+                            app:layout_constraintHorizontal_chainStyle="spread"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="1.0"
+                            tools:text="4.5" />
 
-                    <TextView
-                        android:id="@+id/voteCountTextView"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="@{movieItem.voteCount}"
-                        android:textAppearance="?attr/textAppearanceBody2"
-                        app:layout_constraintEnd_toEndOf="@id/voteTotalTextView"
-                        app:layout_constraintStart_toStartOf="@id/voteAverageTextView"
-                        app:layout_constraintTop_toBottomOf="@id/voteAverageTextView"
-                        tools:text="763,302" />
+                        <TextView
+                            android:id="@+id/voteTotalTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:gravity="center"
+                            android:text="@string/movie_full_rate"
+                            android:textAppearance="?attr/textAppearanceSubtitle2"
+                            app:layout_constraintBottom_toBottomOf="@id/voteAverageTextView"
+                            app:layout_constraintStart_toEndOf="@id/voteAverageTextView"
+                            app:layout_constraintTop_toTopOf="@id/voteAverageTextView" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/rateMovieButton"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:insetTop="0dp"
-                        android:insetBottom="0dp"
-                        android:text="@string/rate_movie"
-                        android:textColor="?android:attr/textColorPrimary"
-                        app:icon="@drawable/ic_star_outline"
-                        app:iconTint="?android:attr/textColorPrimary"
-                        app:layout_constraintBottom_toBottomOf="@id/voteAverageTextView"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/voteAverageTextView"
-                        app:layout_constraintTop_toTopOf="@id/voteAverageTextView" />
+                        <TextView
+                            android:id="@+id/voteCountTextView"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@{movieItem.voteCount}"
+                            android:textAppearance="?attr/textAppearanceBody2"
+                            app:layout_constraintEnd_toEndOf="@id/voteTotalTextView"
+                            app:layout_constraintStart_toStartOf="@id/voteAverageTextView"
+                            app:layout_constraintTop_toBottomOf="@id/voteAverageTextView"
+                            tools:text="763,302" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/rateMovieButton"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            android:text="@string/rate_movie"
+                            android:textColor="?android:attr/textColorPrimary"
+                            app:icon="@drawable/ic_star_outline"
+                            app:iconTint="?android:attr/textColorPrimary"
+                            app:layout_constraintBottom_toBottomOf="@id/voteAverageTextView"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/voteAverageTextView"
+                            app:layout_constraintTop_toTopOf="@id/voteAverageTextView" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
 
                 <me.li2.movies.ui.widgets.GenresGroupView
                     android:id="@+id/genresGroupView"
@@ -299,13 +327,68 @@
                     tools:background="?attr/colorBackgroundFloating"
                     tools:layout_height="36dp" />
 
-                <View
-                    android:id="@+id/divider"
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="16dp"
-                    android:background="?attr/colorDivider"
-                    app:layout_constraintTop_toBottomOf="@id/genresGroupView" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="16dp"
+                    android:backgroundTint="?attr/colorBackgroundFloating"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="4dp"
+                    app:layout_constraintTop_toBottomOf="@id/genresGroupView">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/reviewsLabelTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            android:text="Reviews"
+                            android:textAppearance="?attr/textAppearanceHeadline6"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="HardcodedText" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/reviewsCountTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="16dp"
+                            android:drawableEnd="@drawable/ic_navigate_next"
+                            android:text="@{`All ` + reviewsCount + ` reviews`}"
+                            android:textAppearance="?attr/textAppearanceSubtitle1"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:visibility="@{reviewsCount != null &amp;&amp; reviewsCount > MovieDetailFragment.MAXIMUM_REVIEWS}"
+                            app:drawableTint="?android:attr/textColorSecondary"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/reviewsLabelTextView"
+                            tools:ignore="HardcodedText"
+                            tools:text="All 2,333 reviews" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/reviewsRecyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:clipToPadding="false"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/reviewsLabelTextView"
+                            app:reviews="@{reviews}"
+                            tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            tools:listitem="@layout/review_item_view"
+                            tools:orientation="horizontal"
+                            tools:spanCount="1" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
