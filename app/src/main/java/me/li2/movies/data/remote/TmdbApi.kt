@@ -41,8 +41,12 @@ interface TmdbApi {
         /**
          * @see <a href="https://developers.themoviedb.org/3/getting-started/images">Images</a>
          */
-        fun imageUrl(key: String?): String? {
+        fun imageW500Url(key: String?): String? {
             return if (!key.isNullOrEmpty()) "https://image.tmdb.org/t/p/w500/$key" else null
+        }
+
+        fun imageOriginalUrl(key: String?): String? {
+            return if (!key.isNullOrEmpty()) "https://image.tmdb.org/t/p/original/$key" else null
         }
 
         fun youtubeTrailerUrl(key: String?): String? {

@@ -30,8 +30,8 @@ object MapperUI {
             id = api.id,
             title = api.title,
             releaseDate = api.releaseDate,
-            posterUrl = TmdbApi.imageUrl(api.posterPath),
-            backdropUrl = TmdbApi.imageUrl(api.backdropPath),
+            posterUrl = TmdbApi.imageW500Url(api.posterPath),
+            backdropUrl = TmdbApi.imageOriginalUrl(api.backdropPath),
             voteAverage = api.voteAverage.toString(),
             voteCount = formatNumber(api.voteCount.toDouble(), "###,###", ','),
             overview = api.overview)
@@ -61,8 +61,8 @@ object MapperUI {
             originalLanguage = api.originalLanguage,
             spokenLanguages = api.spokenLanguages.joinToString(separator = ", ") { it.name },
             imdbUrl = TmdbApi.imdbUrl(api.imdbId),
-            posterUrl = TmdbApi.imageUrl(api.posterPath),
-            backdropUrl = TmdbApi.imageUrl(api.backdropPath),
+            posterUrl = TmdbApi.imageW500Url(api.posterPath),
+            backdropUrl = TmdbApi.imageOriginalUrl(api.backdropPath),
             popularity = api.popularity,
             voteAverage = api.voteAverage,
             voteCount = api.voteCount)
