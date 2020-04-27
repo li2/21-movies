@@ -18,13 +18,21 @@ fun ViewModel.io(onError: (Exception) -> Unit = {},
         try {
             ioHandler()
         } catch (exception: Exception) {
+            Timber.e(exception)
             onError(exception)
         }
     }
 }
 
 fun <T> ViewModel.ioWithLiveData(mutableLiveData: MutableLiveData<Resource<T?>>,
+                                 forceRefresh: Boolean = false,
                                  ioHandler: suspend CoroutineScope.() -> T?) {
+    if (!forceRefresh) {
+        mutableLiveData.value?.data?.let { data ->
+            mutableLiveData.postSuccess(data)
+            return
+        }
+    }
     mutableLiveData.postLoading()
     viewModelScope.launch(Dispatchers.IO) {
         try {

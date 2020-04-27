@@ -15,7 +15,6 @@ import me.li2.movies.data.model.MovieDetailUI
 import me.li2.movies.data.model.MovieItemUI
 import me.li2.movies.data.model.MovieReviewListUI
 import me.li2.movies.util.io
-import me.li2.movies.util.ioWithLiveData
 
 class MovieDetailViewModel : BaseViewModel() {
 
@@ -34,7 +33,14 @@ class MovieDetailViewModel : BaseViewModel() {
     private val genreMoviesMutableLiveData: MutableLiveData<Resource<List<MovieItemUI>>> = MutableLiveData()
     internal val genreMoviesLiveData: LiveData<Resource<List<MovieItemUI>>> = genreMoviesMutableLiveData
 
-    fun getMovieDetail(movieId: Int) {
+    fun getMovieDetailScreenData(movieId: Int) {
+        getMovieDetail(movieId)
+        getMovieReviews(movieId)
+        getYouTubeUrl(movieId)
+        getMovieRecommendations(movieId)
+    }
+
+    private fun getMovieDetail(movieId: Int) {
         movieDetailMutableLiveData.postLoading()
         viewModelScope.launch(Dispatchers.IO) {
             try {
@@ -47,7 +53,7 @@ class MovieDetailViewModel : BaseViewModel() {
         }
     }
 
-    fun getMovieReviews(movieId: Int, page: Int = 1) {
+    private fun getMovieReviews(movieId: Int, page: Int = 1) {
         movieReviewsMutableLiveData.postLoading()
         io({
             movieReviewsMutableLiveData.postError(it)
@@ -58,14 +64,14 @@ class MovieDetailViewModel : BaseViewModel() {
         })
     }
 
-    fun getYouTubeUrl(movieId: Int) {
-        ioWithLiveData(youtubeUrlMutableLiveData) {
+    private fun getYouTubeUrl(movieId: Int) {
+        io {
             val movieVideosAPI = repository.getMovieVideos(movieId)
-            MapperUI.toYoutubeUrl(movieVideosAPI)
+            youtubeUrlMutableLiveData.postSuccess(MapperUI.toYoutubeUrl(movieVideosAPI))
         }
     }
 
-    fun getMovieRecommendations(movieId: Int, page: Int = 1) {
+    private fun getMovieRecommendations(movieId: Int, page: Int = 1) {
         recommendationsMutableLiveData.postLoading()
         io({
             recommendationsMutableLiveData.postError(it)

@@ -2,72 +2,70 @@ package me.li2.movies.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import me.li2.android.common.arch.Resource
-import me.li2.android.common.arch.postError
-import me.li2.android.common.arch.postLoading
-import me.li2.android.common.arch.postSuccess
 import me.li2.movies.base.BaseViewModel
 import me.li2.movies.data.model.MapperUI
 import me.li2.movies.data.model.MovieItemUI
-import me.li2.movies.data.model.TmdbMovieListAPI
+import me.li2.movies.util.ioWithLiveData
 
 class HomeViewModel : BaseViewModel() {
 
-    private val topMoviesMutableLiveData: MutableLiveData<Resource<List<MovieItemUI>>> = MutableLiveData()
-    internal val topMoviesLiveData: LiveData<Resource<List<MovieItemUI>>> = topMoviesMutableLiveData
+    private val topMoviesMutableLiveData: MutableLiveData<Resource<List<MovieItemUI>?>> = MutableLiveData()
+    internal val topMoviesLiveData: LiveData<Resource<List<MovieItemUI>?>> = topMoviesMutableLiveData
 
-    private val nowPlayingMoviesMutableLiveData: MutableLiveData<Resource<List<MovieItemUI>>> = MutableLiveData()
-    internal val nowPlayingMoviesLiveData: LiveData<Resource<List<MovieItemUI>>> = nowPlayingMoviesMutableLiveData
+    private val nowPlayingMoviesMutableLiveData: MutableLiveData<Resource<List<MovieItemUI>?>> = MutableLiveData()
+    internal val nowPlayingMoviesLiveData: LiveData<Resource<List<MovieItemUI>?>> = nowPlayingMoviesMutableLiveData
 
-    private val upcomingMoviesMutableLiveData: MutableLiveData<Resource<List<MovieItemUI>>> = MutableLiveData()
-    internal val upcomingMoviesLiveData: LiveData<Resource<List<MovieItemUI>>> = upcomingMoviesMutableLiveData
+    private val upcomingMoviesMutableLiveData: MutableLiveData<Resource<List<MovieItemUI>?>> = MutableLiveData()
+    internal val upcomingMoviesLiveData: LiveData<Resource<List<MovieItemUI>?>> = upcomingMoviesMutableLiveData
 
-    private val popularMoviesMutableLiveData: MutableLiveData<Resource<List<MovieItemUI>>> = MutableLiveData()
-    internal val popularMoviesLiveData: LiveData<Resource<List<MovieItemUI>>> = popularMoviesMutableLiveData
+    private val popularMoviesMutableLiveData: MutableLiveData<Resource<List<MovieItemUI>?>> = MutableLiveData()
+    internal val popularMoviesLiveData: LiveData<Resource<List<MovieItemUI>?>> = popularMoviesMutableLiveData
 
-    private fun getMovies(mutableLiveData: MutableLiveData<Resource<List<MovieItemUI>>>,
-                          forceRefresh: Boolean = false,
-                          api: suspend () -> TmdbMovieListAPI) {
-        if (!forceRefresh) {
-            mutableLiveData.value?.data?.let { items ->
-                mutableLiveData.postSuccess(items)
-                return
-            }
-        }
-        mutableLiveData.postLoading()
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val movies = api().results.take(13).takeLast(10)
-                        .map {
-                            MapperUI.toMovieItemUI(it)
-                        }
-                mutableLiveData.postSuccess(movies)
-            } catch (exception: Exception) {
-                mutableLiveData.postError(exception)
+    init {
+        getHomeScreenData()
+    }
+
+    fun getHomeScreenData(forceRefresh: Boolean = false) {
+        getTopMovies(1, forceRefresh)
+        getNowPlayingMovies(1, forceRefresh)
+        getUpcomingMovies(1, forceRefresh)
+        getPopularMovies(1, forceRefresh)
+    }
+
+    private fun getTopMovies(page: Int, forceRefresh: Boolean = false) {
+        ioWithLiveData(topMoviesMutableLiveData, forceRefresh) {
+            repository.getTopMovies(page).results.take(MAXIMUM_DISPLAY_MOVIES).map {
+                MapperUI.toMovieItemUI(it)
             }
         }
     }
 
-    fun getHomeData(forceRefresh: Boolean = false) {
-        getMovies(topMoviesMutableLiveData, forceRefresh) {
-            repository.getTopMovies(1)
+    private fun getNowPlayingMovies(page: Int, forceRefresh: Boolean = false) {
+        ioWithLiveData(nowPlayingMoviesMutableLiveData, forceRefresh) {
+            repository.getNowPlayingMovies(page).results.take(MAXIMUM_DISPLAY_MOVIES).map {
+                MapperUI.toMovieItemUI(it)
+            }
         }
+    }
 
-/* todo weiyi uncomment
-        getMovies(nowPlayingMoviesMutableLiveData, forceRefresh) {
-            repository.getNowPlayingMoviesAsync(1)
+    private fun getUpcomingMovies(page: Int, forceRefresh: Boolean = false) {
+        ioWithLiveData(upcomingMoviesMutableLiveData, forceRefresh) {
+            repository.getUpcomingMovies(page).results.take(MAXIMUM_DISPLAY_MOVIES).map {
+                MapperUI.toMovieItemUI(it)
+            }
         }
+    }
 
-        getMovies(upcomingMoviesMutableLiveData, forceRefresh) {
-            repository.getUpcomingMoviesAsync(1)
+    private fun getPopularMovies(page: Int, forceRefresh: Boolean = false) {
+        ioWithLiveData(popularMoviesMutableLiveData, forceRefresh) {
+            repository.getPopularMovies(page).results.take(MAXIMUM_DISPLAY_MOVIES).map {
+                MapperUI.toMovieItemUI(it)
+            }
         }
+    }
 
-        getMovies(popularMoviesMutableLiveData, forceRefresh) {
-            repository.getPopularMoviesAsync(1)
-        }
-*/
+    companion object {
+        private const val MAXIMUM_DISPLAY_MOVIES = 10
     }
 }

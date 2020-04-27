@@ -23,6 +23,11 @@ class MoviesFragment : BaseFragment() {
     private val args by navArgs<MoviesFragmentArgs>()
     private val viewModel by viewModels<MovieDetailViewModel>()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.searchGenreMovies(args.genre)
+    }
+
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -33,10 +38,6 @@ class MoviesFragment : BaseFragment() {
     override fun initUi(view: View, savedInstanceState: Bundle?) {
         binding.executePendingBindings()
         setToolbarTitle(args.genre)
-    }
-
-    override fun initViewModel() = with(viewModel) {
-        searchGenreMovies(args.genre)
     }
 
     override fun renderUI() = with(viewModel) {

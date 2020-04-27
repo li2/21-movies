@@ -16,13 +16,10 @@ abstract class BaseFragment : Fragment(), KodeinAware {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initUi(view, savedInstanceState)
-        initViewModel()
         renderUI()
     }
 
     open fun initUi(view: View, savedInstanceState: Bundle?) {}
-
-    open fun initViewModel() {}
 
     open fun renderUI() {}
 

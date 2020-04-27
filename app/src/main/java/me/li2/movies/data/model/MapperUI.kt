@@ -9,7 +9,7 @@ object MapperUI {
     fun toMovieItemUI(api: TmdbMovieAPI) = MovieItemUI(
             id = api.id,
             title = api.title,
-            releaseDate = api.releaseDate,
+            releaseDate = api.releaseDate.orEmpty(),
             posterUrl = TmdbApi.imageW500Url(api.posterPath),
             backdropUrl = TmdbApi.imageOriginalUrl(api.backdropPath),
             voteAverage = api.voteAverage.toString(),

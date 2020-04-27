@@ -36,7 +36,7 @@ data class TmdbMovieAPI(
         @Json(name = "poster_path")
         val posterPath: String?,
         @Json(name = "release_date")
-        val releaseDate: String,
+        val releaseDate: String?,
         @Json(name = "title")
         val title: String,
         @Json(name = "video")

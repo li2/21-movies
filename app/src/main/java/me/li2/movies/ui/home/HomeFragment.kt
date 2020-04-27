@@ -61,7 +61,7 @@ class HomeFragment : BaseFragment(), ViewPager2AutoScrollHelper {
         disableViewPagerAutoScrollOnTouch()
 
         binding.swipeRefreshLayout.setOnRefreshListener {
-            viewModel.getHomeData(true)
+            viewModel.getHomeScreenData(true)
         }
 
         compositeDisposable += Observable.merge(
@@ -73,10 +73,6 @@ class HomeFragment : BaseFragment(), ViewPager2AutoScrollHelper {
             val extras = FragmentNavigatorExtras(posterImageView to getString(R.string.transition_name_movie) + movieItem.id)
             navController().navigate(HomeFragmentDirections.showMovieDetail(movieItem), extras)
         }
-    }
-
-    override fun initViewModel() = with(viewModel) {
-        getHomeData()
     }
 
     override fun renderUI() = with(viewModel) {
@@ -102,7 +98,7 @@ class HomeFragment : BaseFragment(), ViewPager2AutoScrollHelper {
         }
     }
 
-    private fun bindLoadingStatus(resource: Resource<List<MovieItemUI>>) {
+    private fun bindLoadingStatus(resource: Resource<List<MovieItemUI>?>) {
         binding.isLoading = resource.status == LOADING
         if (resource.status == ERROR) {
             toast(resource.exception.toString())

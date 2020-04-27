@@ -31,6 +31,13 @@ class MovieDetailFragment : BaseFragment() {
     private val args by navArgs<MovieDetailFragmentArgs>()
     private val viewModel by viewModels<MovieDetailViewModel>()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // load data in your ViewModel's init {} or onCreate(), not in onViewCreated(). 21note
+        // https://twitter.com/i/status/1103510156741095425
+        viewModel.getMovieDetailScreenData(args.movieItem.id)
+    }
+
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -70,14 +77,6 @@ class MovieDetailFragment : BaseFragment() {
         compositeDisposable += binding.reviewsCountTextView.clicks().throttleFirstShort().subscribe {
             toast("todo: show all reviews")
         }
-    }
-
-    override fun initViewModel() = with(viewModel) {
-        val movieId = args.movieItem.id
-        getMovieDetail(movieId)
-        getMovieReviews(movieId)
-        getYouTubeUrl(movieId)
-        getMovieRecommendations(movieId)
     }
 
     override fun renderUI() = with(viewModel) {
