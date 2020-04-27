@@ -1,4 +1,4 @@
-package me.li2.movies.ui.home.top
+package me.li2.movies.ui.widgets.moviescarousel
 
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -9,7 +9,7 @@ import io.reactivex.subjects.PublishSubject
 import me.li2.movies.data.model.MovieItemUI
 import me.li2.movies.util.CarouselPagerHelper
 
-class TopItemsAdapter : ListAdapter<MovieItemUI, TopItemViewHolder>(DIFF_CALLBACK), CarouselPagerHelper {
+class MovieCarouselAdapter : ListAdapter<MovieItemUI, MovieCarouselItemViewHolder>(DIFF_CALLBACK), CarouselPagerHelper {
 
     private val itemClicksPublish = PublishSubject.create<Pair<ImageView, MovieItemUI>>()
     internal val itemClicks = itemClicksPublish.toFlowable(BackpressureStrategy.LATEST).toObservable()!!
@@ -17,11 +17,11 @@ class TopItemsAdapter : ListAdapter<MovieItemUI, TopItemViewHolder>(DIFF_CALLBAC
     override val carouselDatasetSize: Int
         get() = currentList.size
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopItemViewHolder {
-        return TopItemViewHolder.newInstance(parent, itemClicksPublish)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieCarouselItemViewHolder {
+        return MovieCarouselItemViewHolder.newInstance(parent, itemClicksPublish)
     }
 
-    override fun onBindViewHolder(viewHolder: TopItemViewHolder, position: Int) {
+    override fun onBindViewHolder(viewHolder: MovieCarouselItemViewHolder, position: Int) {
         val dataPosition = getCarouselDataPosition(position)
         viewHolder.bind(getItem(dataPosition), dataPosition)
     }

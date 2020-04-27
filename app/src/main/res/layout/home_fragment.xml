@@ -14,7 +14,7 @@
             type="Boolean" />
 
         <variable
-            name="topItems"
+            name="movieCarouselItems"
             type="List&lt;MovieItemUI&gt;" />
 
         <variable
@@ -50,7 +50,7 @@
                 android:layout_height="match_parent">
 
                 <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/topItemsViewPager"
+                    android:id="@+id/movieCarouselViewPager"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     app:layout_constraintDimensionRatio="H,2:2.3"
@@ -58,18 +58,18 @@
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:topItems="@{topItems}"
+                    app:movieCarouselItems="@{movieCarouselItems}"
                     tools:background="@tools:sample/backgrounds/scenic[9]"
                     tools:listItem="@layout/home_top_item_view" />
 
                 <com.rd.PageIndicatorView
-                    android:id="@+id/topItemsPagerIndicator"
+                    android:id="@+id/movieCarouselPagerIndicator"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    app:layout_constraintBottom_toBottomOf="@id/topItemsViewPager"
-                    app:layout_constraintEnd_toEndOf="@id/topItemsViewPager"
-                    app:layout_constraintStart_toStartOf="@id/topItemsViewPager"
+                    app:layout_constraintBottom_toBottomOf="@id/movieCarouselViewPager"
+                    app:layout_constraintEnd_toEndOf="@id/movieCarouselViewPager"
+                    app:layout_constraintStart_toStartOf="@id/movieCarouselViewPager"
                     app:piv_animationType="none"
                     app:piv_dynamicCount="true"
                     app:piv_interactiveAnimation="true"
@@ -77,7 +77,7 @@
                     app:piv_radius="6dp"
                     app:piv_selectedColor="?attr/colorPrimary"
                     app:piv_unselectedColor="?attr/colorUnselected"
-                    app:piv_viewPager="@id/topItemsViewPager" />
+                    app:piv_viewPager="@id/movieCarouselViewPager" />
 
                 <com.google.android.material.appbar.AppBarLayout
                     android:id="@+id/appBarLayout"
@@ -119,7 +119,7 @@
                     android:textColor="?android:attr/textColorPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/topItemsViewPager"
+                    app:layout_constraintTop_toBottomOf="@id/movieCarouselViewPager"
                     tools:ignore="HardcodedText" />
 
                 <androidx.recyclerview.widget.RecyclerView

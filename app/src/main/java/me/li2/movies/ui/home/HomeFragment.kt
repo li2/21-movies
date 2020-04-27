@@ -22,7 +22,7 @@ import me.li2.movies.base.BaseFragment
 import me.li2.movies.data.model.MovieItemUI
 import me.li2.movies.databinding.HomeFragmentBinding
 import me.li2.movies.ui.home.centre.CentreItemsAdapter
-import me.li2.movies.ui.home.top.TopItemsAdapter
+import me.li2.movies.ui.widgets.moviescarousel.MovieCarouselAdapter
 import me.li2.movies.util.*
 import timber.log.Timber.e
 import java.util.concurrent.TimeUnit
@@ -31,7 +31,7 @@ class HomeFragment : BaseFragment(), ViewPager2AutoScrollHelper {
     private lateinit var binding: HomeFragmentBinding
     private val viewModel by activityViewModels<HomeViewModel>()
 
-    override val autoScrollViewPager get() = binding.topItemsViewPager
+    override val autoScrollViewPager get() = binding.movieCarouselViewPager
     override val viewPagerAutoScrollPeriod = Pair(5L, TimeUnit.SECONDS)
     override val shouldViewPagerAutoScroll = BehaviorSubject.createDefault(true)
     override var viewPagerAutoScrollTask: Disposable? = null
@@ -50,12 +50,12 @@ class HomeFragment : BaseFragment(), ViewPager2AutoScrollHelper {
 
     override fun initUi(view: View, savedInstanceState: Bundle?) {
         binding.executePendingBindings()
-        binding.topItemsViewPager.ignorePullToRefresh(binding.swipeRefreshLayout)
-        binding.topItemsPagerIndicator.setViewPager2(binding.topItemsViewPager)
+        binding.movieCarouselViewPager.ignorePullToRefresh(binding.swipeRefreshLayout)
+        binding.movieCarouselPagerIndicator.setViewPager2(binding.movieCarouselViewPager)
 
         val offsetPx = 48.dpToPx(requireContext())
         val pageMarginPx = 18.dpToPx(requireContext())
-        binding.topItemsViewPager.showPartialLeftAndRightPages(offsetPx, pageMarginPx, CardPageTransformer(0.85f))
+        binding.movieCarouselViewPager.showPartialLeftAndRightPages(offsetPx, pageMarginPx, CardPageTransformer(0.85f))
 
         startViewPagerAutoScrollTask()
         disableViewPagerAutoScrollOnTouch()
@@ -65,7 +65,7 @@ class HomeFragment : BaseFragment(), ViewPager2AutoScrollHelper {
         }
 
         compositeDisposable += Observable.merge(
-                (binding.topItemsViewPager.adapter as TopItemsAdapter).itemClicks,
+                (binding.movieCarouselViewPager.adapter as MovieCarouselAdapter).itemClicks,
                 (binding.nowPlayingMoviesRecyclerView.adapter as CentreItemsAdapter).itemClicks,
                 (binding.upcomingMoviesRecyclerView.adapter as CentreItemsAdapter).itemClicks,
                 (binding.popularMoviesRecyclerView.adapter as CentreItemsAdapter).itemClicks
@@ -81,8 +81,8 @@ class HomeFragment : BaseFragment(), ViewPager2AutoScrollHelper {
 
     override fun renderUI() = with(viewModel) {
         observeOnView(topMoviesLiveData) {
-            binding.topItems = it.data
-            binding.topItemsPagerIndicator.count = it.data?.size.orZero()
+            binding.movieCarouselItems = it.data
+            binding.movieCarouselPagerIndicator.count = it.data?.size.orZero()
             bindLoadingStatus(it)
         }
 
