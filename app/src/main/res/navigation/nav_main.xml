@@ -16,12 +16,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/mainFragment"
-        android:name="me.li2.movies.ui.movies.MainFragment"
-        android:label="@string/app_name"
-        tools:layout="@layout/fragment_main" />
-
-    <fragment
         android:id="@+id/movieDetailFragment"
         android:name="me.li2.movies.ui.moviedetail.MovieDetailFragment"
         android:label=" "
@@ -29,6 +23,19 @@
         <argument
             android:name="movieItem"
             app:argType="me.li2.movies.data.model.MovieItemUI" />
+        <action
+            android:id="@+id/showGenreMoviesList"
+            app:destination="@id/moviesFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/moviesFragment"
+        android:name="me.li2.movies.ui.movies.MoviesFragment"
+        android:label=""
+        tools:layout="@layout/movies_fragment">
+        <argument
+            android:name="genre"
+            app:argType="string" />
     </fragment>
 
 </navigation>

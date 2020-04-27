@@ -21,14 +21,15 @@ import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.MovieDetailFragmentBinding
 import me.li2.movies.util.ifSupportLollipop
+import me.li2.movies.util.navController
 import me.li2.movies.util.watchYoutubeVideo
 import timber.log.Timber.e
 
 class MovieDetailFragment : BaseFragment() {
 
     private lateinit var binding: MovieDetailFragmentBinding
-    private val viewModel by viewModels<MovieDetailViewModel>()
     private val args by navArgs<MovieDetailFragmentArgs>()
+    private val viewModel by viewModels<MovieDetailViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
@@ -63,7 +64,7 @@ class MovieDetailFragment : BaseFragment() {
         }
 
         compositeDisposable += binding.genresGroupView.genreClicks().subscribe { genre ->
-            toast("todo: genre ${genre.name} clicks")
+            navController().navigate(MovieDetailFragmentDirections.showGenreMoviesList(genre.name))
         }
 
         compositeDisposable += binding.reviewsCountTextView.clicks().throttleFirstShort().subscribe {

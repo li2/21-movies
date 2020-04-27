@@ -31,6 +31,9 @@ class MovieDetailViewModel : BaseViewModel() {
     private val recommendationsMutableLiveData: MutableLiveData<Resource<List<MovieItemUI>>> = MutableLiveData()
     internal val recommendationsLiveData: LiveData<Resource<List<MovieItemUI>>> = recommendationsMutableLiveData
 
+    private val genreMoviesMutableLiveData: MutableLiveData<Resource<List<MovieItemUI>>> = MutableLiveData()
+    internal val genreMoviesLiveData: LiveData<Resource<List<MovieItemUI>>> = genreMoviesMutableLiveData
+
     fun getMovieDetail(movieId: Int) {
         movieDetailMutableLiveData.postLoading()
         viewModelScope.launch(Dispatchers.IO) {
@@ -73,5 +76,16 @@ class MovieDetailViewModel : BaseViewModel() {
             recommendationsMutableLiveData.postSuccess(movies)
         })
     }
-}
 
+    fun searchGenreMovies(genre: String, page: Int = 1) {
+        genreMoviesMutableLiveData.postLoading()
+        io({
+            genreMoviesMutableLiveData.postError(it)
+        }, {
+            val movies = repository.searchMovies(genre, page).results
+                    .take(20)
+                    .map { MapperUI.toMovieItemUI(it) }
+            genreMoviesMutableLiveData.postSuccess(movies)
+        })
+    }
+}

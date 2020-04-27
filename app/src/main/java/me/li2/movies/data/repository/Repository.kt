@@ -24,7 +24,12 @@ class Repository : KodeinAware {
 
     suspend fun getMovieVideos(movieId: Int) = tmdbDataSource.getMovieVideosAsync(movieId).await()
 
-    suspend fun getMovieReviews(movieId: Int, page: Int) = tmdbDataSource.getMovieReviewsAsync(movieId, page).await()
-    
-    suspend fun getMovieRecommendations(movieId: Int, page: Int) = tmdbDataSource.getMovieRecommendationsAsync(movieId, page).await()
+    suspend fun getMovieReviews(movieId: Int, page: Int) =
+            tmdbDataSource.getMovieReviewsAsync(movieId, page).await()
+
+    suspend fun getMovieRecommendations(movieId: Int, page: Int) =
+            tmdbDataSource.getMovieRecommendationsAsync(movieId, page).await()
+
+    suspend fun searchMovies(keyword: String, page: Int, year: Int? = null) =
+            tmdbDataSource.searchMoviesAsync(keyword, page, year).await()
 }

@@ -37,6 +37,11 @@ interface TmdbApi {
     fun getMovieRecommendationsAsync(@Path("movieId") movieId: Int,
                                      @Query("page") page: Int): Deferred<TmdbMovieListAPI>
 
+    @GET("search/movie")
+    fun searchMoviesAsync(@Query("query") keyword: String,
+                          @Query("page") page: Int,
+                          @Query("year") year: Int? = null): Deferred<TmdbMovieListAPI>
+
     companion object {
         const val TIMEOUT = 6L
 

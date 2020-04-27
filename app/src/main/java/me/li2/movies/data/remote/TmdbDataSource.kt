@@ -24,5 +24,9 @@ class TmdbDataSource : KodeinAware {
 
     fun getMovieReviewsAsync(movieId: Int, page: Int) = tmdbApi.getMovieReviewsAsync(movieId, page)
 
-    fun getMovieRecommendationsAsync(movieId: Int, page: Int) = tmdbApi.getMovieRecommendationsAsync(movieId, page)
+    fun getMovieRecommendationsAsync(movieId: Int, page: Int) =
+            tmdbApi.getMovieRecommendationsAsync(movieId, page)
+
+    fun searchMoviesAsync(keyword: String, page: Int, year: Int? = null) =
+            tmdbApi.searchMoviesAsync(keyword, page, year)
 }
