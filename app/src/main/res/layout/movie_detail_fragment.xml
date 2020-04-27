@@ -419,12 +419,12 @@
                     android:nestedScrollingEnabled="false"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    app:centreItems="@{recommendations}"
+                    app:movieSummaryHItems="@{recommendations}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/recommendationsLabelTextView"
                     tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/home_centre_item_view"
+                    tools:listitem="@layout/movie_summary_h_item_view"
                     tools:orientation="horizontal"
                     tools:spanCount="1" />
 

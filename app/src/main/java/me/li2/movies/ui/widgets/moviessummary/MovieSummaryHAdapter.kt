@@ -1,4 +1,4 @@
-package me.li2.movies.ui.home.centre
+package me.li2.movies.ui.widgets.moviessummary
 
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -8,16 +8,16 @@ import io.reactivex.BackpressureStrategy
 import io.reactivex.subjects.PublishSubject
 import me.li2.movies.data.model.MovieItemUI
 
-class CentreItemsAdapter : ListAdapter<MovieItemUI, CentreItemViewHolder>(DIFF_CALLBACK) {
+class MovieSummaryHAdapter : ListAdapter<MovieItemUI, MovieSummaryHItemViewHolder>(DIFF_CALLBACK) {
 
     private val itemClicksPublish = PublishSubject.create<Pair<ImageView, MovieItemUI>>()
     internal val itemClicks = itemClicksPublish.toFlowable(BackpressureStrategy.LATEST).toObservable()!!
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CentreItemViewHolder {
-        return CentreItemViewHolder.newInstance(parent, itemClicksPublish)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieSummaryHItemViewHolder {
+        return MovieSummaryHItemViewHolder.newInstance(parent, itemClicksPublish)
     }
 
-    override fun onBindViewHolder(viewHolder: CentreItemViewHolder, position: Int) {
+    override fun onBindViewHolder(viewHolder: MovieSummaryHItemViewHolder, position: Int) {
         viewHolder.bind(getItem(position), position)
     }
 

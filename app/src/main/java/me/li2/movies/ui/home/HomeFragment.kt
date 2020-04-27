@@ -21,8 +21,8 @@ import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.data.model.MovieItemUI
 import me.li2.movies.databinding.HomeFragmentBinding
-import me.li2.movies.ui.home.centre.CentreItemsAdapter
 import me.li2.movies.ui.widgets.moviescarousel.MovieCarouselAdapter
+import me.li2.movies.ui.widgets.moviessummary.MovieSummaryHAdapter
 import me.li2.movies.util.*
 import timber.log.Timber.e
 import java.util.concurrent.TimeUnit
@@ -66,9 +66,9 @@ class HomeFragment : BaseFragment(), ViewPager2AutoScrollHelper {
 
         compositeDisposable += Observable.merge(
                 (binding.movieCarouselViewPager.adapter as MovieCarouselAdapter).itemClicks,
-                (binding.nowPlayingMoviesRecyclerView.adapter as CentreItemsAdapter).itemClicks,
-                (binding.upcomingMoviesRecyclerView.adapter as CentreItemsAdapter).itemClicks,
-                (binding.popularMoviesRecyclerView.adapter as CentreItemsAdapter).itemClicks
+                (binding.nowPlayingMoviesRecyclerView.adapter as MovieSummaryHAdapter).itemClicks,
+                (binding.upcomingMoviesRecyclerView.adapter as MovieSummaryHAdapter).itemClicks,
+                (binding.popularMoviesRecyclerView.adapter as MovieSummaryHAdapter).itemClicks
         ).subscribe { (posterImageView, movieItem) ->
             val extras = FragmentNavigatorExtras(posterImageView to getString(R.string.transition_name_movie) + movieItem.id)
             navController().navigate(HomeFragmentDirections.showMovieDetail(movieItem), extras)

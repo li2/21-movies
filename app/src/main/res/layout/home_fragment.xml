@@ -128,12 +128,12 @@
                     android:layout_height="192dp"
                     android:layout_marginTop="8dp"
                     android:clipToPadding="false"
-                    app:centreItems="@{nowPlayingItems}"
+                    app:movieSummaryHItems="@{nowPlayingItems}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/nowPlayingTextView"
                     tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/home_centre_item_view"
+                    tools:listitem="@layout/movie_summary_h_item_view"
                     tools:orientation="horizontal"
                     tools:spanCount="1" />
 
@@ -158,12 +158,12 @@
                     android:layout_height="192dp"
                     android:layout_marginTop="8dp"
                     android:clipToPadding="false"
-                    app:centreItems="@{upcomingItems}"
+                    app:movieSummaryHItems="@{upcomingItems}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/upcomingTextView"
                     tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/home_centre_item_view"
+                    tools:listitem="@layout/movie_summary_h_item_view"
                     tools:orientation="horizontal"
                     tools:spanCount="1" />
 
@@ -188,12 +188,12 @@
                     android:layout_height="192dp"
                     android:layout_marginTop="8dp"
                     android:clipToPadding="false"
-                    app:centreItems="@{popularItems}"
+                    app:movieSummaryHItems="@{popularItems}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/popularTextView"
                     tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/home_centre_item_view"
+                    tools:listitem="@layout/movie_summary_h_item_view"
                     tools:orientation="horizontal"
                     tools:spanCount="1" />
 
