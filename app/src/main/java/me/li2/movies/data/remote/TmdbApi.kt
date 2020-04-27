@@ -38,6 +38,8 @@ interface TmdbApi {
                                      @Query("page") page: Int): Deferred<TmdbMovieListAPI>
 
     companion object {
+        const val TIMEOUT = 6L
+
         /**
          * @see <a href="https://developers.themoviedb.org/3/getting-started/images">Images</a>
          */

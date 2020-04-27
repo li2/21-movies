@@ -9,6 +9,7 @@ import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.runner.AndroidJUnit4
 import me.li2.movies.R
+import me.li2.movies.ui.widgets.moviessummary.MovieSummaryVItemViewHolder
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
@@ -38,8 +39,8 @@ class MoviesFragmentTest {
         }
 
         // Verify that performing a click prompts the correct Navigation action
-        onView(withId(R.id.rv_movies))
-                .perform(RecyclerViewActions.actionOnItemAtPosition<MovieItemViewHolder>(0, click()))
+        onView(withId(R.id.moviesRecyclerView))
+                .perform(RecyclerViewActions.actionOnItemAtPosition<MovieSummaryVItemViewHolder>(0, click()))
         // todo IllegalStateException: No view holder at position: 0
         verify(mockNavController).navigate(R.id.showMovieDetail)
     }

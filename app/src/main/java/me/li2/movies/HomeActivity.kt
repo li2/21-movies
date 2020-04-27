@@ -6,19 +6,19 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.home_activity.*
 import me.li2.android.view.navigation.setToolbar
 import me.li2.android.view.system.hideStatusBar
 import me.li2.movies.base.BaseActivity
 
-class MainActivity : BaseActivity(), LifecycleOwner, NavController.OnDestinationChangedListener {
+class HomeActivity : BaseActivity(), LifecycleOwner, NavController.OnDestinationChangedListener {
 
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.home_activity)
         setToolbar(toolbar)
         hideStatusBar()
         initNavigation()

@@ -20,7 +20,7 @@
             android:background="?selectableItemBackground">
 
             <ImageView
-                android:id="@+id/iv_poster"
+                android:id="@+id/posterImageView"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:src="@{item.posterUrl}"

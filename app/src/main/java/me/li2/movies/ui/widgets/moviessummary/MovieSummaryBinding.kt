@@ -1,6 +1,7 @@
 package me.li2.movies.ui.widgets.moviessummary
 
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.HORIZONTAL
@@ -18,5 +19,16 @@ object MovieSummaryBinding {
             rv.addItemDecoration(LinearSpacingDecoration(HORIZONTAL, 16.dpToPx(rv.context)))
         }
         (rv.adapter as MovieSummaryHAdapter).submitList(items)
+    }
+
+    @JvmStatic
+    @BindingAdapter(value = ["app:movieSummaryVItems"])
+    fun setMovieSummaryVerticalItems(rv: RecyclerView, items: List<MovieItemUI>?) {
+        if (rv.adapter as? MovieSummaryVAdapter == null) {
+            rv.adapter = MovieSummaryVAdapter()
+            rv.layoutManager = LinearLayoutManager(rv.context)
+            rv.addItemDecoration(DividerItemDecoration(rv.context, RecyclerView.VERTICAL))
+        }
+        (rv.adapter as MovieSummaryVAdapter).submitList(items)
     }
 }

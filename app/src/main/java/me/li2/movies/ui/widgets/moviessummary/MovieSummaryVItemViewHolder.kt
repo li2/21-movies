@@ -8,11 +8,11 @@ import me.li2.android.common.rx.throttleFirstShort
 import me.li2.movies.R
 import me.li2.movies.base.BaseViewHolder
 import me.li2.movies.data.model.MovieItemUI
-import me.li2.movies.databinding.MovieSummaryHItemViewBinding
+import me.li2.movies.databinding.MovieSummaryVItemViewBinding
 
-class MovieSummaryHItemViewHolder(binding: MovieSummaryHItemViewBinding,
+class MovieSummaryVItemViewHolder(binding: MovieSummaryVItemViewBinding,
                                   private val itemClicks: PublishSubject<Pair<ImageView, MovieItemUI>>)
-    : BaseViewHolder<MovieItemUI, MovieSummaryHItemViewBinding>(binding) {
+    : BaseViewHolder<MovieItemUI, MovieSummaryVItemViewBinding>(binding) {
 
     override fun bind(item: MovieItemUI, position: Int) {
         binding.item = item
@@ -25,8 +25,8 @@ class MovieSummaryHItemViewHolder(binding: MovieSummaryHItemViewBinding,
 
     companion object {
         fun newInstance(parent: ViewGroup,
-                        itemClicks: PublishSubject<Pair<ImageView, MovieItemUI>>): MovieSummaryHItemViewHolder {
-            return MovieSummaryHItemViewHolder(newBindingInstance(parent, R.layout.movie_summary_h_item_view) as MovieSummaryHItemViewBinding, itemClicks)
+                        itemClicks: PublishSubject<Pair<ImageView, MovieItemUI>>): MovieSummaryVItemViewHolder {
+            return MovieSummaryVItemViewHolder(newBindingInstance(parent, R.layout.movie_summary_v_item_view) as MovieSummaryVItemViewBinding, itemClicks)
         }
     }
 }

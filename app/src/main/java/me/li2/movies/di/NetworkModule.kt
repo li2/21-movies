@@ -32,6 +32,7 @@ val networkModule = Kodein.Module("network module") {
                 context = instance(),
                 baseUrl = Constants.TMDB_URL,
                 interceptors = listOf(TmdbRequestInterceptor()),
+                timeout = TmdbApi.TIMEOUT,
                 debug = BuildConfig.DEBUG)
     }
 }
