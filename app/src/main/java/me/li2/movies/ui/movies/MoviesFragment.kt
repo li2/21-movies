@@ -17,6 +17,7 @@ import me.li2.movies.databinding.MoviesFragmentBinding
 import me.li2.movies.ui.moviedetail.MovieDetailViewModel
 import me.li2.movies.ui.widgets.moviessummary.MovieSummaryVAdapter
 import me.li2.movies.util.navigate
+import me.li2.movies.util.onScrolledBottom
 import me.li2.movies.util.setToolbarTitle
 import timber.log.Timber
 
@@ -45,11 +46,15 @@ class MoviesFragment : BaseFragment() {
         compositeDisposable += (binding.moviesRecyclerView.adapter as MovieSummaryVAdapter).itemClicks.subscribe { (_, movieItem) ->
             navigate(MoviesFragmentDirections.showMovieDetail(movieItem))
         }
+
+        binding.moviesRecyclerView.onScrolledBottom {
+            viewModel.searchGenreMovies(args.genre)
+        }
     }
 
     override fun renderUI() = with(viewModel) {
-        observeOnView(genreMoviesLiveData) {
-            binding.movies = it.data
+        observeOnView(genreMovies) {
+            binding.movies = it.data?.results
             bindLoadingStatus(it)
         }
     }

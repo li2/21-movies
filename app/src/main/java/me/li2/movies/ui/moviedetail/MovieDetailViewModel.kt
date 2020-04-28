@@ -10,11 +10,11 @@ import me.li2.android.common.arch.postError
 import me.li2.android.common.arch.postLoading
 import me.li2.android.common.arch.postSuccess
 import me.li2.movies.base.BaseViewModel
-import me.li2.movies.data.model.MapperUI
-import me.li2.movies.data.model.MovieDetailUI
-import me.li2.movies.data.model.MovieItemUI
-import me.li2.movies.data.model.MovieReviewListUI
+import me.li2.movies.data.model.*
+import me.li2.movies.data.remote.TmdbApi
+import me.li2.movies.util.distinctUntilChanged
 import me.li2.movies.util.io
+import me.li2.movies.util.isRequestInProgress
 
 class MovieDetailViewModel : BaseViewModel() {
 
@@ -30,8 +30,9 @@ class MovieDetailViewModel : BaseViewModel() {
     private val recommendationsMutableLiveData: MutableLiveData<Resource<List<MovieItemUI>>> = MutableLiveData()
     internal val recommendationsLiveData: LiveData<Resource<List<MovieItemUI>>> = recommendationsMutableLiveData
 
-    private val genreMoviesMutableLiveData: MutableLiveData<Resource<List<MovieItemUI>>> = MutableLiveData()
-    internal val genreMoviesLiveData: LiveData<Resource<List<MovieItemUI>>> = genreMoviesMutableLiveData
+    private val _genreMovies = MutableLiveData<Resource<MovieItemPagedUI>>()
+    internal val genreMovies: LiveData<Resource<MovieItemPagedUI>>
+        get() = _genreMovies.distinctUntilChanged()
 
     fun getMovieDetailScreenData(movieId: Int) {
         getMovieDetail(movieId)
@@ -83,15 +84,23 @@ class MovieDetailViewModel : BaseViewModel() {
         })
     }
 
-    fun searchGenreMovies(genre: String, page: Int = 1) {
-        genreMoviesMutableLiveData.postLoading()
+    // todo 2note stop loading when exceed total pages
+    fun searchGenreMovies(genre: String) {
+        if (_genreMovies.isRequestInProgress()) {
+            return
+        }
+        _genreMovies.postLoading()
         io({
-            genreMoviesMutableLiveData.postError(it)
+            _genreMovies.postError(it)
         }, {
-            val movies = repository.searchMovies(genre, page).results
-                    .take(20)
-                    .map { MapperUI.toMovieItemUI(it) }
-            genreMoviesMutableLiveData.postSuccess(movies)
+            val nextPage = _genreMovies.value?.data?.let { it.page + 1 }
+                    ?: TmdbApi.TMDB_STARTING_PAGE_INDEX
+            val api = repository.searchMovies(genre, nextPage)
+            val ui = MapperUI.toMovieItemPagedUI(api)
+            // append results
+            val appendedResults = _genreMovies.value?.data?.results.orEmpty().toMutableList()
+            appendedResults.addAll(ui.results)
+            _genreMovies.postSuccess(ui.copy(results = appendedResults))
         })
     }
 }

@@ -16,6 +16,12 @@ object MapperUI {
             voteCount = formatNumber(api.voteCount.toDouble(), "###,###", ','),
             overview = api.overview)
 
+    fun toMovieItemPagedUI(api: TmdbMovieListAPI) = MovieItemPagedUI(
+            results = api.results.map { toMovieItemUI(it) },
+            page = api.page,
+            totalPages = api.totalPages,
+            totalResults = api.totalResults)
+
     private fun toDisplayRuntime(runtime: Int?): String {
         val hours = runtime.orZero() / 60
         val minutes = runtime.orZero() % 60

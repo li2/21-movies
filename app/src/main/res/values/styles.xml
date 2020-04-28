@@ -6,7 +6,7 @@
         <item name="colorPrimaryDark">@color/background</item>
         <item name="colorAccent">@color/accent</item>
         <item name="colorTransparent">@android:color/transparent</item>
-        <item name="colorUnselected">@color/background_floating</item>
+        <item name="colorUnselected">@color/divider</item>
         <item name="colorDivider">@color/divider</item>
         <item name="colorError">@color/error</item>
         <item name="android:windowBackground">@color/background</item>

@@ -44,6 +44,7 @@ interface TmdbApi {
 
     companion object {
         const val TIMEOUT = 6L
+        const val TMDB_STARTING_PAGE_INDEX = 1
 
         /**
          * @see <a href="https://developers.themoviedb.org/3/getting-started/images">Images</a>

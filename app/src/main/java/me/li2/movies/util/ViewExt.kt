@@ -4,7 +4,10 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.annotation.Px
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import me.li2.android.common.number.orZero
 import me.li2.android.view.popup.snackbar
 import me.li2.movies.R
 
@@ -29,4 +32,22 @@ fun Fragment.themedSnackbar(content: String) {
     snackbar(content)?.apply {
         this.colorBackgroundFloating()
     }
+}
+
+/**
+ * @param onScrolledBottom will be invoked when RecyclerView was scrolled to bottom.
+ */
+fun RecyclerView.onScrolledBottom(onScrolledBottom: () -> Unit) {
+    addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            super.onScrolled(recyclerView, dx, dy)
+            val totalItemCount = layoutManager?.itemCount.orZero()
+            val visibleItemCount = layoutManager?.childCount.orZero()
+            val firstVisibleItemPosition = (layoutManager as? LinearLayoutManager)?.findFirstVisibleItemPosition().orZero()
+
+            if (visibleItemCount + firstVisibleItemPosition >= totalItemCount) {
+                onScrolledBottom()
+            }
+        }
+    })
 }

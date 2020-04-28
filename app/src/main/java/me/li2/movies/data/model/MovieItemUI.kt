@@ -4,6 +4,14 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
+data class MovieItemPagedUI(
+        val results: List<MovieItemUI>,
+        val page: Int,
+        val totalPages: Int,
+        val totalResults: Int
+) : Parcelable
+
+@Parcelize
 data class MovieItemUI(
         val id: Int,
         val title: String,

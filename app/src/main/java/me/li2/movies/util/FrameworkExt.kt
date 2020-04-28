@@ -3,9 +3,13 @@ package me.li2.movies.util
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
+import me.li2.android.common.arch.Resource
 import me.li2.movies.R
 
 /*
@@ -28,4 +32,16 @@ fun Fragment.navigate(@NonNull directions: NavDirections) {
 
 fun Fragment.setToolbarTitle(title: String) {
     (activity as AppCompatActivity).supportActionBar?.title = title
+}
+
+/**
+ * Creates a new [LiveData] object does not emit a value until the source `this` LiveData value
+ * has been changed.  The value is considered changed if `equals()` yields `false`.
+ */
+@Suppress("NOTHING_TO_INLINE")
+inline fun <X> LiveData<X>.distinctUntilChanged(): LiveData<X> =
+        Transformations.distinctUntilChanged(this)
+
+fun<T> MutableLiveData<Resource<T>>.isRequestInProgress(): Boolean {
+    return value?.status == Resource.Status.LOADING
 }
