@@ -23,8 +23,8 @@ abstract class BaseFragment : Fragment(), KodeinAware {
 
     open fun renderUI() {}
 
-    override fun onDestroy() {
-        compositeDisposable.clear() // todo weiyi clear onDestroyView or onDestroy?
-        super.onDestroy()
+    override fun onDestroyView() {
+        compositeDisposable.clear()
+        super.onDestroyView()
     }
 }

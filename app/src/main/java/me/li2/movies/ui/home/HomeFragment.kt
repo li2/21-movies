@@ -27,7 +27,7 @@ import me.li2.movies.util.*
 import timber.log.Timber.e
 import java.util.concurrent.TimeUnit
 
-class HomeFragment : BaseFragment(), ViewPager2AutoScrollHelper {
+class HomeFragment : BaseFragment(), ViewPager2AutoScrollHelper, KeepRootViewAware {
     private lateinit var binding: HomeFragmentBinding
     private val viewModel by activityViewModels<HomeViewModel>()
 
@@ -36,32 +36,30 @@ class HomeFragment : BaseFragment(), ViewPager2AutoScrollHelper {
     override val shouldViewPagerAutoScroll = BehaviorSubject.createDefault(true)
     override var viewPagerAutoScrollTask: Disposable? = null
 
-    private var rootView: View? = null
-    private var hasInitializedRootView: Boolean = false
+    override var rootView: View? = null
+    override var hasInitializedRootView: Boolean = false
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        if (rootView == null) {
+        return saveRootViewIfNeeded {
             binding = DataBindingUtil.inflate(inflater, R.layout.home_fragment, container, false)
-            rootView = binding.root
+            binding.root
         }
-        return rootView
     }
 
     override fun initUi(view: View, savedInstanceState: Bundle?) {
         viewLifecycleOwner.lifecycle.addObserver(this)
 
-        if (hasInitializedRootView) return
-        hasInitializedRootView = true
+        initializeRootViewIfNeeded {
+            binding.executePendingBindings()
+            binding.movieCarouselViewPager.ignorePullToRefresh(binding.swipeRefreshLayout)
+            binding.movieCarouselPagerIndicator.setViewPager2(binding.movieCarouselViewPager)
 
-        binding.executePendingBindings()
-        binding.movieCarouselViewPager.ignorePullToRefresh(binding.swipeRefreshLayout)
-        binding.movieCarouselPagerIndicator.setViewPager2(binding.movieCarouselViewPager)
-
-        val offsetPx = 48.dpToPx(requireContext())
-        val pageMarginPx = 18.dpToPx(requireContext())
-        binding.movieCarouselViewPager.showPartialLeftAndRightPages(offsetPx, pageMarginPx, CardPageTransformer(0.85f))
+            val offsetPx = 48.dpToPx(requireContext())
+            val pageMarginPx = 18.dpToPx(requireContext())
+            binding.movieCarouselViewPager.showPartialLeftAndRightPages(offsetPx, pageMarginPx, CardPageTransformer(0.85f))
+        }
 
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.getHomeScreenData(true)

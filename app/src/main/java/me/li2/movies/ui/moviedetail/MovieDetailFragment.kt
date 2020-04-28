@@ -20,19 +20,20 @@ import me.li2.android.view.popup.toast
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.MovieDetailFragmentBinding
+import me.li2.movies.util.KeepRootViewAware
 import me.li2.movies.util.ifSupportLollipop
 import me.li2.movies.util.navController
 import me.li2.movies.util.watchYoutubeVideo
 import timber.log.Timber.e
 
-class MovieDetailFragment : BaseFragment() {
+class MovieDetailFragment : BaseFragment(), KeepRootViewAware {
 
     private lateinit var binding: MovieDetailFragmentBinding
     private val args by navArgs<MovieDetailFragmentArgs>()
     private val viewModel by viewModels<MovieDetailViewModel>()
 
-    private var rootView: View? = null
-    private var hasInitializedRootView: Boolean = false
+    override var rootView: View? = null
+    override var hasInitializedRootView: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,30 +45,29 @@ class MovieDetailFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        if (rootView == null) {
+        return saveRootViewIfNeeded {
             binding = DataBindingUtil.inflate(inflater, R.layout.movie_detail_fragment, container, false)
-            rootView = binding.root
+            binding.root
         }
-        return rootView
     }
 
     override fun initUi(view: View, savedInstanceState: Bundle?) {
-        if (hasInitializedRootView) return
-        hasInitializedRootView = true
-
-        binding.executePendingBindings()
-        binding.movieItem = args.movieItem
+        initializeRootViewIfNeeded {
+            binding.executePendingBindings()
+            binding.movieItem = args.movieItem
+        }
 
         ifSupportLollipop {
             sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.explode)
             ViewCompat.setTransitionName(binding.posterImageView, getString(R.string.transition_name_movie) + args.movieItem.id)
         }
 
-        compositeDisposable += Observable.merge(binding.movieOverviewTextView.clicks().throttleFirstShort(),
-                binding.movieOverviewExpandTextView.clicks().throttleFirstShort())
-                .subscribe {
-                    binding.isOverviewExpanded = !binding.isOverviewExpanded.orFalse()
-                }
+        compositeDisposable += Observable.merge(
+                binding.movieOverviewTextView.clicks().throttleFirstShort(),
+                binding.movieOverviewExpandTextView.clicks().throttleFirstShort()
+        ).subscribe {
+            binding.isOverviewExpanded = !binding.isOverviewExpanded.orFalse()
+        }
 
         compositeDisposable += binding.youtubeButton.clicks().throttleFirstShort().subscribe {
             binding.youtubeUrl?.let {
