@@ -81,6 +81,7 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/gradient_transparent_background" />
 
+                <!-- todo 21note: statusBar height is not always 24 dp.-->
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     style="@style/ToolbarStyle"

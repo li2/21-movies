@@ -14,6 +14,7 @@ import me.li2.android.common.arch.Resource
 import me.li2.android.common.arch.observeOnView
 import me.li2.android.common.logic.orFalse
 import me.li2.android.common.rx.throttleFirstShort
+import me.li2.android.view.navigation.setToolbar
 import me.li2.android.view.popup.toast
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
@@ -53,6 +54,7 @@ class MovieDetailFragment : BaseFragment(), KeepRootViewAware {
         initializeRootViewIfNeeded {
             binding.executePendingBindings()
             binding.movieItem = args.movieItem
+            activity?.setToolbar(binding.toolbar)
         }
 
         compositeDisposable += Observable.merge(
