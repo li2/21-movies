@@ -71,9 +71,11 @@
                     android:id="@+id/backdropImageView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
                     android:src="@{movieItem.backdropUrl}"
+                    app:centerCrop="@{true}"
+                    app:placeHolder="@{@drawable/ic_backdrop_placeholder}"
                     tools:ignore="ContentDescription"
+                    tools:scaleType="centerCrop"
                     tools:src="@tools:sample/backgrounds/scenic[9]" />
 
                 <View
@@ -123,8 +125,11 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="?attr/colorBackgroundFloating"
                         android:src="@{movieItem.posterUrl}"
                         app:centerCrop="@{true}"
+                        app:errorPlaceholder="@{@drawable/ic_film}"
+                        app:placeHolder="@{@drawable/ic_film}"
                         tools:ignore="ContentDescription"
                         tools:scaleType="centerCrop"
                         tools:srcCompat="@tools:sample/backgrounds/scenic[9]"
@@ -326,6 +331,7 @@
                     android:layout_marginTop="32dp"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
+                    android:visibility="@{movieDetail.genres.size() > 0}"
                     app:genres="@{movieDetail.genres}"
                     app:label="@{`Genres`}"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -420,14 +426,20 @@
                     android:nestedScrollingEnabled="false"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    app:movieSummaryHItems="@{recommendations}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/recommendationsLabelTextView"
+                    app:movieSummaryHItems="@{recommendations}"
                     tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/movie_summary_h_item_view"
                     tools:orientation="horizontal"
                     tools:spanCount="1" />
+
+                <androidx.constraintlayout.widget.Group
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="@{recommendations.size() > 0}"
+                    app:constraint_referenced_ids="recommendationsLabelTextView,recommendationsRecyclerView" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

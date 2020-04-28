@@ -35,3 +35,10 @@ This App is build on **Android Architecture Components (MVVM)** in **Kotlin** wi
 
 
 That's it.
+
+
+Icon made by Vectors Market from www.flaticon.com
+https://www.flaticon.com/free-icon/film_744531?term=film&page=1&position=76
+
+Backdrop image made by Noom Peerapong
+https://unsplash.com/photos/2uwFEAGUm6E
