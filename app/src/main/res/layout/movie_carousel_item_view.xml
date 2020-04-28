@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="item"
             type="me.li2.movies.data.model.MovieItemUI" />
@@ -25,7 +26,6 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:src="@{item.posterUrl}"
-                android:transitionName="@{@string/transition_name_movie + item.id}"
                 app:centerCrop="@{true}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -68,12 +68,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:drawableStart="@drawable/ic_star"
-                android:gravity="center"
-                app:drawableTint="?attr/colorPrimary"
                 android:drawablePadding="8dp"
+                android:gravity="center"
                 android:text="@{`` + item.voteAverage + ` · ` + item.releaseDate}"
                 android:textAppearance="?attr/textAppearanceBody2"
                 android:textColor="?android:attr/textColorPrimary"
+                app:drawableTint="?attr/colorPrimary"
                 app:layout_constraintStart_toStartOf="@id/tv_title"
                 app:layout_constraintTop_toBottomOf="@id/tv_title"
                 tools:text="8.7 · 2020-05-01" />

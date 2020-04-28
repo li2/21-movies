@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.FragmentNavigatorExtras
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.plusAssign
@@ -70,9 +69,8 @@ class HomeFragment : BaseFragment(), ViewPager2AutoScrollHelper, KeepRootViewAwa
                 (binding.nowPlayingMoviesRecyclerView.adapter as MovieSummaryHAdapter).itemClicks,
                 (binding.upcomingMoviesRecyclerView.adapter as MovieSummaryHAdapter).itemClicks,
                 (binding.popularMoviesRecyclerView.adapter as MovieSummaryHAdapter).itemClicks
-        ).subscribe { (posterImageView, movieItem) ->
-            val extras = FragmentNavigatorExtras(posterImageView to getString(R.string.transition_name_movie) + movieItem.id)
-            navController().navigate(HomeFragmentDirections.showMovieDetail(movieItem), extras)
+        ).subscribe { (_, movieItem) ->
+            navigate(HomeFragmentDirections.showMovieDetail(movieItem))
         }
     }
 

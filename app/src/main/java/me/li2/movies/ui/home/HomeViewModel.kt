@@ -35,7 +35,7 @@ class HomeViewModel : BaseViewModel() {
 
     private fun getTopMovies(page: Int, forceRefresh: Boolean = false) {
         ioWithLiveData(topMoviesMutableLiveData, forceRefresh) {
-            repository.getTopMovies(page).results.take(MAXIMUM_DISPLAY_MOVIES).map {
+            repository.getTopMovies(page).results.take(MAXIMUM_DISPLAY_MOVIES + 3).takeLast(MAXIMUM_DISPLAY_MOVIES).map {
                 MapperUI.toMovieItemUI(it)
             }
         }

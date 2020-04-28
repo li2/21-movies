@@ -4,11 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import androidx.transition.TransitionInflater
 import com.jakewharton.rxbinding3.view.clicks
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.plusAssign
@@ -20,9 +18,9 @@ import me.li2.android.view.popup.toast
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.MovieDetailFragmentBinding
+import me.li2.movies.ui.widgets.moviessummary.MovieSummaryHAdapter
 import me.li2.movies.util.KeepRootViewAware
-import me.li2.movies.util.ifSupportLollipop
-import me.li2.movies.util.navController
+import me.li2.movies.util.navigate
 import me.li2.movies.util.watchYoutubeVideo
 import timber.log.Timber.e
 
@@ -38,7 +36,7 @@ class MovieDetailFragment : BaseFragment(), KeepRootViewAware {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // load data in your ViewModel's init {} or onCreate(), not in onViewCreated(). 21note
-        // https://stackoverflow.com/q/54581071/2722270, https://twitter.com/i/status/1103510156741095425
+        // https://stackoverflow.com/q/54581071/2722270, https://twitter.com/ianhlake/status/1103522856535638016
         viewModel.getMovieDetailScreenData(args.movieItem.id)
     }
 
@@ -55,11 +53,6 @@ class MovieDetailFragment : BaseFragment(), KeepRootViewAware {
         initializeRootViewIfNeeded {
             binding.executePendingBindings()
             binding.movieItem = args.movieItem
-        }
-
-        ifSupportLollipop {
-            sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.explode)
-            ViewCompat.setTransitionName(binding.posterImageView, getString(R.string.transition_name_movie) + args.movieItem.id)
         }
 
         compositeDisposable += Observable.merge(
@@ -80,11 +73,15 @@ class MovieDetailFragment : BaseFragment(), KeepRootViewAware {
         }
 
         compositeDisposable += binding.genresGroupView.genreClicks().subscribe { genre ->
-            navController().navigate(MovieDetailFragmentDirections.showGenreMoviesList(genre.name))
+            navigate(MovieDetailFragmentDirections.showGenreMoviesList(genre.name))
         }
 
         compositeDisposable += binding.reviewsCountTextView.clicks().throttleFirstShort().subscribe {
             toast("todo: show all reviews")
+        }
+
+        compositeDisposable += (binding.recommendationsRecyclerView.adapter as MovieSummaryHAdapter).itemClicks.subscribe { (_, movieItem) ->
+            navigate(MovieDetailFragmentDirections.showMovieDetail(movieItem))
         }
     }
 

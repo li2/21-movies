@@ -19,6 +19,14 @@
         <!--Drawables-->
         <item name="icLogo">@drawable/ic_logo</item>
         <item name="android:listDivider">@drawable/list_divider</item>
+
+        <!--Nav Animation-->
+        <!--todo 21note the following attr not working-->
+        <!--<item name="android:fragmentEnterTransition">@anim/slide_in_right</item>-->
+        <!--<item name="android:fragmentExitTransition">@anim/slide_out_left</item>-->
+        <!--<item name="popEnterAnim">@anim/slide_in_left</item>-->
+        <!--<item name="popExitAnim">@anim/slide_out_right</item>-->
+        <item name="navAnimTime">@android:integer/config_mediumAnimTime</item>
     </style>
 
     <style name="SplashTheme" parent="AppTheme">

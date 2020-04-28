@@ -26,6 +26,9 @@
         <action
             android:id="@+id/showGenreMoviesList"
             app:destination="@id/moviesFragment" />
+        <action
+            android:id="@+id/showMovieDetail"
+            app:destination="@id/movieDetailFragment" />
     </fragment>
 
     <fragment
@@ -36,6 +39,9 @@
         <argument
             android:name="genre"
             app:argType="string" />
+        <action
+            android:id="@+id/showMovieDetail"
+            app:destination="@id/movieDetailFragment" />
     </fragment>
 
 </navigation>

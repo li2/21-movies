@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="item"
             type="me.li2.movies.data.model.MovieItemUI" />
@@ -23,18 +24,17 @@
                 android:id="@+id/posterImageView"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:src="@{item.posterUrl}"
-                android:transitionName="@{@string/transition_name_movie + item.id}"
-                app:centerCrop="@{true}"
                 android:background="?attr/colorBackgroundFloating"
+                android:src="@{item.posterUrl}"
+                app:centerCrop="@{true}"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="H,2:3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:placeHolder="@{@drawable/ic_film}"
                 tools:ignore="ContentDescription"
                 tools:scaleType="centerCrop"
-                app:layout_constraintDimensionRatio="H,2:3"
                 tools:srcCompat="@tools:sample/backgrounds/scenic"
                 tools:targetApi="lollipop" />
 

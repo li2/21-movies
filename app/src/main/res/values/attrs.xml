@@ -7,4 +7,7 @@
 
     <!--Drawables-->
     <attr name="icLogo" format="reference" />
+
+    <!--Navigation-->
+    <attr name="navAnimTime" format="integer" />
 </resources>

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import io.reactivex.rxkotlin.plusAssign
 import me.li2.android.common.arch.Resource
 import me.li2.android.common.arch.observeOnView
 import me.li2.android.view.popup.toast
@@ -14,6 +15,8 @@ import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.MoviesFragmentBinding
 import me.li2.movies.ui.moviedetail.MovieDetailViewModel
+import me.li2.movies.ui.widgets.moviessummary.MovieSummaryVAdapter
+import me.li2.movies.util.navigate
 import me.li2.movies.util.setToolbarTitle
 import timber.log.Timber
 
@@ -38,6 +41,10 @@ class MoviesFragment : BaseFragment() {
     override fun initUi(view: View, savedInstanceState: Bundle?) {
         binding.executePendingBindings()
         setToolbarTitle(args.genre)
+
+        compositeDisposable += (binding.moviesRecyclerView.adapter as MovieSummaryVAdapter).itemClicks.subscribe { (_, movieItem) ->
+            navigate(MoviesFragmentDirections.showMovieDetail(movieItem))
+        }
     }
 
     override fun renderUI() = with(viewModel) {
