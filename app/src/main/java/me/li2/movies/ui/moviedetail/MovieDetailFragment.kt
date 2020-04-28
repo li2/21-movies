@@ -31,21 +31,30 @@ class MovieDetailFragment : BaseFragment() {
     private val args by navArgs<MovieDetailFragmentArgs>()
     private val viewModel by viewModels<MovieDetailViewModel>()
 
+    private var rootView: View? = null
+    private var hasInitializedRootView: Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // load data in your ViewModel's init {} or onCreate(), not in onViewCreated(). 21note
-        // https://twitter.com/i/status/1103510156741095425
+        // https://stackoverflow.com/q/54581071/2722270, https://twitter.com/i/status/1103510156741095425
         viewModel.getMovieDetailScreenData(args.movieItem.id)
     }
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.movie_detail_fragment, container, false)
-        return binding.root
+        if (rootView == null) {
+            binding = DataBindingUtil.inflate(inflater, R.layout.movie_detail_fragment, container, false)
+            rootView = binding.root
+        }
+        return rootView
     }
 
     override fun initUi(view: View, savedInstanceState: Bundle?) {
+        if (hasInitializedRootView) return
+        hasInitializedRootView = true
+
         binding.executePendingBindings()
         binding.movieItem = args.movieItem
 

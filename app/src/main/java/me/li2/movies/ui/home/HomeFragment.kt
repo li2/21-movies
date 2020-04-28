@@ -36,19 +36,25 @@ class HomeFragment : BaseFragment(), ViewPager2AutoScrollHelper {
     override val shouldViewPagerAutoScroll = BehaviorSubject.createDefault(true)
     override var viewPagerAutoScrollTask: Disposable? = null
 
+    private var rootView: View? = null
+    private var hasInitializedRootView: Boolean = false
+
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.home_fragment, container, false)
-        return binding.root
-    }
-
-    override fun onDestroyView() {
-        stopViewPagerAutoScrollTask()
-        super.onDestroyView()
+        if (rootView == null) {
+            binding = DataBindingUtil.inflate(inflater, R.layout.home_fragment, container, false)
+            rootView = binding.root
+        }
+        return rootView
     }
 
     override fun initUi(view: View, savedInstanceState: Bundle?) {
+        viewLifecycleOwner.lifecycle.addObserver(this)
+
+        if (hasInitializedRootView) return
+        hasInitializedRootView = true
+
         binding.executePendingBindings()
         binding.movieCarouselViewPager.ignorePullToRefresh(binding.swipeRefreshLayout)
         binding.movieCarouselPagerIndicator.setViewPager2(binding.movieCarouselViewPager)
@@ -56,9 +62,6 @@ class HomeFragment : BaseFragment(), ViewPager2AutoScrollHelper {
         val offsetPx = 48.dpToPx(requireContext())
         val pageMarginPx = 18.dpToPx(requireContext())
         binding.movieCarouselViewPager.showPartialLeftAndRightPages(offsetPx, pageMarginPx, CardPageTransformer(0.85f))
-
-        startViewPagerAutoScrollTask()
-        disableViewPagerAutoScrollOnTouch()
 
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.getHomeScreenData(true)

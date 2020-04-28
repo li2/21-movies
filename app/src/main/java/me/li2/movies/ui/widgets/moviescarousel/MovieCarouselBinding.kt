@@ -13,7 +13,9 @@ object MovieCarouselBinding {
         }
         val adapter = viewPager.adapter as MovieCarouselAdapter
         adapter.submitList(items) {
-            viewPager.setCurrentItem(adapter.getCarouselInitialDisplayPosition(), false)
+            if (viewPager.currentItem == 0) {
+                viewPager.setCurrentItem(adapter.getCarouselInitialDisplayPosition(), false)
+            }
         }
     }
 }
