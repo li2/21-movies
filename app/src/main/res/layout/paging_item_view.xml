@@ -31,6 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:maxLines="1"
             android:textAppearance="?attr/textAppearanceBody1"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Error: timeout" />

@@ -98,7 +98,11 @@ class MovieDetailViewModel : BaseViewModel() {
             val ui = MapperUI.toMovieItemPagedUI(api)
             // append results
             val appendedResults = _genreMovies.value?.data?.results.orEmpty().toMutableList()
-            appendedResults.addAll(ui.results)
+                    .let {
+                        it.addAll(ui.results)
+                        // remove duplicated items, 21note
+                        it.distinctBy { movie -> movie.id }
+                    }
             _genreMovies.postSuccess(ui.copy(results = appendedResults))
         })
     }

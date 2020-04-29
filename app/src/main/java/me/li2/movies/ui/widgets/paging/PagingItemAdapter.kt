@@ -32,21 +32,22 @@ class PagingItemAdapter : RecyclerView.Adapter<PagingItemViewHolder>() {
      * Changing this property will immediately notify the Adapter to change the item it's
      * presenting.
      */
-    // todo 21note: notifyItemChanged() make the RecyclerView scroll and jump to UP
-    // https://stackoverflow.com/questions/36724898/notifyitemchanged-make-the-recyclerview-scroll-and-jump-to-up
+    // 21note: notifyItemChanged() make the RecyclerView scroll and jump to UP,
+    // use notifyDataSetChanged() and getItemCount always return 1 to resolve this issue.
+    // https://stackoverflow.com/q/36724898/2722270
     var pagingState: PagingState = PagingState.Done()
         set(value) {
             if (field != value) {
-                val displayOldItem = displayLoadStateAsItem(field)
-                val displayNewItem = displayLoadStateAsItem(value)
-
-                if (displayOldItem && !displayNewItem) {
-                    notifyItemRemoved(0)
-                } else if (displayNewItem && !displayOldItem) {
-                    notifyItemInserted(0)
-                } else if (displayOldItem && displayNewItem) {
-                    notifyItemChanged(0)
-                }
+//                val displayOldItem = displayLoadStateAsItem(field)
+//                val displayNewItem = displayLoadStateAsItem(value)
+//                if (displayOldItem && !displayNewItem) {
+//                    notifyItemRemoved(0)
+//                } else if (displayNewItem && !displayOldItem) {
+//                    notifyItemInserted(0)
+//                } else if (displayOldItem && displayNewItem) {
+//                    notifyItemChanged(0)
+//                }
+                notifyDataSetChanged()
                 field = value
             }
         }
@@ -62,7 +63,8 @@ class PagingItemAdapter : RecyclerView.Adapter<PagingItemViewHolder>() {
         holder.bind(pagingState, position)
     }
 
-    override fun getItemCount(): Int = if (displayLoadStateAsItem(pagingState)) 1 else 0
+//    override fun getItemCount(): Int = if (displayLoadStateAsItem(pagingState)) 1 else 0
+    override fun getItemCount(): Int = 1
 
     /**
      * Returns true if the PagingState should be displayed as a list item when active.

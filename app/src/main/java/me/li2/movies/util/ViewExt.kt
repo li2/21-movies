@@ -7,6 +7,11 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import io.reactivex.Emitter
+import io.reactivex.Observable
+import io.reactivex.ObservableEmitter
+import io.reactivex.ObservableOnSubscribe
+import io.reactivex.disposables.Disposable
 import me.li2.android.common.number.orZero
 import me.li2.android.view.popup.snackbar
 import me.li2.movies.R
@@ -35,19 +40,45 @@ fun Fragment.themedSnackbar(content: String) {
 }
 
 /**
- * @param onScrolledBottom will be invoked when RecyclerView was scrolled to bottom.
+ * An observable which emits value when RecyclerView was scrolled to bottom.
  */
-fun RecyclerView.onScrolledBottom(onScrolledBottom: () -> Unit) {
-    addOnScrollListener(object : RecyclerView.OnScrollListener() {
-        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-            super.onScrolled(recyclerView, dx, dy)
-            val totalItemCount = layoutManager?.itemCount.orZero()
-            val visibleItemCount = layoutManager?.childCount.orZero()
-            val firstVisibleItemPosition = (layoutManager as? LinearLayoutManager)?.findFirstVisibleItemPosition().orZero()
+fun RecyclerView.onScrolledBottom(): Observable<Unit> {
 
-            if (visibleItemCount + firstVisibleItemPosition >= totalItemCount) {
-                onScrolledBottom()
+    class RecyclerViewScrollObservable(private val recyclerView: RecyclerView)
+        : ObservableOnSubscribe<Unit>, Disposable {
+
+        private lateinit var emitter: Emitter<Unit>
+        private var onScrollListener: RecyclerView.OnScrollListener?
+
+        init {
+            onScrollListener = object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    val totalItemCount = layoutManager?.itemCount.orZero()
+                    val visibleItemCount = layoutManager?.childCount.orZero()
+                    val firstVisibleItemPosition = (layoutManager as? LinearLayoutManager)?.findFirstVisibleItemPosition().orZero()
+                    if (visibleItemCount + firstVisibleItemPosition >= totalItemCount) {
+                        emitter.onNext(Unit)
+                    }
+                }
             }
         }
-    })
+
+        override fun subscribe(emitter: ObservableEmitter<Unit>) {
+            this.emitter = emitter
+            onScrollListener?.let {
+                recyclerView.addOnScrollListener(it)
+            }
+        }
+
+        override fun dispose() {
+            onScrollListener?.let {
+                recyclerView.removeOnScrollListener(it)
+            }
+        }
+
+        override fun isDisposed() = onScrollListener != null
+    }
+
+    return Observable.create(RecyclerViewScrollObservable(this))
 }

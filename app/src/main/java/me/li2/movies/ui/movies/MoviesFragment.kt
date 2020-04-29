@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.MergeAdapter
 import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.rxkotlin.plusAssign
 import me.li2.android.common.arch.observeOnView
+import me.li2.android.common.rx.throttleFirstShort
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.data.model.MapperUI
@@ -55,25 +56,28 @@ class MoviesFragment : BaseFragment() {
             addItemDecoration(DividerItemDecoration(requireContext(), RecyclerView.VERTICAL))
         }
 
-        compositeDisposable += moviesAdapter.itemClicks.subscribe { (_, movieItem) ->
+        compositeDisposable += moviesAdapter.itemClicks.throttleFirstShort().subscribe { (_, movieItem) ->
             navigate(MoviesFragmentDirections.showMovieDetail(movieItem))
         }
 
-        compositeDisposable += pagingAdapter.retryClicks.subscribe {
+        compositeDisposable += pagingAdapter.retryClicks.throttleFirstShort().subscribe {
             viewModel.searchGenreMovies(args.genre)
         }
 
-        binding.moviesRecyclerView.onScrolledBottom {
-            // don't load next page if it's in requesting, or error, or already on the last page.
-            if (pagingAdapter.isIdleAndNotLastPage) {
-                viewModel.searchGenreMovies(args.genre)
-            }
-        }
+        compositeDisposable += binding.moviesRecyclerView.onScrolledBottom()
+                .throttleFirstShort() // avoid duplicate API calls, 21note
+                .subscribe {
+                    // don't load next page if it's in requesting, or error, or already on the last page. 21note
+                    if (pagingAdapter.isIdleAndNotLastPage) {
+                        viewModel.searchGenreMovies(args.genre)
+                    }
+                }
     }
 
     override fun renderUI() = with(viewModel) {
         observeOnView(genreMovies) {
             moviesAdapter.submitList(it.data?.results)
+            // todo weiyi, after loading the 1st page, why scroll to bottom?
             pagingAdapter.pagingState = MapperUI.toPagingState(it)
         }
     }
