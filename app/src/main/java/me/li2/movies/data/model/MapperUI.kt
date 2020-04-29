@@ -1,8 +1,11 @@
 package me.li2.movies.data.model
 
+import me.li2.android.common.arch.Resource
+import me.li2.android.common.arch.Resource.Status.*
 import me.li2.android.common.number.NumberFormatUtils.formatNumber
 import me.li2.android.common.number.orZero
 import me.li2.movies.data.remote.TmdbApi
+import me.li2.movies.ui.widgets.paging.PagingState
 
 object MapperUI {
 
@@ -64,5 +67,13 @@ object MapperUI {
     fun toYoutubeUrl(api: TmdbMovieVideoListAPI): String? {
         val key = api.results.firstOrNull { it.site.equals("youtube", true) }?.key
         return TmdbApi.youtubeTrailerUrl(key)
+    }
+
+    fun toPagingState(resource: Resource<MovieItemPagedUI>): PagingState {
+        return when (resource.status) {
+            LOADING -> PagingState.Loading
+            SUCCESS -> PagingState.Done(resource.data?.page.orZero(), resource.data?.totalPages.orZero())
+            ERROR -> PagingState.Error("\uD83D\uDE28 Wooops ${resource.exception?.message.orEmpty()}")
+        }
     }
 }

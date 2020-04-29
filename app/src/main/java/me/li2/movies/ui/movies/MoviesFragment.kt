@@ -7,25 +7,31 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.MergeAdapter
+import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.rxkotlin.plusAssign
-import me.li2.android.common.arch.Resource
 import me.li2.android.common.arch.observeOnView
-import me.li2.android.view.popup.toast
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
+import me.li2.movies.data.model.MapperUI
 import me.li2.movies.databinding.MoviesFragmentBinding
 import me.li2.movies.ui.moviedetail.MovieDetailViewModel
 import me.li2.movies.ui.widgets.moviessummary.MovieSummaryVAdapter
+import me.li2.movies.ui.widgets.paging.PagingItemAdapter
+import me.li2.movies.util.DividerItemDecoration
 import me.li2.movies.util.navigate
 import me.li2.movies.util.onScrolledBottom
 import me.li2.movies.util.setToolbarTitle
-import timber.log.Timber
 
 class MoviesFragment : BaseFragment() {
 
     private lateinit var binding: MoviesFragmentBinding
     private val args by navArgs<MoviesFragmentArgs>()
     private val viewModel by viewModels<MovieDetailViewModel>()
+
+    private val moviesAdapter = MovieSummaryVAdapter()
+    private val pagingAdapter = PagingItemAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,26 +49,32 @@ class MoviesFragment : BaseFragment() {
         binding.executePendingBindings()
         setToolbarTitle(args.genre)
 
-        compositeDisposable += (binding.moviesRecyclerView.adapter as MovieSummaryVAdapter).itemClicks.subscribe { (_, movieItem) ->
+        binding.moviesRecyclerView.apply {
+            adapter = MergeAdapter(moviesAdapter, pagingAdapter)
+            layoutManager = LinearLayoutManager(requireContext())
+            addItemDecoration(DividerItemDecoration(requireContext(), RecyclerView.VERTICAL))
+        }
+
+        compositeDisposable += moviesAdapter.itemClicks.subscribe { (_, movieItem) ->
             navigate(MoviesFragmentDirections.showMovieDetail(movieItem))
         }
 
-        binding.moviesRecyclerView.onScrolledBottom {
+        compositeDisposable += pagingAdapter.retryClicks.subscribe {
             viewModel.searchGenreMovies(args.genre)
+        }
+
+        binding.moviesRecyclerView.onScrolledBottom {
+            // don't load next page if it's in requesting, or error, or already on the last page.
+            if (pagingAdapter.isIdleAndNotLastPage) {
+                viewModel.searchGenreMovies(args.genre)
+            }
         }
     }
 
     override fun renderUI() = with(viewModel) {
         observeOnView(genreMovies) {
-            binding.movies = it.data?.results
-            bindLoadingStatus(it)
-        }
-    }
-
-    private fun bindLoadingStatus(resource: Resource<*>) {
-        if (resource.status == Resource.Status.ERROR) {
-            toast(resource.exception.toString())
-            Timber.e(resource.exception)
+            moviesAdapter.submitList(it.data?.results)
+            pagingAdapter.pagingState = MapperUI.toPagingState(it)
         }
     }
 }

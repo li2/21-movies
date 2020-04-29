@@ -84,7 +84,6 @@ class MovieDetailViewModel : BaseViewModel() {
         })
     }
 
-    // todo 2note stop loading when exceed total pages
     fun searchGenreMovies(genre: String) {
         if (_genreMovies.isRequestInProgress()) {
             return
