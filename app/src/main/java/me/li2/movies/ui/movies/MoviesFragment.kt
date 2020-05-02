@@ -77,7 +77,6 @@ class MoviesFragment : BaseFragment() {
     override fun renderUI() = with(viewModel) {
         observeOnView(genreMovies) {
             moviesAdapter.submitList(it.data?.results)
-            // todo weiyi, after loading the 1st page, why scroll to bottom?
             pagingAdapter.pagingState = MapperUI.toPagingState(it)
         }
     }

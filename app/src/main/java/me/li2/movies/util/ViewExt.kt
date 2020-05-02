@@ -57,6 +57,10 @@ fun RecyclerView.onScrolledBottom(): Observable<Unit> {
                     val totalItemCount = layoutManager?.itemCount.orZero()
                     val visibleItemCount = layoutManager?.childCount.orZero()
                     val firstVisibleItemPosition = (layoutManager as? LinearLayoutManager)?.findFirstVisibleItemPosition().orZero()
+                    if (firstVisibleItemPosition == 0 && totalItemCount == 1) {
+                        // ignore this case
+                        return
+                    }
                     if (visibleItemCount + firstVisibleItemPosition >= totalItemCount) {
                         emitter.onNext(Unit)
                     }
