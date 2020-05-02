@@ -128,8 +128,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     implementation "com.github.li2:android-common:$rootProject.vLi2Common"
-    debugImplementation "com.github.li2:android-network:$rootProject.vLi2Network"
-    releaseImplementation "com.github.li2:android-network:$rootProject.vLi2Network"
+    implementation "com.github.li2:android-network:$rootProject.vLi2Network"
     implementation "com.github.li2:android-view:$rootProject.vLi2View"
     implementation "com.github.li2:android-datetime:$rootProject.vLi2Datetime"
 

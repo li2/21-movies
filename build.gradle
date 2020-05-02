@@ -36,8 +36,7 @@ allprojects {
 
         //MARK: My Libraries Dependencies --------------------------------------
         vLi2Common = '0.1.10'
-//        vLi2Network = '0.1.1'
-        vLi2Network = '7b4130f6'
+        vLi2Network = '0.1.2'
         vLi2View = '0.1.4'
         vLi2Datetime = '0.1.0'
 
