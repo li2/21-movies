@@ -30,8 +30,8 @@ class MovieDetailViewModel : BaseViewModel() {
     private val recommendationsMutableLiveData: MutableLiveData<Resource<List<MovieItemUI>>> = MutableLiveData()
     internal val recommendationsLiveData: LiveData<Resource<List<MovieItemUI>>> = recommendationsMutableLiveData
 
-    private val _genreMovies = MutableLiveData<Resource<MovieItemPagedUI>>()
-    internal val genreMovies: LiveData<Resource<MovieItemPagedUI>>
+    private val _genreMovies = MutableLiveData<Resource<MovieItemPagingUI>>()
+    internal val genreMovies: LiveData<Resource<MovieItemPagingUI>>
         get() = _genreMovies.distinctUntilChanged()
 
     fun getMovieDetailScreenData(movieId: Int) {
@@ -95,7 +95,7 @@ class MovieDetailViewModel : BaseViewModel() {
             val nextPage = _genreMovies.value?.data?.let { it.page + 1 }
                     ?: TmdbApi.TMDB_STARTING_PAGE_INDEX
             val api = repository.searchMovies(genre, nextPage)
-            val ui = MapperUI.toMovieItemPagedUI(api)
+            val ui = MapperUI.toMovieItemPagingUI(api)
             // append results
             val appendedResults = _genreMovies.value?.data?.results.orEmpty().toMutableList()
                     .let {

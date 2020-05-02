@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class MovieItemPagedUI(
+data class MovieItemPagingUI(
         val results: List<MovieItemUI>,
         val page: Int,
         val totalPages: Int,

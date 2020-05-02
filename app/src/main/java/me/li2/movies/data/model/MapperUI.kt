@@ -19,7 +19,7 @@ object MapperUI {
             voteCount = formatNumber(api.voteCount.toDouble(), "###,###", ','),
             overview = api.overview)
 
-    fun toMovieItemPagedUI(api: TmdbMovieListAPI) = MovieItemPagedUI(
+    fun toMovieItemPagingUI(api: TmdbMovieListAPI) = MovieItemPagingUI(
             results = api.results.map { toMovieItemUI(it) },
             page = api.page,
             totalPages = api.totalPages,
@@ -69,7 +69,7 @@ object MapperUI {
         return TmdbApi.youtubeTrailerUrl(key)
     }
 
-    fun toPagingState(resource: Resource<MovieItemPagedUI>): PagingState {
+    fun toPagingState(resource: Resource<MovieItemPagingUI>): PagingState {
         return when (resource.status) {
             LOADING -> PagingState.Loading
             SUCCESS -> PagingState.Done(resource.data?.page.orZero(), resource.data?.totalPages.orZero())
