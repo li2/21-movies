@@ -9,8 +9,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import kotlinx.android.synthetic.main.home_activity.*
 import me.li2.android.view.navigation.setToolbar
-import me.li2.android.view.system.hideStatusBar
-import me.li2.android.view.system.showStatusBar
 import me.li2.movies.base.BaseActivity
 import me.li2.movies.databinding.HomeActivityBinding
 
@@ -25,7 +23,6 @@ class HomeActivity : BaseActivity(), LifecycleOwner, NavController.OnDestination
         binding = HomeActivityBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
         setToolbar(binding.toolbar)
-        hideStatusBar()
         initNavigation()
     }
 
@@ -42,14 +39,13 @@ class HomeActivity : BaseActivity(), LifecycleOwner, NavController.OnDestination
                                       arguments: Bundle?) {
         when (destination.id) {
             R.id.homeFragment,
+            R.id.moviesFragment,
             R.id.movieDetailFragment -> {
                 supportActionBar?.hide()
-                hideStatusBar()
             }
             else -> {
                 setToolbar(toolbar)
                 supportActionBar?.show()
-                showStatusBar()
             }
         }
     }

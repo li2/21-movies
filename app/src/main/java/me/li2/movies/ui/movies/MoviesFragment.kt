@@ -15,6 +15,8 @@ import me.li2.android.common.arch.observeOnView
 import me.li2.android.common.rx.throttleFirstShort
 import me.li2.android.view.list.DividerItemDecoration
 import me.li2.android.view.list.onScrolledBottom
+import me.li2.android.view.navigation.setToolbar
+import me.li2.android.view.system.showStatusBar
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.data.model.MapperUI
@@ -23,7 +25,6 @@ import me.li2.movies.ui.moviedetail.MovieDetailViewModel
 import me.li2.movies.ui.widgets.moviessummary.MovieSummaryVAdapter
 import me.li2.movies.ui.widgets.paging.PagingItemAdapter
 import me.li2.movies.util.navigate
-import me.li2.movies.util.setToolbarTitle
 
 class MoviesFragment : BaseFragment() {
 
@@ -47,8 +48,9 @@ class MoviesFragment : BaseFragment() {
     }
 
     override fun initUi(view: View, savedInstanceState: Bundle?) {
+        activity?.setToolbar(binding.toolbar, title = args.genre)
+        activity?.showStatusBar()
         binding.executePendingBindings()
-        setToolbarTitle(args.genre)
 
         binding.moviesRecyclerView.apply {
             adapter = MergeAdapter(moviesAdapter, pagingAdapter)

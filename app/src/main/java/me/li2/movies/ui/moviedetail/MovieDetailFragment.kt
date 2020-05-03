@@ -16,6 +16,7 @@ import me.li2.android.common.logic.orFalse
 import me.li2.android.common.rx.throttleFirstShort
 import me.li2.android.view.navigation.setToolbar
 import me.li2.android.view.popup.toast
+import me.li2.android.view.system.hideStatusBar
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.MovieDetailFragmentBinding
@@ -51,10 +52,12 @@ class MovieDetailFragment : BaseFragment(), RootViewStore {
     }
 
     override fun initUi(view: View, savedInstanceState: Bundle?) {
+        activity?.hideStatusBar()
+
         initializeRootViewIfNeeded {
+            activity?.setToolbar(binding.toolbar)
             binding.executePendingBindings()
             binding.movieItem = args.movieItem
-            activity?.setToolbar(binding.toolbar)
         }
 
         compositeDisposable += Observable.merge(
