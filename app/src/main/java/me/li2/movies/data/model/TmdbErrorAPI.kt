@@ -10,5 +10,5 @@ data class TmdbErrorAPI(
         @Json(name = "status_message")
         val errorMessage: String,
         @Json(name = "success")
-        val success: Boolean
+        val success: Boolean?
 )
