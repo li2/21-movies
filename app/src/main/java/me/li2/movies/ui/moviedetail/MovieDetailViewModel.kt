@@ -8,27 +8,33 @@ import kotlinx.coroutines.launch
 import me.li2.android.common.arch.*
 import me.li2.movies.base.BaseViewModel
 import me.li2.movies.data.model.*
-import me.li2.movies.data.remote.TmdbApi
 import me.li2.movies.util.distinctUntilChanged
 import me.li2.movies.util.io
 
 class MovieDetailViewModel : BaseViewModel() {
 
-    private val movieDetailMutableLiveData: MutableLiveData<Resource<MovieDetailUI>> = MutableLiveData()
-    internal val movieDetailLiveData: LiveData<Resource<MovieDetailUI>> = movieDetailMutableLiveData
+    private val _movieDetail = MutableLiveData<Resource<MovieDetailUI>>()
+    internal val movieDetail: LiveData<Resource<MovieDetailUI>>
+        get() = _movieDetail.distinctUntilChanged()
 
-    private val movieReviewsMutableLiveData: MutableLiveData<Resource<MovieReviewListUI>> = MutableLiveData()
-    internal val movieReviewsLiveData: LiveData<Resource<MovieReviewListUI>> = movieReviewsMutableLiveData
+    private val _movieReviews = MutableLiveData<Resource<MovieReviewListUI>>()
+    internal val movieReviews: LiveData<Resource<MovieReviewListUI>>
+        get() = _movieReviews.distinctUntilChanged()
 
-    private val youtubeUrlMutableLiveData: MutableLiveData<Resource<String?>> = MutableLiveData()
-    internal val youtubeUrlLiveData: LiveData<Resource<String?>> = youtubeUrlMutableLiveData
+    private val _youtubeUrl = MutableLiveData<Resource<String?>>()
+    internal val youtubeUrl: LiveData<Resource<String?>>
+        get() = _youtubeUrl.distinctUntilChanged()
 
-    private val recommendationsMutableLiveData: MutableLiveData<Resource<List<MovieItemUI>>> = MutableLiveData()
-    internal val recommendationsLiveData: LiveData<Resource<List<MovieItemUI>>> = recommendationsMutableLiveData
+    private val _recommendations = MutableLiveData<Resource<List<MovieItemUI>>>()
+    internal val recommendations: LiveData<Resource<List<MovieItemUI>>>
+        get() = _recommendations.distinctUntilChanged()
 
     private val _genreMovies = MutableLiveData<Resource<MovieItemPagingUI>>()
     internal val genreMovies: LiveData<Resource<MovieItemPagingUI>>
         get() = _genreMovies.distinctUntilChanged()
+
+    internal val canLoadMoreGenreMovies: Boolean
+        get() = _genreMovies.isIdle() && !_genreMovies.isLastPage()
 
     fun getMovieDetailScreenData(movieId: Int) {
         getMovieDetail(movieId)
@@ -38,45 +44,45 @@ class MovieDetailViewModel : BaseViewModel() {
     }
 
     private fun getMovieDetail(movieId: Int) {
-        movieDetailMutableLiveData.postLoading()
+        _movieDetail.postLoading()
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val movieDetailAPI = repository.getMovieDetail(movieId)
                 val movieDetailUI = MapperUI.toMovieDetailUI(movieDetailAPI)
-                movieDetailMutableLiveData.postSuccess(movieDetailUI)
+                _movieDetail.postSuccess(movieDetailUI)
             } catch (exception: Exception) {
-                movieDetailMutableLiveData.postError(exception)
+                _movieDetail.postError(exception)
             }
         }
     }
 
     private fun getMovieReviews(movieId: Int, page: Int = 1) {
-        movieReviewsMutableLiveData.postLoading()
+        _movieReviews.postLoading()
         io({
-            movieReviewsMutableLiveData.postError(it)
+            _movieReviews.postError(it)
         }, {
             val movieReviewsAPI = repository.getMovieReviews(movieId, page)
             val movieReviewsUI = MapperUI.toMovieReviewsUI(movieReviewsAPI)
-            movieReviewsMutableLiveData.postSuccess(movieReviewsUI)
+            _movieReviews.postSuccess(movieReviewsUI)
         })
     }
 
     private fun getYouTubeUrl(movieId: Int) {
         io {
             val movieVideosAPI = repository.getMovieVideos(movieId)
-            youtubeUrlMutableLiveData.postSuccess(MapperUI.toYoutubeUrl(movieVideosAPI))
+            _youtubeUrl.postSuccess(MapperUI.toYoutubeUrl(movieVideosAPI))
         }
     }
 
     private fun getMovieRecommendations(movieId: Int, page: Int = 1) {
-        recommendationsMutableLiveData.postLoading()
+        _recommendations.postLoading()
         io({
-            recommendationsMutableLiveData.postError(it)
+            _recommendations.postError(it)
         }, {
             val movies = repository.getMovieRecommendations(movieId, page).results
                     .take(10)
                     .map { MapperUI.toMovieItemUI(it) }
-            recommendationsMutableLiveData.postSuccess(movies)
+            _recommendations.postSuccess(movies)
         })
     }
 
@@ -88,18 +94,9 @@ class MovieDetailViewModel : BaseViewModel() {
         io({
             _genreMovies.postError(it)
         }, {
-            val nextPage = _genreMovies.value?.data?.let { it.page + 1 }
-                    ?: TmdbApi.TMDB_STARTING_PAGE_INDEX
-            val api = repository.searchMovies(genre, nextPage)
+            val api = repository.searchMovies(genre, _genreMovies.nextPage())
             val ui = MapperUI.toMovieItemPagingUI(api)
-            // append results
-            val appendedResults = _genreMovies.value?.data?.results.orEmpty().toMutableList()
-                    .let {
-                        it.addAll(ui.results)
-                        // remove duplicated items, 21note
-                        it.distinctBy { movie -> movie.id }
-                    }
-            _genreMovies.postSuccess(ui.copy(results = appendedResults))
+            _genreMovies.postSuccess(ui.copy(results = _genreMovies.appendResults(ui.results)))
         })
     }
 }

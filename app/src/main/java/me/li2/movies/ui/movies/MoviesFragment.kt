@@ -70,7 +70,7 @@ class MoviesFragment : BaseFragment() {
                 .throttleFirstShort() // avoid duplicate API calls, 21note
                 .subscribe {
                     // don't load next page if it's in requesting, or error, or already on the last page. 21note
-                    if (pagingAdapter.isIdleAndNotLastPage) {
+                    if (viewModel.canLoadMoreGenreMovies) {
                         viewModel.searchGenreMovies(args.genre)
                     }
                 }

@@ -52,9 +52,6 @@ class PagingItemAdapter : RecyclerView.Adapter<PagingItemViewHolder>() {
             }
         }
 
-    val isIdleAndNotLastPage: Boolean
-        get() = !displayLoadStateAsItem(pagingState)
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagingItemViewHolder {
         return PagingItemViewHolder.create(parent, retryPublish)
     }

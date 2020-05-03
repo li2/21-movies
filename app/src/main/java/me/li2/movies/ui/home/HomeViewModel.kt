@@ -6,21 +6,26 @@ import me.li2.android.common.arch.Resource
 import me.li2.movies.base.BaseViewModel
 import me.li2.movies.data.model.MapperUI
 import me.li2.movies.data.model.MovieItemUI
+import me.li2.movies.util.distinctUntilChanged
 import me.li2.movies.util.ioWithLiveData
 
 class HomeViewModel : BaseViewModel() {
 
-    private val topMoviesMutableLiveData: MutableLiveData<Resource<List<MovieItemUI>?>> = MutableLiveData()
-    internal val topMoviesLiveData: LiveData<Resource<List<MovieItemUI>?>> = topMoviesMutableLiveData
+    private val _topMovies = MutableLiveData<Resource<List<MovieItemUI>?>>()
+    internal val topMovies: LiveData<Resource<List<MovieItemUI>?>>
+        get() = _topMovies.distinctUntilChanged()
 
-    private val nowPlayingMoviesMutableLiveData: MutableLiveData<Resource<List<MovieItemUI>?>> = MutableLiveData()
-    internal val nowPlayingMoviesLiveData: LiveData<Resource<List<MovieItemUI>?>> = nowPlayingMoviesMutableLiveData
+    private val _nowPlayingMovies = MutableLiveData<Resource<List<MovieItemUI>?>>()
+    internal val nowPlaying: LiveData<Resource<List<MovieItemUI>?>>
+        get() = _nowPlayingMovies.distinctUntilChanged()
 
-    private val upcomingMoviesMutableLiveData: MutableLiveData<Resource<List<MovieItemUI>?>> = MutableLiveData()
-    internal val upcomingMoviesLiveData: LiveData<Resource<List<MovieItemUI>?>> = upcomingMoviesMutableLiveData
+    private val _upcomingMovies = MutableLiveData<Resource<List<MovieItemUI>?>>()
+    internal val upcomingMovies: LiveData<Resource<List<MovieItemUI>?>>
+        get() = _upcomingMovies.distinctUntilChanged()
 
-    private val popularMoviesMutableLiveData: MutableLiveData<Resource<List<MovieItemUI>?>> = MutableLiveData()
-    internal val popularMoviesLiveData: LiveData<Resource<List<MovieItemUI>?>> = popularMoviesMutableLiveData
+    private val _popularMovies = MutableLiveData<Resource<List<MovieItemUI>?>>()
+    internal val popularMovies: LiveData<Resource<List<MovieItemUI>?>>
+        get() = _popularMovies.distinctUntilChanged()
 
     init {
         getHomeScreenData()
@@ -34,7 +39,7 @@ class HomeViewModel : BaseViewModel() {
     }
 
     private fun getTopMovies(page: Int, forceRefresh: Boolean = false) {
-        ioWithLiveData(topMoviesMutableLiveData, forceRefresh) {
+        ioWithLiveData(_topMovies, forceRefresh) {
             repository.getTopMovies(page).results.take(MAXIMUM_DISPLAY_MOVIES + 3).takeLast(MAXIMUM_DISPLAY_MOVIES).map {
                 MapperUI.toMovieItemUI(it)
             }
@@ -42,7 +47,7 @@ class HomeViewModel : BaseViewModel() {
     }
 
     private fun getNowPlayingMovies(page: Int, forceRefresh: Boolean = false) {
-        ioWithLiveData(nowPlayingMoviesMutableLiveData, forceRefresh) {
+        ioWithLiveData(_nowPlayingMovies, forceRefresh) {
             repository.getNowPlayingMovies(page).results.take(MAXIMUM_DISPLAY_MOVIES).map {
                 MapperUI.toMovieItemUI(it)
             }
@@ -50,7 +55,7 @@ class HomeViewModel : BaseViewModel() {
     }
 
     private fun getUpcomingMovies(page: Int, forceRefresh: Boolean = false) {
-        ioWithLiveData(upcomingMoviesMutableLiveData, forceRefresh) {
+        ioWithLiveData(_upcomingMovies, forceRefresh) {
             repository.getUpcomingMovies(page).results.take(MAXIMUM_DISPLAY_MOVIES).map {
                 MapperUI.toMovieItemUI(it)
             }
@@ -58,7 +63,7 @@ class HomeViewModel : BaseViewModel() {
     }
 
     private fun getPopularMovies(page: Int, forceRefresh: Boolean = false) {
-        ioWithLiveData(popularMoviesMutableLiveData, forceRefresh) {
+        ioWithLiveData(_popularMovies, forceRefresh) {
             repository.getPopularMovies(page).results.take(MAXIMUM_DISPLAY_MOVIES).map {
                 MapperUI.toMovieItemUI(it)
             }

@@ -85,23 +85,23 @@ class HomeFragment : BaseFragment(), ViewPager2AutoScrollHelper, RootViewStore {
     }
 
     override fun renderUI() = with(viewModel) {
-        observeOnView(topMoviesLiveData) {
+        observeOnView(topMovies) {
             binding.movieCarouselItems = it.data
             binding.movieCarouselPagerIndicator.count = it.data?.size.orZero()
             bindLoadingStatus(it)
         }
 
-        observeOnView(nowPlayingMoviesLiveData) {
+        observeOnView(nowPlaying) {
             binding.nowPlayingItems = it.data
             bindLoadingStatus(it)
         }
 
-        observeOnView(upcomingMoviesLiveData) {
+        observeOnView(upcomingMovies) {
             binding.upcomingItems = it.data
             bindLoadingStatus(it)
         }
 
-        observeOnView(popularMoviesLiveData) {
+        observeOnView(popularMovies) {
             binding.popularItems = it.data
             bindLoadingStatus(it)
         }

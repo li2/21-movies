@@ -91,23 +91,23 @@ class MovieDetailFragment : BaseFragment(), RootViewStore {
     }
 
     override fun renderUI() = with(viewModel) {
-        observeOnView(movieDetailLiveData) {
+        observeOnView(movieDetail) {
             binding.movieDetail = it.data
             bindLoadingStatus(it)
         }
 
-        observeOnView(movieReviewsLiveData) {
+        observeOnView(movieReviews) {
             binding.reviews = it.data?.reviews?.take(MAXIMUM_REVIEWS)
             binding.reviewsCount = it.data?.totalResults
             bindLoadingStatus(it)
         }
 
-        observeOnView(youtubeUrlLiveData) {
+        observeOnView(youtubeUrl) {
             binding.youtubeUrl = it.data
             bindLoadingStatus(it)
         }
 
-        observeOnView(recommendationsLiveData) {
+        observeOnView(recommendations) {
             binding.recommendations = it.data
             bindLoadingStatus(it)
         }
