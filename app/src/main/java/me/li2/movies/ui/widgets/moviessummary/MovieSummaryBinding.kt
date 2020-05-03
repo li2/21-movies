@@ -4,10 +4,10 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.HORIZONTAL
+import me.li2.android.common.number.dpToPx
+import me.li2.android.view.list.DividerItemDecoration
 import me.li2.android.view.list.LinearSpacingDecoration
 import me.li2.movies.data.model.MovieItemUI
-import me.li2.movies.util.DividerItemDecoration
-import me.li2.movies.util.dpToPx
 
 object MovieSummaryBinding {
     @JvmStatic

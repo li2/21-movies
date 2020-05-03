@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import io.reactivex.BackpressureStrategy
 import io.reactivex.subjects.PublishSubject
+import me.li2.android.view.list.CarouselPagerHelper
 import me.li2.movies.data.model.MovieItemUI
-import me.li2.movies.util.CarouselPagerHelper
 
 class MovieCarouselAdapter : ListAdapter<MovieItemUI, MovieCarouselItemViewHolder>(DIFF_CALLBACK), CarouselPagerHelper {
 
@@ -26,7 +26,7 @@ class MovieCarouselAdapter : ListAdapter<MovieItemUI, MovieCarouselItemViewHolde
         viewHolder.bind(getItem(dataPosition), dataPosition)
     }
 
-    override fun getItemCount() = getCarouselDisplayedSize()
+    override fun getItemCount() = getCarouselDisplaySize()
 
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<MovieItemUI>() {

@@ -11,7 +11,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.0-beta04'
+        classpath 'com.android.tools.build:gradle:4.0.0-beta05'
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
         classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.9.6"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
@@ -35,9 +35,10 @@ allprojects {
         androidTargetSdk_version = 29
 
         //MARK: My Libraries Dependencies --------------------------------------
-        vLi2Common = '0.1.10'
+        vLi2Common = '0.1.11'
         vLi2Network = '0.1.2'
-        vLi2View = '0.1.4'
+//        vLi2View = '0.1.4'
+        vLi2View = 'e5bbebe6'
         vLi2Datetime = '0.1.0'
 
         //MARK: The following are Test libs ------------------------------------

@@ -2,11 +2,11 @@ package me.li2.movies.util
 
 import android.view.View
 
-interface KeepRootViewAware {
+interface RootViewStore {
     var rootView: View?
     var hasInitializedRootView: Boolean
 
-    fun saveRootViewIfNeeded(saver: () -> View): View? {
+    fun createRootViewIfNeeded(saver: () -> View): View? {
         if (rootView == null) {
             rootView = saver()
         }

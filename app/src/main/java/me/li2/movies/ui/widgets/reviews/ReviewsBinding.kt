@@ -4,8 +4,8 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.VERTICAL
+import me.li2.android.view.list.DividerItemDecoration
 import me.li2.movies.data.model.MovieReviewUI
-import me.li2.movies.util.DividerItemDecoration
 
 object ReviewsBinding {
     @JvmStatic

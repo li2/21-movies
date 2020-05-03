@@ -5,16 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import me.li2.android.common.arch.Resource
-import me.li2.android.common.arch.postError
-import me.li2.android.common.arch.postLoading
-import me.li2.android.common.arch.postSuccess
+import me.li2.android.common.arch.*
 import me.li2.movies.base.BaseViewModel
 import me.li2.movies.data.model.*
 import me.li2.movies.data.remote.TmdbApi
 import me.li2.movies.util.distinctUntilChanged
 import me.li2.movies.util.io
-import me.li2.movies.util.isRequestInProgress
 
 class MovieDetailViewModel : BaseViewModel() {
 
@@ -85,7 +81,7 @@ class MovieDetailViewModel : BaseViewModel() {
     }
 
     fun searchGenreMovies(genre: String) {
-        if (_genreMovies.isRequestInProgress()) {
+        if (_genreMovies.isLoading()) {
             return
         }
         _genreMovies.postLoading()

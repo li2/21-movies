@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.rxkotlin.plusAssign
 import me.li2.android.common.arch.observeOnView
 import me.li2.android.common.rx.throttleFirstShort
+import me.li2.android.view.list.DividerItemDecoration
+import me.li2.android.view.list.onScrolledBottom
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.data.model.MapperUI
@@ -20,9 +22,7 @@ import me.li2.movies.databinding.MoviesFragmentBinding
 import me.li2.movies.ui.moviedetail.MovieDetailViewModel
 import me.li2.movies.ui.widgets.moviessummary.MovieSummaryVAdapter
 import me.li2.movies.ui.widgets.paging.PagingItemAdapter
-import me.li2.movies.util.DividerItemDecoration
 import me.li2.movies.util.navigate
-import me.li2.movies.util.onScrolledBottom
 import me.li2.movies.util.setToolbarTitle
 
 class MoviesFragment : BaseFragment() {

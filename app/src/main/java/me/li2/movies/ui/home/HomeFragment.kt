@@ -14,7 +14,12 @@ import me.li2.android.common.arch.Resource
 import me.li2.android.common.arch.Resource.Status.ERROR
 import me.li2.android.common.arch.Resource.Status.LOADING
 import me.li2.android.common.arch.observeOnView
+import me.li2.android.common.number.dpToPx
 import me.li2.android.common.number.orZero
+import me.li2.android.view.list.CardPageTransformer
+import me.li2.android.view.list.ViewPager2AutoScrollHelper
+import me.li2.android.view.list.ignorePullToRefresh
+import me.li2.android.view.list.showPartialLeftAndRightPages
 import me.li2.android.view.popup.toast
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
@@ -22,11 +27,13 @@ import me.li2.movies.data.model.MovieItemUI
 import me.li2.movies.databinding.HomeFragmentBinding
 import me.li2.movies.ui.widgets.moviescarousel.MovieCarouselAdapter
 import me.li2.movies.ui.widgets.moviessummary.MovieSummaryHAdapter
-import me.li2.movies.util.*
+import me.li2.movies.util.RootViewStore
+import me.li2.movies.util.navigate
+import me.li2.movies.util.setViewPager2
 import timber.log.Timber.e
 import java.util.concurrent.TimeUnit
 
-class HomeFragment : BaseFragment(), ViewPager2AutoScrollHelper, KeepRootViewAware {
+class HomeFragment : BaseFragment(), ViewPager2AutoScrollHelper, RootViewStore {
     private lateinit var binding: HomeFragmentBinding
     private val viewModel by activityViewModels<HomeViewModel>()
 
@@ -41,24 +48,24 @@ class HomeFragment : BaseFragment(), ViewPager2AutoScrollHelper, KeepRootViewAwa
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return saveRootViewIfNeeded {
+        return createRootViewIfNeeded {
             binding = DataBindingUtil.inflate(inflater, R.layout.home_fragment, container, false)
             binding.root
         }
     }
 
     override fun initUi(view: View, savedInstanceState: Bundle?) {
-        viewLifecycleOwner.lifecycle.addObserver(this)
-
         initializeRootViewIfNeeded {
             binding.executePendingBindings()
             binding.movieCarouselViewPager.ignorePullToRefresh(binding.swipeRefreshLayout)
+            binding.movieCarouselViewPager.showPartialLeftAndRightPages(
+                    offset = 48.dpToPx(requireContext()),
+                    pageMargin = 18.dpToPx(requireContext()),
+                    transformer = CardPageTransformer(0.85f))
             binding.movieCarouselPagerIndicator.setViewPager2(binding.movieCarouselViewPager)
-
-            val offsetPx = 48.dpToPx(requireContext())
-            val pageMarginPx = 18.dpToPx(requireContext())
-            binding.movieCarouselViewPager.showPartialLeftAndRightPages(offsetPx, pageMarginPx, CardPageTransformer(0.85f))
         }
+
+        addAutoScrollTaskObserver(viewLifecycleOwner)
 
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.getHomeScreenData(true)

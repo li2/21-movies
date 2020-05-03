@@ -1,16 +1,21 @@
 package me.li2.movies.util
 
+import android.content.Context
+import android.content.Intent
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
-import me.li2.android.common.arch.Resource
 import me.li2.movies.R
+
+fun Context.watchYoutubeVideo(url: String) {
+    startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
+}
 
 /*
     app:enterAnim="@anim/slide_in_right"
@@ -41,7 +46,3 @@ fun Fragment.setToolbarTitle(title: String) {
 @Suppress("NOTHING_TO_INLINE")
 inline fun <X> LiveData<X>.distinctUntilChanged(): LiveData<X> =
         Transformations.distinctUntilChanged(this)
-
-fun<T> MutableLiveData<Resource<T>>.isRequestInProgress(): Boolean {
-    return value?.status == Resource.Status.LOADING
-}

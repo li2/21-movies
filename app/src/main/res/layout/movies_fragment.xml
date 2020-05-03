@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            app:layout_behavior="me.li2.movies.util.OverScrollBounceBehavior"
+            app:layout_behavior="@string/viewlib_overscroll_bounce_behavior"
             tools:listitem="@layout/movie_summary_v_item_view" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -40,7 +40,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <me.li2.movies.util.VerticalScrollView
+        <me.li2.android.view.list.VerticalScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true">
@@ -204,7 +204,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </me.li2.movies.util.VerticalScrollView>
+        </me.li2.android.view.list.VerticalScrollView>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

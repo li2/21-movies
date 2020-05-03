@@ -20,12 +20,12 @@ import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.MovieDetailFragmentBinding
 import me.li2.movies.ui.widgets.moviessummary.MovieSummaryHAdapter
-import me.li2.movies.util.KeepRootViewAware
+import me.li2.movies.util.RootViewStore
 import me.li2.movies.util.navigate
 import me.li2.movies.util.watchYoutubeVideo
 import timber.log.Timber.e
 
-class MovieDetailFragment : BaseFragment(), KeepRootViewAware {
+class MovieDetailFragment : BaseFragment(), RootViewStore {
 
     private lateinit var binding: MovieDetailFragmentBinding
     private val args by navArgs<MovieDetailFragmentArgs>()
@@ -44,7 +44,7 @@ class MovieDetailFragment : BaseFragment(), KeepRootViewAware {
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return saveRootViewIfNeeded {
+        return createRootViewIfNeeded {
             binding = DataBindingUtil.inflate(inflater, R.layout.movie_detail_fragment, container, false)
             binding.root
         }
