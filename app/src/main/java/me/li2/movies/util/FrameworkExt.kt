@@ -13,6 +13,10 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import me.li2.movies.R
 
+fun doNothing() {
+    // do nothing
+}
+
 fun Context.watchYoutubeVideo(url: String) {
     startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
 }

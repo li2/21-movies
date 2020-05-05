@@ -161,7 +161,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime:$androidx_lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$androidx_lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$androidx_lifecycle_version"
-
     //Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
@@ -194,6 +193,14 @@ dependencies {
 
     //MARK: The following are Network libs ------------------------------------------------------------------
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
+
+
+    //MARK: The following are Database libs ------------------------------------------------------------------
+    implementation "androidx.room:room-runtime:$androidx_room_version"
+    implementation "androidx.room:room-ktx:$androidx_room_version"
+    kapt "androidx.room:room-compiler:$androidx_room_version"
+    debugImplementation "com.amitshekhar.android:debug-db:$debug_db_version"
+
 
     //MARK: The following are Rx libs -----------------------------------------------------------------------
     //Rx Java

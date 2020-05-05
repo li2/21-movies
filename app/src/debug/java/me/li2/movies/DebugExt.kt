@@ -1,6 +1,7 @@
 package me.li2.movies
 
 import android.os.Build
+import com.amitshekhar.DebugDB
 import com.facebook.stetho.Stetho
 import timber.log.Timber
 
@@ -21,4 +22,8 @@ private fun setupTimber() {
             return "[${super.createStackElementTag(element)}#${element.methodName}:${element.lineNumber}]"
         }
     })
+}
+
+fun setupDebugDB() {
+    DebugDB.getAddressLog()
 }

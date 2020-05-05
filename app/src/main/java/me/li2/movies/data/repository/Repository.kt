@@ -1,7 +1,7 @@
 package me.li2.movies.data.repository
 
 import me.li2.movies.App
-import me.li2.movies.data.local.DBDataSource
+import me.li2.movies.data.local.LocalDataSource
 import me.li2.movies.data.remote.TmdbDataSource
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
@@ -10,7 +10,7 @@ import org.kodein.di.generic.instance
 class Repository : KodeinAware {
     override val kodein by kodein(App.context)
     private val tmdbDataSource by instance<TmdbDataSource>()
-    private val dbDataSource by instance<DBDataSource>()
+    val localDataSource by instance<LocalDataSource>()
 
     suspend fun getTopMovies(page: Int) = tmdbDataSource.getTopMoviesAsync(page).await()
 
