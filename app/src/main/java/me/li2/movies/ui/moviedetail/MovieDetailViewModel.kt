@@ -44,20 +44,8 @@ class MovieDetailViewModel : BaseViewModel() {
     }
 
     private fun getMovieDetail(movieId: Int) {
-        _movieDetail.postLoading()
         viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val result = repository.localDataSource.getMovieDetail(movieId)
-                        ?: MapperUI.toMovieDetailUI(repository.getMovieDetail(movieId)).also {
-                            repository.localDataSource.saveMovieDetail(it)
-                        }
-                _movieDetail.postSuccess(result)
-//                val movieDetailAPI = repository.getMovieDetail(movieId)
-//                val movieDetailUI = MapperUI.toMovieDetailUI(movieDetailAPI)
-//                _movieDetail.postSuccess(movieDetailUI)
-            } catch (exception: Exception) {
-                _movieDetail.postError(exception)
-            }
+            repository.getMovieDetail(movieId, _movieDetail)
         }
     }
 
