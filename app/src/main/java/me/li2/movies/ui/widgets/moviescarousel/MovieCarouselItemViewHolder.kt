@@ -19,7 +19,7 @@ class MovieCarouselItemViewHolder(binding: MovieCarouselItemViewBinding,
         binding.root
                 .clicks()
                 .throttleFirstShort()
-                .map { Pair(binding.ivPoster, item) }
+                .map { Pair(binding.posterImageView, item) }
                 .subscribe(itemClicks)
     }
 

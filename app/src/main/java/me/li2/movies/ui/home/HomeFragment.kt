@@ -62,7 +62,7 @@ class HomeFragment : BaseFragment(), ViewPager2AutoScrollHelper, RootViewStore {
             binding.executePendingBindings()
             binding.movieCarouselViewPager.ignorePullToRefresh(binding.swipeRefreshLayout)
             binding.movieCarouselViewPager.showPartialLeftAndRightPages(
-                    offset = 48.dpToPx(requireContext()),
+                    offset = 64.dpToPx(requireContext()),
                     pageMargin = 18.dpToPx(requireContext()),
                     transformer = CardPageTransformer(0.85f))
             binding.movieCarouselPagerIndicator.setViewPager2(binding.movieCarouselViewPager)

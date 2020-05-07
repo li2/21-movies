@@ -21,6 +21,6 @@
 <set xmlns:android="http://schemas.android.com/apk/res/android">
     <translate android:fromXDelta="0" android:toXDelta="100%p"
         android:duration="?attr/navAnimTime"/>
-<!--    <alpha android:fromAlpha="1.0" android:toAlpha="0.0"-->
-<!--        android:duration="?attr/navAnimTime" />-->
+    <alpha android:fromAlpha="1.0" android:toAlpha="0.0"
+        android:duration="?attr/navAnimTime" />
 </set>

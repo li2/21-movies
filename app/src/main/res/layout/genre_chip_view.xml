@@ -8,7 +8,7 @@
     android:elevation="4dp"
     android:textAppearance="?attr/textAppearanceBody2"
     android:textColor="?android:attr/textColorPrimary"
-    app:chipBackgroundColor="?attr/colorBackgroundFloating"
+    app:chipBackgroundColor="?attr/colorSurface"
     app:closeIcon="@drawable/ic_navigate_next"
     app:closeIconEnabled="true"
     app:closeIconTint="?android:attr/textColorPrimary"

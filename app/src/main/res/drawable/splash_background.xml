@@ -4,6 +4,6 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="?attr/icLogo" />
+            android:src="?attr/iconLogo" />
     </item>
 </layer-list>

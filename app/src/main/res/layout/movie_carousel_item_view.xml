@@ -13,7 +13,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cardElevation="8dp"
+        app:cardElevation="12dp"
         tools:layout_height="480dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,10 +22,10 @@
             android:background="?selectableItemBackground">
 
             <ImageView
-                android:id="@+id/iv_poster"
+                android:id="@+id/posterImageView"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:background="?attr/colorBackgroundFloating"
+                android:background="?attr/colorSurface"
                 android:src="@{item.posterUrl}"
                 app:centerCrop="@{true}"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -38,69 +38,28 @@
                 tools:srcCompat="@tools:sample/backgrounds/scenic[9]"
                 tools:targetApi="lollipop" />
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:background="@drawable/gradient_transparent_background"
-                app:layout_constraintBottom_toBottomOf="@id/iv_poster"
-                app:layout_constraintEnd_toEndOf="@id/iv_poster"
-                app:layout_constraintStart_toStartOf="@id/iv_poster"
-                app:layout_constraintTop_toTopOf="@id/iv_poster" />
-
-            <TextView
-                android:id="@+id/tv_title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:maxLines="2"
-                android:text="@{item.title}"
-                android:textAppearance="?attr/textAppearanceHeadline5"
-                android:textColor="?android:attr/textColorPrimary"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/guideline"
-                tools:text="Movie Name" />
-
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_rate"
+                android:id="@+id/rateTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:drawableStart="@drawable/ic_star"
+                android:alpha="0.7"
+                android:background="?android:attr/colorBackground"
+                android:drawableStart="@drawable/ic_star_16"
                 android:drawablePadding="8dp"
+                android:fontFamily="@font/eczar_semibold"
                 android:gravity="center"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
                 android:text="@{`` + item.voteAverage + ` · ` + item.releaseDate}"
-                android:textAppearance="?attr/textAppearanceBody2"
+                android:textAppearance="?attr/textAppearanceBody1"
                 android:textColor="?android:attr/textColorPrimary"
                 app:drawableTint="?attr/colorPrimary"
-                app:layout_constraintStart_toStartOf="@id/tv_title"
-                app:layout_constraintTop_toBottomOf="@id/tv_title"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 tools:text="8.7 · 2020-05-01" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:text="@{item.overview}"
-                android:textAppearance="?attr/textAppearanceBody2"
-                android:textColor="?android:attr/textColorPrimary"
-                app:layout_constraintEnd_toEndOf="@id/tv_title"
-                app:layout_constraintStart_toStartOf="@id/tv_title"
-                app:layout_constraintTop_toBottomOf="@id/tv_rate"
-                tools:text="A touching story of an Italian book seller of Jewish ancestry who lives in his own little fairy tale." />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.6" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
+
 </layout>

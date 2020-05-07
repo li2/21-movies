@@ -1,23 +1,24 @@
 <resources>
 
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!--Colors-->
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryDark">@color/background</item>
-        <item name="colorAccent">@color/primary</item>
-        <item name="colorTransparent">@android:color/transparent</item>
-        <item name="colorUnselected">@color/divider</item>
-        <item name="colorDivider">@color/divider</item>
-        <item name="colorError">@color/error</item>
+        <!--UI Colors-->
         <item name="android:windowBackground">@color/background</item>
         <item name="android:colorBackground">@color/background</item>
-        <item name="colorBackgroundFloating">@color/background_floating</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/background</item> <!--statusBar-->
+        <item name="colorAccent">@color/primary</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorError">@color/error</item>
+        <item name="colorTransparent">@android:color/transparent</item>
+        <item name="colorUnselected">@color/divider</item>
+        <item name="colorListDivider">@color/divider</item>
+        <!--Text Colors-->
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorSecondary">@color/white_50</item>
         <item name="android:textColorLink">@color/primary</item>
 
         <!--Drawables-->
-        <item name="icLogo">@drawable/ic_logo</item>
+        <item name="iconLogo">@drawable/ic_logo</item>
         <item name="android:listDivider">@drawable/list_divider</item>
 
         <!--Nav Animation-->
