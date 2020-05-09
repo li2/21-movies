@@ -81,10 +81,6 @@ class MovieDetailFragment : BaseFragment(), RootViewStore {
             navigate(MovieDetailFragmentDirections.showGenreMoviesList(genre.name))
         }
 
-        compositeDisposable += binding.reviewsCountTextView.clicks().throttleFirstShort().subscribe {
-            toast("todo: show all reviews")
-        }
-
         compositeDisposable += (binding.recommendationsRecyclerView.adapter as MovieSummaryHAdapter).itemClicks.subscribe { (_, movieItem) ->
             navigate(MovieDetailFragmentDirections.showMovieDetail(movieItem))
         }
@@ -97,8 +93,7 @@ class MovieDetailFragment : BaseFragment(), RootViewStore {
         }
 
         observeOnView(movieReviews) {
-            binding.reviews = it.data?.reviews?.take(MAXIMUM_REVIEWS)
-            binding.reviewsCount = it.data?.totalResults
+            binding.reviews = it.data
             bindLoadingStatus(it)
         }
 

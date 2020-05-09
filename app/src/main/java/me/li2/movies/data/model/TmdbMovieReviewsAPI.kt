@@ -6,7 +6,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class TmdbMovieReviewListAPI(
         @Json(name = "id")
-        val id: Int,
+        val movieId: Int,
         @Json(name = "page")
         val page: Int,
         @Json(name = "results")

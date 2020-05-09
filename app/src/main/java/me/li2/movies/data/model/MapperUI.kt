@@ -58,7 +58,10 @@ object MapperUI {
 
     fun toMovieReviewsUI(api: TmdbMovieReviewListAPI) = MovieReviewListUI(
             reviews = api.results.map {
-                MovieReviewUI(id = it.id, author = it.author, content = it.content)
+                MovieReviewUI(id = it.id,
+                        movieId = api.movieId,
+                        author = it.author,
+                        content = it.content)
             },
             page = api.page,
             totalPages = api.totalPages,
