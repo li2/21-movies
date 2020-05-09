@@ -71,9 +71,10 @@
                     android:id="@+id/backdropImageView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="?android:attr/colorBackground"
                     android:src="@{movieItem.backdropUrl}"
                     app:centerCrop="@{true}"
-                    app:placeHolder="@{@drawable/ic_backdrop_placeholder}"
+                    app:placeHolder="@{@drawable/ic_film}"
                     tools:ignore="ContentDescription"
                     tools:scaleType="centerCrop"
                     tools:src="@tools:sample/backgrounds/scenic[9]" />
@@ -125,7 +126,7 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="?attr/colorSurface"
+                        android:background="?android:attr/colorBackground"
                         android:src="@{movieItem.posterUrl}"
                         app:centerCrop="@{true}"
                         app:errorPlaceholder="@{@drawable/ic_film}"

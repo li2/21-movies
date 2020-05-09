@@ -21,7 +21,7 @@
             android:id="@+id/posterImageView"
             android:layout_width="80dp"
             android:layout_height="0dp"
-            android:background="?attr/colorSurface"
+            android:background="?android:attr/colorBackground"
             android:src="@{item.posterUrl}"
             app:centerCrop="@{true}"
             app:errorPlaceholder="@{@drawable/ic_film}"
@@ -31,7 +31,6 @@
             app:placeHolder="@{@drawable/ic_film}"
             tools:ignore="ContentDescription"
             tools:scaleType="centerCrop"
-            tools:src="@tools:sample/avatars"
             tools:srcCompat="@tools:sample/backgrounds/scenic"
             tools:targetApi="lollipop" />
 
