@@ -208,8 +208,6 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxkotlin:$rxKotlin_version"
     //Rx Binding
     implementation "com.jakewharton.rxbinding3:rxbinding:$rxbinding3_version"
-    //Rx Gallery
-    implementation "com.github.marchinram:RxGallery:$rxImagePicker_version"
 
 
     //MARK: The following are 3rd Utility libs --------------------------------------------------------------
@@ -223,11 +221,6 @@ dependencies {
     //Timber
     implementation "com.jakewharton.timber:timber:$timber_version"
     implementation 'com.romandanylyk:pageindicatorview:1.0.3'
-
-    //MARK: Video Player libs -------------------------------------------------------------------------------
-    implementation "im.ene.toro3:toro:$toro_video_list_version"
-    implementation "im.ene.toro3:toro-ext-exoplayer:$toro_video_list_version"
-    implementation "com.google.android.exoplayer:exoplayer:$google_exoplayer_version"
 }
 
 apply plugin: 'kotlin-allopen'
