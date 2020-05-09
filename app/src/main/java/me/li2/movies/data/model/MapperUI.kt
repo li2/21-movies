@@ -67,9 +67,13 @@ object MapperUI {
             totalPages = api.totalPages,
             totalResults = api.totalResults)
 
-    fun toYoutubeUrl(api: TmdbMovieVideoListAPI): String? {
-        val key = api.results.firstOrNull { it.site.equals("youtube", true) }?.key
-        return TmdbApi.youtubeTrailerUrl(key)
+    fun toTrailer(api: TmdbMovieVideoListAPI): Trailer? {
+        val youtubeApi = api.results.firstOrNull { it.site.equals("youtube", true) }
+        return youtubeApi?.let {
+            TmdbApi.youtubeTrailerUrl(it.path)?.let { url ->
+                Trailer(id = it.id, movieId = api.movieId, url = url)
+            }
+        }
     }
 
     fun toPagingState(resource: Resource<MovieItemPagingUI>): PagingState {

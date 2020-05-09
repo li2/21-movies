@@ -6,7 +6,7 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
-import me.li2.movies.data.local.AppDatabase
+import me.li2.movies.data.local.AppDatabase.Companion.TABLE_REVIEWS
 
 @Parcelize
 data class MovieReviewListUI(
@@ -17,7 +17,7 @@ data class MovieReviewListUI(
 ) : Parcelable
 
 @Parcelize
-@Entity(tableName = AppDatabase.TABLE_REVIEWS,
+@Entity(tableName = TABLE_REVIEWS,
         indices = [Index(value = ["movie_id"], unique = false)])
 data class MovieReviewUI(
         @PrimaryKey

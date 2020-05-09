@@ -5,10 +5,10 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class TmdbMovieVideoListAPI(
-    @Json(name = "id")
-    val id: Int,
-    @Json(name = "results")
-    val results: List<TmdbMovieVideoAPI>
+        @Json(name = "id")
+        val movieId: Int,
+        @Json(name = "results")
+        val results: List<TmdbMovieVideoAPI>
 )
 
 @JsonClass(generateAdapter = true)
@@ -20,7 +20,7 @@ data class TmdbMovieVideoAPI(
         @Json(name = "iso_639_1")
         val iso6391: String,
         @Json(name = "key")
-        val key: String,
+        val path: String,
         @Json(name = "name")
         val name: String,
         @Json(name = "site")

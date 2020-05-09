@@ -49,16 +49,16 @@ interface TmdbApi {
         /**
          * @see <a href="https://developers.themoviedb.org/3/getting-started/images">Images</a>
          */
-        fun imageW500Url(key: String?): String? {
-            return if (!key.isNullOrEmpty()) "https://image.tmdb.org/t/p/w500/$key" else null
+        fun imageW500Url(path: String?): String? {
+            return if (!path.isNullOrEmpty()) "https://image.tmdb.org/t/p/w500/$path" else null
         }
 
-        fun imageOriginalUrl(key: String?): String? {
-            return if (!key.isNullOrEmpty()) "https://image.tmdb.org/t/p/original/$key" else null
+        fun imageOriginalUrl(path: String?): String? {
+            return if (!path.isNullOrEmpty()) "https://image.tmdb.org/t/p/original/$path" else null
         }
 
-        fun youtubeTrailerUrl(key: String?): String? {
-            return if (!key.isNullOrEmpty()) "https://www.youtube.com/watch?v=$key" else null
+        fun youtubeTrailerUrl(path: String?): String? {
+            return if (!path.isNullOrEmpty()) "https://www.youtube.com/watch?v=$path" else null
         }
 
         fun imdbUrl(imdbId: String?): String? {

@@ -97,8 +97,8 @@ class MovieDetailFragment : BaseFragment(), RootViewStore {
             bindLoadingStatus(it)
         }
 
-        observeOnView(youtubeUrl) {
-            binding.youtubeUrl = it.data
+        observeOnView(movieTrailerUrl) {
+            binding.youtubeUrl = it.data?.url
             bindLoadingStatus(it)
         }
 

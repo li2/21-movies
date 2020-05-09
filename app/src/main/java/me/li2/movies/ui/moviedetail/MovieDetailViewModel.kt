@@ -21,9 +21,9 @@ class MovieDetailViewModel : BaseViewModel() {
     internal val movieReviews: LiveData<Resource<List<MovieReviewUI>>>
         get() = _movieReviews.distinctUntilChanged()
 
-    private val _youtubeUrl = MutableLiveData<Resource<String?>>()
-    internal val youtubeUrl: LiveData<Resource<String?>>
-        get() = _youtubeUrl.distinctUntilChanged()
+    private val _movieTrailerUrl = MutableLiveData<Resource<Trailer?>>()
+    internal val movieTrailerUrl: LiveData<Resource<Trailer?>>
+        get() = _movieTrailerUrl.distinctUntilChanged()
 
     private val _recommendations = MutableLiveData<Resource<List<MovieItemUI>>>()
     internal val recommendations: LiveData<Resource<List<MovieItemUI>>>
@@ -39,7 +39,7 @@ class MovieDetailViewModel : BaseViewModel() {
     fun getMovieDetailScreenData(movieId: Int) {
         getMovieDetail(movieId)
         getMovieReviews(movieId)
-        getYouTubeUrl(movieId)
+        getMovieTrailer(movieId)
         getMovieRecommendations(movieId)
     }
 
@@ -55,10 +55,9 @@ class MovieDetailViewModel : BaseViewModel() {
         }
     }
 
-    private fun getYouTubeUrl(movieId: Int) {
-        io {
-            val movieVideosAPI = repository.getMovieVideos(movieId)
-            _youtubeUrl.postSuccess(MapperUI.toYoutubeUrl(movieVideosAPI))
+    private fun getMovieTrailer(movieId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.getMovieTrailer(movieId, _movieTrailerUrl)
         }
     }
 

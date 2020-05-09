@@ -7,6 +7,7 @@ import me.li2.movies.data.local.LocalDataSource
 import me.li2.movies.data.model.MapperUI
 import me.li2.movies.data.model.MovieDetailUI
 import me.li2.movies.data.model.MovieReviewUI
+import me.li2.movies.data.model.Trailer
 import me.li2.movies.data.remote.TmdbApi
 import me.li2.movies.data.remote.TmdbDataSource
 import me.li2.movies.util.RateLimiter
@@ -57,7 +58,24 @@ class Repository : KodeinAware {
         }.load()
     }
 
-    suspend fun getMovieVideos(movieId: Int) = tmdbDataSource.getMovieVideosAsync(movieId).await()
+    suspend fun getMovieTrailer(movieId: Int, result: MutableLiveData<Resource<Trailer?>>) {
+        object : NetworkBoundResource<Trailer?>(result) {
+            override suspend fun loadFromDb() = localDataSource.getTrailer(movieId)
+
+            override fun shouldFetch(data: Trailer?) = data == null
+
+            override suspend fun fetch(): Trailer? {
+                val apiResponse = tmdbDataSource.getMovieVideosAsync(movieId).await()
+                return MapperUI.toTrailer(apiResponse)
+            }
+
+            override suspend fun saveFetchResult(data: Trailer?) {
+                data?.let {
+                    localDataSource.insertTrailer(data)
+                }
+            }
+        }.load()
+    }
 
     suspend fun getMovieReviews(movieId: Int,
                                 result: MutableLiveData<Resource<List<MovieReviewUI>>>) {
