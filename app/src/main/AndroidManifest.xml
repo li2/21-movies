@@ -28,9 +28,6 @@
             </intent-filter>
         </activity>
         <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="30db228191dfe9c1b04215fa7692e468571bc2d1" />
-        <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 

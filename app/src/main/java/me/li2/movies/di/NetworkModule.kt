@@ -2,7 +2,7 @@ package me.li2.movies.di
 
 import me.li2.android.network.NetworkBuilder
 import me.li2.android.network.connectivity.NetworkMonitor
-import me.li2.movies.BuildConfig
+import me.li2.movies.AppBuildConfig
 import me.li2.movies.data.remote.TmdbApi
 import me.li2.movies.data.remote.TmdbRequestInterceptor
 import me.li2.movies.data.remote.TmdbResponseInterceptor
@@ -24,6 +24,6 @@ val networkModule = Kodein.Module("network module") {
                         TmdbRequestInterceptor(),
                         TmdbResponseInterceptor(instance())),
                 timeout = TmdbApi.TIMEOUT,
-                debug = BuildConfig.DEBUG)
+                debug = AppBuildConfig.DEBUG)
     }
 }

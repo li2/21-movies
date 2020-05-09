@@ -1,8 +1,8 @@
 package me.li2.movies
 
 import androidx.multidex.MultiDexApplication
-import com.crashlytics.android.Crashlytics
-import io.fabric.sdk.android.Fabric
+import me.li2.movies.AppBuildConfig.configCrashlytics
+import me.li2.movies.AppBuildConfig.configDebugLog
 import me.li2.movies.di.MainComponent.appModule
 import me.li2.movies.di.networkModule
 import me.li2.movies.util.Constants
@@ -20,10 +20,10 @@ class App : MultiDexApplication(), KodeinAware {
     override fun onCreate() {
         super.onCreate()
         context = this
-        configDebugBuild()
+        configDebugLog(this)
+        configCrashlytics()
         setupKodein()
         constants.init()
-        setupFabric()
     }
 
     private fun setupKodein() {
@@ -36,10 +36,6 @@ class App : MultiDexApplication(), KodeinAware {
                 addImport(it, true)
             }
         }
-    }
-
-    private fun setupFabric() {
-        Fabric.with(this, Crashlytics())
     }
 
     companion object {

@@ -5,10 +5,10 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import me.li2.movies.AppBuildConfig.configDebugDB
 import me.li2.movies.data.local.AppDatabase.Companion.DATABASE_VERSION
 import me.li2.movies.data.local.converters.GenreListConverter
 import me.li2.movies.data.model.MovieDetailUI
-import me.li2.movies.setupDebugDB
 
 @Database(entities = [
     MovieDetailUI::class
@@ -33,7 +33,7 @@ abstract class AppDatabase : RoomDatabase() {
                 AppDatabase::class.java,
                 DATABASE_NAME)
                 .build().also {
-                    setupDebugDB()
+                    configDebugDB()
                 }
     }
 }

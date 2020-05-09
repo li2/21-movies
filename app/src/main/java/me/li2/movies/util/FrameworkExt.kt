@@ -11,6 +11,7 @@ import androidx.lifecycle.Transformations
 import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import me.li2.movies.R
 
 fun doNothing() {
@@ -50,3 +51,7 @@ fun Fragment.setToolbarTitle(title: String) {
 @Suppress("NOTHING_TO_INLINE")
 inline fun <X> LiveData<X>.distinctUntilChanged(): LiveData<X> =
         Transformations.distinctUntilChanged(this)
+
+fun reportException(exception: Exception) {
+    FirebaseCrashlytics.getInstance().recordException(exception)
+}
