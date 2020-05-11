@@ -8,7 +8,7 @@ import me.li2.movies.data.model.MovieReviewUI
 class ReviewsAdapter : ListAdapter<MovieReviewUI, ReviewViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewViewHolder {
-        return ReviewViewHolder.newInstance(parent)
+        return ReviewViewHolder.create(parent)
     }
 
     override fun onBindViewHolder(viewHolder: ReviewViewHolder, position: Int) {

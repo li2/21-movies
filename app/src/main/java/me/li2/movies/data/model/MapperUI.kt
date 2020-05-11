@@ -2,10 +2,11 @@ package me.li2.movies.data.model
 
 import me.li2.android.common.arch.Resource
 import me.li2.android.common.arch.Resource.Status.*
-import me.li2.android.common.number.NumberFormatUtils.formatNumber
 import me.li2.android.common.number.orZero
 import me.li2.movies.data.remote.TmdbApi
 import me.li2.movies.ui.widgets.paging.PagingState
+import me.li2.movies.util.NumberFormatter.formatRuntime
+import me.li2.movies.util.NumberFormatter.formatVoteCount
 
 object MapperUI {
 
@@ -16,7 +17,7 @@ object MapperUI {
             posterUrl = TmdbApi.imageW500Url(api.posterPath),
             backdropUrl = TmdbApi.imageOriginalUrl(api.backdropPath),
             voteAverage = api.voteAverage.toString(),
-            voteCount = formatNumber(api.voteCount.toDouble(), "###,###", ','),
+            voteCount = formatVoteCount(api.voteCount),
             overview = api.overview)
 
     fun toMovieItemPagingUI(api: TmdbMovieListAPI) = MovieItemPagingUI(
@@ -24,17 +25,6 @@ object MapperUI {
             page = api.page,
             totalPages = api.totalPages,
             totalResults = api.totalResults)
-
-    private fun toDisplayRuntime(runtime: Int?): String {
-        val hours = runtime.orZero() / 60
-        val minutes = runtime.orZero() % 60
-        return when {
-            hours > 0 && minutes > 0 -> "${hours}h ${minutes}m"
-            hours > 0 && minutes == 0 -> "${hours}h"
-            hours == 0 && minutes > 0 -> "${minutes}m"
-            else -> null
-        }.orEmpty()
-    }
 
     private fun toGenreUI(api: Genre) = GenreUI(api.id, api.name)
 
@@ -44,7 +34,7 @@ object MapperUI {
             overview = api.overview.orEmpty(),
             tagline = api.tagline.orEmpty(),
             releaseDate = api.releaseDate,
-            runtime = toDisplayRuntime(api.runtime),
+            runtime = formatRuntime(api.runtime),
             genres = api.genres.map { toGenreUI(it) },
             productionCountry = api.productionCountries.firstOrNull()?.name.orEmpty(),
             originalLanguage = api.originalLanguage,
@@ -52,9 +42,29 @@ object MapperUI {
             imdbUrl = TmdbApi.imdbUrl(api.imdbId),
             posterUrl = TmdbApi.imageW500Url(api.posterPath),
             backdropUrl = TmdbApi.imageOriginalUrl(api.backdropPath),
-            popularity = api.popularity,
-            voteAverage = api.voteAverage,
-            voteCount = api.voteCount)
+            youtubeTrailerUrl = null,
+            popularity = api.popularity.toString(),
+            voteAverage = api.voteAverage.toString(),
+            voteCount = formatVoteCount(api.voteCount))
+
+    fun toMovieDetailUI(item: MovieItemUI) = MovieDetailUI(
+            id = item.id,
+            title = item.title,
+            overview = item.overview,
+            tagline = "",
+            releaseDate = item.releaseDate,
+            runtime = "",
+            genres = emptyList(),
+            productionCountry = "",
+            originalLanguage = "",
+            spokenLanguages = "",
+            imdbUrl = null,
+            posterUrl = item.posterUrl,
+            backdropUrl = item.backdropUrl,
+            youtubeTrailerUrl = null,
+            popularity = "",
+            voteAverage = item.voteAverage,
+            voteCount = "")
 
     fun toMovieReviewsUI(api: TmdbMovieReviewListAPI) = MovieReviewListUI(
             reviews = api.results.map {

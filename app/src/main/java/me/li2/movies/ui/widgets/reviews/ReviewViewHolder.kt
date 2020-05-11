@@ -14,7 +14,7 @@ class ReviewViewHolder(binding: ReviewItemViewBinding)
     }
 
     companion object {
-        fun newInstance(parent: ViewGroup): ReviewViewHolder {
+        fun create(parent: ViewGroup): ReviewViewHolder {
             return ReviewViewHolder(newBindingInstance(parent, R.layout.review_item_view) as ReviewItemViewBinding)
         }
     }

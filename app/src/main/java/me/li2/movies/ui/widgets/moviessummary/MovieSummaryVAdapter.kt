@@ -14,7 +14,7 @@ class MovieSummaryVAdapter : ListAdapter<MovieItemUI, MovieSummaryVItemViewHolde
     internal val itemClicks = itemClicksPublish.toFlowable(BackpressureStrategy.LATEST).toObservable()!!
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieSummaryVItemViewHolder {
-        return MovieSummaryVItemViewHolder.newInstance(parent, itemClicksPublish)
+        return MovieSummaryVItemViewHolder.create(parent, itemClicksPublish)
     }
 
     override fun onBindViewHolder(viewHolder: MovieSummaryVItemViewHolder, position: Int) {

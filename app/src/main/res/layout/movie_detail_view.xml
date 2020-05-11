@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="java.util.List" />
+
+        <variable
+            name="movieDetail"
+            type="me.li2.movies.data.model.MovieDetailUI" />
+
+        <variable
+            name="isOverviewExpanded"
+            type="Boolean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/posterImageView"
+            android:layout_width="0dp"
+            android:layout_height="156dp"
+            android:layout_marginStart="16dp"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="16dp"
+            app:layout_constraintDimensionRatio="H,3:2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?android:attr/colorBackground"
+                android:src="@{movieDetail.posterUrl}"
+                app:centerCrop="@{true}"
+                app:errorPlaceholder="@{@drawable/ic_film}"
+                app:placeHolder="@{@drawable/ic_film}"
+                tools:ignore="ContentDescription"
+                tools:scaleType="centerCrop"
+                tools:srcCompat="@tools:sample/backgrounds/scenic[9]"
+                tools:targetApi="lollipop" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/youtubeButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:elevation="16dp"
+            android:src="@drawable/ic_play_circle_outline"
+            android:tint="?attr/colorError"
+            android:visibility="@{movieDetail.youtubeTrailerUrl != null}"
+            app:layout_constraintBottom_toBottomOf="@id/posterImageView"
+            app:layout_constraintEnd_toEndOf="@id/posterImageView"
+            app:layout_constraintStart_toStartOf="@id/posterImageView"
+            app:layout_constraintTop_toTopOf="@id/posterImageView" />
+
+        <TextView
+            android:id="@+id/releaseDateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="16dp"
+            android:text="@{movieDetail.releaseDate}"
+            android:textAppearance="?attr/textAppearanceBody2"
+            app:layout_constraintStart_toEndOf="@id/posterImageView"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="2020-01-01" />
+
+        <TextView
+            android:id="@+id/runtimeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintHorizontal_bias="0.0"
+            android:text="@{movieDetail.runtime}"
+            android:textAppearance="?attr/textAppearanceBody2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/releaseDateTextView"
+            app:layout_constraintTop_toTopOf="@id/releaseDateTextView"
+            tools:text="1h 20m" />
+
+        <TextView
+            android:id="@+id/genresTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:maxLines="2"
+            android:text="@{movieDetail.getDisplayGenres()}"
+            android:textAppearance="?attr/textAppearanceBody2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/releaseDateTextView"
+            app:layout_constraintTop_toBottomOf="@id/releaseDateTextView"
+            tools:targetApi="lollipop"
+            tools:text="Comedy, Thriller, Drama" />
+
+        <TextView
+            android:id="@+id/productionCountryTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:maxLines="2"
+            android:text="@{movieDetail.productionCountry}"
+            android:textAppearance="?attr/textAppearanceBody2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/genresTextView"
+            app:layout_constraintTop_toBottomOf="@id/genresTextView"
+            tools:targetApi="lollipop"
+            tools:text="New Zealand" />
+
+        <TextView
+            android:id="@+id/spokenLanguagesTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:maxLines="2"
+            android:text="@{movieDetail.spokenLanguages}"
+            android:textAppearance="?attr/textAppearanceBody2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/productionCountryTextView"
+            app:layout_constraintTop_toBottomOf="@id/productionCountryTextView"
+            tools:targetApi="lollipop"
+            tools:text="English, 中文, 한국어" />
+
+        <TextView
+            android:id="@+id/movieOverviewLabelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Storyline"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            app:layout_constraintStart_toStartOf="@id/posterImageView"
+            app:layout_constraintTop_toBottomOf="@id/posterImageView"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/movieOverviewTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:ellipsize="end"
+            android:maxLines="@{isOverviewExpanded ? 20 : 5}"
+            android:text="@{movieDetail.overview}"
+            android:textAppearance="?attr/textAppearanceBody2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/movieOverviewLabelTextView"
+            app:layout_constraintTop_toBottomOf="@id/movieOverviewLabelTextView"
+            tools:maxLines="4"
+            tools:text="Life is a struggle for single father Chris Gardner (Will Smith). Evicted from their apartment, he and his young son (Jaden Christopher Syre Smith) find themselves alone with no place to go. Even though Chris eventually lands a job as an intern at a prestigious brokerage firm, the position pays no money. The pair must live in shelters and endure many hardships, but Chris refuses to give in to despair as he struggles to create a better life for himself and his son." />
+
+        <TextView
+            android:id="@+id/movieOverviewExpandTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@{isOverviewExpanded ? `touch to collapse` : `touch to expand`}"
+            android:textAppearance="?attr/textAppearanceCaption"
+            app:layout_constraintBottom_toBottomOf="@id/movieOverviewLabelTextView"
+            app:layout_constraintEnd_toEndOf="@id/movieOverviewTextView"
+            app:layout_constraintStart_toEndOf="@id/movieOverviewLabelTextView"
+            tools:text="touch to expand" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/rateLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:backgroundTint="?attr/colorSurface"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/movieOverviewTextView">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/voteAverageTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_star"
+                    android:drawablePadding="4dp"
+                    android:gravity="center_vertical"
+                    android:text="@{movieDetail.voteAverage}"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    app:drawableTint="?attr/colorPrimary"
+                    app:layout_constraintEnd_toStartOf="@id/rateMovieButton"
+                    app:layout_constraintHorizontal_chainStyle="spread"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="1.0"
+                    tools:text="4.5" />
+
+                <TextView
+                    android:id="@+id/voteTotalTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:gravity="center"
+                    android:text="@string/movie_full_rate"
+                    android:textAppearance="?attr/textAppearanceSubtitle2"
+                    app:layout_constraintBottom_toBottomOf="@id/voteAverageTextView"
+                    app:layout_constraintStart_toEndOf="@id/voteAverageTextView"
+                    app:layout_constraintTop_toTopOf="@id/voteAverageTextView" />
+
+                <TextView
+                    android:id="@+id/voteCountTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@{movieDetail.voteCount}"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    app:layout_constraintEnd_toEndOf="@id/voteTotalTextView"
+                    app:layout_constraintStart_toStartOf="@id/voteAverageTextView"
+                    app:layout_constraintTop_toBottomOf="@id/voteAverageTextView"
+                    tools:text="763,302" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/rateMovieButton"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:text="@string/rate_movie"
+                    android:textColor="?android:attr/textColorPrimary"
+                    app:icon="@drawable/ic_star_outline"
+                    app:iconTint="?android:attr/textColorPrimary"
+                    app:layout_constraintBottom_toBottomOf="@id/voteAverageTextView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/voteAverageTextView"
+                    app:layout_constraintTop_toTopOf="@id/voteAverageTextView" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <me.li2.movies.ui.widgets.GenresGroupView
+            android:id="@+id/genresGroupView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:visibility="@{movieDetail.genres.size() > 0}"
+            app:genres="@{movieDetail.genres}"
+            app:label="@{`Genres`}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rateLayout"
+            tools:background="?attr/colorSurface"
+            tools:layout_height="36dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

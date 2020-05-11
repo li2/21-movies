@@ -7,23 +7,21 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import com.jakewharton.rxbinding3.view.clicks
-import io.reactivex.Observable
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.rxkotlin.plusAssign
 import me.li2.android.common.arch.Resource
 import me.li2.android.common.arch.observeOnView
-import me.li2.android.common.logic.orFalse
-import me.li2.android.common.rx.throttleFirstShort
+import me.li2.android.common.number.dpToPx
+import me.li2.android.view.list.LinearSpacingDecoration
 import me.li2.android.view.navigation.setToolbar
 import me.li2.android.view.popup.toast
 import me.li2.android.view.system.hideStatusBar
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.MovieDetailFragmentBinding
-import me.li2.movies.ui.widgets.moviessummary.MovieSummaryHAdapter
 import me.li2.movies.util.RootViewStore
 import me.li2.movies.util.navigate
-import me.li2.movies.util.watchYoutubeVideo
 import timber.log.Timber.e
 
 class MovieDetailFragment : BaseFragment(), RootViewStore {
@@ -34,6 +32,8 @@ class MovieDetailFragment : BaseFragment(), RootViewStore {
 
     override var rootView: View? = null
     override var hasInitializedRootView: Boolean = false
+
+    private val detailAdapter = MovieDetailAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,54 +56,46 @@ class MovieDetailFragment : BaseFragment(), RootViewStore {
 
         initializeRootViewIfNeeded {
             activity?.setToolbar(binding.toolbar)
-            binding.executePendingBindings()
             binding.movieItem = args.movieItem
-        }
-
-        compositeDisposable += Observable.merge(
-                binding.movieOverviewTextView.clicks().throttleFirstShort(),
-                binding.movieOverviewExpandTextView.clicks().throttleFirstShort()
-        ).subscribe {
-            binding.isOverviewExpanded = !binding.isOverviewExpanded.orFalse()
-        }
-
-        compositeDisposable += binding.youtubeButton.clicks().throttleFirstShort().subscribe {
-            binding.youtubeUrl?.let {
-                requireContext().watchYoutubeVideo(it)
+            binding.recyclerView.apply {
+                adapter = detailAdapter
+                layoutManager = LinearLayoutManager(context)
+                addItemDecoration(LinearSpacingDecoration(RecyclerView.VERTICAL, 32.dpToPx(context)))
             }
+            viewModel.movieItem = args.movieItem
         }
 
-        compositeDisposable += binding.rateMovieButton.clicks().throttleFirstShort().subscribe {
+        compositeDisposable += detailAdapter.onRateClicks.subscribe {
             toast("todo: rate movie clicks")
         }
 
-        compositeDisposable += binding.genresGroupView.genreClicks().subscribe { genre ->
+        compositeDisposable += detailAdapter.onGenreClicks.subscribe { genre ->
             navigate(MovieDetailFragmentDirections.showGenreMoviesList(genre.name))
         }
 
-        compositeDisposable += (binding.recommendationsRecyclerView.adapter as MovieSummaryHAdapter).itemClicks.subscribe { (_, movieItem) ->
+        compositeDisposable += detailAdapter.onRecMovieClicks.subscribe { (_, movieItem) ->
             navigate(MovieDetailFragmentDirections.showMovieDetail(movieItem))
         }
     }
 
     override fun renderUI() = with(viewModel) {
+        observeOnView(movieDetailRows) {
+            detailAdapter.submitList(it)
+        }
+
         observeOnView(movieDetail) {
-            binding.movieDetail = it.data
             bindLoadingStatus(it)
         }
 
         observeOnView(movieReviews) {
-            binding.reviews = it.data
             bindLoadingStatus(it)
         }
 
-        observeOnView(movieTrailerUrl) {
-            binding.youtubeUrl = it.data?.url
+        observeOnView(movieTrailer) {
             bindLoadingStatus(it)
         }
 
         observeOnView(recommendations) {
-            binding.recommendations = it.data
             bindLoadingStatus(it)
         }
     }
@@ -113,9 +105,5 @@ class MovieDetailFragment : BaseFragment(), RootViewStore {
             toast(resource.exception.toString())
             e(resource.exception)
         }
-    }
-
-    companion object {
-        const val MAXIMUM_REVIEWS = 4
     }
 }

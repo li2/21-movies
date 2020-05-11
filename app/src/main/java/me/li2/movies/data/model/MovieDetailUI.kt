@@ -28,9 +28,10 @@ data class MovieDetailUI(
         val imdbUrl: String?,
         val posterUrl: String?,
         val backdropUrl: String?,
-        val popularity: Double,
-        val voteAverage: Double,
-        val voteCount: Int
+        val youtubeTrailerUrl: String?,
+        val popularity: String,
+        val voteAverage: String,
+        val voteCount: String
 ) : Parcelable {
     fun getDisplayGenres() = genres.joinToString(separator = ", ") { it.name }
 }

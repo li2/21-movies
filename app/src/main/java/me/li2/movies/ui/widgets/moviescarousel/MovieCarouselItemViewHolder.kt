@@ -24,9 +24,10 @@ class MovieCarouselItemViewHolder(binding: MovieCarouselItemViewBinding,
     }
 
     companion object {
-        fun newInstance(parent: ViewGroup,
-                        itemClicks: PublishSubject<Pair<ImageView, MovieItemUI>>): MovieCarouselItemViewHolder {
-            return MovieCarouselItemViewHolder(newBindingInstance(parent, R.layout.movie_carousel_item_view) as MovieCarouselItemViewBinding, itemClicks)
+        fun create(parent: ViewGroup,
+                   itemClicks: PublishSubject<Pair<ImageView, MovieItemUI>>): MovieCarouselItemViewHolder {
+            val binding = newBindingInstance(parent, R.layout.movie_carousel_item_view) as MovieCarouselItemViewBinding
+            return MovieCarouselItemViewHolder(binding, itemClicks)
         }
     }
 }

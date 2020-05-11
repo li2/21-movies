@@ -18,7 +18,7 @@ class MovieCarouselAdapter : ListAdapter<MovieItemUI, MovieCarouselItemViewHolde
         get() = currentList.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieCarouselItemViewHolder {
-        return MovieCarouselItemViewHolder.newInstance(parent, itemClicksPublish)
+        return MovieCarouselItemViewHolder.create(parent, itemClicksPublish)
     }
 
     override fun onBindViewHolder(viewHolder: MovieCarouselItemViewHolder, position: Int) {

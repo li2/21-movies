@@ -8,8 +8,7 @@ import kotlinx.coroutines.launch
 import me.li2.android.common.arch.*
 import me.li2.movies.base.BaseViewModel
 import me.li2.movies.data.model.*
-import me.li2.movies.util.distinctUntilChanged
-import me.li2.movies.util.io
+import me.li2.movies.util.*
 
 class MovieDetailViewModel : BaseViewModel() {
 
@@ -21,13 +20,28 @@ class MovieDetailViewModel : BaseViewModel() {
     internal val movieReviews: LiveData<Resource<List<MovieReviewUI>>>
         get() = _movieReviews.distinctUntilChanged()
 
-    private val _movieTrailerUrl = MutableLiveData<Resource<Trailer?>>()
-    internal val movieTrailerUrl: LiveData<Resource<Trailer?>>
-        get() = _movieTrailerUrl.distinctUntilChanged()
+    private val _movieTrailer = MutableLiveData<Resource<Trailer?>>()
+    internal val movieTrailer: LiveData<Resource<Trailer?>>
+        get() = _movieTrailer.distinctUntilChanged()
 
     private val _recommendations = MutableLiveData<Resource<List<MovieItemUI>>>()
     internal val recommendations: LiveData<Resource<List<MovieItemUI>>>
         get() = _recommendations.distinctUntilChanged()
+
+    var movieItem: MovieItemUI? = null
+
+    val movieDetailRows = CombinedLiveData<List<BaseRowData?>>(movieDetail, movieTrailer, movieReviews, recommendations) { results ->
+        val movieDetail = results[0]?.checkedResourceItem<MovieDetailUI>()
+                ?: movieItem?.let { MapperUI.toMovieDetailUI(it) }
+        val trailer = results[1]?.checkedResourceItem<Trailer>()
+        val reviews = results[2]?.checkedResourceListItem<MovieReviewUI>()
+        val recommendations = results[3]?.checkedResourceListItem<MovieItemUI>()
+
+        return@CombinedLiveData listOf(
+                DetailRowData(movieDetail = movieDetail?.copy(youtubeTrailerUrl = trailer?.url)),
+                ReviewsRowData(reviews = reviews),
+                RecMoviesRowData(movies = recommendations))
+    }
 
     private val _genreMovies = MutableLiveData<Resource<MovieItemPagingUI>>()
     internal val genreMovies: LiveData<Resource<MovieItemPagingUI>>
@@ -57,7 +71,7 @@ class MovieDetailViewModel : BaseViewModel() {
 
     private fun getMovieTrailer(movieId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.getMovieTrailer(movieId, _movieTrailerUrl)
+            repository.getMovieTrailer(movieId, _movieTrailer)
         }
     }
 

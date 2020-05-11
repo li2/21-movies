@@ -14,6 +14,7 @@ import me.li2.android.common.arch.postSuccess
  * A generic class provides a resource backed by both the database and the network.
  *
  * You can read more about it in:
+ * @see <a href="https://developer.android.com/jetpack/docs/guide#addendum">exposing network status</a>
  * @see <a href="https://developer.android.com/arch">Architecture Guide</a>
  * @see <a href="https://github.com/googlesamples/android-architecture-components/blob/master/GithubBrowserSample/app/src/main/java/com/android/example/github/repository/NetworkBoundResource.java">NetworkBoundResource.java</a>
  */

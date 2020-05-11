@@ -24,9 +24,10 @@ class MovieSummaryHItemViewHolder(binding: MovieSummaryHItemViewBinding,
     }
 
     companion object {
-        fun newInstance(parent: ViewGroup,
-                        itemClicks: PublishSubject<Pair<ImageView, MovieItemUI>>): MovieSummaryHItemViewHolder {
-            return MovieSummaryHItemViewHolder(newBindingInstance(parent, R.layout.movie_summary_h_item_view) as MovieSummaryHItemViewBinding, itemClicks)
+        fun create(parent: ViewGroup,
+                   itemClicks: PublishSubject<Pair<ImageView, MovieItemUI>>): MovieSummaryHItemViewHolder {
+            val binding = newBindingInstance(parent, R.layout.movie_summary_h_item_view) as MovieSummaryHItemViewBinding
+            return MovieSummaryHItemViewHolder(binding, itemClicks)
         }
     }
 }
