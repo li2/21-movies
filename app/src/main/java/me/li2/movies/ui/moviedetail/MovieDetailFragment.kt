@@ -21,6 +21,7 @@ import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.MovieDetailFragmentBinding
 import me.li2.movies.util.RootViewStore
+import me.li2.movies.util.enforceSingleScrollDirection
 import me.li2.movies.util.navigate
 import timber.log.Timber.e
 
@@ -61,6 +62,7 @@ class MovieDetailFragment : BaseFragment(), RootViewStore {
                 adapter = detailAdapter
                 layoutManager = LinearLayoutManager(context)
                 addItemDecoration(LinearSpacingDecoration(RecyclerView.VERTICAL, 32.dpToPx(context)))
+                enforceSingleScrollDirection()
             }
             viewModel.movieItem = args.movieItem
         }

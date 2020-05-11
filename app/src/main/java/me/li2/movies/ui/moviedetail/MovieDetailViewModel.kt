@@ -39,7 +39,7 @@ class MovieDetailViewModel : BaseViewModel() {
 
         return@CombinedLiveData listOf(
                 DetailRowData(movieDetail = movieDetail?.copy(youtubeTrailerUrl = trailer?.url)),
-                ReviewsRowData(reviews = reviews),
+                ReviewsRowData(reviews = reviews?.take(10)),
                 RecMoviesRowData(movies = recommendations))
     }
 
