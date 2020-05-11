@@ -29,6 +29,7 @@
         <!--<item name="popEnterAnim">@anim/slide_in_left</item>-->
         <!--<item name="popExitAnim">@anim/slide_out_right</item>-->
         <item name="navAnimTime">@android:integer/config_mediumAnimTime</item>
+        <item name="shimmerDuration">800</item>
     </style>
 
     <style name="SplashTheme" parent="AppTheme">

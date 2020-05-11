@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp">
+
+        <View
+            android:id="@+id/posterImageView"
+            android:layout_width="80dp"
+            android:layout_height="0dp"
+            android:background="?attr/colorShimmer"
+            app:layout_constraintDimensionRatio="H,2:3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <View
+            android:id="@+id/movieTitleTextView"
+            android:layout_width="200dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="?attr/colorShimmer"
+            app:layout_constraintStart_toEndOf="@id/posterImageView"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/voteAverageTextView"
+            android:layout_width="200dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="4dp"
+            android:background="?attr/colorShimmer"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="@id/movieTitleTextView"
+            app:layout_constraintTop_toBottomOf="@id/movieTitleTextView" />
+
+        <View
+            android:id="@+id/movieOverviewTextView"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:background="?attr/colorShimmer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/movieTitleTextView"
+            app:layout_constraintTop_toBottomOf="@id/voteAverageTextView" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="?attr/colorListDivider"
+            app:layout_constraintTop_toBottomOf="@id/posterImageView" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
+import me.li2.android.common.arch.Resource
+import me.li2.android.common.arch.Resource.Status.LOADING
 import me.li2.movies.R
 import me.li2.movies.base.BaseViewHolder
 import me.li2.movies.data.model.MovieReviewUI
@@ -27,15 +29,16 @@ class ReviewListView @JvmOverloads constructor(
 }
 
 class ReviewListViewHolder(binding: ReviewListViewBinding)
-    : BaseViewHolder<List<MovieReviewUI>?, ReviewListViewBinding>(binding) {
+    : BaseViewHolder<Resource<List<MovieReviewUI>>?, ReviewListViewBinding>(binding) {
 
     init {
         binding.executePendingBindings()
     }
 
-    override fun bind(item: List<MovieReviewUI>?, position: Int) {
-        binding.reviews = item
-        binding.isEmpty = item.isNullOrEmpty()
+    override fun bind(item: Resource<List<MovieReviewUI>>?, position: Int) {
+        binding.reviews = item?.data
+        binding.isEmpty = item?.status != LOADING && item?.data.isNullOrEmpty()
+        binding.isLoading = item?.status == LOADING
     }
 
     companion object {

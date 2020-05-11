@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.MergeAdapter
 import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.rxkotlin.plusAssign
+import me.li2.android.common.arch.Resource.Status.LOADING
 import me.li2.android.common.arch.observeOnView
 import me.li2.android.common.rx.throttleFirstShort
 import me.li2.android.view.list.DividerItemDecoration
@@ -24,6 +25,7 @@ import me.li2.movies.ui.moviedetail.MovieDetailViewModel
 import me.li2.movies.ui.widgets.moviessummary.MovieSummaryVAdapter
 import me.li2.movies.ui.widgets.paging.PagingItemAdapter
 import me.li2.movies.util.navigate
+import me.li2.movies.util.showAnimation
 
 class MoviesFragment : BaseFragment() {
 
@@ -78,6 +80,7 @@ class MoviesFragment : BaseFragment() {
         observeOnView(genreMovies) {
             moviesAdapter.submitList(it.data?.results)
             pagingAdapter.pagingState = MapperUI.toPagingState(it)
+            binding.shimmerContainer.shimmer.showAnimation(it.status == LOADING && it.data?.page == null)
         }
     }
 }

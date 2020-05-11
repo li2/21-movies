@@ -16,6 +16,10 @@
         <variable
             name="isEmpty"
             type="Boolean" />
+
+        <variable
+            name="isLoading"
+            type="Boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -52,7 +56,7 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/reviewsRecyclerView"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
@@ -67,6 +71,19 @@
                     tools:listitem="@layout/review_item_view"
                     tools:orientation="vertical"
                     tools:spanCount="1" />
+
+                <include
+                    android:id="@+id/shimmerContainer"
+                    layout="@layout/review_list_placeholder"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/reviewsLabelTextView"
+                    app:startShimmer="@{isLoading}"
+                    tools:visibility="gone" />
 
                 <TextView
                     android:id="@+id/emptyTextView"

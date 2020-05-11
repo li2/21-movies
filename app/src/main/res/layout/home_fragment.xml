@@ -14,6 +14,18 @@
             type="Boolean" />
 
         <variable
+            name="isLoadingNowPlayingMovies"
+            type="Boolean" />
+
+        <variable
+            name="isLoadingUpcomingMovies"
+            type="Boolean" />
+
+        <variable
+            name="isLoadingPopularMovies"
+            type="Boolean" />
+
+        <variable
             name="movieCarouselItems"
             type="List&lt;MovieItemUI&gt;" />
 
@@ -140,6 +152,15 @@
                     tools:orientation="horizontal"
                     tools:spanCount="1" />
 
+                <include
+                    android:id="@+id/nowPlayingShimmerContainer"
+                    layout="@layout/movie_summary_h_list_view_placeholder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:startShimmer="@{isLoadingNowPlayingMovies}"
+                    app:layout_constraintTop_toTopOf="@id/nowPlayingMoviesRecyclerView"
+                    tools:visibility="gone" />
+
                 <TextView
                     android:id="@+id/upcomingTextView"
                     android:layout_width="match_parent"
@@ -170,6 +191,15 @@
                     tools:orientation="horizontal"
                     tools:spanCount="1" />
 
+                <include
+                    android:id="@+id/upcomingShimmerContainer"
+                    layout="@layout/movie_summary_h_list_view_placeholder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:startShimmer="@{isLoadingUpcomingMovies}"
+                    app:layout_constraintTop_toTopOf="@id/upcomingMoviesRecyclerView"
+                    tools:visibility="gone" />
+
                 <TextView
                     android:id="@+id/popularTextView"
                     android:layout_width="match_parent"
@@ -199,6 +229,15 @@
                     tools:listitem="@layout/movie_summary_h_item_view"
                     tools:orientation="horizontal"
                     tools:spanCount="1" />
+
+                <include
+                    android:id="@+id/popularShimmerContainer"
+                    layout="@layout/movie_summary_h_list_view_placeholder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:startShimmer="@{isLoadingPopularMovies}"
+                    app:layout_constraintTop_toTopOf="@id/popularMoviesRecyclerView"
+                    tools:visibility="gone" />
 
                 <include
                     layout="@layout/home_footer_view"

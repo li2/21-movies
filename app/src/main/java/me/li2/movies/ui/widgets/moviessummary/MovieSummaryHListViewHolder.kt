@@ -3,6 +3,7 @@ package me.li2.movies.ui.widgets.moviessummary
 import android.view.ViewGroup
 import android.widget.ImageView
 import io.reactivex.subjects.PublishSubject
+import me.li2.android.common.arch.Resource
 import me.li2.movies.R
 import me.li2.movies.base.BaseViewHolder
 import me.li2.movies.data.model.MovieItemUI
@@ -14,7 +15,7 @@ import me.li2.movies.databinding.MovieSummaryHListViewBinding
 class MovieSummaryHListViewHolder(binding: MovieSummaryHListViewBinding,
                                   onMovieClicks: PublishSubject<Pair<ImageView, MovieItemUI>>,
                                   label: String)
-    : BaseViewHolder<List<MovieItemUI>?, MovieSummaryHListViewBinding>(binding) {
+    : BaseViewHolder<Resource<List<MovieItemUI>>?, MovieSummaryHListViewBinding>(binding) {
 
     init {
         binding.executePendingBindings()
@@ -22,8 +23,9 @@ class MovieSummaryHListViewHolder(binding: MovieSummaryHListViewBinding,
         binding.label = label
     }
 
-    override fun bind(item: List<MovieItemUI>?, position: Int) {
-        binding.movies = item
+    override fun bind(item: Resource<List<MovieItemUI>>?, position: Int) {
+        binding.movies = item?.data
+        binding.isLoading = item?.status == Resource.Status.LOADING
     }
 
     companion object {

@@ -8,7 +8,10 @@ import kotlinx.coroutines.launch
 import me.li2.android.common.arch.*
 import me.li2.movies.base.BaseViewModel
 import me.li2.movies.data.model.*
-import me.li2.movies.util.*
+import me.li2.movies.util.CombinedLiveData
+import me.li2.movies.util.checkedResourceItem
+import me.li2.movies.util.distinctUntilChanged
+import me.li2.movies.util.io
 
 class MovieDetailViewModel : BaseViewModel() {
 
@@ -31,16 +34,16 @@ class MovieDetailViewModel : BaseViewModel() {
     var movieItem: MovieItemUI? = null
 
     @Suppress("UNCHECKED_CAST")
-    val movieDetailRows = CombinedLiveData<List<BaseRowData?>>(movieDetail, movieTrailer, movieReviews, recommendations) { results ->
+    val movieDetailRows = CombinedLiveData(movieDetail, movieTrailer, movieReviews, recommendations) { results ->
         val movieDetail = results[0] as? Resource<MovieDetailUI>
                 ?: Resource.loading(movieItem?.let { MapperUI.toMovieDetailUI(it) })
         val trailer = results[1]?.checkedResourceItem<Trailer>()
-        val reviews = results[2]?.checkedResourceListItem<MovieReviewUI>()
-        val recommendations = results[3]?.checkedResourceListItem<MovieItemUI>()
+        val reviews = results[2] as? Resource<List<MovieReviewUI>>
+        val recommendations = results[3] as? Resource<List<MovieItemUI>>
 
         return@CombinedLiveData listOf(
                 DetailRowData(movieDetail = movieDetail.apply { data?.copy(youtubeTrailerUrl = trailer?.url) }),
-                ReviewsRowData(reviews = reviews?.take(10)),
+                ReviewsRowData(reviews = reviews),
                 RecMoviesRowData(movies = recommendations))
     }
 

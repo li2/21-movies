@@ -90,16 +90,19 @@ class HomeFragment : BaseFragment(), ViewPager2AutoScrollHelper, RootViewStore {
 
         observeOnView(nowPlaying) {
             binding.nowPlayingItems = it.data
+            binding.isLoadingNowPlayingMovies = it.status == LOADING
             bindLoadingStatus(it)
         }
 
         observeOnView(upcomingMovies) {
             binding.upcomingItems = it.data
+            binding.isLoadingUpcomingMovies = it.status == LOADING
             bindLoadingStatus(it)
         }
 
         observeOnView(popularMovies) {
             binding.popularItems = it.data
+            binding.isLoadingPopularMovies = it.status == LOADING
             bindLoadingStatus(it)
         }
     }

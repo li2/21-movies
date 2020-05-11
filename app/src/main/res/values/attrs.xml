@@ -9,8 +9,9 @@
     <!--Drawables-->
     <attr name="iconLogo" format="reference" />
 
-    <!--Navigation-->
+    <!--Animation-->
     <attr name="navAnimTime" format="integer" />
+    <attr name="shimmerDuration" format="integer" />
 
     <declare-styleable name="HotViewFlipperAttrs">
         <attr name="initialView" format="integer" />
