@@ -62,7 +62,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/reviewsLabelTextView"
                     app:reviews="@{reviews}"
-                    tools:itemCount="5"
+                    tools:itemCount="3"
                     tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/review_item_view"
                     tools:orientation="vertical"

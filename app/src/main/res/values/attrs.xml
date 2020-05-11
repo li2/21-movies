@@ -10,4 +10,9 @@
 
     <!--Navigation-->
     <attr name="navAnimTime" format="integer" />
+
+    <declare-styleable name="HotViewFlipperAttrs">
+        <attr name="initialView" format="integer" />
+    </declare-styleable>
+
 </resources>

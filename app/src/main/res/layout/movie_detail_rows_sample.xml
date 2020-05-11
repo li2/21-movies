@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<me.li2.movies.util.HotViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:measureAllChildren="false"
+    tools:initialView="@sample/movie_detail_rows">
+
+    <include layout="@layout/movie_detail_view" />
+
+    <include layout="@layout/review_list_view" />
+
+    <include layout="@layout/movie_summary_h_list_view" />
+
+</me.li2.movies.util.HotViewFlipper>

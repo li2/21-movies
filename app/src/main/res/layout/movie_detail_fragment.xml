@@ -81,9 +81,8 @@
                 android:clipChildren="false"
                 android:clipToPadding="false"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:itemCount="1"
                 tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/movie_detail_view"
+                tools:listitem="@layout/movie_detail_rows_sample"
                 tools:orientation="vertical" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
