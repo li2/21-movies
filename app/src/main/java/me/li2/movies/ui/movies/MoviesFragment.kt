@@ -16,7 +16,6 @@ import me.li2.android.common.rx.throttleFirstShort
 import me.li2.android.view.list.DividerItemDecoration
 import me.li2.android.view.list.onScrolledBottom
 import me.li2.android.view.navigation.setToolbar
-import me.li2.android.view.system.showStatusBar
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.data.model.MapperUI
@@ -49,7 +48,6 @@ class MoviesFragment : BaseFragment() {
 
     override fun initUi(view: View, savedInstanceState: Bundle?) {
         activity?.setToolbar(binding.toolbar, title = args.genre)
-        activity?.showStatusBar()
         binding.executePendingBindings()
 
         binding.moviesRecyclerView.apply {

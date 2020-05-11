@@ -26,19 +26,23 @@
             android:layout_height="wrap_content"
             android:background="?android:attr/colorBackground"
             android:elevation="0dp"
+            android:fitsSystemWindows="true"
             app:elevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:titleTextColor="?android:attr/textColorPrimary"
-            tools:targetApi="lollipop" />
+            tools:targetApi="lollipop"
+            tools:title="Drama" />
 
+        <!-- 21note: ?attr/actionBarSize + statusBar 24 dp.-->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/moviesRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="?attr/actionBarSize"
+            android:layout_marginTop="80dp"
             android:clipToPadding="false"
+            android:fitsSystemWindows="true"
             app:layout_behavior="@string/viewlib_overscroll_bounce_behavior"
             tools:listitem="@layout/movie_summary_v_item_view" />
 

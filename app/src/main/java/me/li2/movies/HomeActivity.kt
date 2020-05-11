@@ -7,8 +7,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
-import kotlinx.android.synthetic.main.home_activity.*
 import me.li2.android.view.navigation.setToolbar
+import me.li2.android.view.system.hideStatusBar
 import me.li2.movies.base.BaseActivity
 import me.li2.movies.databinding.HomeActivityBinding
 
@@ -22,7 +22,14 @@ class HomeActivity : BaseActivity(), LifecycleOwner, NavController.OnDestination
         super.onCreate(savedInstanceState)
         binding = HomeActivityBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
+        // set toolbar for navController
         setToolbar(binding.toolbar)
+        // hide toolbar throughout the App because each fragment will be responsible to set up own toolbar.
+        supportActionBar?.hide()
+        // hide statusBar throughout the App because most fragments need to draw image behind statusBar,
+        // to avoid statusBar flick(show/hide) when navigate between screens.
+        // for other fragments just add a margin on top of toolbar, or android:fitsSystemWindows="true"
+        hideStatusBar()
         initNavigation()
     }
 
@@ -37,16 +44,5 @@ class HomeActivity : BaseActivity(), LifecycleOwner, NavController.OnDestination
     override fun onDestinationChanged(controller: NavController,
                                       destination: NavDestination,
                                       arguments: Bundle?) {
-        when (destination.id) {
-            R.id.homeFragment,
-            R.id.moviesFragment,
-            R.id.movieDetailFragment -> {
-                supportActionBar?.hide()
-            }
-            else -> {
-                setToolbar(toolbar)
-                supportActionBar?.show()
-            }
-        }
     }
 }

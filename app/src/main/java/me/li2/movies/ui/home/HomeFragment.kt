@@ -21,7 +21,6 @@ import me.li2.android.view.list.ViewPager2AutoScrollHelper
 import me.li2.android.view.list.ignorePullToRefresh
 import me.li2.android.view.list.showPartialLeftAndRightPages
 import me.li2.android.view.popup.toast
-import me.li2.android.view.system.hideStatusBar
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.data.model.MovieItemUI
@@ -56,8 +55,6 @@ class HomeFragment : BaseFragment(), ViewPager2AutoScrollHelper, RootViewStore {
     }
 
     override fun initUi(view: View, savedInstanceState: Bundle?) {
-        activity?.hideStatusBar()
-
         initializeRootViewIfNeeded {
             binding.executePendingBindings()
             binding.movieCarouselViewPager.ignorePullToRefresh(binding.swipeRefreshLayout)
