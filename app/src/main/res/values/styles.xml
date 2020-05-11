@@ -9,6 +9,7 @@
         <item name="colorAccent">@color/primary</item>
         <item name="colorSurface">@color/surface</item>
         <item name="colorError">@color/error</item>
+        <item name="colorShimmer">@color/shimmer</item>
         <item name="colorTransparent">@android:color/transparent</item>
         <item name="colorUnselected">@color/divider</item>
         <item name="colorListDivider">@color/divider</item>

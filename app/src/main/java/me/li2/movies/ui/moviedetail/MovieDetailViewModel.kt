@@ -30,15 +30,16 @@ class MovieDetailViewModel : BaseViewModel() {
 
     var movieItem: MovieItemUI? = null
 
+    @Suppress("UNCHECKED_CAST")
     val movieDetailRows = CombinedLiveData<List<BaseRowData?>>(movieDetail, movieTrailer, movieReviews, recommendations) { results ->
-        val movieDetail = results[0]?.checkedResourceItem<MovieDetailUI>()
-                ?: movieItem?.let { MapperUI.toMovieDetailUI(it) }
+        val movieDetail = results[0] as? Resource<MovieDetailUI>
+                ?: Resource.loading(movieItem?.let { MapperUI.toMovieDetailUI(it) })
         val trailer = results[1]?.checkedResourceItem<Trailer>()
         val reviews = results[2]?.checkedResourceListItem<MovieReviewUI>()
         val recommendations = results[3]?.checkedResourceListItem<MovieItemUI>()
 
         return@CombinedLiveData listOf(
-                DetailRowData(movieDetail = movieDetail?.copy(youtubeTrailerUrl = trailer?.url)),
+                DetailRowData(movieDetail = movieDetail.apply { data?.copy(youtubeTrailerUrl = trailer?.url) }),
                 ReviewsRowData(reviews = reviews?.take(10)),
                 RecMoviesRowData(movies = recommendations))
     }

@@ -4,6 +4,7 @@
     <attr name="colorTransparent" format="reference|color" />
     <attr name="colorUnselected" format="reference|color" />
     <attr name="colorListDivider" format="reference|color" />
+    <attr name="colorShimmer" format="reference|color" />
 
     <!--Drawables-->
     <attr name="iconLogo" format="reference" />

@@ -2,9 +2,11 @@ package me.li2.movies.ui.moviedetail
 
 import android.annotation.SuppressLint
 import android.view.ViewGroup
+import com.facebook.shimmer.ShimmerFrameLayout
 import com.jakewharton.rxbinding3.view.clicks
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
+import me.li2.android.common.arch.Resource
 import me.li2.android.common.logic.orFalse
 import me.li2.android.common.rx.throttleFirstShort
 import me.li2.movies.R
@@ -12,19 +14,28 @@ import me.li2.movies.base.BaseViewHolder
 import me.li2.movies.data.model.GenreUI
 import me.li2.movies.data.model.MovieDetailUI
 import me.li2.movies.databinding.MovieDetailViewBinding
+import me.li2.movies.util.ShimmerHelper
 import me.li2.movies.util.watchYoutubeVideo
 
 class MovieDetailViewHolder(binding: MovieDetailViewBinding,
                             private val onRateClicks: PublishSubject<Unit>,
                             private val onGenreClicks: PublishSubject<GenreUI>)
-    : BaseViewHolder<MovieDetailUI?, MovieDetailViewBinding>(binding) {
+    : BaseViewHolder<Resource<MovieDetailUI?>, MovieDetailViewBinding>(binding),
+        ShimmerHelper {
+
+    override val shimmerLayouts: List<ShimmerFrameLayout>
+        get() = listOf(binding.movieDetailShimmerContainer.shimmer)
 
     init {
         initView()
+        startShimmer()
     }
 
-    override fun bind(item: MovieDetailUI?, position: Int) {
-        binding.movieDetail = item
+    override fun bind(item: Resource<MovieDetailUI?>, position: Int) {
+        binding.movieDetail = item.data
+        if (item.status != Resource.Status.LOADING) {
+            stopShimmer()
+        }
     }
 
     @SuppressLint("CheckResult")

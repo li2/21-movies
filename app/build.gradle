@@ -201,6 +201,7 @@ dependencies {
     //Timber
     implementation "com.jakewharton.timber:timber:$timber_version"
     implementation 'com.romandanylyk:pageindicatorview:1.0.3'
+    implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
 }
 
 apply plugin: 'kotlin-allopen'

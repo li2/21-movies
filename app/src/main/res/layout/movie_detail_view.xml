@@ -80,10 +80,10 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="0dp"
             android:layout_marginEnd="16dp"
-            app:layout_constraintHorizontal_bias="0.0"
             android:text="@{movieDetail.runtime}"
             android:textAppearance="?attr/textAppearanceBody2"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@id/releaseDateTextView"
             app:layout_constraintTop_toTopOf="@id/releaseDateTextView"
             tools:text="1h 20m" />
@@ -132,6 +132,15 @@
             app:layout_constraintTop_toBottomOf="@id/productionCountryTextView"
             tools:targetApi="lollipop"
             tools:text="English, 中文, 한국어" />
+
+        <include
+            android:id="@+id/movieDetailShimmerContainer"
+            layout="@layout/movie_detail_view_placeholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/releaseDateTextView"
+            app:layout_constraintTop_toTopOf="@id/releaseDateTextView"
+            tools:visibility="gone" />
 
         <TextView
             android:id="@+id/movieOverviewLabelTextView"
@@ -260,7 +269,6 @@
             android:layout_marginTop="32dp"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:visibility="@{movieDetail.genres.size() > 0}"
             app:genres="@{movieDetail.genres}"
             app:label="@{`Genres`}"
             app:layout_constraintStart_toStartOf="parent"
