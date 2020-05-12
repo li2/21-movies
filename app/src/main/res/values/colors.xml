@@ -11,4 +11,5 @@
     <color name="surface">#343538</color>
     <color name="divider">#555555</color>
     <color name="shimmer">#555555</color>
+    <color name="ic_launcher_background">#897F74</color>
 </resources>

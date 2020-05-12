@@ -43,7 +43,7 @@ interface TmdbApi {
                           @Query("year") year: Int? = null): Deferred<TmdbMovieListAPI>
 
     companion object {
-        const val TIMEOUT = 6L
+        const val TIMEOUT = 12L
         const val TMDB_STARTING_PAGE_INDEX = 1
 
         /**

@@ -70,7 +70,6 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="32dp"
             app:behavior_overlapTop="64dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -79,6 +78,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clipChildren="false"
+                android:paddingBottom="32dp"
                 android:clipToPadding="false"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
