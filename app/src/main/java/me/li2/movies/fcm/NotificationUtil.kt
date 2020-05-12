@@ -7,9 +7,13 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
+import android.os.Bundle
 import androidx.core.app.NotificationCompat
 import androidx.core.content.getSystemService
 import com.bumptech.glide.Glide
+import org.json.JSONException
+import org.json.JSONObject
+import timber.log.Timber
 
 object NotificationUtil {
     fun createNotificationChannels(context: Context) {
@@ -27,10 +31,25 @@ object NotificationUtil {
         }
     }
 
+    private fun bundleToJson(bundle: Bundle): String {
+        val json = JSONObject()
+        val keys = bundle.keySet()
+        for (key in keys) {
+            try {
+                json.put(key, bundle.get(key))
+            } catch (exc: JSONException) {
+                Timber.e(exc)
+            }
+        }
+        return json.toString()
+    }
+
     fun dispatchPushNotification(intent: Intent?, dispatcher: (MessageAPI) -> Unit) {
-        val message = intent?.extras?.getParcelable<MessageAPI>(MessageService.EXTRA_KEY_MESSAGE)
-        message?.let {
-            dispatcher(it)
+        intent?.extras?.let { bundle ->
+            bundle.getParcelable<MessageAPI>(MessageService.EXTRA_KEY_MESSAGE)
+                    ?: MessageAPI.fromJson(bundleToJson(bundle))?.let { message ->
+                        dispatcher(message)
+                    }
         }
     }
 }
