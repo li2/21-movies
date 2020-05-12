@@ -85,6 +85,7 @@ class HomeFragment : BaseFragment(), ViewPager2AutoScrollHelper, RootViewStore {
         observeOnView(topMovies) {
             binding.movieCarouselItems = it.data
             binding.movieCarouselPagerIndicator.count = it.data?.size.orZero()
+            binding.isLoadingTopMovies = it.status == LOADING
             bindLoadingStatus(it)
         }
 

@@ -14,6 +14,10 @@
             type="Boolean" />
 
         <variable
+            name="isLoadingTopMovies"
+            type="Boolean" />
+
+        <variable
             name="isLoadingNowPlayingMovies"
             type="Boolean" />
 
@@ -75,6 +79,17 @@
                     app:movieCarouselItems="@{movieCarouselItems}"
                     tools:background="@tools:sample/backgrounds/scenic[9]"
                     tools:listItem="@layout/home_top_item_view" />
+
+                <include
+                    layout="@layout/movie_carousel_placeholder"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@id/movieCarouselViewPager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:startShimmer="@{isLoadingTopMovies}"
+                    tools:visibility="gone" />
 
                 <com.rd.PageIndicatorView
                     android:id="@+id/movieCarouselPagerIndicator"
@@ -157,8 +172,8 @@
                     layout="@layout/movie_summary_h_list_view_placeholder"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:startShimmer="@{isLoadingNowPlayingMovies}"
                     app:layout_constraintTop_toTopOf="@id/nowPlayingMoviesRecyclerView"
+                    app:startShimmer="@{isLoadingNowPlayingMovies}"
                     tools:visibility="gone" />
 
                 <TextView
@@ -196,8 +211,8 @@
                     layout="@layout/movie_summary_h_list_view_placeholder"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:startShimmer="@{isLoadingUpcomingMovies}"
                     app:layout_constraintTop_toTopOf="@id/upcomingMoviesRecyclerView"
+                    app:startShimmer="@{isLoadingUpcomingMovies}"
                     tools:visibility="gone" />
 
                 <TextView
@@ -235,8 +250,8 @@
                     layout="@layout/movie_summary_h_list_view_placeholder"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:startShimmer="@{isLoadingPopularMovies}"
                     app:layout_constraintTop_toTopOf="@id/popularMoviesRecyclerView"
+                    app:startShimmer="@{isLoadingPopularMovies}"
                     tools:visibility="gone" />
 
                 <include
