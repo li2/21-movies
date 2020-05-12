@@ -4,6 +4,7 @@ import me.li2.android.common.arch.Resource
 import me.li2.android.common.arch.Resource.Status.*
 import me.li2.android.common.number.orZero
 import me.li2.movies.data.remote.TmdbApi
+import me.li2.movies.fcm.MessageAPI
 import me.li2.movies.ui.widgets.paging.PagingState
 import me.li2.movies.util.NumberFormatter.formatRuntime
 import me.li2.movies.util.NumberFormatter.formatVoteCount
@@ -18,6 +19,16 @@ object MapperUI {
             backdropUrl = TmdbApi.imageOriginalUrl(api.backdropPath),
             voteAverage = api.voteAverage.toString(),
             voteCount = formatVoteCount(api.voteCount),
+            overview = api.overview)
+
+    fun toMovieItemUI(api: MessageAPI) = MovieItemUI(
+            id = api.id.toInt(),
+            title = api.title,
+            releaseDate = api.releaseDate,
+            posterUrl = api.posterUrl,
+            backdropUrl = "",
+            voteAverage = "",
+            voteCount = "",
             overview = api.overview)
 
     fun toMovieItemPagingUI(api: TmdbMovieListAPI) = MovieItemPagingUI(

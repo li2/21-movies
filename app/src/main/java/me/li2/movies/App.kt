@@ -5,6 +5,7 @@ import me.li2.movies.AppBuildConfig.configCrashlytics
 import me.li2.movies.AppBuildConfig.configDebugLog
 import me.li2.movies.di.MainComponent.appModule
 import me.li2.movies.di.networkModule
+import me.li2.movies.fcm.NotificationUtil.createNotificationChannels
 import me.li2.movies.util.Constants
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -24,6 +25,7 @@ class App : MultiDexApplication(), KodeinAware {
         configCrashlytics()
         setupKodein()
         constants.init()
+        createNotificationChannels(this)
     }
 
     private fun setupKodein() {

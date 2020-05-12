@@ -20,6 +20,7 @@
         tools:targetApi="n">
         <activity
             android:name="me.li2.movies.HomeActivity"
+            android:launchMode="singleInstance"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,6 +41,27 @@
         <uses-library
             android:name="android.test.mock"
             android:required="false" />
+
+        <!--region: Push Notifications start-->
+        <service
+            android:name=".fcm.MessageService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_notification_small_icon" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/primary" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="channel_id_1" />
+        <!--endregion-->
+
     </application>
 
 </manifest>

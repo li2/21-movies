@@ -169,6 +169,7 @@ dependencies {
     implementation "com.google.android.material:material:$google_material_version"
     implementation "com.google.firebase:firebase-analytics:$firebase_analytics_version"
     implementation "com.google.firebase:firebase-crashlytics:$firebase_crashlytics_version"
+    implementation "com.google.firebase:firebase-messaging:$firebase_messaging_version"
 
 
     //MARK: The following are Network libs ------------------------------------------------------------------
@@ -202,6 +203,7 @@ dependencies {
     implementation "com.jakewharton.timber:timber:$timber_version"
     implementation 'com.romandanylyk:pageindicatorview:1.0.3'
     implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
+    implementation "com.github.bumptech.glide:glide:$rootProject.glide_version"
 }
 
 apply plugin: 'kotlin-allopen'

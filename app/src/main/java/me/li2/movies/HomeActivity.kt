@@ -1,5 +1,6 @@
 package me.li2.movies
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.lifecycle.LifecycleOwner
@@ -10,7 +11,10 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import me.li2.android.view.navigation.setToolbar
 import me.li2.android.view.system.hideStatusBar
 import me.li2.movies.base.BaseActivity
+import me.li2.movies.data.model.MapperUI
 import me.li2.movies.databinding.HomeActivityBinding
+import me.li2.movies.fcm.NotificationUtil.dispatchPushNotification
+import me.li2.movies.ui.home.HomeFragmentDirections
 
 class HomeActivity : BaseActivity(), LifecycleOwner, NavController.OnDestinationChangedListener {
 
@@ -31,6 +35,13 @@ class HomeActivity : BaseActivity(), LifecycleOwner, NavController.OnDestination
         // for other fragments just add a margin on top of toolbar, or android:fitsSystemWindows="true"
         hideStatusBar()
         initNavigation()
+
+        checkPushNotification(intent)
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        checkPushNotification(intent)
     }
 
     private fun initNavigation() {
@@ -44,5 +55,12 @@ class HomeActivity : BaseActivity(), LifecycleOwner, NavController.OnDestination
     override fun onDestinationChanged(controller: NavController,
                                       destination: NavDestination,
                                       arguments: Bundle?) {
+    }
+
+    private fun checkPushNotification(intent: Intent?) {
+        dispatchPushNotification(intent) { message ->
+            val movie = MapperUI.toMovieItemUI(message)
+            navController.navigate(HomeFragmentDirections.showMovieDetail(movie))
+        }
     }
 }

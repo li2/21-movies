@@ -74,6 +74,7 @@ allprojects {
         google_material_version = "1.2.0-alpha06"
         firebase_analytics_version = '17.4.1'
         firebase_crashlytics_version = '17.0.0'
+        firebase_messaging_version = "20.1.7"
 
 
         //MARK: The following are Network libs ---------------------------------
@@ -98,10 +99,7 @@ allprojects {
         anko_version = "0.10.8"
         //Logger
         timber_version = "4.7.1"
-
-
-        //MARK: The following are 3rd View libs --------------------------------
-
+        glide_version = "4.10.0"
     }
 }
 
