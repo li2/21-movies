@@ -1,4 +1,4 @@
-# 21 CINEMAS
+# 21 MOVIES
 
 This App is build on **Android Architecture Components (MVVM)** in **Kotlin** with following features:
 

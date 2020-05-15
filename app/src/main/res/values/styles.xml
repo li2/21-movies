@@ -19,7 +19,7 @@
         <item name="android:textColorLink">@color/primary</item>
 
         <!--Drawables-->
-        <item name="iconLogo">@drawable/ic_logo</item>
+        <item name="iconLogo">@drawable/ic_logo2</item>
         <item name="android:listDivider">@drawable/list_divider</item>
 
         <!--Nav Animation-->

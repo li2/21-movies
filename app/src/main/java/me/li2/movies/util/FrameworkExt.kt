@@ -43,7 +43,7 @@ private fun getDefaultNavOptionsBuilder(): NavOptions.Builder {
 }
 
 fun Fragment.navigate(@NonNull directions: NavDirections) {
-    NavHostFragment.findNavController(this).navigate(directions, getDefaultNavOptionsBuilder().build())
+    NavHostFragment.findNavController(this).navigate(directions)
 }
 
 fun Fragment.setToolbarTitle(title: String) {
