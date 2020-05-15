@@ -6,10 +6,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import me.li2.android.common.arch.*
+import me.li2.android.common.arch.Resource
+import me.li2.android.common.arch.postError
+import me.li2.android.common.arch.postLoading
+import me.li2.android.common.arch.postSuccess
 import me.li2.movies.base.BaseViewModel
 import me.li2.movies.data.model.*
-import me.li2.movies.util.*
+import me.li2.movies.util.combineLatest
+import me.li2.movies.util.copy
+import me.li2.movies.util.distinctUntilChanged
+import me.li2.movies.util.io
 
 class MovieDetailViewModel(movieItem: MovieItemUI) : BaseViewModel() {
 
@@ -30,13 +36,6 @@ class MovieDetailViewModel(movieItem: MovieItemUI) : BaseViewModel() {
         get() = _recommendations.distinctUntilChanged()
 
     internal var movieDetailRows: MediatorLiveData<List<BaseRowData>>
-
-    private val _genreMovies = MutableLiveData<Resource<MovieItemPagingUI>>()
-    internal val genreMovies: LiveData<Resource<MovieItemPagingUI>>
-        get() = _genreMovies.distinctUntilChanged()
-
-    internal val canLoadMoreGenreMovies: Boolean
-        get() = _genreMovies.isIdle() && !_genreMovies.isLastPage()
 
     init {
         @Suppress("UNCHECKED_CAST")
@@ -92,20 +91,6 @@ class MovieDetailViewModel(movieItem: MovieItemUI) : BaseViewModel() {
                     .take(10)
                     .map { MapperUI.toMovieItemUI(it) }
             _recommendations.postSuccess(movies)
-        })
-    }
-
-    fun searchGenreMovies(genre: String) {
-        if (_genreMovies.isLoading()) {
-            return
-        }
-        _genreMovies.postLoading()
-        io({
-            _genreMovies.postError(it)
-        }, {
-            val api = repository.searchMovies(genre, _genreMovies.nextPage())
-            val ui = MapperUI.toMovieItemPagingUI(api)
-            _genreMovies.postSuccess(ui.copy(results = _genreMovies.appendResults(ui.results)))
         })
     }
 }

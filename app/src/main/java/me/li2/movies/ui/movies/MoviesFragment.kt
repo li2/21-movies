@@ -31,7 +31,7 @@ class MoviesFragment : BaseFragment() {
 
     private lateinit var binding: MoviesFragmentBinding
     private val args by navArgs<MoviesFragmentArgs>()
-    private val viewModel by viewModels<MovieDetailViewModel>()
+    private val viewModel by viewModels<MoviesModel>()
 
     private val moviesAdapter = MovieSummaryVAdapter()
     private val pagingAdapter = PagingItemAdapter()
