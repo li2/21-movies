@@ -17,5 +17,5 @@ enum class MovieDetailRowType {
 sealed class BaseRowData(val rowType: MovieDetailRowType)
 
 data class DetailRowData(val movieDetail: Resource<MovieDetailUI>) : BaseRowData(ROW_TYPE_DETAIL)
-data class ReviewsRowData(val reviews: Resource<List<MovieReviewUI>>?) : BaseRowData(ROW_TYPE_REVIEWS)
-data class RecMoviesRowData(val movies: Resource<List<MovieItemUI>>?) : BaseRowData(ROW_TYPE_REC_MOVIES)
+data class ReviewsRowData(val reviews: Resource<List<MovieReviewUI>>) : BaseRowData(ROW_TYPE_REVIEWS)
+data class RecMoviesRowData(val movies: Resource<List<MovieItemUI>>) : BaseRowData(ROW_TYPE_REC_MOVIES)

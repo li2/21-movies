@@ -29,16 +29,16 @@ class ReviewListView @JvmOverloads constructor(
 }
 
 class ReviewListViewHolder(binding: ReviewListViewBinding)
-    : BaseViewHolder<Resource<List<MovieReviewUI>>?, ReviewListViewBinding>(binding) {
+    : BaseViewHolder<Resource<List<MovieReviewUI>>, ReviewListViewBinding>(binding) {
 
     init {
         binding.executePendingBindings()
     }
 
-    override fun bind(item: Resource<List<MovieReviewUI>>?, position: Int) {
-        binding.reviews = item?.data
-        binding.isEmpty = item?.status != LOADING && item?.data.isNullOrEmpty()
-        binding.isLoading = item?.status == LOADING
+    override fun bind(item: Resource<List<MovieReviewUI>>, position: Int) {
+        binding.reviews = item.data?.take(3)
+        binding.isLoading = item.status == LOADING
+        binding.isEmpty = item.status != LOADING && item.data.isNullOrEmpty()
     }
 
     companion object {

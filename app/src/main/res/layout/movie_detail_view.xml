@@ -142,9 +142,9 @@
             layout="@layout/movie_detail_view_placeholder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:startShimmer="@{isLoadingMovieDetail}"
             app:layout_constraintStart_toStartOf="@id/releaseDateTextView"
             app:layout_constraintTop_toTopOf="@id/releaseDateTextView"
+            app:startShimmer="@{isLoadingMovieDetail}"
             tools:visibility="gone" />
 
         <TextView
@@ -270,7 +270,7 @@
         <me.li2.movies.ui.widgets.GenresGroupView
             android:id="@+id/genresGroupView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_marginTop="32dp"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"

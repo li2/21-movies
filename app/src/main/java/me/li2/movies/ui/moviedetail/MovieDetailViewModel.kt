@@ -1,6 +1,7 @@
 package me.li2.movies.ui.moviedetail
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -8,44 +9,27 @@ import kotlinx.coroutines.launch
 import me.li2.android.common.arch.*
 import me.li2.movies.base.BaseViewModel
 import me.li2.movies.data.model.*
-import me.li2.movies.util.CombinedLiveData
-import me.li2.movies.util.checkedResourceItem
-import me.li2.movies.util.distinctUntilChanged
-import me.li2.movies.util.io
+import me.li2.movies.util.*
 
-class MovieDetailViewModel : BaseViewModel() {
+class MovieDetailViewModel(movieItem: MovieItemUI) : BaseViewModel() {
 
-    private val _movieDetail = MutableLiveData<Resource<MovieDetailUI>>()
+    private val _movieDetail = MutableLiveData(Resource.loading(MapperUI.toMovieDetailUI(movieItem)))
     internal val movieDetail: LiveData<Resource<MovieDetailUI>>
         get() = _movieDetail.distinctUntilChanged()
 
-    private val _movieReviews = MutableLiveData<Resource<List<MovieReviewUI>>>()
-    internal val movieReviews: LiveData<Resource<List<MovieReviewUI>>>
-        get() = _movieReviews.distinctUntilChanged()
-
-    private val _movieTrailer = MutableLiveData<Resource<Trailer?>>()
+    private val _movieTrailer = MutableLiveData<Resource<Trailer?>>(Resource.loading(null))
     internal val movieTrailer: LiveData<Resource<Trailer?>>
         get() = _movieTrailer.distinctUntilChanged()
 
-    private val _recommendations = MutableLiveData<Resource<List<MovieItemUI>>>()
+    private val _movieReviews = MutableLiveData<Resource<List<MovieReviewUI>>>(Resource.loading(emptyList()))
+    internal val movieReviews: LiveData<Resource<List<MovieReviewUI>>>
+        get() = _movieReviews.distinctUntilChanged()
+
+    private val _recommendations = MutableLiveData<Resource<List<MovieItemUI>>>(Resource.loading(emptyList()))
     internal val recommendations: LiveData<Resource<List<MovieItemUI>>>
         get() = _recommendations.distinctUntilChanged()
 
-    var movieItem: MovieItemUI? = null
-
-    @Suppress("UNCHECKED_CAST")
-    val movieDetailRows = CombinedLiveData(movieDetail, movieTrailer, movieReviews, recommendations) { results ->
-        val movieDetail = results[0] as? Resource<MovieDetailUI>
-                ?: Resource.loading(movieItem?.let { MapperUI.toMovieDetailUI(it) })
-        val trailer = results[1]?.checkedResourceItem<Trailer>()
-        val reviews = results[2] as? Resource<List<MovieReviewUI>>
-        val recommendations = results[3] as? Resource<List<MovieItemUI>>
-
-        return@CombinedLiveData listOf(
-                DetailRowData(movieDetail = movieDetail.apply { data?.copy(youtubeTrailerUrl = trailer?.url) }),
-                ReviewsRowData(reviews = reviews),
-                RecMoviesRowData(movies = recommendations))
-    }
+    internal var movieDetailRows: MediatorLiveData<List<BaseRowData>>
 
     private val _genreMovies = MutableLiveData<Resource<MovieItemPagingUI>>()
     internal val genreMovies: LiveData<Resource<MovieItemPagingUI>>
@@ -53,6 +37,26 @@ class MovieDetailViewModel : BaseViewModel() {
 
     internal val canLoadMoreGenreMovies: Boolean
         get() = _genreMovies.isIdle() && !_genreMovies.isLastPage()
+
+    init {
+        @Suppress("UNCHECKED_CAST")
+        movieDetailRows = combineLatest(movieDetail, movieTrailer, movieReviews, recommendations) { results ->
+            val movieDetail = results[0] as Resource<MovieDetailUI>
+            val trailerUrl = (results[1] as? Resource<Trailer?>)?.data?.url
+            val reviews = results[2] as Resource<List<MovieReviewUI>>
+            val recommendations = results[3] as Resource<List<MovieItemUI>>
+
+            val movieDetailWithTrailer =
+                    if (trailerUrl != null && movieDetail.data != null && movieDetail.data?.youtubeTrailerUrl == null) {
+                        movieDetail.copy(requireNotNull(movieDetail.data).copy(youtubeTrailerUrl = trailerUrl))
+                    } else {
+                        movieDetail
+                    }
+            listOf(DetailRowData(movieDetail = movieDetailWithTrailer),
+                    ReviewsRowData(reviews = reviews),
+                    RecMoviesRowData(movies = recommendations))
+        }
+    }
 
     fun getMovieDetailScreenData(movieId: Int) {
         getMovieDetail(movieId)

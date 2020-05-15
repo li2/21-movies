@@ -85,25 +85,25 @@ class HomeFragment : BaseFragment(), ViewPager2AutoScrollHelper, RootViewStore {
         observeOnView(topMovies) {
             binding.movieCarouselItems = it.data
             binding.movieCarouselPagerIndicator.count = it.data?.size.orZero()
-            binding.isLoadingTopMovies = it.status == LOADING
+            binding.isLoadingTopMovies = it.status == LOADING && it.data.isNullOrEmpty()
             bindLoadingStatus(it)
         }
 
         observeOnView(nowPlaying) {
             binding.nowPlayingItems = it.data
-            binding.isLoadingNowPlayingMovies = it.status == LOADING
+            binding.isLoadingNowPlayingMovies = it.status == LOADING && it.data.isNullOrEmpty()
             bindLoadingStatus(it)
         }
 
         observeOnView(upcomingMovies) {
             binding.upcomingItems = it.data
-            binding.isLoadingUpcomingMovies = it.status == LOADING
+            binding.isLoadingUpcomingMovies = it.status == LOADING && it.data.isNullOrEmpty()
             bindLoadingStatus(it)
         }
 
         observeOnView(popularMovies) {
             binding.popularItems = it.data
-            binding.isLoadingPopularMovies = it.status == LOADING
+            binding.isLoadingPopularMovies = it.status == LOADING && it.data.isNullOrEmpty()
             bindLoadingStatus(it)
         }
     }

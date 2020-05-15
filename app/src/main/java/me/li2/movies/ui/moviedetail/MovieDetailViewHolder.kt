@@ -19,13 +19,13 @@ import me.li2.movies.util.watchYoutubeVideo
 class MovieDetailViewHolder(binding: MovieDetailViewBinding,
                             private val onRateClicks: PublishSubject<Unit>,
                             private val onGenreClicks: PublishSubject<GenreUI>)
-    : BaseViewHolder<Resource<MovieDetailUI?>, MovieDetailViewBinding>(binding) {
+    : BaseViewHolder<Resource<MovieDetailUI>, MovieDetailViewBinding>(binding) {
 
     init {
         initView()
     }
 
-    override fun bind(item: Resource<MovieDetailUI?>, position: Int) {
+    override fun bind(item: Resource<MovieDetailUI>, position: Int) {
         binding.movieDetail = item.data
         binding.isLoadingMovieDetail = item.status == LOADING
     }

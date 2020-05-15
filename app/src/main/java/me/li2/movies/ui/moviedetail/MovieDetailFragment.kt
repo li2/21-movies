@@ -28,7 +28,7 @@ class MovieDetailFragment : BaseFragment(), RootViewStore {
 
     private lateinit var binding: MovieDetailFragmentBinding
     private val args by navArgs<MovieDetailFragmentArgs>()
-    private val viewModel by viewModels<MovieDetailViewModel>()
+    private val viewModel by viewModels<MovieDetailViewModel> { MovieDetailViewModelFactory(args.movieItem) }
 
     override var rootView: View? = null
     override var hasInitializedRootView: Boolean = false
@@ -61,7 +61,6 @@ class MovieDetailFragment : BaseFragment(), RootViewStore {
                 addItemDecoration(LinearSpacingDecoration(RecyclerView.VERTICAL, 32.dpToPx(context)))
                 enforceSingleScrollDirection()
             }
-            viewModel.movieItem = args.movieItem
         }
 
         compositeDisposable += detailAdapter.onRateClicks.subscribe {

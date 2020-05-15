@@ -24,8 +24,6 @@
 
             <include layout="@layout/review_item_view_placeholder" />
 
-            <include layout="@layout/review_item_view_placeholder" />
-
         </LinearLayout>
 
     </com.facebook.shimmer.ShimmerFrameLayout>

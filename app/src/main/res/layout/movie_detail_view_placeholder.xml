@@ -22,8 +22,9 @@
 
             <View
                 android:id="@+id/releaseDateTextView"
-                android:layout_width="156dp"
+                android:layout_width="80dp"
                 android:layout_height="20dp"
+                android:layout_marginStart="80dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginEnd="16dp"
                 android:background="?attr/colorShimmer"
@@ -37,12 +38,12 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="16dp"
                 android:background="?attr/colorShimmer"
-                app:layout_constraintStart_toStartOf="@id/releaseDateTextView"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/releaseDateTextView" />
 
             <View
                 android:id="@+id/productionCountryTextView"
-                android:layout_width="128dp"
+                android:layout_width="120dp"
                 android:layout_height="20dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="16dp"
@@ -52,7 +53,7 @@
 
             <View
                 android:id="@+id/spokenLanguagesTextView"
-                android:layout_width="100dp"
+                android:layout_width="120dp"
                 android:layout_height="20dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="16dp"
