@@ -6,8 +6,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import me.li2.android.common.arch.Resource
 import me.li2.android.common.arch.Resource.Status.LOADING
+import me.li2.android.view.list.DividerItemDecoration
 import me.li2.movies.R
 import me.li2.movies.base.BaseViewHolder
 import me.li2.movies.data.model.MovieReviewUI
@@ -24,20 +27,27 @@ class ReviewListView @JvmOverloads constructor(
     var reviews: List<MovieReviewUI>? = emptyList()
         set(value) {
             field = value
-            binding.reviews = value
         }
 }
 
 class ReviewListViewHolder(binding: ReviewListViewBinding)
     : BaseViewHolder<Resource<List<MovieReviewUI>>, ReviewListViewBinding>(binding) {
 
+    private val reviewsAdapter = ReviewsAdapter()
+
     init {
-        binding.executePendingBindings()
+        binding.reviewsRecyclerView.apply {
+            adapter = reviewsAdapter
+            addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))
+            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        }
+        binding.isLoading = true
     }
 
     override fun bind(item: Resource<List<MovieReviewUI>>, position: Int) {
-        binding.reviews = item.data?.take(3)
-        binding.isLoading = item.status == LOADING
+        reviewsAdapter.submitList(item.data?.take(3)) {
+            binding.isLoading = false
+        }
         binding.isEmpty = item.status != LOADING && item.data.isNullOrEmpty()
     }
 

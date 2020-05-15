@@ -10,10 +10,6 @@
         <import type="me.li2.movies.data.model.MovieReviewUI" />
 
         <variable
-            name="reviews"
-            type="List&lt;MovieReviewUI&gt;" />
-
-        <variable
             name="isEmpty"
             type="Boolean" />
 
@@ -65,7 +61,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/reviewsLabelTextView"
-                    app:reviews="@{reviews}"
                     tools:itemCount="3"
                     tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/review_item_view"
