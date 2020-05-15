@@ -13,5 +13,5 @@ open class BaseViewModel :
 
     final override val kodein by kodein(App.context)
 
-    val repository: Repository by instance()
+    val repository by instance<Repository>()
 }
