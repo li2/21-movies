@@ -15,7 +15,7 @@ import org.kodein.di.generic.instance
 
 class App : MultiDexApplication(), KodeinAware {
     override val kodein = ConfigurableKodein(mutable = true)
-    private val constants: Constants by instance()
+    private val constants by instance<Constants>()
     private var overrideModule: Kodein.Module? = null
 
     override fun onCreate() {
