@@ -82,23 +82,27 @@ class MovieDetailFragment : BaseFragment(), RootViewStore {
         }
 
         observeOnView(movieDetail) {
-            bindLoadingStatus(it)
+            bindErrorState(it)
+        }
+
+        observeOnView(credits) {
+            bindErrorState(it)
         }
 
         observeOnView(movieReviews) {
-            bindLoadingStatus(it)
+            bindErrorState(it)
         }
 
         observeOnView(movieTrailer) {
-            bindLoadingStatus(it)
+            bindErrorState(it)
         }
 
         observeOnView(recommendations) {
-            bindLoadingStatus(it)
+            bindErrorState(it)
         }
     }
 
-    private fun bindLoadingStatus(resource: Resource<*>) {
+    private fun bindErrorState(resource: Resource<*>) {
         if (resource.status == Resource.Status.ERROR) {
             toast(resource.exception.toString())
             e(resource.exception)

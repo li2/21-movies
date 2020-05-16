@@ -104,6 +104,9 @@ class Repository : KodeinAware {
         }.load()
     }
 
+    suspend fun getMovieCredits(movieId: Int) =
+            MapperUI.toCreditListUI(tmdbDataSource.getMovieCreditsAsync(movieId).await())
+
     suspend fun getMovieRecommendations(movieId: Int, page: Int) =
             tmdbDataSource.getMovieRecommendationsAsync(movieId, page).await()
 

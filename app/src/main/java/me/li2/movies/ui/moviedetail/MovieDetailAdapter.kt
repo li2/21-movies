@@ -11,6 +11,7 @@ import io.reactivex.subjects.PublishSubject
 import me.li2.movies.data.model.GenreUI
 import me.li2.movies.data.model.MovieItemUI
 import me.li2.movies.ui.moviedetail.MovieDetailRowType.*
+import me.li2.movies.ui.widgets.credits.CreditListViewHolder
 import me.li2.movies.ui.widgets.moviessummary.MovieSummaryHListViewHolder
 import me.li2.movies.ui.widgets.reviews.ReviewListViewHolder
 
@@ -32,6 +33,7 @@ class MovieDetailAdapter : ListAdapter<BaseRowData, RecyclerView.ViewHolder>(DIF
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             ROW_TYPE_DETAIL.ordinal -> MovieDetailViewHolder.create(parent, _onRateClicks, _onGenreClicks)
+            ROW_TYPE_CREDITS.ordinal -> CreditListViewHolder.create(parent)
             ROW_TYPE_REVIEWS.ordinal -> ReviewListViewHolder.create(parent)
             ROW_TYPE_REC_MOVIES.ordinal -> MovieSummaryHListViewHolder.create(parent, _onRecMovieClicks, "Recommendations")
             else -> throw RuntimeException("Unexpected view type $viewType")
@@ -42,6 +44,7 @@ class MovieDetailAdapter : ListAdapter<BaseRowData, RecyclerView.ViewHolder>(DIF
         val data = getItem(position)
         when (holder) {
             is MovieDetailViewHolder -> holder.bind((data as DetailRowData).movieDetail, position)
+            is CreditListViewHolder -> holder.bind((data as CreditsRowData).credits, position)
             is ReviewListViewHolder -> holder.bind((data as ReviewsRowData).reviews, position)
             is MovieSummaryHListViewHolder -> holder.bind((data as RecMoviesRowData).movies, position)
         }
@@ -52,6 +55,9 @@ class MovieDetailAdapter : ListAdapter<BaseRowData, RecyclerView.ViewHolder>(DIF
             override fun areItemsTheSame(oldItem: BaseRowData, newItem: BaseRowData): Boolean {
                 // for RecyclerView contains multiple view type, return true if they are the same data type
                 if (oldItem is DetailRowData && newItem is DetailRowData) {
+                    return true
+                }
+                if (oldItem is CreditsRowData && newItem is CreditsRowData) {
                     return true
                 }
                 if (oldItem is ReviewsRowData && newItem is ReviewsRowData) {

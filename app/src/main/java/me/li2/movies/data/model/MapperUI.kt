@@ -97,6 +97,31 @@ object MapperUI {
         }
     }
 
+    private fun toCastUI(api: CastAPI) = CastUI(
+            castId = api.castId,
+            characterOrJob = api.character,
+            creditId = api.creditId,
+            gender = api.gender,
+            id = api.id,
+            name = api.name,
+            order = api.order,
+            profileUrl = TmdbApi.imageW500Url(api.profilePath))
+
+    private fun toCrewUI(api: CrewAPI) = CrewUI(
+            creditId = api.creditId,
+            department = api.department,
+            gender = api.gender,
+            id = api.id,
+            characterOrJob = api.job,
+            name = api.name,
+            profileUrl = TmdbApi.imageW500Url(api.profilePath))
+
+    fun toCreditListUI(api: TmdbMovieCreditListAPI) = CreditListUI(
+            movieId = api.id,
+            casts = api.casts.map { toCastUI(it) }.distinctBy { it.id }.sortedBy { it.order },
+            crews = api.crews.map { toCrewUI(it) }.distinctBy { it.id }
+    )
+
     fun toPagingState(resource: Resource<MovieItemPagingUI>): PagingState {
         return when (resource.status) {
             LOADING -> PagingState.Loading

@@ -45,7 +45,7 @@ class ReviewListViewHolder(binding: ReviewListViewBinding)
     }
 
     override fun bind(item: Resource<List<MovieReviewUI>>, position: Int) {
-        reviewsAdapter.submitList(item.data?.take(3)) {
+        reviewsAdapter.submitList(item.data?.take(5)) {
             binding.isLoading = false
         }
         binding.isEmpty = item.status != LOADING && item.data.isNullOrEmpty()

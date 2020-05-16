@@ -13,12 +13,12 @@
     <androidx.cardview.widget.CardView
         android:layout_width="128dp"
         android:layout_height="wrap_content"
+        android:background="?selectableItemBackground"
         app:cardElevation="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?selectableItemBackground">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/posterImageView"

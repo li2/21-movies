@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="credit"
+            type="me.li2.movies.data.model.CreditUI" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:background="?selectableItemBackground"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:backgroundTint="?android:attr/colorBackground"
+            android:clipToPadding="false"
+            app:cardElevation="4dp"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintDimensionRatio="H,2:3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/profileImageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@{credit.profileUrl}"
+                app:centerCrop="@{true}"
+                app:errorPlaceholder="@{@drawable/ic_person}"
+                app:placeHolder="@{@drawable/ic_person}"
+                tools:ignore="ContentDescription"
+                tools:scaleType="centerCrop"
+                tools:srcCompat="@tools:sample/avatars"
+                tools:targetApi="lollipop" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/nameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="@{credit.name}"
+            android:textAppearance="?attr/textAppearanceBody2"
+            app:layout_constraintTop_toBottomOf="@id/cardView"
+            tools:text="Name" />
+
+        <TextView
+            android:id="@+id/characterOrJobTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="@{credit.characterOrJob}"
+            android:textAppearance="?attr/textAppearanceCaption"
+            app:layout_constraintTop_toBottomOf="@id/nameTextView"
+            tools:text="Character/Job" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

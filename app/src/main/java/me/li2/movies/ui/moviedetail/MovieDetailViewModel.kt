@@ -27,6 +27,10 @@ class MovieDetailViewModel(movieItem: MovieItemUI) : BaseViewModel() {
     internal val movieTrailer: LiveData<Resource<Trailer?>>
         get() = _movieTrailer.distinctUntilChanged()
 
+    private val _credits = MutableLiveData(Resource.loading(CreditListUI(movieId = movieItem.id, casts = emptyList(), crews = emptyList())))
+    internal val credits: LiveData<Resource<CreditListUI>>
+        get() = _credits.distinctUntilChanged()
+
     private val _movieReviews = MutableLiveData<Resource<List<MovieReviewUI>>>(Resource.loading(emptyList()))
     internal val movieReviews: LiveData<Resource<List<MovieReviewUI>>>
         get() = _movieReviews.distinctUntilChanged()
@@ -39,11 +43,12 @@ class MovieDetailViewModel(movieItem: MovieItemUI) : BaseViewModel() {
 
     init {
         @Suppress("UNCHECKED_CAST")
-        movieDetailRows = combineLatest(movieDetail, movieTrailer, movieReviews, recommendations) { results ->
+        movieDetailRows = combineLatest(movieDetail, movieTrailer, credits, movieReviews, recommendations) { results ->
             val movieDetail = results[0] as Resource<MovieDetailUI>
             val trailerUrl = (results[1] as? Resource<Trailer?>)?.data?.url
-            val reviews = results[2] as Resource<List<MovieReviewUI>>
-            val recommendations = results[3] as Resource<List<MovieItemUI>>
+            val credits = results[2] as Resource<CreditListUI>
+            val reviews = results[3] as Resource<List<MovieReviewUI>>
+            val recommendations = results[4] as Resource<List<MovieItemUI>>
 
             val movieDetailWithTrailer =
                     if (trailerUrl != null && movieDetail.data != null && movieDetail.data?.youtubeTrailerUrl == null) {
@@ -52,6 +57,7 @@ class MovieDetailViewModel(movieItem: MovieItemUI) : BaseViewModel() {
                         movieDetail
                     }
             listOf(DetailRowData(movieDetail = movieDetailWithTrailer),
+                    CreditsRowData(credits = credits),
                     ReviewsRowData(reviews = reviews),
                     RecMoviesRowData(movies = recommendations))
         }
@@ -59,6 +65,7 @@ class MovieDetailViewModel(movieItem: MovieItemUI) : BaseViewModel() {
 
     fun getMovieDetailScreenData(movieId: Int) {
         getMovieDetail(movieId)
+        getMovieCredits(movieId)
         getMovieReviews(movieId)
         getMovieTrailer(movieId)
         getMovieRecommendations(movieId)
@@ -68,6 +75,16 @@ class MovieDetailViewModel(movieItem: MovieItemUI) : BaseViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.getMovieDetail(movieId, _movieDetail)
         }
+    }
+
+    private fun getMovieCredits(movieId: Int) {
+        _credits.postLoading()
+        io({
+            _credits.postError(it)
+        }, {
+            val credits = repository.getMovieCredits(movieId)
+            _credits.postSuccess(credits)
+        })
     }
 
     private fun getMovieReviews(movieId: Int) {

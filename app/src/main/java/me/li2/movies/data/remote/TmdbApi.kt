@@ -1,10 +1,7 @@
 package me.li2.movies.data.remote
 
 import kotlinx.coroutines.Deferred
-import me.li2.movies.data.model.TmdbMovieDetailAPI
-import me.li2.movies.data.model.TmdbMovieListAPI
-import me.li2.movies.data.model.TmdbMovieReviewListAPI
-import me.li2.movies.data.model.TmdbMovieVideoListAPI
+import me.li2.movies.data.model.*
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -28,6 +25,9 @@ interface TmdbApi {
 
     @GET("movie/{movieId}/videos")
     fun getMovieVideosAsync(@Path("movieId") movieId: Int): Deferred<TmdbMovieVideoListAPI>
+
+    @GET("movie/{movieId}/credits")
+    fun getMovieCreditsAsync(@Path("movieId") movieId: Int): Deferred<TmdbMovieCreditListAPI>
 
     @GET("movie/{movieId}/reviews")
     fun getMovieReviewsAsync(@Path("movieId") movieId: Int,

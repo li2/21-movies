@@ -8,7 +8,7 @@ import org.kodein.di.generic.instance
 class TmdbDataSource : KodeinAware {
 
     override val kodein by kodein(App.context)
-    private val tmdbApi: TmdbApi by instance()
+    private val tmdbApi by instance<TmdbApi>()
 
     fun getTopMoviesAsync(page: Int) = tmdbApi.getTopMoviesAsync(page)
 
@@ -21,6 +21,9 @@ class TmdbDataSource : KodeinAware {
     fun getMovieDetailAsync(movieId: Int) = tmdbApi.getMovieDetailAsync(movieId)
 
     fun getMovieVideosAsync(movieId: Int) = tmdbApi.getMovieVideosAsync(movieId)
+
+    fun getMovieCreditsAsync(movieId: Int) =
+            tmdbApi.getMovieCreditsAsync(movieId)
 
     fun getMovieReviewsAsync(movieId: Int, page: Int) = tmdbApi.getMovieReviewsAsync(movieId, page)
 
