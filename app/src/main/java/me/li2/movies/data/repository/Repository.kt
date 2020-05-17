@@ -4,10 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import me.li2.android.common.arch.Resource
 import me.li2.movies.App
 import me.li2.movies.data.local.LocalDataSource
-import me.li2.movies.data.model.MapperUI
-import me.li2.movies.data.model.MovieDetailUI
-import me.li2.movies.data.model.MovieReviewUI
-import me.li2.movies.data.model.Trailer
+import me.li2.movies.data.model.*
 import me.li2.movies.data.remote.TmdbApi
 import me.li2.movies.data.remote.TmdbDataSource
 import me.li2.movies.util.RateLimiter
@@ -21,6 +18,8 @@ class Repository : KodeinAware {
     private val tmdbDataSource by instance<TmdbDataSource>()
     private val localDataSource by instance<LocalDataSource>()
     private val tmdbApiRateLimit: RateLimiter<String> = RateLimiter(2, TimeUnit.MINUTES)
+
+    suspend fun getTrendingMovies(timeWindow: TimeWindow) = tmdbDataSource.getTrendingMoviesAsync(timeWindow).await()
 
     suspend fun getTopMovies(page: Int) = tmdbDataSource.getTopMoviesAsync(page).await()
 

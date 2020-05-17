@@ -8,6 +8,9 @@ import retrofit2.http.Query
 
 interface TmdbApi {
 
+    @GET("trending/movie/{timeWindow}")
+    fun getTrendingMoviesAsync(@Path("timeWindow") timeWindow: String): Deferred<TmdbMovieListAPI>
+
     @GET("movie/top_rated")
     fun getTopMoviesAsync(@Query("page") page: Int): Deferred<TmdbMovieListAPI>
 

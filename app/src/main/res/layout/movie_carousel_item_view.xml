@@ -50,7 +50,7 @@
                 android:gravity="center"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
-                android:text="@{`` + item.voteAverage + ` · ` + item.releaseDate}"
+                android:text="@{item.voteAverageDisplay + ` · ` + item.releaseDateDisplay}"
                 android:textAppearance="?attr/textAppearanceBody1"
                 android:textColor="?android:attr/textColorPrimary"
                 app:drawableTint="?attr/colorPrimary"

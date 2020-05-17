@@ -6,6 +6,7 @@ import kotlinx.android.parcel.Parcelize
 import me.li2.android.common.arch.Resource
 import me.li2.android.common.logic.orFalse
 import me.li2.movies.data.remote.TmdbApi
+import org.threeten.bp.LocalDate
 
 @Parcelize
 data class MovieItemPagingUI(
@@ -19,11 +20,15 @@ data class MovieItemPagingUI(
 data class MovieItemUI(
         val id: Int,
         val title: String,
-        val releaseDate: String,
+        val releaseDate: LocalDate?,
+        val releaseDateDisplay: String,
         val posterUrl: String?,
         val backdropUrl: String?,
-        val voteAverage: String,
-        val voteCount: String,
+        val popularity: Double,
+        val voteAverage: Double,
+        val voteAverageDisplay: String,
+        val voteCount: Int,
+        val voteCountDisplay: String,
         val overview: String
 ) : Parcelable
 

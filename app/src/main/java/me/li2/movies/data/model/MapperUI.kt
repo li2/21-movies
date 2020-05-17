@@ -8,27 +8,37 @@ import me.li2.movies.fcm.MessageAPI
 import me.li2.movies.ui.widgets.paging.PagingState
 import me.li2.movies.util.NumberFormatter.formatRuntime
 import me.li2.movies.util.NumberFormatter.formatVoteCount
+import me.li2.movies.util.parseLocalDate
+import me.li2.movies.util.releaseDateWithBestLocalPattern
 
 object MapperUI {
 
     fun toMovieItemUI(api: TmdbMovieAPI) = MovieItemUI(
             id = api.id,
             title = api.title,
-            releaseDate = api.releaseDate.orEmpty(),
+            releaseDate = api.releaseDate?.parseLocalDate(),
+            releaseDateDisplay = api.releaseDate?.releaseDateWithBestLocalPattern().orEmpty(),
             posterUrl = TmdbApi.imageW500Url(api.posterPath),
             backdropUrl = TmdbApi.imageOriginalUrl(api.backdropPath),
-            voteAverage = api.voteAverage.toString(),
-            voteCount = formatVoteCount(api.voteCount),
+            popularity = api.popularity,
+            voteAverage = api.voteAverage,
+            voteAverageDisplay = api.voteAverage.toString(),
+            voteCount = api.voteCount,
+            voteCountDisplay = formatVoteCount(api.voteCount),
             overview = api.overview)
 
     fun toMovieItemUI(api: MessageAPI) = MovieItemUI(
             id = api.id.toInt(),
             title = api.title,
-            releaseDate = api.releaseDate,
+            releaseDate = api.releaseDate.parseLocalDate(),
+            releaseDateDisplay = api.releaseDate.releaseDateWithBestLocalPattern(),
             posterUrl = api.posterUrl,
             backdropUrl = "",
-            voteAverage = "",
-            voteCount = "",
+            popularity = 0.0,
+            voteAverage = 0.0,
+            voteAverageDisplay = "0.0",
+            voteCount = 0,
+            voteCountDisplay = "0",
             overview = api.overview)
 
     fun toMovieItemPagingUI(api: TmdbMovieListAPI) = MovieItemPagingUI(
@@ -44,7 +54,8 @@ object MapperUI {
             title = api.title,
             overview = api.overview.orEmpty(),
             tagline = api.tagline.orEmpty(),
-            releaseDate = api.releaseDate,
+            releaseDate = api.releaseDate.parseLocalDate(),
+            releaseDateDisplay = api.releaseDate.releaseDateWithBestLocalPattern(),
             runtime = formatRuntime(api.runtime),
             genres = api.genres.map { toGenreUI(it) },
             productionCountry = api.productionCountries.firstOrNull()?.name.orEmpty(),
@@ -54,9 +65,11 @@ object MapperUI {
             posterUrl = TmdbApi.imageW500Url(api.posterPath),
             backdropUrl = TmdbApi.imageOriginalUrl(api.backdropPath),
             youtubeTrailerUrl = null,
-            popularity = api.popularity.toString(),
-            voteAverage = api.voteAverage.toString(),
-            voteCount = formatVoteCount(api.voteCount))
+            popularity = api.popularity,
+            voteAverage = api.voteAverage,
+            voteAverageDisplay = api.voteAverage.toString(),
+            voteCount = api.voteCount,
+            voteCountDisplay = formatVoteCount(api.voteCount))
 
     fun toMovieDetailUI(item: MovieItemUI) = MovieDetailUI(
             id = item.id,
@@ -64,6 +77,7 @@ object MapperUI {
             overview = item.overview,
             tagline = "",
             releaseDate = item.releaseDate,
+            releaseDateDisplay = item.releaseDateDisplay,
             runtime = "",
             genres = emptyList(),
             productionCountry = "",
@@ -73,9 +87,11 @@ object MapperUI {
             posterUrl = item.posterUrl,
             backdropUrl = item.backdropUrl,
             youtubeTrailerUrl = null,
-            popularity = "",
+            popularity = 0.0,
             voteAverage = item.voteAverage,
-            voteCount = "")
+            voteAverageDisplay = item.voteAverageDisplay,
+            voteCount = 0,
+            voteCountDisplay = "0")
 
     fun toMovieReviewsUI(api: TmdbMovieReviewListAPI) = MovieReviewListUI(
             reviews = api.results.map {
