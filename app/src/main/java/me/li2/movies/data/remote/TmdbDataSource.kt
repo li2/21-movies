@@ -1,6 +1,7 @@
 package me.li2.movies.data.remote
 
 import me.li2.movies.App
+import me.li2.movies.data.model.TimeWindow
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -9,6 +10,8 @@ class TmdbDataSource : KodeinAware {
 
     override val kodein by kodein(App.context)
     private val tmdbApi by instance<TmdbApi>()
+
+    fun getTrendingMoviesAsync(timeWindow: TimeWindow) = tmdbApi.getTrendingMoviesAsync(timeWindow.value)
 
     fun getTopMoviesAsync(page: Int) = tmdbApi.getTopMoviesAsync(page)
 
