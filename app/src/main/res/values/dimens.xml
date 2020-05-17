@@ -1,3 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="movies_horizontal_list_height">232dp</dimen>
 </resources>

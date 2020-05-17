@@ -10,6 +10,6 @@
 
     <include layout="@layout/review_list_view" />
 
-    <include layout="@layout/movie_summary_h_list_view" />
+    <include layout="@layout/movie_list_viewholder" />
 
 </me.li2.movies.util.HotViewFlipper>

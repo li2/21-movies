@@ -21,8 +21,8 @@ import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.data.model.MapperUI
 import me.li2.movies.databinding.MoviesFragmentBinding
-import me.li2.movies.ui.moviedetail.MovieDetailViewModel
-import me.li2.movies.ui.widgets.moviessummary.MovieSummaryVAdapter
+import me.li2.movies.ui.widgets.movies.MovieListAdapter
+import me.li2.movies.ui.widgets.movies.MovieListLayoutType.LINEAR_LAYOUT_VERTICAL
 import me.li2.movies.ui.widgets.paging.PagingItemAdapter
 import me.li2.movies.util.navigate
 import me.li2.movies.util.showAnimation
@@ -33,7 +33,7 @@ class MoviesFragment : BaseFragment() {
     private val args by navArgs<MoviesFragmentArgs>()
     private val viewModel by viewModels<MoviesModel>()
 
-    private val moviesAdapter = MovieSummaryVAdapter()
+    private val moviesAdapter = MovieListAdapter(LINEAR_LAYOUT_VERTICAL)
     private val pagingAdapter = PagingItemAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,7 +58,7 @@ class MoviesFragment : BaseFragment() {
             addItemDecoration(DividerItemDecoration(requireContext(), RecyclerView.VERTICAL))
         }
 
-        compositeDisposable += moviesAdapter.itemClicks.throttleFirstShort().subscribe { (_, movieItem) ->
+        compositeDisposable += moviesAdapter.onMovieClicks.throttleFirstShort().subscribe { (_, movieItem) ->
             navigate(MoviesFragmentDirections.showMovieDetail(movieItem))
         }
 

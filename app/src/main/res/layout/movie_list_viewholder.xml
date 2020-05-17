@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="java.util.List" />
+
+        <import type="me.li2.android.common.arch.Resource" />
+
+        <import type="me.li2.movies.data.model.MovieItemUI" />
+
+        <import type="me.li2.movies.ui.widgets.movies.MovieListLayoutType" />
+
+        <variable
+            name="label"
+            type="String" />
+
+        <variable
+            name="movies"
+            type="Resource&lt;List&lt;MovieItemUI>>" />
+
+        <variable
+            name="layoutType"
+            type="MovieListLayoutType" />
+
+        <variable
+            name="isLoading"
+            type="Boolean" />
+    </data>
+
+    <me.li2.movies.ui.widgets.movies.MovieItemListView
+        android:id="@+id/movieListView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/movies_horizontal_list_height"
+        app:label="@{label}"
+        app:layoutType="@{layoutType}"
+        app:movies="@{movies}"
+        tools:text="Recommendations" />
+
+</layout>

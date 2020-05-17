@@ -26,7 +26,6 @@ import me.li2.movies.base.BaseFragment
 import me.li2.movies.data.model.MovieItemUI
 import me.li2.movies.databinding.HomeFragmentBinding
 import me.li2.movies.ui.widgets.moviescarousel.MovieCarouselAdapter
-import me.li2.movies.ui.widgets.moviessummary.MovieSummaryHAdapter
 import me.li2.movies.util.RootViewStore
 import me.li2.movies.util.navigate
 import me.li2.movies.util.setViewPager2
@@ -71,11 +70,12 @@ class HomeFragment : BaseFragment(), ViewPager2AutoScrollHelper, RootViewStore {
             viewModel.getHomeScreenData(true)
         }
 
-        compositeDisposable += Observable.merge(
+        compositeDisposable += Observable.mergeArray(
                 (binding.movieCarouselViewPager.adapter as MovieCarouselAdapter).itemClicks,
-                (binding.nowPlayingMoviesRecyclerView.adapter as MovieSummaryHAdapter).itemClicks,
-                (binding.upcomingMoviesRecyclerView.adapter as MovieSummaryHAdapter).itemClicks,
-                (binding.popularMoviesRecyclerView.adapter as MovieSummaryHAdapter).itemClicks
+                binding.nowPlayingMovieListView.onMovieClicks,
+                binding.upcomingMovieListView.onMovieClicks,
+                binding.popularMovieListView.onMovieClicks,
+                binding.topRatedMovieListView.onMovieClicks
         ).subscribe { (_, movieItem) ->
             navigate(HomeFragmentDirections.showMovieDetail(movieItem))
         }
@@ -85,26 +85,24 @@ class HomeFragment : BaseFragment(), ViewPager2AutoScrollHelper, RootViewStore {
         observeOnView(trendingMovies) {
             binding.movieCarouselItems = it.data
             binding.movieCarouselPagerIndicator.count = it.data?.size.orZero()
-            binding.isLoadingTopMovies = it.status == LOADING && it.data.isNullOrEmpty()
+            binding.isCarouselLoading = it.status == LOADING && it.data.isNullOrEmpty()
             bindLoadingStatus(it)
         }
 
         observeOnView(nowPlaying) {
-            binding.nowPlayingItems = it.data
-            binding.isLoadingNowPlayingMovies = it.status == LOADING && it.data.isNullOrEmpty()
-            bindLoadingStatus(it)
+            binding.nowPlayingMovies = it
         }
 
         observeOnView(upcomingMovies) {
-            binding.upcomingItems = it.data
-            binding.isLoadingUpcomingMovies = it.status == LOADING && it.data.isNullOrEmpty()
-            bindLoadingStatus(it)
+            binding.upcomingMovies = it
         }
 
         observeOnView(popularMovies) {
-            binding.popularItems = it.data
-            binding.isLoadingPopularMovies = it.status == LOADING && it.data.isNullOrEmpty()
-            bindLoadingStatus(it)
+            binding.popularMovies = it
+        }
+
+        observeOnView(topMovies) {
+            binding.topRatedMovies = it
         }
     }
 

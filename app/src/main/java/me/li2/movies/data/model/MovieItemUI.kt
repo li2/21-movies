@@ -49,3 +49,5 @@ fun MutableLiveData<Resource<MovieItemPagingUI>>.appendResults(results: List<Mov
                 it.distinctBy { movie -> movie.id }
             }
 }
+
+fun Resource<List<MovieItemUI>>.noData() = this.data?.isNullOrEmpty().orFalse()

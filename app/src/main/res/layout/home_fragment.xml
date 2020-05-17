@@ -7,43 +7,40 @@
 
         <import type="java.util.List" />
 
+        <import type="me.li2.android.common.arch.Resource" />
+
         <import type="me.li2.movies.data.model.MovieItemUI" />
+
+        <import type="me.li2.movies.ui.widgets.movies.MovieListLayoutType" />
 
         <variable
             name="isLoading"
             type="Boolean" />
 
         <variable
-            name="isLoadingTopMovies"
-            type="Boolean" />
-
-        <variable
-            name="isLoadingNowPlayingMovies"
-            type="Boolean" />
-
-        <variable
-            name="isLoadingUpcomingMovies"
-            type="Boolean" />
-
-        <variable
-            name="isLoadingPopularMovies"
+            name="isCarouselLoading"
             type="Boolean" />
 
         <variable
             name="movieCarouselItems"
-            type="List&lt;MovieItemUI&gt;" />
+            type="List&lt;MovieItemUI>" />
 
         <variable
-            name="nowPlayingItems"
-            type="List&lt;MovieItemUI&gt;" />
+            name="nowPlayingMovies"
+            type="Resource&lt;List&lt;MovieItemUI>>" />
 
         <variable
-            name="upcomingItems"
-            type="List&lt;MovieItemUI&gt;" />
+            name="upcomingMovies"
+            type="Resource&lt;List&lt;MovieItemUI>>" />
 
         <variable
-            name="popularItems"
-            type="List&lt;MovieItemUI&gt;" />
+            name="popularMovies"
+            type="Resource&lt;List&lt;MovieItemUI>>" />
+
+        <variable
+            name="topRatedMovies"
+            type="Resource&lt;List&lt;MovieItemUI>>" />
+
     </data>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -58,7 +55,7 @@
 
         <me.li2.android.view.list.VerticalScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:fillViewport="true">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -88,7 +85,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:startShimmer="@{isLoadingTopMovies}"
+                    app:startShimmer="@{isCarouselLoading}"
                     tools:visibility="gone" />
 
                 <com.rd.PageIndicatorView
@@ -137,128 +134,54 @@
 
                 </com.google.android.material.appbar.AppBarLayout>
 
-                <TextView
-                    android:id="@+id/nowPlayingTextView"
+                <me.li2.movies.ui.widgets.movies.MovieItemListView
+                    android:id="@+id/nowPlayingMovieListView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_height="@dimen/movies_horizontal_list_height"
                     android:layout_marginTop="48dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="Now Playing"
-                    android:textAppearance="?attr/textAppearanceHeadline6"
-                    android:textColor="?android:attr/textColorPrimary"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:label="@{`Now Playing`}"
+                    app:layoutType="@{MovieListLayoutType.LINEAR_LAYOUT_HORIZONTAL}"
                     app:layout_constraintTop_toBottomOf="@id/movieCarouselViewPager"
-                    tools:ignore="HardcodedText" />
+                    app:movies="@{nowPlayingMovies}" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/nowPlayingMoviesRecyclerView"
+                <me.li2.movies.ui.widgets.movies.MovieItemListView
+                    android:id="@+id/upcomingMovieListView"
                     android:layout_width="match_parent"
-                    android:layout_height="192dp"
-                    android:layout_marginTop="8dp"
-                    android:clipToPadding="false"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/nowPlayingTextView"
-                    app:movieSummaryHItems="@{nowPlayingItems}"
-                    tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/movie_summary_h_item_view"
-                    tools:orientation="horizontal"
-                    tools:spanCount="1" />
-
-                <include
-                    android:id="@+id/nowPlayingShimmerContainer"
-                    layout="@layout/movie_summary_h_list_view_placeholder"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="@id/nowPlayingMoviesRecyclerView"
-                    app:startShimmer="@{isLoadingNowPlayingMovies}"
-                    tools:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/upcomingTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_height="@dimen/movies_horizontal_list_height"
                     android:layout_marginTop="32dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="Upcoming"
-                    android:textAppearance="?attr/textAppearanceHeadline6"
-                    android:textColor="?android:attr/textColorPrimary"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/nowPlayingMoviesRecyclerView"
-                    tools:ignore="HardcodedText" />
+                    app:label="@{`Upcoming`}"
+                    app:layoutType="@{MovieListLayoutType.LINEAR_LAYOUT_HORIZONTAL}"
+                    app:layout_constraintTop_toBottomOf="@id/nowPlayingMovieListView"
+                    app:movies="@{upcomingMovies}" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/upcomingMoviesRecyclerView"
+                <me.li2.movies.ui.widgets.movies.MovieItemListView
+                    android:id="@+id/popularMovieListView"
                     android:layout_width="match_parent"
-                    android:layout_height="192dp"
-                    android:layout_marginTop="8dp"
-                    android:clipToPadding="false"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/upcomingTextView"
-                    app:movieSummaryHItems="@{upcomingItems}"
-                    tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/movie_summary_h_item_view"
-                    tools:orientation="horizontal"
-                    tools:spanCount="1" />
-
-                <include
-                    android:id="@+id/upcomingShimmerContainer"
-                    layout="@layout/movie_summary_h_list_view_placeholder"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="@id/upcomingMoviesRecyclerView"
-                    app:startShimmer="@{isLoadingUpcomingMovies}"
-                    tools:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/popularTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_height="@dimen/movies_horizontal_list_height"
                     android:layout_marginTop="32dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="Popular"
-                    android:textAppearance="?attr/textAppearanceHeadline6"
-                    android:textColor="?android:attr/textColorPrimary"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/upcomingMoviesRecyclerView"
-                    tools:ignore="HardcodedText" />
+                    app:label="@{`Popular`}"
+                    app:layoutType="@{MovieListLayoutType.LINEAR_LAYOUT_HORIZONTAL}"
+                    app:layout_constraintTop_toBottomOf="@id/upcomingMovieListView"
+                    app:movies="@{popularMovies}" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/popularMoviesRecyclerView"
+                <me.li2.movies.ui.widgets.movies.MovieItemListView
+                    android:id="@+id/topRatedMovieListView"
                     android:layout_width="match_parent"
-                    android:layout_height="192dp"
-                    android:layout_marginTop="8dp"
-                    android:clipToPadding="false"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/popularTextView"
-                    app:movieSummaryHItems="@{popularItems}"
-                    tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/movie_summary_h_item_view"
-                    tools:orientation="horizontal"
-                    tools:spanCount="1" />
-
-                <include
-                    android:id="@+id/popularShimmerContainer"
-                    layout="@layout/movie_summary_h_list_view_placeholder"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="@id/popularMoviesRecyclerView"
-                    app:startShimmer="@{isLoadingPopularMovies}"
-                    tools:visibility="gone" />
+                    android:layout_height="@dimen/movies_horizontal_list_height"
+                    android:layout_marginTop="32dp"
+                    app:label="@{`Top Rated`}"
+                    app:layoutType="@{MovieListLayoutType.LINEAR_LAYOUT_HORIZONTAL}"
+                    app:layout_constraintTop_toBottomOf="@id/popularMovieListView"
+                    app:movies="@{topRatedMovies}" />
 
                 <include
                     layout="@layout/home_footer_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/popularMoviesRecyclerView" />
+                    android:layout_marginTop="32dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/topRatedMovieListView"
+                    app:layout_constraintVertical_bias="1.0" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

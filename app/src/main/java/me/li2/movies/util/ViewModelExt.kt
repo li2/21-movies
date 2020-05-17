@@ -24,9 +24,9 @@ fun ViewModel.io(onError: (Exception) -> Unit = {},
     }
 }
 
-fun <T> ViewModel.ioWithLiveData(mutableLiveData: MutableLiveData<Resource<T?>>,
+fun <T> ViewModel.ioWithLiveData(mutableLiveData: MutableLiveData<Resource<T>>,
                                  forceRefresh: Boolean = false,
-                                 ioHandler: suspend CoroutineScope.() -> T?) {
+                                 ioHandler: suspend CoroutineScope.() -> T) {
     if (!forceRefresh) {
         mutableLiveData.value?.data?.let { data ->
             mutableLiveData.postSuccess(data)

@@ -36,7 +36,7 @@
             android:clipToPadding="false"
             android:fitsSystemWindows="true"
             app:layout_behavior="@string/viewlib_overscroll_bounce_behavior"
-            tools:listitem="@layout/movie_summary_v_item_view" />
+            tools:listitem="@layout/movie_item_vertical_view" />
 
         <include
             android:id="@+id/shimmerContainer"

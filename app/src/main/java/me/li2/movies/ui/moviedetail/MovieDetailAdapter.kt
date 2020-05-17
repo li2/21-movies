@@ -12,7 +12,7 @@ import me.li2.movies.data.model.GenreUI
 import me.li2.movies.data.model.MovieItemUI
 import me.li2.movies.ui.moviedetail.MovieDetailRowType.*
 import me.li2.movies.ui.widgets.credits.CreditListViewHolder
-import me.li2.movies.ui.widgets.moviessummary.MovieSummaryHListViewHolder
+import me.li2.movies.ui.widgets.movies.MovieListViewHolder
 import me.li2.movies.ui.widgets.reviews.ReviewListViewHolder
 
 class MovieDetailAdapter : ListAdapter<BaseRowData, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
@@ -35,7 +35,7 @@ class MovieDetailAdapter : ListAdapter<BaseRowData, RecyclerView.ViewHolder>(DIF
             ROW_TYPE_DETAIL.ordinal -> MovieDetailViewHolder.create(parent, _onRateClicks, _onGenreClicks)
             ROW_TYPE_CREDITS.ordinal -> CreditListViewHolder.create(parent)
             ROW_TYPE_REVIEWS.ordinal -> ReviewListViewHolder.create(parent)
-            ROW_TYPE_REC_MOVIES.ordinal -> MovieSummaryHListViewHolder.create(parent, _onRecMovieClicks, "Recommendations")
+            ROW_TYPE_REC_MOVIES.ordinal -> MovieListViewHolder.create(parent, _onRecMovieClicks, "Recommendations")
             else -> throw RuntimeException("Unexpected view type $viewType")
         }
     }
@@ -46,7 +46,7 @@ class MovieDetailAdapter : ListAdapter<BaseRowData, RecyclerView.ViewHolder>(DIF
             is MovieDetailViewHolder -> holder.bind((data as DetailRowData).movieDetail, position)
             is CreditListViewHolder -> holder.bind((data as CreditsRowData).credits, position)
             is ReviewListViewHolder -> holder.bind((data as ReviewsRowData).reviews, position)
-            is MovieSummaryHListViewHolder -> holder.bind((data as RecMoviesRowData).movies, position)
+            is MovieListViewHolder -> holder.bind((data as RecMoviesRowData).movies, position)
         }
     }
 

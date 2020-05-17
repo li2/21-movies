@@ -17,19 +17,19 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <include layout="@layout/movie_summary_v_item_view_placeholder" />
+            <include layout="@layout/movie_item_vertical_view_placeholder" />
 
-            <include layout="@layout/movie_summary_v_item_view_placeholder" />
+            <include layout="@layout/movie_item_vertical_view_placeholder" />
 
-            <include layout="@layout/movie_summary_v_item_view_placeholder" />
+            <include layout="@layout/movie_item_vertical_view_placeholder" />
 
-            <include layout="@layout/movie_summary_v_item_view_placeholder" />
+            <include layout="@layout/movie_item_vertical_view_placeholder" />
 
-            <include layout="@layout/movie_summary_v_item_view_placeholder" />
+            <include layout="@layout/movie_item_vertical_view_placeholder" />
 
-            <include layout="@layout/movie_summary_v_item_view_placeholder" />
+            <include layout="@layout/movie_item_vertical_view_placeholder" />
 
-            <include layout="@layout/movie_summary_v_item_view_placeholder" />
+            <include layout="@layout/movie_item_vertical_view_placeholder" />
 
         </LinearLayout>
 
