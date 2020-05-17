@@ -55,7 +55,7 @@
             android:drawableStart="@drawable/ic_star_16"
             android:drawablePadding="4dp"
             android:gravity="center_vertical"
-            android:text="@{`` + item.voteAverage + ` · ` + item.releaseDate}"
+            android:text="@{item.voteAverageDisplay + ` · ` + item.releaseDateDisplay}"
             android:textAppearance="?attr/textAppearanceBody2"
             app:drawableTint="?attr/colorPrimary"
             app:layout_constraintHorizontal_chainStyle="spread"

@@ -9,6 +9,7 @@ import me.li2.movies.data.model.MovieItemUI
 import me.li2.movies.data.model.TimeWindow
 import me.li2.movies.util.distinctUntilChanged
 import me.li2.movies.util.ioWithLiveData
+import org.threeten.bp.LocalDate
 
 class HomeViewModel : BaseViewModel() {
 
@@ -44,12 +45,18 @@ class HomeViewModel : BaseViewModel() {
         getPopularMovies(1, forceRefresh)
     }
 
-    private fun getTrendingMovies(timeWindow: TimeWindow = TimeWindow.WEEK,
+    private fun getTrendingMovies(timeWindow: TimeWindow = TimeWindow.DAY,
                                   forceRefresh: Boolean = false) {
         ioWithLiveData(_trendingMovies, forceRefresh) {
-            repository.getTrendingMovies(timeWindow).results.take(MAXIMUM_DISPLAY_MOVIES).map {
-                MapperUI.toMovieItemUI(it)
-            }
+            repository.getTrendingMovies(timeWindow).results
+                    .map { MapperUI.toMovieItemUI(it) }
+                    .filter {
+                        it.releaseDate != null && it.releaseDate.isAfter(LocalDate.now().minusMonths(3))
+                                && it.voteCount > 50
+                                && it.voteAverage > 5.0
+                    }
+                    .sortedBy { it.popularity }
+                    .take(MAXIMUM_DISPLAY_MOVIES)
         }
     }
 

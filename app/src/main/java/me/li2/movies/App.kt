@@ -1,6 +1,7 @@
 package me.li2.movies
 
 import androidx.multidex.MultiDexApplication
+import com.jakewharton.threetenabp.AndroidThreeTen
 import me.li2.movies.AppBuildConfig.configCrashlytics
 import me.li2.movies.AppBuildConfig.configDebugLog
 import me.li2.movies.di.MainComponent.appModule
@@ -26,6 +27,7 @@ class App : MultiDexApplication(), KodeinAware {
         setupKodein()
         constants.init()
         createNotificationChannels(this)
+        AndroidThreeTen.init(this)
     }
 
     private fun setupKodein() {

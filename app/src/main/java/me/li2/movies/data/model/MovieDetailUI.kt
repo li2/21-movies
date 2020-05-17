@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 import kotlinx.serialization.Serializable
 import me.li2.movies.data.local.AppDatabase.Companion.TABLE_MOVIES
+import org.threeten.bp.LocalDate
 
 @Parcelize
 @Entity(tableName = TABLE_MOVIES,
@@ -18,8 +19,9 @@ data class MovieDetailUI(
         val title: String,
         val overview: String,
         val tagline: String,
+        val releaseDate: LocalDate?,
         @ColumnInfo(name = "release_date")
-        val releaseDate: String,
+        val releaseDateDisplay: String,
         val runtime: String,
         val genres: List<GenreUI>,
         val productionCountry: String,
@@ -29,9 +31,11 @@ data class MovieDetailUI(
         val posterUrl: String?,
         val backdropUrl: String?,
         val youtubeTrailerUrl: String?,
-        val popularity: String,
-        val voteAverage: String,
-        val voteCount: String
+        val popularity: Double,
+        val voteAverage: Double,
+        val voteAverageDisplay: String,
+        val voteCount: Int,
+        val voteCountDisplay: String
 ) : Parcelable {
     fun getDisplayGenres() = genres.joinToString(separator = ", ") { it.name }
 }
