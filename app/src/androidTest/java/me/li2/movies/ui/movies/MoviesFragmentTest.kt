@@ -9,7 +9,6 @@ import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.runner.AndroidJUnit4
 import me.li2.movies.R
-import me.li2.movies.ui.widgets.movies.MovieSummaryVItemViewHolder
 import me.li2.movies.ui.widgets.movies.MovieViewHolder
 import org.junit.Test
 import org.junit.runner.RunWith

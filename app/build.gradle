@@ -31,10 +31,10 @@ android {
         }
     }
 
-    dataBinding {
-        enabled = true
+    buildFeatures {
+        dataBinding = true
     }
-
+    
     defaultConfig {
         applicationId "me.li2.movies"
         minSdkVersion androidMinSdk_version

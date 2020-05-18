@@ -1,3 +1,7 @@
+/*
+ * Created by Weiyi Li on 2020-05-04.
+ * https://github.com/li2
+ */
 package me.li2.movies.data.local
 
 import android.content.Context
@@ -17,7 +21,7 @@ import me.li2.movies.data.model.Trailer
     MovieDetailUI::class,
     MovieReviewUI::class,
     Trailer::class
-], version = DATABASE_VERSION, exportSchema = true)
+], version = DATABASE_VERSION, exportSchema = false)
 @TypeConverters(
         GenreListConverter::class,
         LocalDateConverter::class

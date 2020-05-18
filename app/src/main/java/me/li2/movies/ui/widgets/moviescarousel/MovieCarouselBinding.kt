@@ -1,3 +1,7 @@
+/*
+ * Created by Weiyi Li on 2020-04-27.
+ * https://github.com/li2
+ */
 package me.li2.movies.ui.widgets.moviescarousel
 
 import androidx.databinding.BindingAdapter
@@ -6,7 +10,7 @@ import me.li2.movies.data.model.MovieItemUI
 
 object MovieCarouselBinding {
     @JvmStatic
-    @BindingAdapter(value = ["app:movieCarouselItems"])
+    @BindingAdapter(value = ["movieCarouselItems"])
     fun setMovieCarouselItems(viewPager: ViewPager2, items: List<MovieItemUI>?) {
         if (viewPager.adapter as? MovieCarouselAdapter == null) {
             viewPager.adapter = MovieCarouselAdapter()

@@ -1,3 +1,7 @@
+/*
+ * Created by Weiyi Li on 2020-04-29.
+ * https://github.com/li2
+ */
 package me.li2.movies.ui.widgets.paging
 
 import android.view.ViewGroup

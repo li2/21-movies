@@ -65,10 +65,7 @@
                     android:clipChildren="false"
                     android:clipToPadding="false"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:movies="@{movieCarouselItems}"
-                    tools:background="@tools:sample/backgrounds/scenic[9]"
-                    tools:layout_height="480dp"
-                    tools:listItem="@layout/home_top_item_view" />
+                    app:movies="@{movieCarouselItems}" />
 
                 <com.google.android.material.appbar.AppBarLayout
                     android:id="@+id/appBarLayout"

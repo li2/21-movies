@@ -1,3 +1,7 @@
+/*
+ * Created by Weiyi Li on 2020-05-18.
+ * https://github.com/li2
+ */
 package me.li2.movies.ui.widgets.movies
 
 import android.view.ViewGroup
@@ -29,7 +33,7 @@ class MovieListAdapter(layoutType: MovieListLayoutType) : ListAdapter<MovieItemU
     }
 
     override fun onBindViewHolder(viewHolder: MovieViewHolder, position: Int) {
-        viewHolder.bind(getItem(position), position)
+        viewHolder.bind(getItem(position))
     }
 
     companion object {

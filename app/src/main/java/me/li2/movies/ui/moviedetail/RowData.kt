@@ -1,3 +1,7 @@
+/*
+ * Created by Weiyi Li on 2020-05-11.
+ * https://github.com/li2
+ */
 package me.li2.movies.ui.moviedetail
 
 import me.li2.android.common.arch.Resource

@@ -1,3 +1,7 @@
+/*
+ * Created by Weiyi Li on 2020-05-17.
+ * https://github.com/li2
+ */
 package me.li2.movies.ui.widgets.credits
 
 import androidx.databinding.BindingAdapter
@@ -10,7 +14,7 @@ import me.li2.movies.data.model.CreditUI
 
 object CreditsBinding {
     @JvmStatic
-    @BindingAdapter(value = ["app:credits"])
+    @BindingAdapter(value = ["credits"])
     fun setCredits(rv: RecyclerView, items: List<CreditUI>?) {
         if (rv.adapter as? CreditListAdapter == null) {
             rv.adapter = CreditListAdapter()

@@ -10,7 +10,7 @@
     </data>
 
     <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/shimmer"
+        android:id="@+id/shimmerLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:duration="?attr/shimmerDuration"

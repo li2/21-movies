@@ -1,3 +1,7 @@
+/*
+ * Created by Weiyi Li on 2020-05-18.
+ * https://github.com/li2
+ */
 package me.li2.movies.ui.widgets.movies
 
 import android.content.Context

@@ -5,21 +5,6 @@
 
     <data>
 
-        <import type="java.util.List" />
-
-        <import type="me.li2.movies.data.model.MovieItemUI" />
-
-        <variable
-            name="movieItems"
-            type="List&lt;MovieItemUI>" />
-
-        <variable
-            name="isLoading"
-            type="Boolean" />
-
-        <variable
-            name="emptyOrErrorMessage"
-            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -37,11 +22,11 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:movieCarouselItems="@{movieItems}"
             tools:background="@tools:sample/backgrounds/scenic[9]"
             tools:listItem="@layout/home_top_item_view" />
 
         <include
+            android:id="@+id/shimmerLayout"
             layout="@layout/movie_carousel_placeholder"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -49,7 +34,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:startShimmer="@{isLoading}"
             tools:visibility="gone" />
 
         <com.rd.PageIndicatorView
@@ -78,22 +62,21 @@
             android:layout_marginEnd="16dp"
             android:backgroundTint="?attr/colorSurface"
             android:clipToPadding="false"
-            android:visibility="@{emptyOrErrorMessage != null}"
+            android:visibility="gone"
             app:cardCornerRadius="8dp"
             app:cardElevation="4dp"
             app:cardUseCompatPadding="true"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/movieCarouselViewPager"
             app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="visible">
+            tools:visibility="gone">
 
             <TextView
-                android:id="@+id/emptyTextView"
+                android:id="@+id/stateTextView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="?attr/colorSurface"
                 android:gravity="center"
                 android:padding="16dp"
-                android:text="@{emptyOrErrorMessage}"
                 android:textAppearance="?attr/textAppearanceCaption"
                 tools:ignore="HardcodedText"
                 tools:text="No Movies" />

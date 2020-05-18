@@ -1,3 +1,7 @@
+/*
+ * Created by Weiyi Li on 2020-04-27.
+ * https://github.com/li2
+ */
 package me.li2.movies.util
 
 import android.view.View
