@@ -11,14 +11,14 @@ import me.li2.movies.data.model.MovieItemUI
 
 class MovieCarouselAdapter : ListAdapter<MovieItemUI, MovieCarouselItemViewHolder>(DIFF_CALLBACK), CarouselPagerHelper {
 
-    private val itemClicksPublish = PublishSubject.create<Pair<ImageView, MovieItemUI>>()
-    internal val itemClicks = itemClicksPublish.toFlowable(BackpressureStrategy.LATEST).toObservable()!!
+    private val _onMovieClicks = PublishSubject.create<Pair<ImageView, MovieItemUI>>()
+    internal val onMovieClicks = _onMovieClicks.toFlowable(BackpressureStrategy.LATEST).toObservable()!!
 
     override val carouselDatasetSize: Int
         get() = currentList.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieCarouselItemViewHolder {
-        return MovieCarouselItemViewHolder.create(parent, itemClicksPublish)
+        return MovieCarouselItemViewHolder.create(parent, _onMovieClicks)
     }
 
     override fun onBindViewHolder(viewHolder: MovieCarouselItemViewHolder, position: Int) {
