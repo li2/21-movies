@@ -27,7 +27,7 @@ class MovieCarouselAdapter : ListAdapter<MovieItemUI, MovieCarouselItemViewHolde
 
     override fun onBindViewHolder(viewHolder: MovieCarouselItemViewHolder, position: Int) {
         val dataPosition = getCarouselDataPosition(position)
-        viewHolder.bind(getItem(dataPosition), dataPosition)
+        viewHolder.bind(getItem(dataPosition))
     }
 
     override fun getItemCount() = getCarouselDisplaySize()
