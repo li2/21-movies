@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.FrameLayout
-import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.jakewharton.rxbinding3.view.clicks
@@ -19,10 +18,9 @@ import me.li2.movies.R
 import me.li2.movies.data.model.MovieItemUI
 import me.li2.movies.databinding.MovieCarouselItemViewBinding
 
-
 class MovieCarouselItemViewHolder(root: View,
                                   private val binding: MovieCarouselItemViewBinding?,
-                                  private val itemClicks: PublishSubject<Pair<ImageView, MovieItemUI>>)
+                                  private val itemClicks: PublishSubject<Pair<View, MovieItemUI>>)
     : RecyclerView.ViewHolder(root) {
 
     fun bind(item: MovieItemUI) {
@@ -31,14 +29,14 @@ class MovieCarouselItemViewHolder(root: View,
             binding.root
                     .clicks()
                     .throttleFirstShort()
-                    .map { Pair(binding.posterImageView, item) }
+                    .map { Pair(binding.movieItemContainer, item) }
                     .subscribe(itemClicks)
         }
     }
 
     companion object {
         fun create(parent: ViewGroup,
-                   itemClicks: PublishSubject<Pair<ImageView, MovieItemUI>>): MovieCarouselItemViewHolder {
+                   itemClicks: PublishSubject<Pair<View, MovieItemUI>>): MovieCarouselItemViewHolder {
             val root = LayoutInflater.from(parent.context).inflate(R.layout.movie_carousel_item_view, parent, false)
             // render problem: Pages must fill the whole ViewPager2 (use match_parent)
             // Android Preview is not taking the match_parent assigned in xml to attach views.

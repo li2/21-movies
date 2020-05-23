@@ -45,13 +45,11 @@ class ReviewListViewHolder(binding: ReviewListViewBinding)
             addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         }
-        binding.isLoading = true
     }
 
     override fun bind(item: Resource<List<MovieReviewUI>>, position: Int) {
-        reviewsAdapter.submitList(item.data?.take(5)) {
-            binding.isLoading = false
-        }
+        reviewsAdapter.submitList(item.data?.take(5))
+        binding.isLoading = item.status == LOADING && item.data.isNullOrEmpty()
         binding.isEmpty = item.status != LOADING && item.data.isNullOrEmpty()
     }
 

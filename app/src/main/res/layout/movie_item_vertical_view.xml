@@ -11,11 +11,13 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/movieItemContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?selectableItemBackground"
+        android:foreground="?attr/selectableItemBackground"
         android:paddingTop="16dp"
-        android:paddingBottom="16dp">
+        android:paddingBottom="16dp"
+        tools:targetApi="m">
 
         <ImageView
             android:id="@+id/posterImageView"

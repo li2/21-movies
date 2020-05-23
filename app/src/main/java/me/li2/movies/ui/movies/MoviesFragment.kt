@@ -8,8 +8,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.MergeAdapter
@@ -28,7 +30,9 @@ import me.li2.movies.databinding.MoviesFragmentBinding
 import me.li2.movies.ui.widgets.movies.MovieListAdapter
 import me.li2.movies.ui.widgets.movies.MovieListLayoutType.LINEAR_LAYOUT_VERTICAL
 import me.li2.movies.ui.widgets.paging.PagingItemAdapter
-import me.li2.movies.util.navigate
+import me.li2.movies.util.fixContainerExitTransition
+import me.li2.movies.util.navController
+import me.li2.movies.util.setUpContainerExitTransition
 import me.li2.movies.util.showAnimation
 
 class MoviesFragment : BaseFragment() {
@@ -42,6 +46,7 @@ class MoviesFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setUpContainerExitTransition(R.id.root)
         viewModel.searchGenreMovies(args.genre)
     }
 
@@ -53,6 +58,7 @@ class MoviesFragment : BaseFragment() {
     }
 
     override fun initUi(view: View, savedInstanceState: Bundle?) {
+        fixContainerExitTransition()
         activity?.setToolbar(binding.toolbar, title = args.genre)
         binding.executePendingBindings()
 
@@ -62,8 +68,9 @@ class MoviesFragment : BaseFragment() {
             addItemDecoration(DividerItemDecoration(requireContext(), RecyclerView.VERTICAL))
         }
 
-        compositeDisposable += moviesAdapter.onMovieClicks.throttleFirstShort().subscribe { (_, movieItem) ->
-            navigate(MoviesFragmentDirections.showMovieDetail(movieItem))
+        compositeDisposable += moviesAdapter.onMovieClicks.throttleFirstShort().subscribe { (view, movieItem) ->
+            val extras = FragmentNavigatorExtras(view to ViewCompat.getTransitionName(view).orEmpty())
+            navController().navigate(MoviesFragmentDirections.showMovieDetail(movieItem), extras)
         }
 
         compositeDisposable += pagingAdapter.retryClicks.throttleFirstShort().subscribe {

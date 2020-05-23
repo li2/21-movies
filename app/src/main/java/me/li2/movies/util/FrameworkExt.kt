@@ -6,7 +6,6 @@ package me.li2.movies.util
 
 import android.content.Context
 import android.content.Intent
-import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
@@ -44,7 +43,9 @@ private fun getDefaultNavOptionsBuilder(): NavOptions.Builder {
             .setPopExitAnim(R.anim.slide_out_right)
 }
 
-fun Fragment.navigate(@NonNull directions: NavDirections) {
+fun Fragment.navController() = NavHostFragment.findNavController(this)
+
+fun Fragment.navigate(directions: NavDirections) {
     NavHostFragment.findNavController(this).navigate(directions)
 }
 

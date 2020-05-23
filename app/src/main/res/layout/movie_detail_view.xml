@@ -22,7 +22,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="?android:attr/colorBackground">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/posterImageView"
@@ -137,15 +138,16 @@
             tools:targetApi="lollipop"
             tools:text="English, 中文, 한국어" />
 
-        <include
-            android:id="@+id/movieDetailShimmerContainer"
-            layout="@layout/movie_detail_view_placeholder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@id/releaseDateTextView"
-            app:layout_constraintTop_toTopOf="@id/releaseDateTextView"
-            app:startShimmer="@{isLoadingMovieDetail}"
-            tools:visibility="gone" />
+        <!-- remove this view makes shared element transition better. noteweiyi-->
+        <!-- <include-->
+        <!--     android:id="@+id/movieDetailShimmerContainer"-->
+        <!--     layout="@layout/movie_detail_view_placeholder"-->
+        <!--     android:layout_width="wrap_content"-->
+        <!--     android:layout_height="wrap_content"-->
+        <!--     app:layout_constraintStart_toStartOf="@id/releaseDateTextView"-->
+        <!--     app:layout_constraintTop_toTopOf="@id/releaseDateTextView"-->
+        <!--     app:startShimmer="@{isLoadingMovieDetail}"-->
+        <!--     tools:visibility="gone" />-->
 
         <TextView
             android:id="@+id/movieOverviewLabelTextView"

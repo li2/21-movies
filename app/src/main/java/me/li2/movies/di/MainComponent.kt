@@ -5,11 +5,9 @@ import me.li2.movies.data.local.LocalDataSource
 import me.li2.movies.data.remote.TmdbDataSource
 import me.li2.movies.data.repository.Repository
 import me.li2.movies.util.Constants
+import me.li2.movies.util.ContainerTransformConfiguration
 import org.kodein.di.Kodein
-import org.kodein.di.generic.bind
-import org.kodein.di.generic.eagerSingleton
-import org.kodein.di.generic.instance
-import org.kodein.di.generic.singleton
+import org.kodein.di.generic.*
 
 object MainComponent {
 
@@ -19,5 +17,6 @@ object MainComponent {
         bind<TmdbDataSource>() with singleton { TmdbDataSource() }
         bind<AppDatabase>() with eagerSingleton { AppDatabase.buildRoomDatabase(instance()) }
         bind<LocalDataSource>() with singleton { LocalDataSource() }
+        bind<ContainerTransformConfiguration>() with provider { ContainerTransformConfiguration() }
     }
 }

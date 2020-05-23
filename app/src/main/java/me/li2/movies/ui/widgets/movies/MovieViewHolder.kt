@@ -7,7 +7,7 @@ package me.li2.movies.ui.widgets.movies
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
@@ -18,32 +18,27 @@ import me.li2.movies.data.model.MovieItemUI
 import me.li2.movies.databinding.MovieItemHorizontalViewBinding
 import me.li2.movies.databinding.MovieItemVerticalViewBinding
 
-class MovieViewHolder(root: View,
+class MovieViewHolder(private val root: View,
                       private val binding: ViewDataBinding?,
                       private val layoutType: MovieListLayoutType,
-                      private val itemClicks: PublishSubject<Pair<ImageView, MovieItemUI>>)
+                      private val itemClicks: PublishSubject<Pair<View, MovieItemUI>>)
     : RecyclerView.ViewHolder(root) {
 
     fun bind(item: MovieItemUI) {
         if (layoutType == MovieListLayoutType.LINEAR_LAYOUT_VERTICAL) {
-            (binding as? MovieItemVerticalViewBinding)?.let {
-                binding.item = item
-                binding.root
-                        .clicks()
-                        .throttleFirstShort()
-                        .map { Pair(binding.posterImageView, item) }
-                        .subscribe(itemClicks)
-            }
+            (binding as? MovieItemVerticalViewBinding)?.item = item
         } else {
-            (binding as? MovieItemHorizontalViewBinding)?.let {
-                binding.item = item
-                binding.root
-                        .clicks()
-                        .throttleFirstShort()
-                        .map { Pair(binding.posterImageView, item) }
-                        .subscribe(itemClicks)
-            }
+            (binding as? MovieItemHorizontalViewBinding)?.item = item
         }
+
+        root.clicks()
+                .throttleFirstShort()
+                .map { Pair(root, item) }
+                .subscribe(itemClicks)
+
+        // Use a unique transition name so this item can be used as a shared element when
+        // transitioning to the album details screen.
+        ViewCompat.setTransitionName(root, item.getSharedTransitionName())
     }
 
     // Custom view with data-binding cannot be rendered by layout preview due to NullPointerException
@@ -56,7 +51,7 @@ class MovieViewHolder(root: View,
     companion object {
         fun create(parent: ViewGroup,
                    layoutType: MovieListLayoutType,
-                   itemClicks: PublishSubject<Pair<ImageView, MovieItemUI>>): MovieViewHolder {
+                   itemClicks: PublishSubject<Pair<View, MovieItemUI>>): MovieViewHolder {
             val root = LayoutInflater.from(parent.context).inflate(layoutType.getLayoutResId(), parent, false)
             val binding = if (!parent.isInEditMode) {
                 DataBindingUtil.bind<ViewDataBinding>(root)

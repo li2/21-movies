@@ -8,17 +8,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.plusAssign
 import me.li2.android.common.arch.observeOnView
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.HomeFragmentBinding
-import me.li2.movies.util.RootViewStore
-import me.li2.movies.util.doNothing
-import me.li2.movies.util.navigate
+import me.li2.movies.util.*
 
 class HomeFragment : BaseFragment(), RootViewStore {
     private lateinit var binding: HomeFragmentBinding
@@ -47,14 +47,20 @@ class HomeFragment : BaseFragment(), RootViewStore {
             viewModel.getHomeScreenData(true)
         }
 
+        compositeDisposable += binding.moviesCarouselView.onMovieClicks.subscribe { (_, movieItem) ->
+            removeContainerExitTransition()
+            navigate(HomeFragmentDirections.showMovieDetail(movieItem))
+        }
+
         compositeDisposable += Observable.mergeArray(
-                binding.moviesCarouselView.onMovieClicks,
                 binding.nowPlayingMovieListView.onMovieClicks,
                 binding.upcomingMovieListView.onMovieClicks,
                 binding.popularMovieListView.onMovieClicks,
                 binding.topRatedMovieListView.onMovieClicks
-        ).subscribe { (_, movieItem) ->
-            navigate(HomeFragmentDirections.showMovieDetail(movieItem))
+        ).subscribe { (view, movieItem) ->
+            setUpContainerExitTransition(R.id.swipeRefreshLayout)
+            val extras = FragmentNavigatorExtras(view to ViewCompat.getTransitionName(view).orEmpty())
+            navController().navigate(HomeFragmentDirections.showMovieDetail(movieItem), extras)
         }
     }
 

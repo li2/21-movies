@@ -11,9 +11,10 @@
     </data>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/movieItemContainer"
         android:layout_width="128dp"
         android:layout_height="wrap_content"
-        android:background="?selectableItemBackground"
+        android:foreground="?attr/selectableItemBackground"
         app:cardElevation="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout

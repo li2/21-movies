@@ -34,7 +34,9 @@ data class MovieItemUI(
         val voteCount: Int,
         val voteCountDisplay: String,
         val overview: String
-) : Parcelable
+) : Parcelable {
+    fun getSharedTransitionName() = "$title:$id"
+}
 
 fun MutableLiveData<Resource<MovieItemPagingUI>>.nextPage(): Int {
     return this.value?.data?.let { it.page + 1 }

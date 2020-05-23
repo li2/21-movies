@@ -4,8 +4,8 @@
  */
 package me.li2.movies.ui.moviedetail
 
+import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -27,8 +27,8 @@ class MovieDetailAdapter : ListAdapter<BaseRowData, RecyclerView.ViewHolder>(DIF
     private val _onGenreClicks = PublishSubject.create<GenreUI>()
     val onGenreClicks: Observable<GenreUI> = _onGenreClicks.toFlowable(BackpressureStrategy.LATEST).toObservable()
 
-    private val _onRecMovieClicks = PublishSubject.create<Pair<ImageView, MovieItemUI>>()
-    val onRecMovieClicks: Observable<Pair<ImageView, MovieItemUI>> = _onRecMovieClicks.toFlowable(BackpressureStrategy.LATEST).toObservable()
+    private val _onRecMovieClicks = PublishSubject.create<Pair<View, MovieItemUI>>()
+    val onRecMovieClicks: Observable<Pair<View, MovieItemUI>> = _onRecMovieClicks.toFlowable(BackpressureStrategy.LATEST).toObservable()
 
     override fun getItemViewType(position: Int): Int {
         return getItem(position).rowType.ordinal

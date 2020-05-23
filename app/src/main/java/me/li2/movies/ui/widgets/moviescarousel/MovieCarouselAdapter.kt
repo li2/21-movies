@@ -4,8 +4,8 @@
  */
 package me.li2.movies.ui.widgets.moviescarousel
 
+import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import io.reactivex.BackpressureStrategy
@@ -15,7 +15,7 @@ import me.li2.movies.data.model.MovieItemUI
 
 class MovieCarouselAdapter : ListAdapter<MovieItemUI, MovieCarouselItemViewHolder>(DIFF_CALLBACK), CarouselPagerHelper {
 
-    private val _onMovieClicks = PublishSubject.create<Pair<ImageView, MovieItemUI>>()
+    private val _onMovieClicks = PublishSubject.create<Pair<View, MovieItemUI>>()
     internal val onMovieClicks = _onMovieClicks.toFlowable(BackpressureStrategy.LATEST).toObservable()!!
 
     override val carouselDatasetSize: Int

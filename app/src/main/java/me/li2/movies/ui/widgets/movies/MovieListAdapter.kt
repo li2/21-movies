@@ -4,8 +4,8 @@
  */
 package me.li2.movies.ui.widgets.movies
 
+import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import io.reactivex.BackpressureStrategy
@@ -15,7 +15,7 @@ import me.li2.movies.ui.widgets.movies.MovieListLayoutType.LINEAR_LAYOUT_HORIZON
 
 class MovieListAdapter(layoutType: MovieListLayoutType) : ListAdapter<MovieItemUI, MovieViewHolder>(DIFF_CALLBACK) {
 
-    private val _onMovieClicks = PublishSubject.create<Pair<ImageView, MovieItemUI>>()
+    private val _onMovieClicks = PublishSubject.create<Pair<View, MovieItemUI>>()
     val onMovieClicks = _onMovieClicks.toFlowable(BackpressureStrategy.LATEST).toObservable()!!
 
     var layoutType: MovieListLayoutType = LINEAR_LAYOUT_HORIZONTAL

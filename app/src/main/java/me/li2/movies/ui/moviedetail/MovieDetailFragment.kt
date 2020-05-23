@@ -8,11 +8,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import io.reactivex.Completable
 import io.reactivex.rxkotlin.plusAssign
 import me.li2.android.common.arch.Resource
 import me.li2.android.common.arch.observeOnView
@@ -23,10 +26,10 @@ import me.li2.android.view.popup.toast
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.MovieDetailFragmentBinding
-import me.li2.movies.util.RootViewStore
-import me.li2.movies.util.enforceSingleScrollDirection
-import me.li2.movies.util.navigate
+import me.li2.movies.util.*
+import org.kodein.di.generic.instance
 import timber.log.Timber.e
+import java.util.concurrent.TimeUnit
 
 class MovieDetailFragment : BaseFragment(), RootViewStore {
 
@@ -38,12 +41,20 @@ class MovieDetailFragment : BaseFragment(), RootViewStore {
     override var hasInitializedRootView: Boolean = false
 
     private val detailAdapter = MovieDetailAdapter()
+    private val containerTransformConfiguration by instance<ContainerTransformConfiguration>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // load data in your ViewModel's init {} or onCreate(), not in onViewCreated(). 21note
+        setUpContainerEnterTransitions(containerTransformConfiguration)
+        // load data in your ViewModel's init {} or onCreate(), not in onViewCreated(). 21note))
         // https://stackoverflow.com/q/54581071/2722270, https://twitter.com/ianhlake/status/1103522856535638016
-        viewModel.getMovieDetailScreenData(args.movieItem.id)
+        compositeDisposable += Completable.complete()
+                .delay(500, TimeUnit.MICROSECONDS)
+                .doOnComplete {
+                    // delay loading data to make transition smooth, ideally make the call onTransitionEnd, however its not called.
+                    viewModel.getMovieDetailScreenData(args.movieItem.id)
+                }
+                .subscribe()
     }
 
     override fun onCreateView(inflater: LayoutInflater,
@@ -65,6 +76,10 @@ class MovieDetailFragment : BaseFragment(), RootViewStore {
                 addItemDecoration(LinearSpacingDecoration(RecyclerView.VERTICAL, 32.dpToPx(context)))
                 enforceSingleScrollDirection()
             }
+
+            // Set the transition name which matches the list/grid item to be transitioned from for
+            // the shared element transition.
+            ViewCompat.setTransitionName(binding.root, args.movieItem.getSharedTransitionName())
         }
 
         compositeDisposable += detailAdapter.onRateClicks.subscribe {
@@ -75,8 +90,10 @@ class MovieDetailFragment : BaseFragment(), RootViewStore {
             navigate(MovieDetailFragmentDirections.showGenreMoviesList(genre.name))
         }
 
-        compositeDisposable += detailAdapter.onRecMovieClicks.subscribe { (_, movieItem) ->
-            navigate(MovieDetailFragmentDirections.showMovieDetail(movieItem))
+        compositeDisposable += detailAdapter.onRecMovieClicks.subscribe { (view, movieItem) ->
+            setUpContainerExitTransition(R.id.root)
+            val extras = FragmentNavigatorExtras(view to ViewCompat.getTransitionName(view).orEmpty())
+            navController().navigate(MovieDetailFragmentDirections.showMovieDetail(movieItem), extras)
         }
     }
 
