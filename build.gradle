@@ -37,7 +37,7 @@ allprojects {
         androidTargetSdk_version = 29
 
         //MARK: My Libraries Dependencies --------------------------------------
-        vLi2Common = '0.1.11'
+        vLi2Common = '0.1.12'
         vLi2Network = '0.1.2'
 //        vLi2View = '0.1.4'
         vLi2View = 'e5bbebe6'

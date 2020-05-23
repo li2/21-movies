@@ -5,13 +5,13 @@
 package me.li2.movies.data.repository
 
 import androidx.lifecycle.MutableLiveData
+import me.li2.android.common.arch.RateLimiter
 import me.li2.android.common.arch.Resource
 import me.li2.movies.App
 import me.li2.movies.data.local.LocalDataSource
 import me.li2.movies.data.model.*
 import me.li2.movies.data.remote.TmdbApi
 import me.li2.movies.data.remote.TmdbDataSource
-import me.li2.movies.util.RateLimiter
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance

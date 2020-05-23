@@ -10,14 +10,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import me.li2.android.common.arch.Resource
-import me.li2.android.common.arch.postError
-import me.li2.android.common.arch.postLoading
-import me.li2.android.common.arch.postSuccess
+import me.li2.android.common.arch.*
 import me.li2.movies.base.BaseViewModel
 import me.li2.movies.data.model.*
-import me.li2.movies.util.combineLatest
-import me.li2.movies.util.copy
 import me.li2.movies.util.distinctUntilChanged
 import me.li2.movies.util.io
 
@@ -56,7 +51,7 @@ class MovieDetailViewModel(movieItem: MovieItemUI) : BaseViewModel() {
 
             val movieDetailWithTrailer =
                     if (trailerUrl != null && movieDetail.data != null && movieDetail.data?.youtubeTrailerUrl == null) {
-                        movieDetail.copy(requireNotNull(movieDetail.data).copy(youtubeTrailerUrl = trailerUrl))
+                        movieDetail.copy(data = requireNotNull(movieDetail.data).copy(youtubeTrailerUrl = trailerUrl))
                     } else {
                         movieDetail
                     }
