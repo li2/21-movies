@@ -6,6 +6,7 @@ package me.li2.movies.ui.widgets.movies
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
@@ -23,8 +24,7 @@ import me.li2.movies.util.showAnimation
 class MovieItemListView @JvmOverloads constructor(
         context: Context,
         attrs: AttributeSet? = null,
-        defStyleAttr: Int = 0,
-        defStyleRes: Int = 0) : ConstraintLayout(context, attrs, defStyleAttr, defStyleRes) {
+        defStyleAttr: Int = 0) : ConstraintLayout(context, attrs, defStyleAttr) {
 
     private val labelTextView: TextView
     private val stateTextView: TextView
@@ -37,6 +37,7 @@ class MovieItemListView @JvmOverloads constructor(
 
     var label: String? = null
         set(value) {
+            if (field == value) return
             field = value
             labelTextView.text = value
             labelTextView.isVisible = value != null
@@ -44,7 +45,7 @@ class MovieItemListView @JvmOverloads constructor(
 
     var movies: Resource<List<MovieItemUI>>? = null
         set(value) {
-            if (value == null) return
+            if (value == null || field == value) return
             field = value
             // update list
             moviesAdapter.submitList(value.data)
@@ -62,6 +63,7 @@ class MovieItemListView @JvmOverloads constructor(
 
     var layoutType: MovieListLayoutType = LINEAR_LAYOUT_HORIZONTAL
         set(value) {
+            if (field == value) return
             field = value
             moviesAdapter.layoutType = value
         }
@@ -73,16 +75,50 @@ class MovieItemListView @JvmOverloads constructor(
         recyclerView = root.findViewById(R.id.moviesRecyclerView)
         shimmerLayout = root.findViewById(R.id.shimmerLayout)
 
+        /* Custom view must have a unique ID, otherwise, when saving state,
+        all of them are being saves in same state, and the last one overwrites all.
+        therefor the recycler scroll position restored to 0.
+        A simple fix is just use View.generateViewId(). noteweiyi*/
+        labelTextView.id = View.generateViewId()
+        stateTextView.id = View.generateViewId()
+        recyclerView.id = View.generateViewId()
+        shimmerLayout.id = View.generateViewId()
+
         recyclerView.apply {
             adapter = moviesAdapter
             addItemDecoration(layoutType.getItemDecoration(context))
             layoutManager = layoutType.getLayoutManger(context)
         }
 
+        showSampleData()
+    }
+
+    /** show sample data when shown in the IDE preview */
+    private fun showSampleData() {
         if (isInEditMode) {
-            // show sample data when shown in the IDE preview
             label = "Upcoming"
             movies = Resource.success(SampleProvider.movieItemList())
         }
     }
+
+/*
+    private val PARCEL_KEY_STATE = "instanceState"
+    private val PARCEL_KEY_RECYCLER_VIEW_STATE = "recycler_view_state"
+
+    override fun onSaveInstanceState(): Parcelable? {
+        return Bundle().apply {
+            putParcelable(PARCEL_KEY_STATE, super.onSaveInstanceState())
+            putParcelable(PARCEL_KEY_RECYCLER_VIEW_STATE, recyclerView.layoutManager?.onSaveInstanceState())
+        }
+    }
+
+    override fun onRestoreInstanceState(state: Parcelable?) {
+        var restoredState = state
+        (restoredState as? Bundle)?.let { bundle ->
+            recyclerView.layoutManager?.onRestoreInstanceState(bundle.getParcelable(PARCEL_KEY_RECYCLER_VIEW_STATE))
+            restoredState = bundle.getParcelable(PARCEL_KEY_STATE)
+        }
+        super.onRestoreInstanceState(restoredState)
+    }
+*/
 }

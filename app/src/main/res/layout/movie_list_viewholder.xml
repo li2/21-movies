@@ -24,10 +24,6 @@
         <variable
             name="layoutType"
             type="MovieListLayoutType" />
-
-        <variable
-            name="isLoading"
-            type="Boolean" />
     </data>
 
     <me.li2.movies.ui.widgets.movies.MovieItemListView
