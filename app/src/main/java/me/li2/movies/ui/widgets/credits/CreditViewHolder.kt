@@ -6,6 +6,7 @@ package me.li2.movies.ui.widgets.credits
 
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
 import com.jakewharton.rxbinding3.view.clicks
 import io.reactivex.subjects.PublishSubject
 import me.li2.android.common.rx.throttleFirstShort
@@ -19,6 +20,7 @@ class CreditViewHolder(binding: CreditItemViewBinding,
     : BaseViewHolder<CreditUI, CreditItemViewBinding>(binding) {
 
     override fun bind(item: CreditUI, position: Int) {
+        ViewCompat.setTransitionName(binding.root, item.id.toString())
         binding.credit = item
         binding.creditItemContainer.clicks().throttleFirstShort()
                 .map { Pair(binding.creditItemContainer, item) }

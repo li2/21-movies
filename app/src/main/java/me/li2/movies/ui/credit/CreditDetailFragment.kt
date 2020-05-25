@@ -8,17 +8,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.navArgs
 import me.li2.android.view.navigation.setToolbar
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.CreditDetailFragmentBinding
+import me.li2.movies.util.ContainerTransformConfiguration
+import me.li2.movies.util.setUpContainerEnterTransitions
+import org.kodein.di.generic.instance
 
 class CreditDetailFragment : BaseFragment() {
 
     private lateinit var binding: CreditDetailFragmentBinding
     private val args by navArgs<CreditDetailFragmentArgs>()
+    private val containerTransformConfiguration by instance<ContainerTransformConfiguration>()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setUpContainerEnterTransitions(containerTransformConfiguration)
+    }
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
@@ -29,6 +39,7 @@ class CreditDetailFragment : BaseFragment() {
 
     override fun initUi(view: View, savedInstanceState: Bundle?) {
         activity?.setToolbar(binding.toolbar)
+        ViewCompat.setTransitionName(binding.root, args.credit.id.toString())
         binding.credit = args.credit
     }
 }

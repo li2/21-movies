@@ -88,7 +88,9 @@ class MovieDetailFragment : BaseFragment(), RootViewStore {
 
         compositeDisposable += detailAdapter.onCreditClicks.subscribe { (view, credit) ->
             credit.profileOriginalUrl?.let {
-                navigate(MovieDetailFragmentDirections.showCreditDetail(credit))
+                setUpContainerExitTransition(R.id.root)
+                val extras = FragmentNavigatorExtras(view to ViewCompat.getTransitionName(view).orEmpty())
+                navController().navigate(MovieDetailFragmentDirections.showCreditDetail(credit), extras)
             }
         }
 
