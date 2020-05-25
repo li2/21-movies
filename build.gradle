@@ -40,7 +40,7 @@ allprojects {
         vLi2Common = '0.1.12'
         vLi2Network = '0.1.2'
 //        vLi2View = '0.1.4'
-        vLi2View = 'e5bbebe6'
+        vLi2View = '4f23c74c'
         vLi2Datetime = '0.1.0'
 
         //MARK: The following are Test libs ------------------------------------

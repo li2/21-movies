@@ -9,6 +9,10 @@
             name="credit"
             type="me.li2.movies.data.model.CreditUI" />
 
+        <variable
+            name="onGlideRequestComplete"
+            type="me.li2.android.view.image.GlideRequestListener" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,6 +26,7 @@
             android:src="@{credit.profileOriginalUrl}"
             app:centerCrop="@{true}"
             app:errorPlaceholder="@{@drawable/ic_person}"
+            app:onComplete="@{onGlideRequestComplete}"
             app:placeHolder="@{@drawable/ic_person}"
             tools:ignore="ContentDescription"
             tools:scaleType="centerCrop"
@@ -43,7 +48,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:navigationIcon="@drawable/ic_cancel_24"/>
+                app:navigationIcon="@drawable/ic_cancel_24" />
 
         </com.google.android.material.appbar.AppBarLayout>
 

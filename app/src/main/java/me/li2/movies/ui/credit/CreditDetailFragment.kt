@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.navArgs
+import me.li2.android.view.image.GlideRequestListener
 import me.li2.android.view.navigation.setToolbar
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
@@ -28,6 +29,7 @@ class CreditDetailFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setUpContainerEnterTransitions(containerTransformConfiguration)
+        postponeEnterTransition()
     }
 
     override fun onCreateView(inflater: LayoutInflater,
@@ -40,6 +42,13 @@ class CreditDetailFragment : BaseFragment() {
     override fun initUi(view: View, savedInstanceState: Bundle?) {
         activity?.setToolbar(binding.toolbar)
         ViewCompat.setTransitionName(binding.root, args.credit.id.toString())
+
         binding.credit = args.credit
+
+        binding.onGlideRequestComplete = object : GlideRequestListener {
+            override fun onGlideRequestComplete(success: Boolean) {
+                startPostponedEnterTransition()
+            }
+        }
     }
 }
