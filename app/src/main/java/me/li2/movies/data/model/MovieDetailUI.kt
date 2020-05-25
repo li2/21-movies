@@ -34,7 +34,6 @@ data class MovieDetailUI(
         val imdbUrl: String?,
         val posterUrl: String?,
         val backdropUrl: String?,
-        val youtubeTrailerUrl: String?,
         val popularity: Double,
         val voteAverage: Double,
         val voteAverageDisplay: String,

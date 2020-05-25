@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:textAppearance="?attr/textAppearanceBody1"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="ChipGroup Label" />
@@ -26,7 +27,9 @@
             android:id="@+id/scrollChipGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="0dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
             app:chipSpacingHorizontal="12dp"
             app:singleLine="true" />
 

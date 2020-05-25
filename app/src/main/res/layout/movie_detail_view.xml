@@ -51,20 +51,6 @@
 
         </androidx.cardview.widget.CardView>
 
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/youtubeButton"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="?android:attr/selectableItemBackground"
-            android:elevation="16dp"
-            android:src="@drawable/ic_play_circle_outline"
-            android:tint="?attr/colorError"
-            android:visibility="@{movieDetail.youtubeTrailerUrl != null}"
-            app:layout_constraintBottom_toBottomOf="@id/posterImageView"
-            app:layout_constraintEnd_toEndOf="@id/posterImageView"
-            app:layout_constraintStart_toStartOf="@id/posterImageView"
-            app:layout_constraintTop_toTopOf="@id/posterImageView" />
-
         <TextView
             android:id="@+id/titleTextView"
             android:layout_width="0dp"
@@ -268,13 +254,13 @@
 
         <me.li2.movies.ui.widgets.GenresGroupView
             android:id="@+id/genresGroupView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_marginTop="32dp"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
+            android:visibility="@{movieDetail.genres.size() > 0}"
             app:genres="@{movieDetail.genres}"
             app:label="@{`Genres`}"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/movieOverviewTextView"
             tools:background="?attr/colorSurface"

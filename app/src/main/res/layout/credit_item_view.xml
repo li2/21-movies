@@ -14,9 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="128dp"
         android:layout_height="wrap_content"
-        android:background="?selectableItemBackground"
-        android:paddingTop="16dp"
-        android:paddingBottom="16dp">
+        android:background="?selectableItemBackground">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardView"

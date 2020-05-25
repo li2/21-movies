@@ -68,7 +68,6 @@ object MapperUI {
             imdbUrl = TmdbApi.imdbUrl(api.imdbId),
             posterUrl = TmdbApi.imageW500Url(api.posterPath),
             backdropUrl = TmdbApi.imageOriginalUrl(api.backdropPath),
-            youtubeTrailerUrl = null,
             popularity = api.popularity,
             voteAverage = api.voteAverage,
             voteAverageDisplay = api.voteAverage.toString(),
@@ -90,7 +89,6 @@ object MapperUI {
             imdbUrl = null,
             posterUrl = item.posterUrl,
             backdropUrl = item.backdropUrl,
-            youtubeTrailerUrl = null,
             popularity = 0.0,
             voteAverage = item.voteAverage,
             voteAverageDisplay = item.voteAverageDisplay,
@@ -108,11 +106,15 @@ object MapperUI {
             totalPages = api.totalPages,
             totalResults = api.totalResults)
 
-    fun toTrailer(api: TmdbMovieVideoListAPI): Trailer? {
-        val youtubeApi = api.results.firstOrNull { it.site.equals("youtube", true) }
-        return youtubeApi?.let {
-            TmdbApi.youtubeTrailerUrl(it.path)?.let { url ->
-                Trailer(id = it.id, movieId = api.movieId, url = url)
+    fun toTrailersUI(api: TmdbMovieVideoListAPI): List<Trailer> {
+        val youtubeTrailersAPI = api.results.filter { it.site.equals("youtube", true) }
+        return youtubeTrailersAPI.mapNotNull { trailerAPI ->
+            val url = TmdbApi.youtubeTrailerUrl(trailerAPI.path)
+            val thumbnailUrl = TmdbApi.youtubeTrailerThumbnailUrl(trailerAPI.path)
+            if (url != null && thumbnailUrl != null) {
+                Trailer(trailerAPI.id, api.movieId, url, thumbnailUrl)
+            } else {
+                null
             }
         }
     }

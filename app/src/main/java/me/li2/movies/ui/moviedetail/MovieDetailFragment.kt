@@ -82,6 +82,10 @@ class MovieDetailFragment : BaseFragment(), RootViewStore {
             ViewCompat.setTransitionName(binding.root, args.movieItem.getSharedTransitionName())
         }
 
+        compositeDisposable += detailAdapter.onTrailerClicks.subscribe { trailer ->
+            requireContext().watchYoutubeVideo(trailer.url)
+        }
+
         compositeDisposable += detailAdapter.onGenreClicks.subscribe { genre ->
             navigate(MovieDetailFragmentDirections.showGenreMoviesList(genre.name))
         }
@@ -107,10 +111,6 @@ class MovieDetailFragment : BaseFragment(), RootViewStore {
         }
 
         observeOnView(movieReviews) {
-            bindErrorState(it)
-        }
-
-        observeOnView(movieTrailer) {
             bindErrorState(it)
         }
 

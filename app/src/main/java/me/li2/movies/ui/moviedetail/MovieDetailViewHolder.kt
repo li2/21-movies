@@ -18,7 +18,6 @@ import me.li2.movies.base.BaseViewHolder
 import me.li2.movies.data.model.GenreUI
 import me.li2.movies.data.model.MovieDetailUI
 import me.li2.movies.databinding.MovieDetailViewBinding
-import me.li2.movies.util.watchYoutubeVideo
 
 class MovieDetailViewHolder(binding: MovieDetailViewBinding,
                             private val onRateClicks: PublishSubject<Unit>,
@@ -36,12 +35,6 @@ class MovieDetailViewHolder(binding: MovieDetailViewBinding,
 
     @SuppressLint("CheckResult")
     private fun initView() {
-        binding.youtubeButton.clicks().throttleFirstShort().subscribe {
-            binding.movieDetail?.youtubeTrailerUrl?.let {
-                binding.youtubeButton.context.watchYoutubeVideo(it)
-            }
-        }
-
         Observable.merge(
                 binding.movieOverviewTextView.clicks().throttleFirstShort(),
                 binding.movieOverviewExpandTextView.clicks().throttleFirstShort()

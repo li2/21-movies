@@ -14,8 +14,8 @@ import me.li2.movies.data.model.Trailer
 @Dao
 interface TrailerDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTrailer(trailer: Trailer): Long
+    suspend fun insertTrailers(trailers: List<Trailer>): List<Long>
 
     @Query("$SELECT_FROM_TRAILERS WHERE movie_id = :movieId")
-    suspend fun getTrailer(movieId: Int): Trailer?
+    suspend fun getTrailers(movieId: Int): List<Trailer>?
 }

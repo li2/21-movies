@@ -68,6 +68,10 @@ interface TmdbApi {
             return if (!path.isNullOrEmpty()) "https://www.youtube.com/watch?v=$path" else null
         }
 
+        fun youtubeTrailerThumbnailUrl(path: String?): String? {
+            return if (!path.isNullOrEmpty()) return "https://img.youtube.com/vi/$path/0.jpg" else null
+        }
+
         fun imdbUrl(imdbId: String?): String? {
             return if (!imdbId.isNullOrEmpty()) "https://www.imdb.com/title/$imdbId" else null
         }

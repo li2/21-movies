@@ -13,6 +13,7 @@ import me.li2.movies.AppBuildConfig.configDebugDB
 import me.li2.movies.data.local.AppDatabase.Companion.DATABASE_VERSION
 import me.li2.movies.data.local.converters.GenreListConverter
 import me.li2.movies.data.local.converters.LocalDateConverter
+import me.li2.movies.data.local.converters.TrailerListConverter
 import me.li2.movies.data.model.MovieDetailUI
 import me.li2.movies.data.model.MovieReviewUI
 import me.li2.movies.data.model.Trailer
@@ -24,7 +25,8 @@ import me.li2.movies.data.model.Trailer
 ], version = DATABASE_VERSION, exportSchema = false)
 @TypeConverters(
         GenreListConverter::class,
-        LocalDateConverter::class
+        LocalDateConverter::class,
+        TrailerListConverter::class
 )
 abstract class AppDatabase : RoomDatabase() {
 

@@ -33,11 +33,11 @@ class LocalDataSource : KodeinAware {
         return db.reviewsDao().getReviews(movieId)
     }
 
-    suspend fun insertTrailer(trailer: Trailer): Long {
-        return db.trailerDao().insertTrailer(trailer)
+    suspend fun insertTrailers(trailers: List<Trailer>): List<Long> {
+        return db.trailerDao().insertTrailers(trailers)
     }
 
-    suspend fun getTrailer(movieId: Int): Trailer? {
-        return db.trailerDao().getTrailer(movieId)
+    suspend fun getTrailers(movieId: Int): List<Trailer>? {
+        return db.trailerDao().getTrailers(movieId)
     }
 }

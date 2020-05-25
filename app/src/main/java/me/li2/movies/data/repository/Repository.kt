@@ -61,21 +61,23 @@ class Repository : KodeinAware {
         }.load()
     }
 
-    suspend fun getMovieTrailer(movieId: Int, result: MutableLiveData<Resource<Trailer?>>) {
-        object : NetworkBoundResource<Trailer?>(result) {
-            override suspend fun loadFromDb() = localDataSource.getTrailer(movieId)
-
-            override fun shouldFetch(data: Trailer?) = data == null
-
-            override suspend fun fetch(): Trailer? {
-                val apiResponse = tmdbDataSource.getMovieVideosAsync(movieId).await()
-                return MapperUI.toTrailer(apiResponse)
+    suspend fun getMovieTrailers(movieId: Int, result: MutableLiveData<Resource<List<Trailer>>>) {
+        object : NetworkBoundResource<List<Trailer>>(result) {
+            override suspend fun loadFromDb(): List<Trailer>? {
+                return localDataSource.getTrailers(movieId)
             }
 
-            override suspend fun saveFetchResult(data: Trailer?) {
-                data?.let {
-                    localDataSource.insertTrailer(data)
-                }
+            override fun shouldFetch(data: List<Trailer>?): Boolean {
+                return data.isNullOrEmpty()
+            }
+
+            override suspend fun fetch(): List<Trailer> {
+                val apiResponse = tmdbDataSource.getMovieVideosAsync(movieId).await()
+                return MapperUI.toTrailersUI(apiResponse)
+            }
+
+            override suspend fun saveFetchResult(data: List<Trailer>) {
+                localDataSource.insertTrailers(data)
             }
         }.load()
     }
