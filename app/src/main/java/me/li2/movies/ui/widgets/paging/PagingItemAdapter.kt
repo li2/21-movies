@@ -35,6 +35,7 @@ class PagingItemAdapter : RecyclerView.Adapter<PagingItemViewHolder>() {
     // 21note: notifyItemChanged() make the RecyclerView scroll and jump to UP,
     // use notifyDataSetChanged() and getItemCount always return 1 to resolve this issue.
     // https://stackoverflow.com/q/36724898/2722270
+    // can be easily fix by setting the height of paging view the same as recycler item view.
     var pagingState: PagingState = PagingState.Done()
         set(value) {
             if (field != value) {

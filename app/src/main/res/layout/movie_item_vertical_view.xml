@@ -13,7 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/movieItemContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="152dp"
         android:foreground="?attr/selectableItemBackground"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
