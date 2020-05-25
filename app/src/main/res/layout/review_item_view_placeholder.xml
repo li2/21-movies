@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="16dp"
-            android:background="?attr/colorListDivider"
+            android:background="?attr/colorDivider"
             app:layout_constraintTop_toBottomOf="@id/contentTextView" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -19,7 +19,7 @@
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
-            android:layout_height="280dp"
+            android:layout_height="480dp"
             app:elevation="0dp">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -32,8 +32,7 @@
                 app:expandedTitleMarginStart="16dp"
                 app:expandedTitleTextAppearance="?attr/textAppearanceHeadline5"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-                app:title="@{movieItem.title}"
-                app:titleEnabled="true"
+                app:titleEnabled="false"
                 tools:title="Movie Title">
 
                 <ImageView
@@ -43,10 +42,11 @@
                     android:background="?android:attr/colorBackground"
                     android:src="@{movieItem.posterUrl}"
                     app:centerCrop="@{true}"
+                    app:errorPlaceholder="@{@drawable/ic_film}"
                     app:placeHolder="@{@drawable/ic_film}"
                     tools:ignore="ContentDescription"
                     tools:scaleType="centerCrop"
-                    tools:src="@tools:sample/backgrounds/scenic[9]" />
+                    tools:src="@tools:sample/backgrounds/scenic[2]" />
 
                 <!-- remove this view makes shared element transition better. noteweiyi-->
                 <!-- <View-->
@@ -69,25 +69,20 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:behavior_overlapTop="0dp"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipChildren="false"
-                android:clipToPadding="false"
-                android:paddingBottom="32dp"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/movie_detail_rows_sample"
-                tools:orientation="vertical" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/movie_detail_rows_sample"
+            tools:orientation="vertical" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

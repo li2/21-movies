@@ -82,10 +82,6 @@ class MovieDetailFragment : BaseFragment(), RootViewStore {
             ViewCompat.setTransitionName(binding.root, args.movieItem.getSharedTransitionName())
         }
 
-        compositeDisposable += detailAdapter.onRateClicks.subscribe {
-            toast("todo: rate movie clicks")
-        }
-
         compositeDisposable += detailAdapter.onGenreClicks.subscribe { genre ->
             navigate(MovieDetailFragmentDirections.showGenreMoviesList(genre.name))
         }

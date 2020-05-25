@@ -49,8 +49,6 @@ class MovieDetailViewHolder(binding: MovieDetailViewBinding,
             binding.isOverviewExpanded = !binding.isOverviewExpanded.orFalse()
         }
 
-        binding.rateMovieButton.clicks().throttleFirstShort().subscribe(onRateClicks)
-
         binding.genresGroupView.genreClicks().throttleFirstShort().subscribe(onGenreClicks)
     }
 

@@ -13,9 +13,9 @@ object NumberFormatter {
         val hours = runtime.orZero() / 60
         val minutes = runtime.orZero() % 60
         return when {
-            hours > 0 && minutes > 0 -> "${hours}h ${minutes}m"
-            hours > 0 && minutes == 0 -> "${hours}h"
-            hours == 0 && minutes > 0 -> "${minutes}m"
+            hours > 0 && minutes > 0 -> "${hours}hr ${minutes}min"
+            hours > 0 && minutes == 0 -> "${hours}hr"
+            hours == 0 && minutes > 0 -> "${minutes}min"
             else -> null
         }.orEmpty()
     }

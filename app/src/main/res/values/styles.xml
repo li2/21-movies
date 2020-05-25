@@ -12,7 +12,7 @@
         <item name="colorShimmer">@color/shimmer</item>
         <item name="colorTransparent">@android:color/transparent</item>
         <item name="colorUnselected">@color/divider</item>
-        <item name="colorListDivider">@color/divider</item>
+        <item name="colorDivider">@color/divider</item>
         <!--Text Colors-->
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorSecondary">@color/white_50</item>
