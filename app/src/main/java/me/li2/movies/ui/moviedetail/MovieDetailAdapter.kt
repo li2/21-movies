@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
+import me.li2.movies.data.model.CreditUI
 import me.li2.movies.data.model.GenreUI
 import me.li2.movies.data.model.MovieItemUI
 import me.li2.movies.data.model.Trailer
@@ -32,6 +33,9 @@ class MovieDetailAdapter : ListAdapter<BaseRowData, RecyclerView.ViewHolder>(DIF
     private val _onGenreClicks = PublishSubject.create<GenreUI>()
     val onGenreClicks: Observable<GenreUI> = _onGenreClicks.toFlowable(BackpressureStrategy.LATEST).toObservable()
 
+    private val _onCreditClicks = PublishSubject.create<Pair<View, CreditUI>>()
+    val onCreditClicks: Observable<Pair<View, CreditUI>> = _onCreditClicks.toFlowable(BackpressureStrategy.LATEST).toObservable()
+
     private val _onRecMovieClicks = PublishSubject.create<Pair<View, MovieItemUI>>()
     val onRecMovieClicks: Observable<Pair<View, MovieItemUI>> = _onRecMovieClicks.toFlowable(BackpressureStrategy.LATEST).toObservable()
 
@@ -43,7 +47,7 @@ class MovieDetailAdapter : ListAdapter<BaseRowData, RecyclerView.ViewHolder>(DIF
         return when (viewType) {
             ROW_TYPE_DETAIL.ordinal -> MovieDetailViewHolder.create(parent, _onRateClicks, _onGenreClicks)
             ROW_TYPE_TRAILERS.ordinal -> TrailerListViewHolder.create(parent, _onTrailerClicks)
-            ROW_TYPE_CREDITS.ordinal -> CreditListViewHolder.create(parent)
+            ROW_TYPE_CREDITS.ordinal -> CreditListViewHolder.create(parent, _onCreditClicks)
             ROW_TYPE_REVIEWS.ordinal -> ReviewListViewHolder.create(parent)
             ROW_TYPE_REC_MOVIES.ordinal -> MovieListViewHolder.create(parent, _onRecMovieClicks, "Recommendations")
             else -> throw RuntimeException("Unexpected view type $viewType")

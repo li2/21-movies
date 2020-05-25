@@ -4,20 +4,25 @@
  */
 package me.li2.movies.data.model
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
 data class CreditListUI(
         val casts: List<CastUI>,
         val crews: List<CrewUI>,
         val movieId: Int)
 
-interface CreditUI {
+interface CreditUI : Parcelable {
     val characterOrJob: String
     val creditId: String
     val gender: Int?
     val id: Int
     val name: String
     val profileUrl: String?
+    val profileOriginalUrl: String?
 }
 
+@Parcelize
 data class CastUI(
         val castId: Int,
         override val characterOrJob: String,
@@ -26,8 +31,11 @@ data class CastUI(
         override val id: Int,
         override val name: String,
         val order: Int,
-        override val profileUrl: String?): CreditUI
+        override val profileUrl: String?,
+        override val profileOriginalUrl: String?
+) : CreditUI, Parcelable
 
+@Parcelize
 data class CrewUI(
         override val characterOrJob: String,
         override val creditId: String,
@@ -35,7 +43,8 @@ data class CrewUI(
         override val gender: Int?,
         override val id: Int,
         override val name: String,
-        override val profileUrl: String?): CreditUI
+        override val profileUrl: String?,
+        override val profileOriginalUrl: String?) : CreditUI, Parcelable
 
 /*
 data class CastUI(

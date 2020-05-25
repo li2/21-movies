@@ -29,6 +29,9 @@
         <action
             android:id="@+id/showMovieDetail"
             app:destination="@id/movieDetailFragment" />
+        <action
+            android:id="@+id/showCreditDetail"
+            app:destination="@id/creditDetailFragment" />
     </fragment>
 
     <fragment
@@ -42,6 +45,16 @@
         <action
             android:id="@+id/showMovieDetail"
             app:destination="@id/movieDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/creditDetailFragment"
+        android:name="me.li2.movies.ui.credit.CreditDetailFragment"
+        android:label="CreditDetailFragment"
+        tools:layout="@layout/credit_detail_fragment">
+        <argument
+            android:name="credit"
+            app:argType="me.li2.movies.data.model.CreditUI" />
     </fragment>
 
 </navigation>

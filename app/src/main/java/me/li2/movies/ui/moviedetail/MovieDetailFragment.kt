@@ -86,6 +86,12 @@ class MovieDetailFragment : BaseFragment(), RootViewStore {
             requireContext().watchYoutubeVideo(trailer.url)
         }
 
+        compositeDisposable += detailAdapter.onCreditClicks.subscribe { (view, credit) ->
+            credit.profileOriginalUrl?.let {
+                navigate(MovieDetailFragmentDirections.showCreditDetail(credit))
+            }
+        }
+
         compositeDisposable += detailAdapter.onGenreClicks.subscribe { genre ->
             navigate(MovieDetailFragmentDirections.showGenreMoviesList(genre.name))
         }

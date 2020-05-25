@@ -5,11 +5,14 @@
 
     <data>
 
+        <import type="android.view.View" />
+        <import type="io.reactivex.subjects.PublishSubject" />
         <import type="java.util.List" />
-
+        <import type="kotlin.Pair" />
         <import type="me.li2.movies.data.model.CastUI" />
-
         <import type="me.li2.movies.data.model.CrewUI" />
+        <import type="me.li2.movies.data.model.CreditUI" />
+
 
         <variable
             name="casts"
@@ -18,6 +21,10 @@
         <variable
             name="crews"
             type="List&lt;CrewUI&gt;" />
+
+        <variable
+            name="onCreditClicks"
+            type="PublishSubject&lt;Pair&lt;View, CreditUI>>" />
 
     </data>
 
@@ -46,6 +53,7 @@
             android:clipToPadding="false"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
+            app:creditClicks="@{onCreditClicks}"
             app:credits="@{casts}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -77,6 +85,7 @@
             android:clipToPadding="false"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
+            app:creditClicks="@{onCreditClicks}"
             app:credits="@{crews}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

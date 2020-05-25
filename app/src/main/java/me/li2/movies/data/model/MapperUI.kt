@@ -127,7 +127,8 @@ object MapperUI {
             id = api.id,
             name = api.name,
             order = api.order,
-            profileUrl = TmdbApi.imageW500Url(api.profilePath))
+            profileUrl = TmdbApi.imageW500Url(api.profilePath),
+            profileOriginalUrl = TmdbApi.imageOriginalUrl(api.profilePath))
 
     private fun toCrewUI(api: CrewAPI) = CrewUI(
             creditId = api.creditId,
@@ -136,7 +137,8 @@ object MapperUI {
             id = api.id,
             characterOrJob = api.job,
             name = api.name,
-            profileUrl = TmdbApi.imageW500Url(api.profilePath))
+            profileUrl = TmdbApi.imageW500Url(api.profilePath),
+            profileOriginalUrl = TmdbApi.imageOriginalUrl(api.profilePath))
 
     fun toCreditListUI(api: TmdbMovieCreditListAPI) = CreditListUI(
             movieId = api.id,

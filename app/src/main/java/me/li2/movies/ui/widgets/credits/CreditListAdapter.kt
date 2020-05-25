@@ -4,11 +4,14 @@
  */
 package me.li2.movies.ui.widgets.credits
 
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import io.reactivex.subjects.PublishSubject
 import me.li2.movies.data.model.CreditUI
 
-class CreditListAdapter : RecyclerView.Adapter<CreditViewHolder>() {
+class CreditListAdapter(private val onCreditClicks: PublishSubject<Pair<View, CreditUI>>)
+    : RecyclerView.Adapter<CreditViewHolder>() {
 
     var credits: List<CreditUI> = emptyList()
         set(value) {
@@ -17,7 +20,7 @@ class CreditListAdapter : RecyclerView.Adapter<CreditViewHolder>() {
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CreditViewHolder {
-        return CreditViewHolder.create(parent)
+        return CreditViewHolder.create(parent, onCreditClicks)
     }
 
     override fun onBindViewHolder(viewHolder: CreditViewHolder, position: Int) {

@@ -12,9 +12,11 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/creditItemContainer"
         android:layout_width="128dp"
         android:layout_height="wrap_content"
-        android:background="?selectableItemBackground">
+        android:foreground="?selectableItemBackground"
+        tools:targetApi="m">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardView"
