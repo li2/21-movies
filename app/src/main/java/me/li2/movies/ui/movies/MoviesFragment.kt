@@ -39,7 +39,7 @@ class MoviesFragment : BaseFragment() {
 
     private lateinit var binding: MoviesFragmentBinding
     private val args by navArgs<MoviesFragmentArgs>()
-    private val viewModel by viewModels<MoviesModel>()
+    private val viewModel by viewModels<MoviesViewModel>()
 
     private val moviesAdapter = MovieListAdapter(LINEAR_LAYOUT_VERTICAL)
     private val pagingAdapter = PagingItemAdapter()
@@ -47,7 +47,7 @@ class MoviesFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setUpContainerExitTransition(R.id.root)
-        viewModel.searchGenreMovies(args.genre)
+        viewModel.searchMovies(args.genre)
     }
 
     override fun onCreateView(inflater: LayoutInflater,
@@ -74,21 +74,21 @@ class MoviesFragment : BaseFragment() {
         }
 
         compositeDisposable += pagingAdapter.retryClicks.throttleFirstShort().subscribe {
-            viewModel.searchGenreMovies(args.genre)
+            viewModel.searchMovies(args.genre)
         }
 
         compositeDisposable += binding.moviesRecyclerView.onScrolledBottom()
                 .throttleFirstShort() // avoid duplicate API calls, 21note
                 .subscribe {
                     // don't load next page if it's in requesting, or error, or already on the last page. 21note
-                    if (viewModel.canLoadMoreGenreMovies) {
-                        viewModel.searchGenreMovies(args.genre)
+                    if (viewModel.canLoadMoreMovies) {
+                        viewModel.searchMovies(args.genre)
                     }
                 }
     }
 
     override fun renderUI() = with(viewModel) {
-        observeOnView(genreMovies) {
+        observeOnView(movies) {
             moviesAdapter.submitList(it.data?.results)
             pagingAdapter.pagingState = MapperUI.toPagingState(it)
             binding.shimmerContainer.shimmer.showAnimation(it.status == LOADING && it.data?.page == null)
