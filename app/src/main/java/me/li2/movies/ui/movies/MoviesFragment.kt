@@ -16,7 +16,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.MergeAdapter
 import androidx.recyclerview.widget.RecyclerView
-import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.rxjava3.kotlin.plusAssign
 import me.li2.android.common.arch.Resource.Status.LOADING
 import me.li2.android.common.arch.observeOnView
 import me.li2.android.common.rx.throttleFirstShort

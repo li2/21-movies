@@ -6,7 +6,7 @@
     <data>
 
         <import type="android.view.View" />
-        <import type="io.reactivex.subjects.PublishSubject" />
+        <import type="io.reactivex.rxjava3.subjects.PublishSubject" />
         <import type="java.util.List" />
         <import type="kotlin.Pair" />
         <import type="me.li2.movies.data.model.CastUI" />

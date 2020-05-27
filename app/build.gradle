@@ -188,10 +188,11 @@ dependencies {
 
     //MARK: The following are Rx libs -----------------------------------------------------------------------
     //Rx Java
-    implementation "io.reactivex.rxjava2:rxandroid:$rxAndroid_version"
-    implementation "io.reactivex.rxjava2:rxkotlin:$rxKotlin_version"
+    implementation "io.reactivex.rxjava3:rxandroid:$rxAndroid_version"
+    implementation "io.reactivex.rxjava3:rxkotlin:$rxKotlin_version"
     //Rx Binding
-    implementation "com.jakewharton.rxbinding3:rxbinding:$rxbinding3_version"
+    implementation "com.jakewharton.rxbinding4:rxbinding:$rxbinding4_version"
+    implementation "com.jakewharton.rxbinding4:rxbinding-appcompat:$rxbinding4_version"
 
 
     //MARK: The following are 3rd Utility libs --------------------------------------------------------------

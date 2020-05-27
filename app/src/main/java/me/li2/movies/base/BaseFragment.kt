@@ -7,7 +7,7 @@ package me.li2.movies.base
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 

@@ -12,8 +12,8 @@ import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
-import io.reactivex.Observable
-import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.kotlin.plusAssign
 import me.li2.android.common.arch.observeOnView
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment

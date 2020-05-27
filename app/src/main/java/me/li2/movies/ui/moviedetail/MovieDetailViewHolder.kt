@@ -6,9 +6,9 @@ package me.li2.movies.ui.moviedetail
 
 import android.annotation.SuppressLint
 import android.view.ViewGroup
-import com.jakewharton.rxbinding3.view.clicks
-import io.reactivex.Observable
-import io.reactivex.subjects.PublishSubject
+import com.jakewharton.rxbinding4.view.clicks
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.subjects.PublishSubject
 import me.li2.android.common.arch.Resource
 import me.li2.android.common.arch.Resource.Status.LOADING
 import me.li2.android.common.logic.orFalse

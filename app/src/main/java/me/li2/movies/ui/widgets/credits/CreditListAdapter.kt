@@ -7,7 +7,7 @@ package me.li2.movies.ui.widgets.credits
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.PublishSubject
 import me.li2.movies.data.model.CreditUI
 
 class CreditListAdapter(private val onCreditClicks: PublishSubject<Pair<View, CreditUI>>)

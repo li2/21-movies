@@ -6,7 +6,7 @@ package me.li2.movies.ui.widgets.movies
 
 import android.view.View
 import android.view.ViewGroup
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.PublishSubject
 import me.li2.android.common.arch.Resource
 import me.li2.movies.R
 import me.li2.movies.base.BaseViewHolder

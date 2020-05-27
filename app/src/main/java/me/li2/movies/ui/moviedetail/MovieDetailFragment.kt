@@ -15,8 +15,8 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import io.reactivex.Completable
-import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.kotlin.plusAssign
 import me.li2.android.common.arch.Resource
 import me.li2.android.common.arch.observeOnView
 import me.li2.android.common.number.dpToPx

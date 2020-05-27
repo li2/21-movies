@@ -11,8 +11,8 @@ import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
-import com.jakewharton.rxbinding3.view.clicks
-import io.reactivex.subjects.PublishSubject
+import com.jakewharton.rxbinding4.view.clicks
+import io.reactivex.rxjava3.subjects.PublishSubject
 import me.li2.android.common.rx.throttleFirstShort
 import me.li2.movies.data.model.MovieItemUI
 import me.li2.movies.databinding.MovieItemHorizontalViewBinding

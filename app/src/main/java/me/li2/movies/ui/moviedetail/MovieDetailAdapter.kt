@@ -9,9 +9,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import io.reactivex.BackpressureStrategy
-import io.reactivex.Observable
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.rxjava3.core.BackpressureStrategy
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.subjects.PublishSubject
 import me.li2.movies.data.model.CreditUI
 import me.li2.movies.data.model.GenreUI
 import me.li2.movies.data.model.MovieItemUI

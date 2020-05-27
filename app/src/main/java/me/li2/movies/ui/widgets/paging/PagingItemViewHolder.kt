@@ -6,8 +6,8 @@ package me.li2.movies.ui.widgets.paging
 
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import com.jakewharton.rxbinding3.view.clicks
-import io.reactivex.subjects.PublishSubject
+import com.jakewharton.rxbinding4.view.clicks
+import io.reactivex.rxjava3.subjects.PublishSubject
 import me.li2.android.common.rx.throttleFirstShort
 import me.li2.movies.R
 import me.li2.movies.base.BaseViewHolder

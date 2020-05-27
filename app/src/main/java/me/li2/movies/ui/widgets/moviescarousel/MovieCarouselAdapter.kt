@@ -8,8 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import io.reactivex.BackpressureStrategy
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.rxjava3.core.BackpressureStrategy
+import io.reactivex.rxjava3.subjects.PublishSubject
 import me.li2.android.view.list.CarouselPagerHelper
 import me.li2.movies.data.model.MovieItemUI
 

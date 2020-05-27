@@ -10,9 +10,9 @@ import android.view.LayoutInflater
 import android.widget.TextView
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
-import io.reactivex.BackpressureStrategy
-import io.reactivex.Observable
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.rxjava3.core.BackpressureStrategy
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.subjects.PublishSubject
 import me.li2.movies.R
 import me.li2.movies.data.model.GenreUI
 

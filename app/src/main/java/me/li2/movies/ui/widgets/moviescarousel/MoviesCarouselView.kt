@@ -13,8 +13,8 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.viewpager2.widget.ViewPager2
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.rd.PageIndicatorView
-import io.reactivex.disposables.Disposable
-import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.rxjava3.disposables.Disposable
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 import me.li2.android.common.arch.Resource
 import me.li2.android.common.arch.Resource.Status
 import me.li2.android.common.arch.Resource.Status.LOADING
@@ -45,7 +45,7 @@ class MoviesCarouselView @JvmOverloads constructor(
 
     override val autoScrollViewPager get() = viewPager
     override val viewPagerAutoScrollPeriod = Pair(5L, TimeUnit.SECONDS)
-    override val shouldViewPagerAutoScroll = BehaviorSubject.createDefault(true)
+    override val shouldViewPagerAutoScroll = BehaviorSubject.createDefault(true)!!
     override var viewPagerAutoScrollTask: Disposable? = null
 
     private val moviesAdapter: MovieCarouselAdapter = MovieCarouselAdapter()

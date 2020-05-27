@@ -7,7 +7,7 @@ package me.li2.movies.ui.widgets.trailers
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.PublishSubject
 import me.li2.android.common.arch.Resource
 import me.li2.android.common.arch.Resource.Status.SUCCESS
 import me.li2.android.common.number.dpToPx

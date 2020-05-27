@@ -9,7 +9,7 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.HORIZONTAL
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.PublishSubject
 import me.li2.android.common.number.dpToPx
 import me.li2.android.view.list.LinearSpacingDecoration
 import me.li2.movies.data.model.CreditUI

@@ -37,10 +37,9 @@ allprojects {
         androidTargetSdk_version = 29
 
         //MARK: My Libraries Dependencies --------------------------------------
-        vLi2Common = '0.1.12'
+        vLi2Common = '0.2.0'
         vLi2Network = '0.1.2'
-//        vLi2View = '0.1.4'
-        vLi2View = '4f23c74c'
+        vLi2View = '0.2.0'
         vLi2Datetime = '0.1.0'
 
         //MARK: The following are Test libs ------------------------------------
@@ -81,9 +80,9 @@ allprojects {
         moshi_version = "1.9.2"
 
         //MARK: The following are Rx libs --------------------------------------
-        rxbinding3_version = "3.0.0-alpha2"
-        rxAndroid_version = "2.1.1"
-        rxKotlin_version = "2.3.0"
+        rxbinding4_version = "4.0.0"
+        rxAndroid_version = "3.0.0"
+        rxKotlin_version = "3.0.0"
 
 
         //MARK: The following are Debug libs -----------------------------------

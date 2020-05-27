@@ -17,9 +17,9 @@ package me.li2.movies.ui.widgets.paging
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import io.reactivex.BackpressureStrategy
-import io.reactivex.Observable
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.rxjava3.core.BackpressureStrategy
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.subjects.PublishSubject
 
 class PagingItemAdapter : RecyclerView.Adapter<PagingItemViewHolder>() {
 

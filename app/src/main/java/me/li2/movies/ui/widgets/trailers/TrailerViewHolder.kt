@@ -7,8 +7,8 @@ package me.li2.movies.ui.widgets.trailers
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import com.jakewharton.rxbinding3.view.clicks
-import io.reactivex.subjects.PublishSubject
+import com.jakewharton.rxbinding4.view.clicks
+import io.reactivex.rxjava3.subjects.PublishSubject
 import me.li2.android.common.rx.throttleFirstShort
 import me.li2.movies.R
 import me.li2.movies.base.BaseViewHolder

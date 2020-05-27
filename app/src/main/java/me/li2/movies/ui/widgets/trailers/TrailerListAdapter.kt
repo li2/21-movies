@@ -7,7 +7,7 @@ package me.li2.movies.ui.widgets.trailers
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.PublishSubject
 import me.li2.movies.data.model.Trailer
 
 class TrailerListAdapter(private val onTrailerClicks: PublishSubject<Trailer>)
