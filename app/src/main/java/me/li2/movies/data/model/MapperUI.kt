@@ -46,7 +46,7 @@ object MapperUI {
             overview = api.overview)
 
     fun toMovieItemPagingUI(api: TmdbMovieListAPI) = MovieItemPagingUI(
-            results = api.results.map { toMovieItemUI(it) },
+            results = api.results.map { toMovieItemUI(it) }.toMutableList(),
             page = api.page,
             totalPages = api.totalPages,
             totalResults = api.totalResults)

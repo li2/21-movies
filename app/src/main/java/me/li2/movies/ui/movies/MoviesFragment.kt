@@ -5,9 +5,8 @@
 package me.li2.movies.ui.movies
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
@@ -16,6 +15,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.MergeAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.jakewharton.rxbinding4.appcompat.queryTextChanges
 import io.reactivex.rxjava3.kotlin.plusAssign
 import me.li2.android.common.arch.Resource.Status.LOADING
 import me.li2.android.common.arch.observeOnView
@@ -34,6 +34,7 @@ import me.li2.movies.util.fixContainerExitTransition
 import me.li2.movies.util.navController
 import me.li2.movies.util.setUpContainerExitTransition
 import me.li2.movies.util.showAnimation
+import java.util.concurrent.TimeUnit
 
 class MoviesFragment : BaseFragment() {
 
@@ -46,6 +47,7 @@ class MoviesFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
         setUpContainerExitTransition(R.id.root)
         viewModel.searchMovies(args.genre)
     }
@@ -93,5 +95,22 @@ class MoviesFragment : BaseFragment() {
             pagingAdapter.pagingState = MapperUI.toPagingState(it)
             binding.shimmerContainer.shimmer.showAnimation(it.status == LOADING && it.data?.page == null)
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.movies_menu, menu)
+        setUpSearchView(menu.findItem(R.id.search).actionView as SearchView)
+    }
+
+    private fun setUpSearchView(searchView: SearchView) {
+        searchView.queryHint = "Search Movies"
+
+        compositeDisposable += searchView.queryTextChanges()
+                .debounce(300, TimeUnit.MILLISECONDS)
+                .distinctUntilChanged()
+                .subscribe { queryText ->
+                    viewModel.filter.queryText = queryText.toString()
+                    viewModel.filterMovies()
+                }
     }
 }

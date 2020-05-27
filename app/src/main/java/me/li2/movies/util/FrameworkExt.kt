@@ -49,6 +49,10 @@ fun Fragment.navigate(directions: NavDirections) {
     NavHostFragment.findNavController(this).navigate(directions)
 }
 
+fun Fragment.navigateSlideInOut(directions: NavDirections) {
+    NavHostFragment.findNavController(this).navigate(directions, getDefaultNavOptionsBuilder().build())
+}
+
 fun Fragment.setToolbarTitle(title: String) {
     (activity as AppCompatActivity).supportActionBar?.title = title
 }

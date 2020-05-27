@@ -14,7 +14,7 @@ import org.threeten.bp.LocalDate
 
 @Parcelize
 data class MovieItemPagingUI(
-        val results: List<MovieItemUI>,
+        val results: MutableList<MovieItemUI>,
         val page: Int,
         val totalPages: Int,
         val totalResults: Int
@@ -47,10 +47,10 @@ fun MutableLiveData<Resource<MovieItemPagingUI>>.isLastPage(): Boolean {
     return this.value?.data?.let { it.page == it.totalPages }.orFalse()
 }
 
-fun MutableLiveData<Resource<MovieItemPagingUI>>.appendResults(results: List<MovieItemUI>): List<MovieItemUI> {
-    return this.value?.data?.results.orEmpty().toMutableList()
+fun List<MovieItemUI>.appendNextPage(nextPage: List<MovieItemUI>): List<MovieItemUI> {
+    return this.toMutableList()
             .let {
-                it.addAll(results)
+                it.addAll(nextPage)
                 // remove duplicated items, 21note
                 it.distinctBy { movie -> movie.id }
             }

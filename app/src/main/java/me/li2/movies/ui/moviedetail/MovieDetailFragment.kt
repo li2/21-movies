@@ -95,7 +95,7 @@ class MovieDetailFragment : BaseFragment(), RootViewStore {
         }
 
         compositeDisposable += detailAdapter.onGenreClicks.subscribe { genre ->
-            navigate(MovieDetailFragmentDirections.showGenreMoviesList(genre.name))
+            navigateSlideInOut(MovieDetailFragmentDirections.showGenreMoviesList(genre.name))
         }
 
         compositeDisposable += detailAdapter.onRecMovieClicks.subscribe { (view, movieItem) ->
