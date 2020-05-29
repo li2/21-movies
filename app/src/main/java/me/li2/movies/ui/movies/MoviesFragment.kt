@@ -27,6 +27,7 @@ import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.data.model.MapperUI
 import me.li2.movies.databinding.MoviesFragmentBinding
+import me.li2.movies.ui.filter.FilterBottomSheet
 import me.li2.movies.ui.widgets.movies.MovieListAdapter
 import me.li2.movies.ui.widgets.movies.MovieListLayoutType.LINEAR_LAYOUT_VERTICAL
 import me.li2.movies.ui.widgets.paging.PagingItemAdapter
@@ -102,6 +103,16 @@ class MoviesFragment : BaseFragment() {
         setUpSearchView(menu.findItem(R.id.search).actionView as SearchView)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.filter -> {
+                showFilterBottomSheet()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     private fun setUpSearchView(searchView: SearchView) {
         searchView.queryHint = "Search Movies"
 
@@ -112,5 +123,15 @@ class MoviesFragment : BaseFragment() {
                     viewModel.filter.queryText = queryText.toString()
                     viewModel.filterMovies()
                 }
+    }
+
+    private fun showFilterBottomSheet() {
+        FilterBottomSheet(requireContext(),
+                initialFilter = viewModel.filter,
+                onApplyClick = {
+                    viewModel.filter = it
+                    viewModel.filterMovies()
+                }
+        ).show()
     }
 }

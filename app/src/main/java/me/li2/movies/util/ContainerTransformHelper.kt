@@ -52,7 +52,7 @@ fun Fragment.removeContainerExitTransition() {
  * Call in the detail fragment.
  */
 fun Fragment.setUpContainerEnterTransitions(configuration: ContainerTransformConfiguration) {
-    val transform = MaterialContainerTransform(requireContext())
+    val transform = MaterialContainerTransform()
     if (configuration.isArcMotionEnabled) {
         transform.pathMotion = MaterialArcMotion()
     }

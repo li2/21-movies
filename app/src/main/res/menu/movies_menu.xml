@@ -9,4 +9,11 @@
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="collapseActionView|always"
         tools:ignore="HardcodedText" />
+
+    <item
+        android:id="@+id/filter"
+        android:icon="@drawable/ic_filter_list_24"
+        android:title="Filter"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction,HardcodedText" />
 </menu>

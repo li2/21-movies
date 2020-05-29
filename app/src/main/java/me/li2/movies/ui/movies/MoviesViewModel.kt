@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 import me.li2.android.common.arch.*
 import me.li2.movies.base.BaseViewModel
 import me.li2.movies.data.model.*
+import me.li2.movies.ui.filter.MoviesFilter
 import me.li2.movies.util.distinctUntilChanged
 import me.li2.movies.util.doNothing
 import me.li2.movies.util.io
@@ -25,7 +26,8 @@ class MoviesViewModel : BaseViewModel() {
         get() = _movies.isIdle() && !_movies.isLastPage()
 
     private var unfilteredMovies: MovieItemPagingUI? = null
-    internal val filter = MoviesFilter()
+    // todo weiyi val?
+    internal var filter = MoviesFilter()
 
     fun searchMovies(genre: String) {
         if (_movies.isLoading()) {

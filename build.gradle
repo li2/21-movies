@@ -70,7 +70,7 @@ allprojects {
 
 
         //MARK: The following are Google libs ----------------------------------
-        google_material_version = "1.2.0-alpha02"
+        google_material_version = "1.2.0-alpha06"
         firebase_analytics_version = '17.4.1'
         firebase_crashlytics_version = '17.0.0'
         firebase_messaging_version = "20.1.7"
