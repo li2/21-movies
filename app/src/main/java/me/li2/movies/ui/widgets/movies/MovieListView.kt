@@ -27,8 +27,9 @@ class MovieItemListView @JvmOverloads constructor(
         defStyleAttr: Int = 0) : ConstraintLayout(context, attrs, defStyleAttr) {
 
     private val labelTextView: TextView
-    private val stateTextView: TextView
     private val recyclerView: RecyclerView
+    private val stateLayout: View
+    private val stateTextView: TextView
     private val shimmerLayout: ShimmerFrameLayout
 
     private val moviesAdapter = MovieListAdapter(LINEAR_LAYOUT_HORIZONTAL)
@@ -53,12 +54,12 @@ class MovieItemListView @JvmOverloads constructor(
             shimmerLayout.showAnimation(value.status == LOADING && value.noData())
             // update empty or error message
             val stateMessage = when {
-                value.status == SUCCESS && value.noData() -> "Movies are empty"
+                value.status == SUCCESS && value.noData() -> "oops no movies yet"
                 value.status == ERROR && value.noData() -> "\uD83D\uDE28 Wooops ${value.exception?.message}"
                 else -> null
             }
             stateTextView.text = stateMessage
-            stateTextView.isVisible = stateMessage != null
+            stateLayout.isVisible = stateMessage != null
         }
 
     var layoutType: MovieListLayoutType = LINEAR_LAYOUT_HORIZONTAL
@@ -71,8 +72,9 @@ class MovieItemListView @JvmOverloads constructor(
     init {
         val root = inflate(context, R.layout.movie_list_view, this)
         labelTextView = root.findViewById(R.id.labelTextView)
-        stateTextView = root.findViewById(R.id.stateTextView)
         recyclerView = root.findViewById(R.id.moviesRecyclerView)
+        stateTextView = root.findViewById(R.id.stateTextView)
+        stateLayout = root.findViewById(R.id.stateLayout)
         shimmerLayout = root.findViewById(R.id.shimmerLayout)
 
         /* Custom view must have a unique ID, otherwise, when saving state,
@@ -80,8 +82,9 @@ class MovieItemListView @JvmOverloads constructor(
         therefor the recycler scroll position restored to 0.
         A simple fix is just use View.generateViewId(). noteweiyi*/
         labelTextView.id = View.generateViewId()
-        stateTextView.id = View.generateViewId()
         recyclerView.id = View.generateViewId()
+        stateLayout.id = View.generateViewId()
+        stateTextView.id = View.generateViewId()
         shimmerLayout.id = View.generateViewId()
 
         recyclerView.apply {

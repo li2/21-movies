@@ -18,29 +18,29 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="192dp"
             android:orientation="horizontal">
 
             <View
                 android:layout_width="128dp"
-                android:layout_height="192dp"
+                android:layout_height="match_parent"
                 android:background="?attr/colorShimmer" />
 
             <View
                 android:layout_width="128dp"
-                android:layout_height="192dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="16dp"
                 android:background="?attr/colorShimmer" />
 
             <View
                 android:layout_width="128dp"
-                android:layout_height="192dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="16dp"
                 android:background="?attr/colorShimmer" />
 
             <View
                 android:layout_width="128dp"
-                android:layout_height="192dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="16dp"
                 android:background="?attr/colorShimmer" />
 

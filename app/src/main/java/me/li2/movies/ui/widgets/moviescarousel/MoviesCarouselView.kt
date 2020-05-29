@@ -6,6 +6,7 @@ package me.li2.movies.ui.widgets.moviescarousel
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
@@ -38,9 +39,10 @@ class MoviesCarouselView @JvmOverloads constructor(
     : ConstraintLayout(context, attrs, defStyleAttr),
         ViewPager2AutoScrollHelper {
 
-    private val stateTextView: TextView
     private val viewPager: ViewPager2
     private val pagerIndicator: PageIndicatorView
+    private val stateLayout: View
+    private val stateTextView: TextView
     private val shimmerLayout: ShimmerFrameLayout
 
     override val autoScrollViewPager get() = viewPager
@@ -71,14 +73,15 @@ class MoviesCarouselView @JvmOverloads constructor(
                 else -> null
             }
             stateTextView.text = stateMessage
-            stateTextView.isVisible = stateMessage != null
+            stateLayout.isVisible = stateMessage != null
         }
 
     init {
         val root = inflate(context, R.layout.movies_carousel_view, this)
-        stateTextView = root.findViewById(R.id.stateTextView)
         viewPager = root.findViewById(R.id.movieCarouselViewPager)
         pagerIndicator = root.findViewById(R.id.movieCarouselPagerIndicator)
+        stateTextView = root.findViewById(R.id.stateTextView)
+        stateLayout = root.findViewById(R.id.stateLayout)
         shimmerLayout = root.findViewById(R.id.shimmerLayout)
 
         viewPager.adapter = moviesAdapter
