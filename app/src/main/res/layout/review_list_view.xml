@@ -5,17 +5,23 @@
 
     <data>
 
+        <import type="android.text.TextUtils" />
+
         <import type="java.util.List" />
 
         <import type="me.li2.movies.data.model.MovieReviewUI" />
 
         <variable
-            name="isEmpty"
+            name="showShimmer"
             type="Boolean" />
 
         <variable
-            name="isLoading"
+            name="showComments"
             type="Boolean" />
+
+        <variable
+            name="stateMessage"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -56,7 +62,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:clipToPadding="false"
-                    android:visibility="@{!isEmpty}"
+                    android:visibility="@{showComments}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -76,20 +82,20 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:startShimmer="@{isLoading}"
+                    app:startShimmer="@{showShimmer}"
                     tools:visibility="gone" />
 
                 <TextView
-                    android:id="@+id/emptyTextView"
+                    android:id="@+id/stateTextView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:height="36dp"
                     android:gravity="center_horizontal|center"
-                    android:text="oops no reviews yet"
+                    android:padding="16dp"
+                    android:text="@{stateMessage}"
                     android:textAppearance="?attr/textAppearanceCaption"
-                    android:visibility="@{isEmpty}"
+                    android:visibility="@{!TextUtils.isEmpty(stateMessage)}"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="HardcodedText" />
+                    tools:text="oops no reviews" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

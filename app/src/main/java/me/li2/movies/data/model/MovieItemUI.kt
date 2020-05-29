@@ -55,5 +55,3 @@ fun List<MovieItemUI>.appendNextPage(nextPage: List<MovieItemUI>): List<MovieIte
                 it.distinctBy { movie -> movie.id }
             }
 }
-
-fun Resource<List<MovieItemUI>>.noData() = this.data?.isNullOrEmpty().orFalse()

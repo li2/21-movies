@@ -26,8 +26,8 @@ import me.li2.android.view.list.ViewPager2AutoScrollHelper
 import me.li2.android.view.list.showPartialLeftAndRightPages
 import me.li2.movies.R
 import me.li2.movies.data.model.MovieItemUI
-import me.li2.movies.data.model.noData
 import me.li2.movies.util.SampleProvider
+import me.li2.movies.util.noData
 import me.li2.movies.util.setViewPager2
 import me.li2.movies.util.showAnimation
 import java.util.concurrent.TimeUnit

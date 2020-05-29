@@ -15,22 +15,17 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.kotlin.plusAssign
-import me.li2.android.common.arch.Resource
 import me.li2.android.common.arch.observeOnView
 import me.li2.android.common.number.dpToPx
 import me.li2.android.view.image.GlideRequestListener
 import me.li2.android.view.list.LinearSpacingDecoration
 import me.li2.android.view.navigation.setToolbar
-import me.li2.android.view.popup.toast
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.MovieDetailFragmentBinding
 import me.li2.movies.util.*
 import org.kodein.di.generic.instance
-import timber.log.Timber.e
-import java.util.concurrent.TimeUnit
 
 class MovieDetailFragment : BaseFragment(), RootViewStore {
 
@@ -65,7 +60,9 @@ class MovieDetailFragment : BaseFragment(), RootViewStore {
     override fun initUi(view: View, savedInstanceState: Bundle?) {
         initializeRootViewIfNeeded {
             activity?.setToolbar(binding.toolbar)
+
             binding.movieItem = args.movieItem
+
             binding.recyclerView.apply {
                 adapter = detailAdapter
                 layoutManager = LinearLayoutManager(context)
@@ -112,29 +109,6 @@ class MovieDetailFragment : BaseFragment(), RootViewStore {
     override fun renderUI() = with(viewModel) {
         observeOnView(movieDetailRows) {
             detailAdapter.submitList(it)
-        }
-
-        observeOnView(movieDetail) {
-            bindErrorState(it)
-        }
-
-        observeOnView(credits) {
-            bindErrorState(it)
-        }
-
-        observeOnView(movieReviews) {
-            bindErrorState(it)
-        }
-
-        observeOnView(recommendations) {
-            bindErrorState(it)
-        }
-    }
-
-    private fun bindErrorState(resource: Resource<*>) {
-        if (resource.status == Resource.Status.ERROR) {
-            toast(resource.exception.toString())
-            e(resource.exception)
         }
     }
 }

@@ -16,9 +16,9 @@ import me.li2.android.common.arch.Resource
 import me.li2.android.common.arch.Resource.Status.*
 import me.li2.movies.R
 import me.li2.movies.data.model.MovieItemUI
-import me.li2.movies.data.model.noData
 import me.li2.movies.ui.widgets.movies.MovieListLayoutType.LINEAR_LAYOUT_HORIZONTAL
 import me.li2.movies.util.SampleProvider
+import me.li2.movies.util.noData
 import me.li2.movies.util.showAnimation
 
 class MovieItemListView @JvmOverloads constructor(

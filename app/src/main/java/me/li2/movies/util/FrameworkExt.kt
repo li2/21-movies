@@ -15,6 +15,8 @@ import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import me.li2.android.common.arch.Resource
+import me.li2.android.common.logic.orFalse
 import me.li2.movies.R
 
 fun doNothing() {
@@ -76,3 +78,5 @@ inline fun <reified T> List<*>.checkItemsAre(): List<T>? {
     else
         null
 }
+
+fun <T> Resource<List<T>>.noData() = this.data?.isNullOrEmpty().orFalse()

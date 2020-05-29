@@ -8,12 +8,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import me.li2.android.common.arch.Resource
-import me.li2.android.common.arch.Resource.Status.LOADING
+import me.li2.android.common.arch.Resource.Status.*
 import me.li2.android.view.list.DividerItemDecoration
 import me.li2.movies.R
 import me.li2.movies.base.BaseViewHolder
 import me.li2.movies.data.model.MovieReviewUI
 import me.li2.movies.databinding.ReviewListViewBinding
+import me.li2.movies.util.noData
 
 class ReviewListViewHolder(binding: ReviewListViewBinding)
     : BaseViewHolder<Resource<List<MovieReviewUI>>, ReviewListViewBinding>(binding) {
@@ -30,8 +31,14 @@ class ReviewListViewHolder(binding: ReviewListViewBinding)
 
     override fun bind(item: Resource<List<MovieReviewUI>>, position: Int) {
         reviewsAdapter.submitList(item.data?.take(5))
-        binding.isLoading = item.status == LOADING && item.data.isNullOrEmpty()
-        binding.isEmpty = item.status != LOADING && item.data.isNullOrEmpty()
+        binding.showShimmer = item.status == LOADING && item.noData()
+        binding.showComments = !item.noData()
+        // update empty or error message
+        binding.stateMessage = when {
+            item.status == SUCCESS && item.noData() -> "oops no reviews yet"
+            item.status == ERROR && item.noData() -> "\uD83D\uDE28 Wooops ${item.exception?.message}"
+            else -> null
+        }
     }
 
     companion object {
