@@ -25,9 +25,8 @@ class MoviesViewModel : BaseViewModel() {
     internal val canLoadMoreMovies: Boolean
         get() = _movies.isIdle() && !_movies.isLastPage()
 
+    internal val filter = MoviesFilter()
     private var unfilteredMovies: MovieItemPagingUI? = null
-    // todo weiyi val?
-    internal var filter = MoviesFilter()
 
     fun searchMovies(genre: String) {
         if (_movies.isLoading()) {
@@ -46,7 +45,8 @@ class MoviesViewModel : BaseViewModel() {
         })
     }
 
-    fun filterMovies() {
+    fun filterMovies(updateFilter: MoviesFilter.() -> Unit = {}) {
+        filter.updateFilter()
         viewModelScope.launch {
             unfilteredMovies?.let { pagingUI ->
                 val filteredMovies = filter.performFiltering(pagingUI.results)

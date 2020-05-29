@@ -15,6 +15,12 @@ class MoviesFilter {
     var voteRange = IntRange(0, 10)
     var releaseDateFilter = ALL
 
+    fun copy(other: MoviesFilter) {
+        queryText = other.queryText
+        voteRange = other.voteRange
+        releaseDateFilter = other.releaseDateFilter
+    }
+
     @WorkerThread
     fun performFiltering(movies: List<MovieItemUI>): List<MovieItemUI> {
         return movies.filter { movie ->

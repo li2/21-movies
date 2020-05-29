@@ -120,8 +120,7 @@ class MoviesFragment : BaseFragment() {
                 .debounce(300, TimeUnit.MILLISECONDS)
                 .distinctUntilChanged()
                 .subscribe { queryText ->
-                    viewModel.filter.queryText = queryText.toString()
-                    viewModel.filterMovies()
+                    viewModel.filterMovies { this.queryText = queryText.toString() }
                 }
     }
 
@@ -129,8 +128,7 @@ class MoviesFragment : BaseFragment() {
         FilterBottomSheet(requireContext(),
                 initialFilter = viewModel.filter,
                 onApplyClick = {
-                    viewModel.filter = it
-                    viewModel.filterMovies()
+                    viewModel.filterMovies { this.copy(it) }
                 }
         ).show()
     }
