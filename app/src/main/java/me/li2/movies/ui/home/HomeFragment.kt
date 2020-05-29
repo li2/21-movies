@@ -65,6 +65,10 @@ class HomeFragment : BaseFragment(), RootViewStore {
     }
 
     override fun renderUI() = with(viewModel) {
+        observeOnView(isLoading) {
+            binding.isLoading = it
+        }
+
         observeOnView(trendingMovies) {
             binding.movieCarouselItems = it
         }

@@ -5,8 +5,11 @@
 package me.li2.movies.ui.home
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import me.li2.android.common.arch.Resource
+import me.li2.android.common.arch.Resource.Status.LOADING
+import me.li2.android.common.arch.combineLatest
 import me.li2.movies.base.BaseViewModel
 import me.li2.movies.data.model.MapperUI
 import me.li2.movies.data.model.MovieItemUI
@@ -36,6 +39,14 @@ class HomeViewModel : BaseViewModel() {
     private val _topMovies = MutableLiveData<Resource<List<MovieItemUI>>>(Resource.loading(emptyList()))
     internal val topMovies: LiveData<Resource<List<MovieItemUI>>>
         get() = _topMovies.distinctUntilChanged()
+
+    internal var isLoading: MediatorLiveData<Boolean> = combineLatest(trendingMovies, nowPlaying, upcomingMovies, popularMovies, topMovies) { results ->
+        (results[0] as Resource<*>).status == LOADING
+                && (results[1] as Resource<*>).status == LOADING
+                && (results[2] as Resource<*>).status == LOADING
+                && (results[3] as Resource<*>).status == LOADING
+                && (results[4] as Resource<*>).status == LOADING
+    }
 
     init {
         getHomeScreenData(true)
