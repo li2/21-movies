@@ -8,6 +8,10 @@
         <variable
             name="movieItem"
             type="me.li2.movies.data.model.MovieItemUI" />
+
+        <variable
+            name="onGlideRequestComplete"
+            type="me.li2.android.view.image.GlideRequestListener" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -19,7 +23,7 @@
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
-            android:layout_height="480dp"
+            android:layout_height="280dp"
             app:elevation="0dp">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -40,10 +44,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="?android:attr/colorBackground"
-                    android:src="@{movieItem.posterUrl}"
+                    android:src="@{movieItem.backdropUrl}"
                     app:centerCrop="@{true}"
-                    app:errorPlaceholder="@{@drawable/ic_film}"
-                    app:placeHolder="@{@drawable/ic_film}"
+                    app:onComplete="@{onGlideRequestComplete}"
                     tools:ignore="ContentDescription"
                     tools:scaleType="centerCrop"
                     tools:src="@tools:sample/backgrounds/scenic[2]" />

@@ -20,6 +20,7 @@ import io.reactivex.rxjava3.kotlin.plusAssign
 import me.li2.android.common.arch.Resource
 import me.li2.android.common.arch.observeOnView
 import me.li2.android.common.number.dpToPx
+import me.li2.android.view.image.GlideRequestListener
 import me.li2.android.view.list.LinearSpacingDecoration
 import me.li2.android.view.navigation.setToolbar
 import me.li2.android.view.popup.toast
@@ -46,15 +47,10 @@ class MovieDetailFragment : BaseFragment(), RootViewStore {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setUpContainerEnterTransitions(containerTransformConfiguration)
+
         // load data in your ViewModel's init {} or onCreate(), not in onViewCreated(). 21note))
         // https://stackoverflow.com/q/54581071/2722270, https://twitter.com/ianhlake/status/1103522856535638016
-        compositeDisposable += Completable.complete()
-                .delay(500, TimeUnit.MICROSECONDS)
-                .doOnComplete {
-                    // delay loading data to make transition smooth, ideally make the call onTransitionEnd, however its not called.
-                    viewModel.getMovieDetailScreenData(args.movieItem.id)
-                }
-                .subscribe()
+        viewModel.getMovieDetailScreenData(args.movieItem.id)
     }
 
     override fun onCreateView(inflater: LayoutInflater,
@@ -80,6 +76,14 @@ class MovieDetailFragment : BaseFragment(), RootViewStore {
             // Set the transition name which matches the list/grid item to be transitioned from for
             // the shared element transition.
             ViewCompat.setTransitionName(binding.root, args.movieItem.getSharedTransitionName())
+        }
+
+        binding.onGlideRequestComplete = object : GlideRequestListener {
+            override fun onGlideRequestComplete(success: Boolean) {
+                if (!success) {
+                    binding.appBarLayout.setExpanded(false)
+                }
+            }
         }
 
         compositeDisposable += detailAdapter.onTrailerClicks.subscribe { trailer ->
