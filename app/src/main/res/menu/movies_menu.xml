@@ -12,8 +12,16 @@
 
     <item
         android:id="@+id/filter"
-        android:icon="@drawable/ic_filter_list_24"
+        android:icon="@drawable/ic_filter_24"
         android:title="Filter"
         app:showAsAction="always"
         tools:ignore="AlwaysShowAction,HardcodedText" />
+
+    <item
+        android:id="@+id/sort"
+        android:icon="@drawable/ic_sort_24"
+        android:title="Sort"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction,HardcodedText" />
+
 </menu>

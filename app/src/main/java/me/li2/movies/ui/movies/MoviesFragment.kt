@@ -28,6 +28,7 @@ import me.li2.movies.base.BaseFragment
 import me.li2.movies.data.model.MapperUI
 import me.li2.movies.databinding.MoviesFragmentBinding
 import me.li2.movies.ui.filter.FilterBottomSheet
+import me.li2.movies.ui.sort.SortBottomSheet
 import me.li2.movies.ui.widgets.movies.MovieListAdapter
 import me.li2.movies.ui.widgets.movies.MovieListLayoutType.LINEAR_LAYOUT_VERTICAL
 import me.li2.movies.ui.widgets.paging.PagingItemAdapter
@@ -105,10 +106,8 @@ class MoviesFragment : BaseFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.filter -> {
-                showFilterBottomSheet()
-                true
-            }
+            R.id.filter -> showFilterBottomSheet()
+            R.id.sort -> showSortBottomSheet()
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -124,12 +123,23 @@ class MoviesFragment : BaseFragment() {
                 }
     }
 
-    private fun showFilterBottomSheet() {
+    private fun showFilterBottomSheet(): Boolean {
         FilterBottomSheet(requireContext(),
                 initialFilter = viewModel.filter,
                 onApplyClick = {
                     viewModel.filterMovies { this.copy(it) }
                 }
         ).show()
+        return true
+    }
+
+    private fun showSortBottomSheet(): Boolean {
+        SortBottomSheet(requireContext(),
+                sortItems = viewModel.sort.buildSortItems(),
+                onSortChange = { sortType, descending ->
+                    viewModel.sortMovies(sortType, descending)
+                }
+        ).show()
+        return true
     }
 }
