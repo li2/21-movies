@@ -59,6 +59,7 @@ class MovieListView @JvmOverloads constructor(
             field = value
             // update list
             moviesAdapter.submitList(value.data)
+            moreButton.isVisible = !value.data.isNullOrEmpty()
             // update loading state
             shimmerLayout.showAnimation(value.status == LOADING && value.noData())
             // update empty or error message
