@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="credit"
-            type="me.li2.movies.data.model.CreditUI" />
+            name="imageUrl"
+            type="String" />
 
         <variable
             name="onGlideRequestComplete"
@@ -23,7 +23,7 @@
             android:id="@+id/profileImageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@{credit.profileOriginalUrl}"
+            android:src="@{imageUrl}"
             app:centerCrop="@{true}"
             app:errorPlaceholder="@{@drawable/ic_person}"
             app:onComplete="@{onGlideRequestComplete}"

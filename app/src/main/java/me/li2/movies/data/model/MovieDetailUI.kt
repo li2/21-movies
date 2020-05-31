@@ -33,6 +33,7 @@ data class MovieDetailUI(
         val spokenLanguages: String,
         val imdbUrl: String?,
         val posterUrl: String?,
+        val posterOriginalUrl: String?,
         val backdropUrl: String?,
         val popularity: Double,
         val voteAverage: Double,

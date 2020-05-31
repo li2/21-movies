@@ -33,8 +33,8 @@
             android:id="@+id/showMovieDetail"
             app:destination="@id/movieDetailFragment" />
         <action
-            android:id="@+id/showCreditDetail"
-            app:destination="@id/creditDetailFragment" />
+            android:id="@+id/showBigImage"
+            app:destination="@id/bigImageFragment" />
     </fragment>
 
     <fragment
@@ -51,13 +51,13 @@
     </fragment>
 
     <fragment
-        android:id="@+id/creditDetailFragment"
-        android:name="me.li2.movies.ui.credit.CreditDetailFragment"
+        android:id="@+id/bigImageFragment"
+        android:name="me.li2.movies.ui.widgets.image.BigImageFragment"
         android:label="CreditDetailFragment"
-        tools:layout="@layout/credit_detail_fragment">
+        tools:layout="@layout/big_image_fragment">
         <argument
-            android:name="credit"
-            app:argType="me.li2.movies.data.model.CreditUI" />
+            android:name="imageUrl"
+            app:argType="string" />
     </fragment>
 
 </navigation>

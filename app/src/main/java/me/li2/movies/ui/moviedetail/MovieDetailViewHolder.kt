@@ -5,7 +5,9 @@
 package me.li2.movies.ui.moviedetail
 
 import android.annotation.SuppressLint
+import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
 import com.jakewharton.rxbinding4.view.clicks
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.PublishSubject
@@ -21,7 +23,8 @@ import me.li2.movies.databinding.MovieDetailViewBinding
 
 class MovieDetailViewHolder(binding: MovieDetailViewBinding,
                             private val onRateClicks: PublishSubject<Unit>,
-                            private val onGenreClicks: PublishSubject<GenreUI>)
+                            private val onGenreClicks: PublishSubject<GenreUI>,
+                            private val onPosterClicks: PublishSubject<Pair<View, String>>)
     : BaseViewHolder<Resource<MovieDetailUI>, MovieDetailViewBinding>(binding) {
 
     init {
@@ -31,6 +34,13 @@ class MovieDetailViewHolder(binding: MovieDetailViewBinding,
     override fun bind(item: Resource<MovieDetailUI>, position: Int) {
         binding.movieDetail = item.data
         binding.isLoadingMovieDetail = item.status == LOADING
+
+        item.data?.posterOriginalUrl?.let { url ->
+            ViewCompat.setTransitionName(binding.posterImageView, url)
+            binding.posterImageView.clicks().throttleFirstShort()
+                    .map { Pair(binding.posterImageView, url) }
+                    .subscribe(onPosterClicks)
+        }
     }
 
     @SuppressLint("CheckResult")
@@ -48,9 +58,10 @@ class MovieDetailViewHolder(binding: MovieDetailViewBinding,
     companion object {
         fun create(parent: ViewGroup,
                    onRateClicks: PublishSubject<Unit>,
-                   onGenreClicks: PublishSubject<GenreUI>): MovieDetailViewHolder {
+                   onGenreClicks: PublishSubject<GenreUI>,
+                   onPosterClicks: PublishSubject<Pair<View, String>>): MovieDetailViewHolder {
             val binding = newBindingInstance(parent, R.layout.movie_detail_view) as MovieDetailViewBinding
-            return MovieDetailViewHolder(binding, onRateClicks, onGenreClicks)
+            return MovieDetailViewHolder(binding, onRateClicks, onGenreClicks, onPosterClicks)
         }
     }
 }

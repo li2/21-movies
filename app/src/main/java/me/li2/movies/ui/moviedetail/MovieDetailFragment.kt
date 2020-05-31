@@ -89,11 +89,17 @@ class MovieDetailFragment : BaseFragment(), RootViewStore {
             requireContext().watchYoutubeVideo(trailer.url)
         }
 
+        compositeDisposable += detailAdapter.onPosterClicks.subscribe { (view, posterUrl) ->
+            setUpContainerExitTransition(R.id.root)
+            val extras = FragmentNavigatorExtras(view to ViewCompat.getTransitionName(view).orEmpty())
+            navController().navigate(MovieDetailFragmentDirections.showBigImage(posterUrl), extras)
+        }
+
         compositeDisposable += detailAdapter.onCreditClicks.subscribe { (view, credit) ->
-            credit.profileOriginalUrl?.let {
+            credit.profileOriginalUrl?.let { profileImageUrl ->
                 setUpContainerExitTransition(R.id.root)
                 val extras = FragmentNavigatorExtras(view to ViewCompat.getTransitionName(view).orEmpty())
-                navController().navigate(MovieDetailFragmentDirections.showCreditDetail(credit), extras)
+                navController().navigate(MovieDetailFragmentDirections.showBigImage(profileImageUrl), extras)
             }
         }
 

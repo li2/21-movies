@@ -20,7 +20,7 @@ class CreditViewHolder(binding: CreditItemViewBinding,
     : BaseViewHolder<CreditUI, CreditItemViewBinding>(binding) {
 
     override fun bind(item: CreditUI, position: Int) {
-        ViewCompat.setTransitionName(binding.root, item.id.toString())
+        ViewCompat.setTransitionName(binding.root, item.profileOriginalUrl)
         binding.credit = item
         binding.creditItemContainer.clicks().throttleFirstShort()
                 .map { Pair(binding.creditItemContainer, item) }

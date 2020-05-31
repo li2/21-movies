@@ -27,6 +27,7 @@ data class MovieItemUI(
         val releaseDate: LocalDate?,
         val releaseDateDisplay: String,
         val posterUrl: String?,
+        val posterOriginalUrl: String?,
         val backdropUrl: String?,
         val popularity: Double,
         val voteAverage: Double,
