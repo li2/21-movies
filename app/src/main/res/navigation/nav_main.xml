@@ -13,6 +13,9 @@
         <action
             android:id="@+id/showMovieDetail"
             app:destination="@id/movieDetailFragment" />
+        <action
+            android:id="@+id/showMoviesList"
+            app:destination="@id/moviesFragment" />
     </fragment>
 
     <fragment
@@ -24,7 +27,7 @@
             android:name="movieItem"
             app:argType="me.li2.movies.data.model.MovieItemUI" />
         <action
-            android:id="@+id/showGenreMoviesList"
+            android:id="@+id/showMoviesList"
             app:destination="@id/moviesFragment" />
         <action
             android:id="@+id/showMovieDetail"
@@ -40,8 +43,8 @@
         android:label=""
         tools:layout="@layout/movies_fragment">
         <argument
-            android:name="genre"
-            app:argType="string" />
+            android:name="movieListType"
+            app:argType="me.li2.movies.ui.movies.MovieListType" />
         <action
             android:id="@+id/showMovieDetail"
             app:destination="@id/movieDetailFragment" />

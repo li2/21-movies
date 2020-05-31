@@ -7,13 +7,18 @@ package me.li2.movies.ui.widgets.movies
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.jakewharton.rxbinding4.view.clicks
+import io.reactivex.rxjava3.core.BackpressureStrategy
+import io.reactivex.rxjava3.subjects.PublishSubject
 import me.li2.android.common.arch.Resource
 import me.li2.android.common.arch.Resource.Status.*
+import me.li2.android.common.rx.throttleFirstShort
 import me.li2.movies.R
 import me.li2.movies.data.model.MovieItemUI
 import me.li2.movies.ui.widgets.movies.MovieListLayoutType.LINEAR_LAYOUT_HORIZONTAL
@@ -21,18 +26,22 @@ import me.li2.movies.util.SampleProvider
 import me.li2.movies.util.noData
 import me.li2.movies.util.showAnimation
 
-class MovieItemListView @JvmOverloads constructor(
+class MovieListView @JvmOverloads constructor(
         context: Context,
         attrs: AttributeSet? = null,
         defStyleAttr: Int = 0) : ConstraintLayout(context, attrs, defStyleAttr) {
 
     private val labelTextView: TextView
+    private val moreButton: Button
     private val recyclerView: RecyclerView
     private val stateLayout: View
     private val stateTextView: TextView
     private val shimmerLayout: ShimmerFrameLayout
 
     private val moviesAdapter = MovieListAdapter(LINEAR_LAYOUT_HORIZONTAL)
+
+    private val _onMoreClicks = PublishSubject.create<Unit>()
+    val onMoreClicks = _onMoreClicks.toFlowable(BackpressureStrategy.LATEST).toObservable()!!
 
     val onMovieClicks = moviesAdapter.onMovieClicks
 
@@ -72,6 +81,7 @@ class MovieItemListView @JvmOverloads constructor(
     init {
         val root = inflate(context, R.layout.movie_list_view, this)
         labelTextView = root.findViewById(R.id.labelTextView)
+        moreButton = root.findViewById(R.id.moreButton)
         recyclerView = root.findViewById(R.id.moviesRecyclerView)
         stateTextView = root.findViewById(R.id.stateTextView)
         stateLayout = root.findViewById(R.id.stateLayout)
@@ -82,6 +92,7 @@ class MovieItemListView @JvmOverloads constructor(
         therefor the recycler scroll position restored to 0.
         A simple fix is just use View.generateViewId(). noteweiyi*/
         labelTextView.id = View.generateViewId()
+        moreButton.id = View.generateViewId()
         recyclerView.id = View.generateViewId()
         stateLayout.id = View.generateViewId()
         stateTextView.id = View.generateViewId()
@@ -92,6 +103,8 @@ class MovieItemListView @JvmOverloads constructor(
             addItemDecoration(layoutType.getItemDecoration(context))
             layoutManager = layoutType.getLayoutManger(context)
         }
+
+        moreButton.clicks().throttleFirstShort().subscribe(_onMoreClicks)
 
         showSampleData()
     }

@@ -95,7 +95,7 @@
 
                 </com.google.android.material.appbar.AppBarLayout>
 
-                <me.li2.movies.ui.widgets.movies.MovieItemListView
+                <me.li2.movies.ui.widgets.movies.MovieListView
                     android:id="@+id/nowPlayingMovieListView"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/movies_horizontal_list_height"
@@ -105,7 +105,7 @@
                     app:layout_constraintTop_toBottomOf="@id/moviesCarouselView"
                     app:movies="@{nowPlayingMovies}" />
 
-                <me.li2.movies.ui.widgets.movies.MovieItemListView
+                <me.li2.movies.ui.widgets.movies.MovieListView
                     android:id="@+id/upcomingMovieListView"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/movies_horizontal_list_height"
@@ -115,7 +115,7 @@
                     app:layout_constraintTop_toBottomOf="@id/nowPlayingMovieListView"
                     app:movies="@{upcomingMovies}" />
 
-                <me.li2.movies.ui.widgets.movies.MovieItemListView
+                <me.li2.movies.ui.widgets.movies.MovieListView
                     android:id="@+id/popularMovieListView"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/movies_horizontal_list_height"
@@ -125,7 +125,7 @@
                     app:layout_constraintTop_toBottomOf="@id/upcomingMovieListView"
                     app:movies="@{popularMovies}" />
 
-                <me.li2.movies.ui.widgets.movies.MovieItemListView
+                <me.li2.movies.ui.widgets.movies.MovieListView
                     android:id="@+id/topRatedMovieListView"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/movies_horizontal_list_height"

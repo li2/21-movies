@@ -39,6 +39,9 @@ class MovieDetailAdapter : ListAdapter<BaseRowData, RecyclerView.ViewHolder>(DIF
     private val _onRecMovieClicks = PublishSubject.create<Pair<View, MovieItemUI>>()
     val onRecMovieClicks: Observable<Pair<View, MovieItemUI>> = _onRecMovieClicks.toFlowable(BackpressureStrategy.LATEST).toObservable()
 
+    private val _onMoreRecClicks = PublishSubject.create<Unit>()
+    val onMoreRecClicks = _onMoreRecClicks.toFlowable(BackpressureStrategy.LATEST).toObservable()!!
+
     override fun getItemViewType(position: Int): Int {
         return getItem(position).rowType.ordinal
     }
@@ -49,7 +52,7 @@ class MovieDetailAdapter : ListAdapter<BaseRowData, RecyclerView.ViewHolder>(DIF
             ROW_TYPE_TRAILERS.ordinal -> TrailerListViewHolder.create(parent, _onTrailerClicks)
             ROW_TYPE_CREDITS.ordinal -> CreditListViewHolder.create(parent, _onCreditClicks)
             ROW_TYPE_REVIEWS.ordinal -> ReviewListViewHolder.create(parent)
-            ROW_TYPE_REC_MOVIES.ordinal -> MovieListViewHolder.create(parent, _onRecMovieClicks, "Recommendations")
+            ROW_TYPE_REC_MOVIES.ordinal -> MovieListViewHolder.create(parent, _onRecMovieClicks, _onMoreRecClicks, "Recommendations")
             else -> throw RuntimeException("Unexpected view type $viewType")
         }
     }

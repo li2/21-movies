@@ -18,6 +18,10 @@ import me.li2.android.common.arch.observeOnView
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.HomeFragmentBinding
+import me.li2.movies.ui.movies.NowPlayingMovieList
+import me.li2.movies.ui.movies.PopularMovieList
+import me.li2.movies.ui.movies.TopRatedMovieList
+import me.li2.movies.ui.movies.UpcomingMovieList
 import me.li2.movies.util.*
 
 class HomeFragment : BaseFragment(), RootViewStore {
@@ -61,6 +65,15 @@ class HomeFragment : BaseFragment(), RootViewStore {
             setUpContainerExitTransition(R.id.swipeRefreshLayout)
             val extras = FragmentNavigatorExtras(view to ViewCompat.getTransitionName(view).orEmpty())
             navController().navigate(HomeFragmentDirections.showMovieDetail(movieItem), extras)
+        }
+
+        compositeDisposable += Observable.mergeArray(
+                binding.nowPlayingMovieListView.onMoreClicks.map { NowPlayingMovieList },
+                binding.upcomingMovieListView.onMoreClicks.map { UpcomingMovieList },
+                binding.popularMovieListView.onMoreClicks.map { PopularMovieList },
+                binding.topRatedMovieListView.onMoreClicks.map { TopRatedMovieList }
+        ).subscribe { movieListType ->
+            navigateSlideInOut(HomeFragmentDirections.showMoviesList(movieListType))
         }
     }
 

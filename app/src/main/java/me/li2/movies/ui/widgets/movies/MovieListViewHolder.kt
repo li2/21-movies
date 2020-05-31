@@ -15,6 +15,7 @@ import me.li2.movies.databinding.MovieListViewholderBinding
 
 class MovieListViewHolder(binding: MovieListViewholderBinding,
                           onMovieClicks: PublishSubject<Pair<View, MovieItemUI>>,
+                          onMoreClicks: PublishSubject<Unit>,
                           label: String)
     : BaseViewHolder<Resource<List<MovieItemUI>>?, MovieListViewholderBinding>(binding) {
 
@@ -22,6 +23,7 @@ class MovieListViewHolder(binding: MovieListViewholderBinding,
         binding.label = label
         binding.layoutType = MovieListLayoutType.LINEAR_LAYOUT_HORIZONTAL
         binding.movieListView.onMovieClicks.subscribe(onMovieClicks)
+        binding.movieListView.onMoreClicks.subscribe(onMoreClicks)
     }
 
     override fun bind(item: Resource<List<MovieItemUI>>?, position: Int) {
@@ -35,9 +37,10 @@ class MovieListViewHolder(binding: MovieListViewholderBinding,
         // https://stackoverflow.com/a/45809756/2722270 21noteWy
         fun create(parent: ViewGroup,
                    onMovieClicks: PublishSubject<Pair<View, MovieItemUI>>,
+                   onMoreClicks: PublishSubject<Unit>,
                    label: String): MovieListViewHolder {
             val binding = newBindingInstance(parent, R.layout.movie_list_viewholder) as MovieListViewholderBinding
-            return MovieListViewHolder(binding, onMovieClicks, label)
+            return MovieListViewHolder(binding, onMovieClicks, onMoreClicks, label)
         }
     }
 }

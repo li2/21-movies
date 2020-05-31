@@ -26,7 +26,7 @@
             type="MovieListLayoutType" />
     </data>
 
-    <me.li2.movies.ui.widgets.movies.MovieItemListView
+    <me.li2.movies.ui.widgets.movies.MovieListView
         android:id="@+id/movieListView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/movies_horizontal_list_height"

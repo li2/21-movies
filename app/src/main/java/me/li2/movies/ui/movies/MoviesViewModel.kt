@@ -34,7 +34,7 @@ class MoviesViewModel : BaseViewModel() {
     internal val filter = MoviesFilter()
     private var unfilteredMovies: MovieItemPagingUI? = null
 
-    fun searchMovies(genre: String) {
+    fun getMovies(type: MovieListType) {
         if (_movies.isLoading()) {
             doNothing()
             return
@@ -43,12 +43,25 @@ class MoviesViewModel : BaseViewModel() {
         io({
             _movies.postError(it)
         }, {
-            val api = repository.searchMovies(genre, _movies.nextPage())
-            val pagingUI = MapperUI.toMovieItemPagingUI(api)
+            val pagingUI = getMoviesByType(type)
             pagingUI.results.addAll(0, unfilteredMovies?.results.orEmpty())
             unfilteredMovies = pagingUI
             filterMovies()
         })
+    }
+
+    private suspend fun getMoviesByType(type: MovieListType): MovieItemPagingUI {
+        val nextPage = _movies.nextPage()
+        val api = when (type) {
+            NowPlayingMovieList -> repository.getNowPlayingMovies(nextPage)
+            UpcomingMovieList -> repository.getUpcomingMovies(nextPage)
+            PopularMovieList -> repository.getPopularMovies(nextPage)
+            TopRatedMovieList -> repository.getTopMovies(nextPage)
+            is RecMovieList -> repository.getMovieRecommendations(type.movieId, nextPage)
+            is GenreMovieList -> repository.searchMovies(type.genre, nextPage)
+            is SearchMovieList -> repository.searchMovies(type.query, nextPage)
+        }
+        return MapperUI.toMovieItemPagingUI(api)
     }
 
     fun filterMovies(updateFilter: MoviesFilter.() -> Unit = {}) {

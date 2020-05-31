@@ -24,6 +24,8 @@ import me.li2.android.view.navigation.setToolbar
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.MovieDetailFragmentBinding
+import me.li2.movies.ui.movies.GenreMovieList
+import me.li2.movies.ui.movies.RecMovieList
 import me.li2.movies.util.*
 import org.kodein.di.generic.instance
 
@@ -96,13 +98,17 @@ class MovieDetailFragment : BaseFragment(), RootViewStore {
         }
 
         compositeDisposable += detailAdapter.onGenreClicks.subscribe { genre ->
-            navigateSlideInOut(MovieDetailFragmentDirections.showGenreMoviesList(genre.name))
+            navigateSlideInOut(MovieDetailFragmentDirections.showMoviesList(GenreMovieList(genre.name)))
         }
 
         compositeDisposable += detailAdapter.onRecMovieClicks.subscribe { (view, movieItem) ->
             setUpContainerExitTransition(R.id.root)
             val extras = FragmentNavigatorExtras(view to ViewCompat.getTransitionName(view).orEmpty())
             navController().navigate(MovieDetailFragmentDirections.showMovieDetail(movieItem), extras)
+        }
+
+        compositeDisposable += detailAdapter.onMoreRecClicks.subscribe {
+            navigateSlideInOut(MovieDetailFragmentDirections.showMoviesList(RecMovieList(args.movieItem.id)))
         }
     }
 

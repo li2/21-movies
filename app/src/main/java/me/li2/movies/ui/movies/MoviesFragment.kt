@@ -51,7 +51,7 @@ class MoviesFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
         setUpContainerExitTransition(R.id.root)
-        viewModel.searchMovies(args.genre)
+        viewModel.getMovies(args.movieListType)
     }
 
     override fun onCreateView(inflater: LayoutInflater,
@@ -63,7 +63,7 @@ class MoviesFragment : BaseFragment() {
 
     override fun initUi(view: View, savedInstanceState: Bundle?) {
         fixContainerExitTransition()
-        activity?.setToolbar(binding.toolbar, title = args.genre)
+        activity?.setToolbar(binding.toolbar, title = args.movieListType.label)
         binding.executePendingBindings()
 
         binding.moviesRecyclerView.apply {
@@ -78,7 +78,7 @@ class MoviesFragment : BaseFragment() {
         }
 
         compositeDisposable += pagingAdapter.retryClicks.throttleFirstShort().subscribe {
-            viewModel.searchMovies(args.genre)
+            viewModel.getMovies(args.movieListType)
         }
 
         compositeDisposable += binding.moviesRecyclerView.onScrolledBottom()
@@ -86,7 +86,7 @@ class MoviesFragment : BaseFragment() {
                 .subscribe {
                     // don't load next page if it's in requesting, or error, or already on the last page. 21note
                     if (viewModel.canLoadMoreMovies) {
-                        viewModel.searchMovies(args.genre)
+                        viewModel.getMovies(args.movieListType)
                     }
                 }
     }
