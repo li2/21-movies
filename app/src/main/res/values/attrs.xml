@@ -6,6 +6,9 @@
     <attr name="colorDivider" format="reference|color" />
     <attr name="colorShimmer" format="reference|color" />
 
+    <!--Buttons-->
+    <attr name="iconButtonStyle" format="reference" />
+
     <!--Drawables-->
     <attr name="bottomSheetBackground" format="reference" />
     <attr name="iconLogo" format="reference" />

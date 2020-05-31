@@ -14,25 +14,37 @@
 
         <TextView
             android:id="@+id/labelTextView"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:paddingBottom="8dp"
+            android:gravity="center"
             android:textAppearance="?attr/textAppearanceHeadline6"
             android:textColor="?android:attr/textColorPrimary"
             android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="HardcodedText"
             tools:text="List Label"
             tools:visibility="visible" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/moreButton"
+            style="?attr/iconButtonStyle"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:backgroundTint="?android:attr/colorBackground"
+            app:elevation="0dp"
+            app:icon="@drawable/ic_arrow_forward_16"
+            app:iconTint="?android:attr/textColorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/moviesRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="8dp"
             android:clipToPadding="false"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"

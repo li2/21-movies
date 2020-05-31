@@ -91,7 +91,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/cancelButton"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
+        style="?attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
@@ -114,11 +114,10 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/applyButton"
-        style="@style/Widget.MaterialComponents.Button"
+        style="?attr/materialButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Apply"
-        android:textColor="?android:attr/textColorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/cancelButton"

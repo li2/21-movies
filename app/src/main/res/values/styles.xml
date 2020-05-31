@@ -18,6 +18,11 @@
         <item name="android:textColorSecondary">@color/white_50</item>
         <item name="android:textColorLink">@color/primary</item>
 
+        <!--Theming buttons https://material.io/develop/android/components/buttons/-->
+        <item name="borderlessButtonStyle">@style/borderlessButtonStyle</item>
+        <item name="iconButtonStyle">@style/iconButtonStyle</item>
+        <item name="materialButtonStyle">@style/materialButtonStyle</item>
+
         <!--Drawables-->
         <item name="android:listDivider">@drawable/list_divider</item>
         <item name="bottomSheetBackground">@drawable/bottom_sheet_background</item>
@@ -32,6 +37,7 @@
         <item name="navAnimTime">@android:integer/config_mediumAnimTime</item>
         <item name="shimmerDuration">800</item>
 
+        <!--Dialog-->
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialog</item>
 
     </style>
@@ -70,14 +76,29 @@
         <item name="actionMenuTextAppearance">@style/ToolbarMenuText</item>
     </style>
 
-    <style name="TextButton" parent="Widget.MaterialComponents.Button.TextButton">
-        <item name="android:textAllCaps">false</item>
+    <style name="borderlessButtonStyle" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textAllCaps">true</item>
         <item name="android:textColor">?android:attr/colorPrimary</item>
         <item name="android:textAppearance">?attr/textAppearanceButton</item>
     </style>
 
+    <style name="iconButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetRight">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="iconPadding">0dp</item>
+        <item name="iconGravity">textStart</item>
+    </style>
+
+    <style name="materialButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="android:textAppearance">?attr/textAppearanceButton</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
     <style name="AppBottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/AppBottomSheet</item>
+        <item name="materialButtonStyle">@style/materialButtonStyle</item>
     </style>
 
     <style name="AppBottomSheet" parent="Widget.MaterialComponents.BottomSheet">
