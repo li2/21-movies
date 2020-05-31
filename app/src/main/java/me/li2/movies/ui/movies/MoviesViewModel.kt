@@ -14,6 +14,7 @@ import me.li2.movies.data.model.MapperUI
 import me.li2.movies.data.model.MovieItemPagingUI
 import me.li2.movies.data.model.isLastPage
 import me.li2.movies.data.model.nextPage
+import me.li2.movies.data.remote.TmdbApi.Companion.TMDB_STARTING_PAGE_INDEX
 import me.li2.movies.ui.filter.MoviesFilter
 import me.li2.movies.ui.sort.MoviesSort
 import me.li2.movies.ui.sort.MoviesSortType
@@ -34,7 +35,7 @@ class MoviesViewModel : BaseViewModel() {
     internal val filter = MoviesFilter()
     private var unfilteredMovies: MovieItemPagingUI? = null
 
-    fun getMovies(type: MovieListType) {
+    fun getMovies(type: MovieListType, forceRefresh: Boolean = false) {
         if (_movies.isLoading()) {
             doNothing()
             return
@@ -43,15 +44,18 @@ class MoviesViewModel : BaseViewModel() {
         io({
             _movies.postError(it)
         }, {
-            val pagingUI = getMoviesByType(type)
-            pagingUI.results.addAll(0, unfilteredMovies?.results.orEmpty())
+            val pagingUI = getMoviesByType(type, forceRefresh)
+            if (!forceRefresh) {
+                pagingUI.results.addAll(0, unfilteredMovies?.results.orEmpty())
+            }
             unfilteredMovies = pagingUI
             filterMovies()
         })
     }
 
-    private suspend fun getMoviesByType(type: MovieListType): MovieItemPagingUI {
-        val nextPage = _movies.nextPage()
+    private suspend fun getMoviesByType(type: MovieListType,
+                                        forceRefresh: Boolean): MovieItemPagingUI {
+        val nextPage = if (forceRefresh) TMDB_STARTING_PAGE_INDEX else _movies.nextPage()
         val api = when (type) {
             NowPlayingMovieList -> repository.getNowPlayingMovies(nextPage)
             UpcomingMovieList -> repository.getUpcomingMovies(nextPage)

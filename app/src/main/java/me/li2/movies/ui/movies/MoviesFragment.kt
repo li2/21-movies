@@ -34,7 +34,11 @@ import me.li2.movies.ui.widgets.movies.MovieListLayoutType.LINEAR_LAYOUT_VERTICA
 import me.li2.movies.ui.widgets.paging.PagingItemAdapter
 import me.li2.movies.util.*
 
-class MoviesFragment : BaseFragment() {
+class MoviesFragment : BaseFragment(), RootViewStore {
+
+    override var rootView: View? = null
+    override var hasInitializedRootView: Boolean = false
+    override var hasInitializedOptionsMenu: Boolean = false
 
     private lateinit var binding: MoviesFragmentBinding
     private val args by navArgs<MoviesFragmentArgs>()
@@ -42,6 +46,8 @@ class MoviesFragment : BaseFragment() {
 
     private val moviesAdapter = MovieListAdapter(LINEAR_LAYOUT_VERTICAL)
     private val pagingAdapter = PagingItemAdapter()
+
+    private lateinit var searchView: SearchView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,19 +64,23 @@ class MoviesFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.movies_fragment, container, false)
-        return binding.root
+        return createRootViewIfNeeded {
+            binding = DataBindingUtil.inflate(inflater, R.layout.movies_fragment, container, false)
+            binding.root
+        }
     }
 
     override fun initUi(view: View, savedInstanceState: Bundle?) {
-        fixContainerExitTransition()
-        activity?.setToolbar(binding.toolbar, title = args.movieListType.label)
-        binding.executePendingBindings()
+        initializeRootViewIfNeeded {
+            fixContainerExitTransition()
+            activity?.setToolbar(binding.toolbar, title = args.movieListType.label)
+            binding.executePendingBindings()
 
-        binding.moviesRecyclerView.apply {
-            adapter = MergeAdapter(moviesAdapter, pagingAdapter)
-            layoutManager = LinearLayoutManager(requireContext())
-            addItemDecoration(DividerItemDecoration(requireContext(), RecyclerView.VERTICAL))
+            binding.moviesRecyclerView.apply {
+                adapter = MergeAdapter(moviesAdapter, pagingAdapter)
+                layoutManager = LinearLayoutManager(requireContext())
+                addItemDecoration(DividerItemDecoration(requireContext(), RecyclerView.VERTICAL))
+            }
         }
 
         compositeDisposable += moviesAdapter.onMovieClicks.throttleFirstShort().subscribe { (view, movieItem) ->
@@ -87,7 +97,13 @@ class MoviesFragment : BaseFragment() {
                 .subscribe {
                     // don't load next page if it's in requesting, or error, or already on the last page. 21note
                     if (viewModel.canLoadMoreMovies) {
-                        viewModel.getMovies(args.movieListType)
+                        if (args.movieListType is SearchMovieList
+                                && this::searchView.isInitialized
+                                && this.searchView.query.isNotEmpty()) {
+                            viewModel.getMovies(SearchMovieList(searchView.query.toString()))
+                        } else {
+                            viewModel.getMovies(args.movieListType)
+                        }
                     }
                 }
     }
@@ -102,7 +118,9 @@ class MoviesFragment : BaseFragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.movies_menu, menu)
-        setUpSearchView(menu.findItem(R.id.search))
+        initializeOptionsMenuIfNeeded {
+            setUpSearchView(menu.findItem(R.id.search))
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -121,9 +139,11 @@ class MoviesFragment : BaseFragment() {
         }
         searchMenuItem.isVisible = true
         val initialQuery = (args.movieListType as SearchMovieList).query
-        val searchView = searchMenuItem.actionView as SearchView
-        searchView.init(searchMenuItem, initialQuery, "Search Movies") {
-            viewModel.filterMovies { this.queryText = it }
+        searchView = searchMenuItem.actionView as SearchView
+        searchView.init(searchMenuItem, initialQuery, "Search Movies") { queryText ->
+            if (queryText.isNotEmpty()) {
+                viewModel.getMovies(SearchMovieList(queryText), true)
+            }
         }
     }
 

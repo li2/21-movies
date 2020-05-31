@@ -30,6 +30,7 @@ class HomeFragment : BaseFragment(), RootViewStore {
 
     override var rootView: View? = null
     override var hasInitializedRootView: Boolean = false
+    override var hasInitializedOptionsMenu: Boolean = false
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,

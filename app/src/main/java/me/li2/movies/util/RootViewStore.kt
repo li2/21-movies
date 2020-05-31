@@ -9,6 +9,7 @@ import android.view.View
 interface RootViewStore {
     var rootView: View?
     var hasInitializedRootView: Boolean
+    var hasInitializedOptionsMenu: Boolean
 
     fun createRootViewIfNeeded(saver: () -> View): View? {
         if (rootView == null) {
@@ -20,6 +21,13 @@ interface RootViewStore {
     fun initializeRootViewIfNeeded(init: () -> Unit) {
         if (!hasInitializedRootView) {
             hasInitializedRootView = true
+            init()
+        }
+    }
+
+    fun initializeOptionsMenuIfNeeded(init: () -> Unit) {
+        if (!hasInitializedOptionsMenu) {
+            hasInitializedOptionsMenu = true
             init()
         }
     }

@@ -37,6 +37,7 @@ class MovieDetailFragment : BaseFragment(), RootViewStore {
 
     override var rootView: View? = null
     override var hasInitializedRootView: Boolean = false
+    override var hasInitializedOptionsMenu: Boolean = false
 
     private val detailAdapter = MovieDetailAdapter()
     private val containerTransformConfiguration by instance<ContainerTransformConfiguration>()
