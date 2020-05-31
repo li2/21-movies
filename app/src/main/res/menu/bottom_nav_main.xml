@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <item
+        android:id="@id/homeFragment"
+        android:icon="@drawable/ic_menu_home_24"
+        android:title="Home"
+        tools:ignore="HardcodedText" />
+
+    <item
+        android:id="@id/discoverFragment"
+        android:icon="@drawable/ic_menu_explore_24"
+        android:title="Discover"
+        tools:ignore="HardcodedText" />
+
+    <item
+        android:id="@id/settingsFragment"
+        android:icon="@drawable/ic_menu_settings_24"
+        android:title="Settings"
+        tools:ignore="HardcodedText" />
+</menu>

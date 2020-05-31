@@ -53,11 +53,23 @@
     <fragment
         android:id="@+id/bigImageFragment"
         android:name="me.li2.movies.ui.widgets.image.BigImageFragment"
-        android:label="CreditDetailFragment"
+        android:label=""
         tools:layout="@layout/big_image_fragment">
         <argument
             android:name="imageUrl"
             app:argType="string" />
     </fragment>
+
+    <fragment
+        android:id="@+id/discoverFragment"
+        android:name="me.li2.movies.ui.discover.DiscoverFragment"
+        android:label="Discover"
+        tools:layout="@layout/discover_fragment" />
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="me.li2.movies.ui.settings.SettingsFragment"
+        android:label="Settings"
+        tools:layout="@layout/settings_fragment" />
 
 </navigation>

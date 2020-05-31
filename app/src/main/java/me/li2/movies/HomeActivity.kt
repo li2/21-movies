@@ -7,11 +7,13 @@ package me.li2.movies
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import androidx.core.view.isVisible
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import me.li2.android.view.navigation.setToolbar
 import me.li2.android.view.system.hideStatusBar
 import me.li2.movies.base.BaseActivity
@@ -19,6 +21,7 @@ import me.li2.movies.data.model.MapperUI
 import me.li2.movies.databinding.HomeActivityBinding
 import me.li2.movies.fcm.NotificationUtil.dispatchPushNotification
 import me.li2.movies.ui.home.HomeFragmentDirections
+import me.li2.movies.util.doNothing
 
 class HomeActivity : BaseActivity(), LifecycleOwner, NavController.OnDestinationChangedListener {
 
@@ -52,6 +55,8 @@ class HomeActivity : BaseActivity(), LifecycleOwner, NavController.OnDestination
         navController = findNavController(R.id.navHostFragment)
         navController.addOnDestinationChangedListener(this)
         setupActionBarWithNavController(navController)
+        binding.bottomNavigationView.setupWithNavController(navController)
+        binding.bottomNavigationView.setOnNavigationItemReselectedListener { doNothing() }
     }
 
     override fun onSupportNavigateUp() = navController.navigateUp()
@@ -59,6 +64,13 @@ class HomeActivity : BaseActivity(), LifecycleOwner, NavController.OnDestination
     override fun onDestinationChanged(controller: NavController,
                                       destination: NavDestination,
                                       arguments: Bundle?) {
+        // show/hide bottom navigation view
+        binding.bottomNavigationView.isVisible = when (destination.id) {
+            R.id.homeFragment,
+            R.id.discoverFragment,
+            R.id.settingsFragment -> true
+            else -> false
+        }
     }
 
     private fun checkPushNotification(intent: Intent?) {
