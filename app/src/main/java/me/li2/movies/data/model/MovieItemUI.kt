@@ -44,6 +44,10 @@ fun MutableLiveData<Resource<MovieItemPagingUI>>.nextPage(): Int {
             ?: TmdbApi.TMDB_STARTING_PAGE_INDEX
 }
 
+fun MutableLiveData<Resource<MovieItemPagingUI>>.isFirstPage(): Boolean {
+    return this.value?.data?.let { it.page == TmdbApi.TMDB_STARTING_PAGE_INDEX }.orFalse()
+}
+
 fun MutableLiveData<Resource<MovieItemPagingUI>>.isLastPage(): Boolean {
     return this.value?.data?.let { it.page == it.totalPages }.orFalse()
 }

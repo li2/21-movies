@@ -111,6 +111,9 @@ class MoviesFragment : BaseFragment(), RootViewStore {
     override fun renderUI() = with(viewModel) {
         observeOnView(movies) {
             moviesAdapter.submitList(it.data?.results)
+            if (isFirstPage) {
+                binding.moviesRecyclerView.scrollToPosition(0)
+            }
             pagingAdapter.pagingState = MapperUI.toPagingState(it)
             binding.shimmerContainer.shimmer.showAnimation(it.status == LOADING && it.data?.page == null)
         }
@@ -141,7 +144,8 @@ class MoviesFragment : BaseFragment(), RootViewStore {
         val initialQuery = (args.movieListType as SearchMovieList).query
         searchView = searchMenuItem.actionView as SearchView
         searchView.init(searchMenuItem, initialQuery, "Search Movies") { queryText ->
-            if (queryText.isNotEmpty()) {
+            if (!queryText.isNullOrEmpty()) {
+                hideKeyboard()
                 viewModel.getMovies(SearchMovieList(queryText), true)
             }
         }

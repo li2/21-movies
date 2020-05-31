@@ -61,7 +61,7 @@ fun TextInputLayout.endIconClicks(): Observable<Unit> {
 fun SearchView.init(menuItem: MenuItem,
                     query: String,
                     hint: String,
-                    queryTextChanges: (String) -> Unit) {
+                    onQueryTextSubmit: (String?) -> Unit) {
     this.queryHint = hint
     this.isIconified = false
     // Expand SearchView Without Focus (Hide Keyboard)
@@ -69,11 +69,15 @@ fun SearchView.init(menuItem: MenuItem,
     this.doOnLayout { this.clearFocus() }
     // Show query (only works after expandActionView)
     this.setQuery(query, false)
+    // Only query when keyboard actionSearch clicks
+    this.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        override fun onQueryTextSubmit(query: String?): Boolean {
+            onQueryTextSubmit(query)
+            return true
+        }
 
-    this.queryTextChanges()
-            .debounce(300, TimeUnit.MILLISECONDS)
-            .distinctUntilChanged()
-            .subscribe { queryText ->
-                queryTextChanges(queryText.toString())
-            }
+        override fun onQueryTextChange(newText: String?): Boolean {
+            return false
+        }
+    })
 }

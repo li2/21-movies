@@ -10,10 +10,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import me.li2.android.common.arch.*
 import me.li2.movies.base.BaseViewModel
-import me.li2.movies.data.model.MapperUI
-import me.li2.movies.data.model.MovieItemPagingUI
-import me.li2.movies.data.model.isLastPage
-import me.li2.movies.data.model.nextPage
+import me.li2.movies.data.model.*
 import me.li2.movies.data.remote.TmdbApi.Companion.TMDB_STARTING_PAGE_INDEX
 import me.li2.movies.ui.filter.MoviesFilter
 import me.li2.movies.ui.sort.MoviesSort
@@ -30,6 +27,9 @@ class MoviesViewModel : BaseViewModel() {
 
     internal val canLoadMoreMovies: Boolean
         get() = _movies.isIdle() && !_movies.isLastPage()
+
+    internal val isFirstPage: Boolean
+        get() = _movies.isFirstPage()
 
     internal val sort = MoviesSort()
     internal val filter = MoviesFilter()
