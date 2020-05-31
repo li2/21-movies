@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_main"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/discoverFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -64,7 +64,11 @@
         android:id="@+id/discoverFragment"
         android:name="me.li2.movies.ui.discover.DiscoverFragment"
         android:label="Discover"
-        tools:layout="@layout/discover_fragment" />
+        tools:layout="@layout/discover_fragment">
+        <action
+            android:id="@+id/showMoviesList"
+            app:destination="@id/moviesFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/settingsFragment"

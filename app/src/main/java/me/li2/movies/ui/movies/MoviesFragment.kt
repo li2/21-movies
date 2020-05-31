@@ -15,7 +15,6 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.MergeAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.jakewharton.rxbinding4.appcompat.queryTextChanges
 import io.reactivex.rxjava3.kotlin.plusAssign
 import me.li2.android.common.arch.Resource.Status.LOADING
 import me.li2.android.common.arch.observeOnView
@@ -23,6 +22,7 @@ import me.li2.android.common.rx.throttleFirstShort
 import me.li2.android.view.list.DividerItemDecoration
 import me.li2.android.view.list.onScrolledBottom
 import me.li2.android.view.navigation.setToolbar
+import me.li2.android.view.system.hideKeyboard
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.data.model.MapperUI
@@ -32,11 +32,7 @@ import me.li2.movies.ui.sort.SortBottomSheet
 import me.li2.movies.ui.widgets.movies.MovieListAdapter
 import me.li2.movies.ui.widgets.movies.MovieListLayoutType.LINEAR_LAYOUT_VERTICAL
 import me.li2.movies.ui.widgets.paging.PagingItemAdapter
-import me.li2.movies.util.fixContainerExitTransition
-import me.li2.movies.util.navController
-import me.li2.movies.util.setUpContainerExitTransition
-import me.li2.movies.util.showAnimation
-import java.util.concurrent.TimeUnit
+import me.li2.movies.util.*
 
 class MoviesFragment : BaseFragment() {
 
@@ -52,6 +48,11 @@ class MoviesFragment : BaseFragment() {
         setHasOptionsMenu(true)
         setUpContainerExitTransition(R.id.root)
         viewModel.getMovies(args.movieListType)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        hideKeyboard()
     }
 
     override fun onCreateView(inflater: LayoutInflater,
@@ -101,7 +102,7 @@ class MoviesFragment : BaseFragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.movies_menu, menu)
-        setUpSearchView(menu.findItem(R.id.search).actionView as SearchView)
+        setUpSearchView(menu.findItem(R.id.search))
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -112,15 +113,18 @@ class MoviesFragment : BaseFragment() {
         }
     }
 
-    private fun setUpSearchView(searchView: SearchView) {
-        searchView.queryHint = "Search Movies"
-
-        compositeDisposable += searchView.queryTextChanges()
-                .debounce(300, TimeUnit.MILLISECONDS)
-                .distinctUntilChanged()
-                .subscribe { queryText ->
-                    viewModel.filterMovies { this.queryText = queryText.toString() }
-                }
+    private fun setUpSearchView(searchMenuItem: MenuItem) {
+        // only show search menu item for Search type
+        if (args.movieListType !is SearchMovieList) {
+            searchMenuItem.isVisible = false
+            return
+        }
+        searchMenuItem.isVisible = true
+        val initialQuery = (args.movieListType as SearchMovieList).query
+        val searchView = searchMenuItem.actionView as SearchView
+        searchView.init(searchMenuItem, initialQuery, "Search Movies") {
+            viewModel.filterMovies { this.queryText = it }
+        }
     }
 
     private fun showFilterBottomSheet(): Boolean {
