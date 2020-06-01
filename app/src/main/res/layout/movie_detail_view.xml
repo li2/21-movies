@@ -255,7 +255,7 @@
         <me.li2.movies.ui.widgets.GenresGroupView
             android:id="@+id/genresGroupView"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:visibility="@{movieDetail.genres.size() > 0}"
             app:genres="@{movieDetail.genres}"
@@ -263,7 +263,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/movieOverviewTextView"
-            tools:background="?attr/colorSurface"
             tools:layout_height="36dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,6 +15,7 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.PublishSubject
 import me.li2.movies.R
 import me.li2.movies.data.model.GenreUI
+import me.li2.movies.util.SampleProvider
 
 class GenresGroupView @JvmOverloads constructor(
         context: Context,
@@ -45,6 +46,8 @@ class GenresGroupView @JvmOverloads constructor(
         val view = LayoutInflater.from(context).inflate(R.layout.genres_group_view, this, true)
         labelTextView = view.findViewById(R.id.labelTextView)
         chipGroup = view.findViewById(R.id.scrollChipGroup)
+
+        showSampleData()
     }
 
     fun genreClicks(): Observable<GenreUI> = itemClicksSubject.toFlowable(BackpressureStrategy.LATEST).toObservable()
@@ -58,6 +61,13 @@ class GenresGroupView @JvmOverloads constructor(
             setOnClickListener {
                 itemClicksSubject.onNext(genre)
             }
+        }
+    }
+
+    /** show sample data when shown in the IDE preview */
+    private fun showSampleData() {
+        if (isInEditMode) {
+            genres = SampleProvider.genreList()
         }
     }
 }
