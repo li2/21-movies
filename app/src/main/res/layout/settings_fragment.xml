@@ -16,6 +16,7 @@
             android:gravity="center"
             android:text="Settings\nComing Soon"
             android:textAppearance="?attr/textAppearanceHeadline3"
+            android:textColor="?android:attr/textColorSecondary"
             tools:ignore="HardcodedText" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

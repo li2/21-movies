@@ -6,13 +6,18 @@
     <data>
 
         <import type="android.view.View" />
-        <import type="io.reactivex.rxjava3.subjects.PublishSubject" />
-        <import type="java.util.List" />
-        <import type="kotlin.Pair" />
-        <import type="me.li2.movies.data.model.CastUI" />
-        <import type="me.li2.movies.data.model.CrewUI" />
-        <import type="me.li2.movies.data.model.CreditUI" />
 
+        <import type="io.reactivex.rxjava3.subjects.PublishSubject" />
+
+        <import type="java.util.List" />
+
+        <import type="kotlin.Pair" />
+
+        <import type="me.li2.movies.data.model.CastUI" />
+
+        <import type="me.li2.movies.data.model.CrewUI" />
+
+        <import type="me.li2.movies.data.model.CreditUI" />
 
         <variable
             name="casts"
@@ -34,14 +39,12 @@
 
         <TextView
             android:id="@+id/castsLabelTextView"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:text="Top Billed Cast"
             android:textAppearance="?attr/textAppearanceHeadline6"
             android:textColor="?android:attr/textColorPrimary"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="HardcodedText" />
@@ -51,8 +54,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipToPadding="false"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
+            android:paddingStart="@dimen/startEndMargin_when_cardUseCompatPadding"
+            android:paddingEnd="@dimen/startEndMargin_when_cardUseCompatPadding"
             app:creditClicks="@{onCreditClicks}"
             app:credits="@{casts}"
             app:layout_constraintEnd_toEndOf="parent"
@@ -65,15 +68,13 @@
 
         <TextView
             android:id="@+id/crewsLabelTextView"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
-            android:layout_marginEnd="16dp"
             android:text="Crew"
             android:textAppearance="?attr/textAppearanceHeadline6"
             android:textColor="?android:attr/textColorPrimary"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/castsRecyclerView"
             tools:ignore="HardcodedText" />

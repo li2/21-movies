@@ -39,7 +39,7 @@ enum class MovieListLayoutType {
 
     fun getItemDecoration(context: Context): RecyclerView.ItemDecoration {
         return when (this) {
-            LINEAR_LAYOUT_HORIZONTAL -> LinearSpacingDecoration(RecyclerView.HORIZONTAL, 16.dpToPx(context))
+            LINEAR_LAYOUT_HORIZONTAL -> LinearSpacingDecoration(RecyclerView.HORIZONTAL, 0.dpToPx(context))
             LINEAR_LAYOUT_VERTICAL -> DividerItemDecoration(context, RecyclerView.VERTICAL)
             GRID_LAYOUT -> GridSpacingDecoration(SPAN_COUNT, 16.dpToPx(context))
         }

@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#00d2ff</color>
-    <color name="primary_dark">#0288D1</color>
-    <color name="primary_light">#B3E5FC</color>
-    <color name="white">#EFEFEF</color>
-    <color name="white_50">#80EFEFEF</color>
-    <color name="error">#F44336</color>
-    <color name="background">#232323</color>
-    <color name="surface">#343538</color>
-    <color name="divider">#555555</color>
-    <color name="shimmer">#555555</color>
     <color name="ic_launcher_background">#897F74</color>
+    <color name="primary">#00d2ff</color>
+    <color name="error">#F44336</color>
+    <color name="background">#FAFAFA</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="divider">#DDE2E2</color>
+    <color name="shimmer">#DDE2E2</color>
+    <color name="textPrimaryColor">#111111</color>
+    <color name="textSecondaryColor">#A3111111</color>
 </resources>

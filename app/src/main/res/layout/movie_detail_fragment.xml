@@ -58,13 +58,12 @@
                 <!-- android:background="@drawable/gradient_translucency_background" />-->
 
                 <!-- todo 21note: statusBar height is not always 24 dp.-->
-                <androidx.appcompat.widget.Toolbar
+                <com.google.android.material.appbar.MaterialToolbar
                     android:id="@+id/toolbar"
-                    style="@style/ToolbarStyle"
+                    style="?attr/toolbarStyle"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:layout_marginTop="24dp"
-                    android:background="@android:color/transparent"
                     app:layout_collapseMode="pin"
                     tools:targetApi="lollipop" />
 

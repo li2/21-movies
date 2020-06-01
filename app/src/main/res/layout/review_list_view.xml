@@ -26,14 +26,13 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp">
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/reviewsLabelTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:text="Reviews"
             android:textAppearance="?attr/textAppearanceHeadline6"
             app:layout_constraintStart_toStartOf="parent"
@@ -44,11 +43,13 @@
             android:id="@+id/reviewsCardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginStart="@dimen/startEndMargin_when_cardUseCompatPadding"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="@dimen/startEndMargin_when_cardUseCompatPadding"
             android:backgroundTint="?attr/colorSurface"
-            android:clipToPadding="false"
             app:cardCornerRadius="8dp"
-            app:cardElevation="4dp"
+            app:cardElevation="@dimen/card_elevation"
+            app:cardUseCompatPadding="true"
             app:layout_constraintTop_toBottomOf="@id/reviewsLabelTextView">
 
             <androidx.constraintlayout.widget.ConstraintLayout

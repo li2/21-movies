@@ -14,8 +14,8 @@
         <item name="colorUnselected">@color/divider</item>
         <item name="colorDivider">@color/divider</item>
         <!--Text Colors-->
-        <item name="android:textColorPrimary">@color/white</item>
-        <item name="android:textColorSecondary">@color/white_50</item>
+        <item name="android:textColorPrimary">@color/textPrimaryColor</item>
+        <item name="android:textColorSecondary">@color/textSecondaryColor</item>
         <item name="android:textColorLink">@color/primary</item>
 
         <!--Theming buttons https://material.io/develop/android/components/buttons/-->
@@ -40,6 +40,8 @@
         <!--Dialog-->
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialog</item>
 
+        <item name="toolbarStyle">@style/AppToolbarStyle</item>
+
     </style>
 
     <style name="SplashTheme" parent="AppTheme">
@@ -51,29 +53,34 @@
         <item name="textAllCaps">true</item>
     </style>
 
-    <style name="ToolbarStyle">
+    <style name="AppToolbarStyle" parent="Widget.MaterialComponents.Toolbar">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">?attr/actionBarSize</item>
-        <item name="android:background">?android:attr/colorBackground</item>
-        <item name="android:theme">@style/ToolbarTheme</item>
-        <item name="titleTextAppearance">@style/ToolbarText</item>
+        <item name="android:background">?attr/colorTransparent</item>
+        <item name="android:theme">@style/AppToolbar.Theme</item>
+        <item name="titleTextAppearance">@style/AppToolbar.TextAppearance</item>
+        <item name="toolbarNavigationButtonStyle">@style/AppToolbar.Button.Navigation.Tinted</item>
     </style>
 
-    <style name="ToolbarText">
+    <style name="AppToolbar.TextAppearance" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">18sp</item>
         <item name="android:textAllCaps">false</item>
     </style>
 
-    <style name="ToolbarMenuText" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Menu">
+    <style name="AppToolbar.MenuTextAppearance" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Menu">
         <item name="android:textSize">16sp</item>
         <item name="android:textAllCaps">true</item>
     </style>
 
-    <style name="ToolbarTheme" parent="@style/ThemeOverlay.MaterialComponents.ActionBar">
+    <style name="AppToolbar.Theme" parent="@style/ThemeOverlay.MaterialComponents.ActionBar">
         <!-- Customize color of navigation drawer icon and back arrow -->
-        <item name="colorControlNormal">@color/white</item>
-        <item name="actionMenuTextColor">@color/white</item>
-        <item name="actionMenuTextAppearance">@style/ToolbarMenuText</item>
+        <item name="colorControlNormal">@color/textPrimaryColor</item>
+        <item name="actionMenuTextColor">@color/textPrimaryColor</item>
+        <item name="actionMenuTextAppearance">@style/AppToolbar.MenuTextAppearance</item>
+    </style>
+
+    <style name="AppToolbar.Button.Navigation.Tinted" parent="Widget.AppCompat.Toolbar.Button.Navigation">
+        <item name="tint">@color/textPrimaryColor</item>
     </style>
 
     <style name="borderlessButtonStyle" parent="Widget.MaterialComponents.Button.TextButton">
@@ -87,6 +94,7 @@
         <item name="android:insetTop">0dp</item>
         <item name="android:insetRight">0dp</item>
         <item name="android:insetBottom">0dp</item>
+        <item name="android:stateListAnimator">@null</item>
         <item name="iconPadding">0dp</item>
         <item name="iconGravity">textStart</item>
     </style>

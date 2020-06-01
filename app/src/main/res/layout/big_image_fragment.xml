@@ -44,8 +44,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.appcompat.widget.Toolbar
+            <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
+                style="?attr/toolbarStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:navigationIcon="@drawable/ic_cancel_24" />

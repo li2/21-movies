@@ -10,8 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.rxjava3.subjects.PublishSubject
 import me.li2.android.common.arch.Resource
 import me.li2.android.common.arch.Resource.Status.SUCCESS
-import me.li2.android.common.number.dpToPx
-import me.li2.android.view.list.LinearSpacingDecoration
 import me.li2.movies.R
 import me.li2.movies.base.BaseViewHolder
 import me.li2.movies.data.model.Trailer
@@ -27,7 +25,6 @@ class TrailerListViewHolder(binding: TrailerListViewholderBinding,
         binding.trailersRecyclerView.apply {
             adapter = trailersAdapter
             layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-            addItemDecoration(LinearSpacingDecoration(RecyclerView.HORIZONTAL, 16.dpToPx(context)))
         }
     }
 
