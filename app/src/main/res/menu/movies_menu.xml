@@ -23,5 +23,4 @@
         android:title="Sort"
         app:showAsAction="always"
         tools:ignore="AlwaysShowAction,HardcodedText" />
-
 </menu>

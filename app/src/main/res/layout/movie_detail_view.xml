@@ -7,6 +7,8 @@
 
         <import type="java.util.List" />
 
+        <import type="android.text.TextUtils" />
+
         <import type="me.li2.movies.ui.movies.MoviesCategory" />
 
         <variable
@@ -37,7 +39,7 @@
             android:layout_height="156dp"
             android:layout_marginStart="16dp"
             app:cardCornerRadius="4dp"
-            app:cardElevation="16dp"
+            app:cardElevation="8dp"
             app:layout_constraintDimensionRatio="H,3:2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -84,6 +86,7 @@
             android:text="@{movieDetail.releaseDateDisplay}"
             android:textAppearance="?attr/textAppearanceBody2"
             android:textColor="?android:attr/textColorSecondary"
+            android:visibility="@{!TextUtils.isEmpty(movieDetail.releaseDateDisplay)}"
             app:layout_constraintStart_toEndOf="@id/posterImageView"
             app:layout_constraintTop_toBottomOf="@id/titleTextView"
             tools:text="2020-01-01" />
@@ -92,13 +95,16 @@
             android:id="@+id/productionCountryTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="16dp"
             android:maxLines="2"
             android:text="@{movieDetail.productionCountry}"
             android:textAppearance="?attr/textAppearanceBody2"
             android:textColor="?android:attr/textColorSecondary"
+            android:visibility="@{!TextUtils.isEmpty(movieDetail.productionCountry)}"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/posterImageView"
             app:layout_constraintStart_toStartOf="@id/releaseDateTextView"
             app:layout_constraintTop_toBottomOf="@id/releaseDateTextView"
             tools:targetApi="lollipop"
@@ -108,14 +114,16 @@
             android:id="@+id/spokenLanguagesTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="16dp"
             android:maxLines="2"
             android:text="@{movieDetail.spokenLanguages}"
             android:textAppearance="?attr/textAppearanceBody2"
             android:textColor="?android:attr/textColorSecondary"
+            android:visibility="@{!TextUtils.isEmpty(movieDetail.spokenLanguages)}"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/productionCountryTextView"
+            app:layout_constraintStart_toEndOf="@id/posterImageView"
             app:layout_constraintTop_toBottomOf="@id/productionCountryTextView"
             tools:targetApi="lollipop"
             tools:text="English, 中文, 한국어" />
@@ -148,6 +156,7 @@
                 android:gravity="center_vertical"
                 android:text="@{movieDetail.voteAverageDisplay}"
                 android:textAppearance="?attr/textAppearanceHeadline6"
+                app:drawableTint="?android:attr/textColorPrimary"
                 app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -198,6 +207,8 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginEnd="16dp"
+                android:gravity="center"
+                android:minWidth="80dp"
                 android:text="@{movieDetail.runtime}"
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 app:layout_constraintBottom_toBottomOf="@id/voteAverageTextView"

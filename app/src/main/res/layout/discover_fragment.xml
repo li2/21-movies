@@ -89,6 +89,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
+                android:paddingBottom="32dp"
                 android:visibility="@{genresCategories.size() > 0}"
                 app:categories="@{genresCategories}"
                 app:label="@{`Genres`}"

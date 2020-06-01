@@ -73,10 +73,12 @@
     </style>
 
     <style name="AppToolbar.Theme" parent="@style/ThemeOverlay.MaterialComponents.ActionBar">
-        <!-- Customize color of navigation drawer icon and back arrow -->
+        <!--Customize color of navigation drawer icon and back arrow-->
         <item name="colorControlNormal">@color/textPrimaryColor</item>
         <item name="actionMenuTextColor">@color/textPrimaryColor</item>
         <item name="actionMenuTextAppearance">@style/AppToolbar.MenuTextAppearance</item>
+        <!--SearView hint text color-->
+        <item name="android:textColorHint">@color/textSecondaryColor</item>
     </style>
 
     <style name="AppToolbar.Button.Navigation.Tinted" parent="Widget.AppCompat.Toolbar.Button.Navigation">
