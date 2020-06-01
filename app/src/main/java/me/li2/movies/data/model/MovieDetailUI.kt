@@ -13,6 +13,7 @@ import kotlinx.android.parcel.Parcelize
 import kotlinx.serialization.Serializable
 import me.li2.movies.data.local.AppDatabase
 import me.li2.movies.data.local.AppDatabase.Companion.TABLE_MOVIES
+import me.li2.movies.ui.movies.GenreCategory
 import org.threeten.bp.LocalDate
 
 @Parcelize
@@ -41,7 +42,10 @@ data class MovieDetailUI(
         val voteAverageDisplay: String,
         val voteCount: Int,
         val voteCountDisplay: String
-) : Parcelable
+) : Parcelable {
+
+    fun genresToCategories() = genres.map { GenreCategory(it) }
+}
 
 @Parcelize
 @Serializable

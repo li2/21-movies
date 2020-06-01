@@ -13,12 +13,10 @@ import androidx.fragment.app.viewModels
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.kotlin.plusAssign
 import me.li2.android.common.arch.observeOnView
-import me.li2.android.view.system.hideKeyboard
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.DiscoverFragmentBinding
-import me.li2.movies.ui.movies.GenreMovieList
-import me.li2.movies.ui.movies.SearchMovieList
+import me.li2.movies.ui.movies.QueryCategory
 import me.li2.movies.util.endIconClicks
 import me.li2.movies.util.imeActionSearchClicks
 import me.li2.movies.util.navigateSlideInOut
@@ -43,20 +41,24 @@ class DiscoverFragment : BaseFragment() {
         ).subscribe {
             binding.searchEditText.text.toString().let { query ->
                 if (query.isNotEmpty()) {
-                    hideKeyboard()
-                    navigateSlideInOut(DiscoverFragmentDirections.showMoviesList(SearchMovieList(query)))
+                    navigateSlideInOut(DiscoverFragmentDirections.showMoviesList(QueryCategory(query)))
                 }
             }
         }
 
-        binding.genresGroupView.onGenreClicks.subscribe {
-            navigateSlideInOut(DiscoverFragmentDirections.showMoviesList(GenreMovieList(it.name)))
+        Observable.merge(
+                binding.genresCategoriesGroupView.onCategoryClicks,
+                binding.mainCategoriesGroupView.onCategoryClicks
+        ).subscribe {
+            navigateSlideInOut(DiscoverFragmentDirections.showMoviesList(it))
         }
     }
 
     override fun renderUI() = with(viewModel) {
-        observeOnView(genres) {
-            binding.genres = it.data
+        binding.mainCategories = mainCategories
+
+        observeOnView(genresCategories) {
+            binding.genresCategories = it
         }
     }
 }

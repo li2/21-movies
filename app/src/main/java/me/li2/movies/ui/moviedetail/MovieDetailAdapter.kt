@@ -13,10 +13,10 @@ import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.PublishSubject
 import me.li2.movies.data.model.CreditUI
-import me.li2.movies.data.model.GenreUI
 import me.li2.movies.data.model.MovieItemUI
 import me.li2.movies.data.model.Trailer
 import me.li2.movies.ui.moviedetail.MovieDetailRowType.*
+import me.li2.movies.ui.movies.MoviesCategory
 import me.li2.movies.ui.widgets.credits.CreditListViewHolder
 import me.li2.movies.ui.widgets.movies.MovieListViewHolder
 import me.li2.movies.ui.widgets.reviews.ReviewListViewHolder
@@ -33,8 +33,8 @@ class MovieDetailAdapter : ListAdapter<BaseRowData, RecyclerView.ViewHolder>(DIF
     private val _onTrailerClicks = PublishSubject.create<Trailer>()
     val onTrailerClicks: Observable<Trailer> = _onTrailerClicks.toFlowable(BackpressureStrategy.LATEST).toObservable()
 
-    private val _onGenreClicks = PublishSubject.create<GenreUI>()
-    val onGenreClicks: Observable<GenreUI> = _onGenreClicks.toFlowable(BackpressureStrategy.LATEST).toObservable()
+    private val _onCategoryClicks = PublishSubject.create<MoviesCategory>()
+    val onCategoryClicks: Observable<MoviesCategory> = _onCategoryClicks.toFlowable(BackpressureStrategy.LATEST).toObservable()
 
     private val _onCreditClicks = PublishSubject.create<Pair<View, CreditUI>>()
     val onCreditClicks: Observable<Pair<View, CreditUI>> = _onCreditClicks.toFlowable(BackpressureStrategy.LATEST).toObservable()
@@ -51,7 +51,7 @@ class MovieDetailAdapter : ListAdapter<BaseRowData, RecyclerView.ViewHolder>(DIF
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            ROW_TYPE_DETAIL.ordinal -> MovieDetailViewHolder.create(parent, _onRateClicks, _onGenreClicks, _onPosterClicks)
+            ROW_TYPE_DETAIL.ordinal -> MovieDetailViewHolder.create(parent, _onRateClicks, _onCategoryClicks, _onPosterClicks)
             ROW_TYPE_TRAILERS.ordinal -> TrailerListViewHolder.create(parent, _onTrailerClicks)
             ROW_TYPE_CREDITS.ordinal -> CreditListViewHolder.create(parent, _onCreditClicks)
             ROW_TYPE_REVIEWS.ordinal -> ReviewListViewHolder.create(parent)

@@ -24,8 +24,7 @@ import me.li2.android.view.navigation.setToolbar
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.MovieDetailFragmentBinding
-import me.li2.movies.ui.movies.GenreMovieList
-import me.li2.movies.ui.movies.RecMovieList
+import me.li2.movies.ui.movies.RecommendationCategory
 import me.li2.movies.util.*
 import org.kodein.di.generic.instance
 
@@ -104,8 +103,8 @@ class MovieDetailFragment : BaseFragment(), RootViewStore {
             }
         }
 
-        compositeDisposable += detailAdapter.onGenreClicks.subscribe { genre ->
-            navigateSlideInOut(MovieDetailFragmentDirections.showMoviesList(GenreMovieList(genre.name)))
+        compositeDisposable += detailAdapter.onCategoryClicks.subscribe {
+            navigateSlideInOut(MovieDetailFragmentDirections.showMoviesList(it))
         }
 
         compositeDisposable += detailAdapter.onRecMovieClicks.subscribe { (view, movieItem) ->
@@ -115,7 +114,7 @@ class MovieDetailFragment : BaseFragment(), RootViewStore {
         }
 
         compositeDisposable += detailAdapter.onMoreRecClicks.subscribe {
-            navigateSlideInOut(MovieDetailFragmentDirections.showMoviesList(RecMovieList(args.movieItem.id)))
+            navigateSlideInOut(MovieDetailFragmentDirections.showMoviesList(RecommendationCategory(args.movieItem.id)))
         }
     }
 

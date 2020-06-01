@@ -18,10 +18,10 @@ import me.li2.android.common.arch.observeOnView
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.HomeFragmentBinding
-import me.li2.movies.ui.movies.NowPlayingMovieList
-import me.li2.movies.ui.movies.PopularMovieList
-import me.li2.movies.ui.movies.TopRatedMovieList
-import me.li2.movies.ui.movies.UpcomingMovieList
+import me.li2.movies.ui.movies.NowPlayingCategory
+import me.li2.movies.ui.movies.PopularCategory
+import me.li2.movies.ui.movies.TopRatedCategory
+import me.li2.movies.ui.movies.UpcomingCategory
 import me.li2.movies.util.*
 
 class HomeFragment : BaseFragment(), RootViewStore {
@@ -69,12 +69,12 @@ class HomeFragment : BaseFragment(), RootViewStore {
         }
 
         compositeDisposable += Observable.mergeArray(
-                binding.nowPlayingMovieListView.onMoreClicks.map { NowPlayingMovieList },
-                binding.upcomingMovieListView.onMoreClicks.map { UpcomingMovieList },
-                binding.popularMovieListView.onMoreClicks.map { PopularMovieList },
-                binding.topRatedMovieListView.onMoreClicks.map { TopRatedMovieList }
-        ).subscribe { movieListType ->
-            navigateSlideInOut(HomeFragmentDirections.showMoviesList(movieListType))
+                binding.nowPlayingMovieListView.onMoreClicks.map { NowPlayingCategory },
+                binding.upcomingMovieListView.onMoreClicks.map { UpcomingCategory },
+                binding.popularMovieListView.onMoreClicks.map { PopularCategory },
+                binding.topRatedMovieListView.onMoreClicks.map { TopRatedCategory }
+        ).subscribe {
+            navigateSlideInOut(HomeFragmentDirections.showMoviesList(it))
         }
     }
 

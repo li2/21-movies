@@ -17,13 +17,13 @@ import me.li2.android.common.logic.orFalse
 import me.li2.android.common.rx.throttleFirstShort
 import me.li2.movies.R
 import me.li2.movies.base.BaseViewHolder
-import me.li2.movies.data.model.GenreUI
 import me.li2.movies.data.model.MovieDetailUI
 import me.li2.movies.databinding.MovieDetailViewBinding
+import me.li2.movies.ui.movies.MoviesCategory
 
 class MovieDetailViewHolder(binding: MovieDetailViewBinding,
                             private val onRateClicks: PublishSubject<Unit>,
-                            private val onGenreClicks: PublishSubject<GenreUI>,
+                            private val onCategoryClicks: PublishSubject<MoviesCategory>,
                             private val onPosterClicks: PublishSubject<Pair<View, String>>)
     : BaseViewHolder<Resource<MovieDetailUI>, MovieDetailViewBinding>(binding) {
 
@@ -33,6 +33,7 @@ class MovieDetailViewHolder(binding: MovieDetailViewBinding,
 
     override fun bind(item: Resource<MovieDetailUI>, position: Int) {
         binding.movieDetail = item.data
+        binding.categories = item.data?.genresToCategories()
         binding.isLoadingMovieDetail = item.status == LOADING
 
         item.data?.posterOriginalUrl?.let { url ->
@@ -52,16 +53,16 @@ class MovieDetailViewHolder(binding: MovieDetailViewBinding,
             binding.isOverviewExpanded = !binding.isOverviewExpanded.orFalse()
         }
 
-        binding.genresGroupView.onGenreClicks.throttleFirstShort().subscribe(onGenreClicks)
+        binding.categoriesGroupView.onCategoryClicks.throttleFirstShort().subscribe(onCategoryClicks)
     }
 
     companion object {
         fun create(parent: ViewGroup,
                    onRateClicks: PublishSubject<Unit>,
-                   onGenreClicks: PublishSubject<GenreUI>,
+                   onCategoryClicks: PublishSubject<MoviesCategory>,
                    onPosterClicks: PublishSubject<Pair<View, String>>): MovieDetailViewHolder {
             val binding = newBindingInstance(parent, R.layout.movie_detail_view) as MovieDetailViewBinding
-            return MovieDetailViewHolder(binding, onRateClicks, onGenreClicks, onPosterClicks)
+            return MovieDetailViewHolder(binding, onRateClicks, onCategoryClicks, onPosterClicks)
         }
     }
 }

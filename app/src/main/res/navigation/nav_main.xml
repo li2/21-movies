@@ -43,8 +43,8 @@
         android:label=""
         tools:layout="@layout/movies_fragment">
         <argument
-            android:name="movieListType"
-            app:argType="me.li2.movies.ui.movies.MovieListType" />
+            android:name="moviesCategory"
+            app:argType="me.li2.movies.ui.movies.MoviesCategory" />
         <action
             android:id="@+id/showMovieDetail"
             app:destination="@id/movieDetailFragment" />

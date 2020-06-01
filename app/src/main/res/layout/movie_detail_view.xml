@@ -7,9 +7,15 @@
 
         <import type="java.util.List" />
 
+        <import type="me.li2.movies.ui.movies.MoviesCategory" />
+
         <variable
             name="movieDetail"
             type="me.li2.movies.data.model.MovieDetailUI" />
+
+        <variable
+            name="categories"
+            type="List&lt;MoviesCategory&gt;" />
 
         <variable
             name="isOverviewExpanded"
@@ -252,18 +258,16 @@
             app:layout_constraintStart_toEndOf="@id/movieOverviewLabelTextView"
             tools:text="touch to expand" />
 
-        <me.li2.movies.ui.widgets.GenresGroupView
-            android:id="@+id/genresGroupView"
+        <me.li2.movies.ui.widgets.CategoriesGroupView
+            android:id="@+id/categoriesGroupView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:visibility="@{movieDetail.genres.size() > 0}"
-            app:genres="@{movieDetail.genres}"
-            app:label="@{`Genres`}"
+            android:visibility="@{categories.size() > 0}"
+            app:categories="@{categories}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/movieOverviewTextView"
-            tools:layout_height="36dp" />
+            app:layout_constraintTop_toBottomOf="@id/movieOverviewTextView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

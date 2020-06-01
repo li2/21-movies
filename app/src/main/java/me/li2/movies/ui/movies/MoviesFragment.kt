@@ -44,6 +44,10 @@ class MoviesFragment : BaseFragment(), RootViewStore {
     private val args by navArgs<MoviesFragmentArgs>()
     private val viewModel by viewModels<MoviesViewModel>()
 
+    // trending movies list is not paging supported
+    private val isPagingSupported: Boolean
+        get() = args.moviesCategory !is TrendingCategory
+
     private val moviesAdapter = MovieListAdapter(LINEAR_LAYOUT_VERTICAL)
     private val pagingAdapter = PagingItemAdapter()
 
@@ -53,7 +57,7 @@ class MoviesFragment : BaseFragment(), RootViewStore {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
         setUpContainerExitTransition(R.id.root)
-        viewModel.getMovies(args.movieListType)
+        viewModel.getMovies(args.moviesCategory)
     }
 
     override fun onPause() {
@@ -73,11 +77,15 @@ class MoviesFragment : BaseFragment(), RootViewStore {
     override fun initUi(view: View, savedInstanceState: Bundle?) {
         initializeRootViewIfNeeded {
             fixContainerExitTransition()
-            activity?.setToolbar(binding.toolbar, title = args.movieListType.label)
+            activity?.setToolbar(binding.toolbar, title = args.moviesCategory.label)
             binding.executePendingBindings()
 
             binding.moviesRecyclerView.apply {
-                adapter = MergeAdapter(moviesAdapter, pagingAdapter)
+                adapter = if (isPagingSupported) {
+                    MergeAdapter(moviesAdapter, pagingAdapter)
+                } else {
+                    moviesAdapter
+                }
                 layoutManager = LinearLayoutManager(requireContext())
                 addItemDecoration(DividerItemDecoration(requireContext(), RecyclerView.VERTICAL))
             }
@@ -89,20 +97,20 @@ class MoviesFragment : BaseFragment(), RootViewStore {
         }
 
         compositeDisposable += pagingAdapter.retryClicks.throttleFirstShort().subscribe {
-            viewModel.getMovies(args.movieListType)
+            viewModel.getMovies(args.moviesCategory)
         }
 
         compositeDisposable += binding.moviesRecyclerView.onScrolledBottom()
                 .throttleFirstShort() // avoid duplicate API calls, 21note
                 .subscribe {
                     // don't load next page if it's in requesting, or error, or already on the last page. 21note
-                    if (viewModel.canLoadMoreMovies) {
-                        if (args.movieListType is SearchMovieList
+                    if (viewModel.canLoadMoreMovies && isPagingSupported) {
+                        if (args.moviesCategory is QueryCategory
                                 && this::searchView.isInitialized
                                 && this.searchView.query.isNotEmpty()) {
-                            viewModel.getMovies(SearchMovieList(searchView.query.toString()))
+                            viewModel.getMovies(QueryCategory(searchView.query.toString()))
                         } else {
-                            viewModel.getMovies(args.movieListType)
+                            viewModel.getMovies(args.moviesCategory)
                         }
                     }
                 }
@@ -114,7 +122,9 @@ class MoviesFragment : BaseFragment(), RootViewStore {
             if (isFirstPage) {
                 binding.moviesRecyclerView.scrollToPosition(0)
             }
-            pagingAdapter.pagingState = MapperUI.toPagingState(it)
+            if (isPagingSupported) {
+                pagingAdapter.pagingState = MapperUI.toPagingState(it)
+            }
             binding.shimmerContainer.shimmer.showAnimation(it.status == LOADING && it.data?.page == null)
         }
     }
@@ -136,17 +146,17 @@ class MoviesFragment : BaseFragment(), RootViewStore {
 
     private fun setUpSearchView(searchMenuItem: MenuItem) {
         // only show search menu item for Search type
-        if (args.movieListType !is SearchMovieList) {
+        if (args.moviesCategory !is QueryCategory) {
             searchMenuItem.isVisible = false
             return
         }
         searchMenuItem.isVisible = true
-        val initialQuery = (args.movieListType as SearchMovieList).query
+        val initialQuery = (args.moviesCategory as QueryCategory).query
         searchView = searchMenuItem.actionView as SearchView
         searchView.init(searchMenuItem, initialQuery, "Search Movies") { queryText ->
             if (!queryText.isNullOrEmpty()) {
                 hideKeyboard()
-                viewModel.getMovies(SearchMovieList(queryText), true)
+                viewModel.getMovies(QueryCategory(queryText), true)
             }
         }
     }

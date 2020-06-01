@@ -8,57 +8,58 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.TextView
+import androidx.core.view.isVisible
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import io.reactivex.rxjava3.core.BackpressureStrategy
-import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.PublishSubject
 import me.li2.movies.R
-import me.li2.movies.data.model.GenreUI
+import me.li2.movies.ui.movies.MoviesCategory
 import me.li2.movies.util.SampleProvider
 
-class GenresGroupView @JvmOverloads constructor(
+class CategoriesGroupView @JvmOverloads constructor(
         context: Context,
         attrs: AttributeSet? = null,
         defStyleAttr: Int = 0) : ChipGroup(context, attrs, defStyleAttr) {
 
     private var labelTextView: TextView
     private var chipGroup: ChipGroup
-    private val _onGenreClicks: PublishSubject<GenreUI> = PublishSubject.create()
-    val onGenreClicks = _onGenreClicks.toFlowable(BackpressureStrategy.LATEST).toObservable()!!
+    private val _onCategoryClicks: PublishSubject<MoviesCategory> = PublishSubject.create()
+    val onCategoryClicks = _onCategoryClicks.toFlowable(BackpressureStrategy.LATEST).toObservable()!!
 
     var label: String? = null
         set(value) {
             field = value
             labelTextView.text = value
+            labelTextView.isVisible = !value.isNullOrEmpty()
         }
 
-    var genres: List<GenreUI>? = emptyList()
+    var categories: List<MoviesCategory>? = emptyList()
         set(value) {
             field = value
             chipGroup.removeAllViews()
-            value?.forEach { genre ->
-                chipGroup.addView(createGenreChip(genre))
+            value?.forEach { category ->
+                chipGroup.addView(createChipView(category))
             }
         }
 
     init {
         // set attachToRoot to true otherwise view won't show. 2note
-        val view = LayoutInflater.from(context).inflate(R.layout.genres_group_view, this, true)
+        val view = LayoutInflater.from(context).inflate(R.layout.categories_group_view, this, true)
         labelTextView = view.findViewById(R.id.labelTextView)
-        chipGroup = view.findViewById(R.id.scrollChipGroup)
+        chipGroup = view.findViewById(R.id.chipGroup)
 
         showSampleData()
     }
 
-    private fun createGenreChip(genre: GenreUI): Chip {
-        return (LayoutInflater.from(context).inflate(R.layout.genre_chip_view, chipGroup, false) as Chip).apply {
-            text = genre.name
+    private fun createChipView(category: MoviesCategory): Chip {
+        return (LayoutInflater.from(context).inflate(R.layout.category_chip_view, chipGroup, false) as Chip).apply {
+            text = category.label
             setOnCloseIconClickListener {
-                _onGenreClicks.onNext(genre)
+                _onCategoryClicks.onNext(category)
             }
             setOnClickListener {
-                _onGenreClicks.onNext(genre)
+                _onCategoryClicks.onNext(category)
             }
         }
     }
@@ -66,7 +67,8 @@ class GenresGroupView @JvmOverloads constructor(
     /** show sample data when shown in the IDE preview */
     private fun showSampleData() {
         if (isInEditMode) {
-            genres = SampleProvider.genreList()
+            label = "Genres"
+            categories = SampleProvider.categoryList()
         }
     }
 }

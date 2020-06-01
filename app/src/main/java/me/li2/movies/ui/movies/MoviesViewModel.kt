@@ -35,7 +35,7 @@ class MoviesViewModel : BaseViewModel() {
     internal val filter = MoviesFilter()
     private var unfilteredMovies: MovieItemPagingUI? = null
 
-    fun getMovies(type: MovieListType, forceRefresh: Boolean = false) {
+    fun getMovies(category: MoviesCategory, forceRefresh: Boolean = false) {
         if (_movies.isLoading()) {
             doNothing()
             return
@@ -44,7 +44,7 @@ class MoviesViewModel : BaseViewModel() {
         io({
             _movies.postError(it)
         }, {
-            val pagingUI = getMoviesByType(type, forceRefresh)
+            val pagingUI = getMoviesByCategory(category, forceRefresh)
             if (!forceRefresh) {
                 pagingUI.results.addAll(0, unfilteredMovies?.results.orEmpty())
             }
@@ -53,17 +53,18 @@ class MoviesViewModel : BaseViewModel() {
         })
     }
 
-    private suspend fun getMoviesByType(type: MovieListType,
-                                        forceRefresh: Boolean): MovieItemPagingUI {
+    private suspend fun getMoviesByCategory(category: MoviesCategory,
+                                            forceRefresh: Boolean): MovieItemPagingUI {
         val nextPage = if (forceRefresh) TMDB_STARTING_PAGE_INDEX else _movies.nextPage()
-        val api = when (type) {
-            NowPlayingMovieList -> repository.getNowPlayingMovies(nextPage)
-            UpcomingMovieList -> repository.getUpcomingMovies(nextPage)
-            PopularMovieList -> repository.getPopularMovies(nextPage)
-            TopRatedMovieList -> repository.getTopMovies(nextPage)
-            is RecMovieList -> repository.getMovieRecommendations(type.movieId, nextPage)
-            is GenreMovieList -> repository.searchMovies(type.genre, nextPage)
-            is SearchMovieList -> repository.searchMovies(type.query, nextPage)
+        val api = when (category) {
+            is TrendingCategory -> repository.getTrendingMovies(category.timeWindow)
+            NowPlayingCategory -> repository.getNowPlayingMovies(nextPage)
+            UpcomingCategory -> repository.getUpcomingMovies(nextPage)
+            PopularCategory -> repository.getPopularMovies(nextPage)
+            TopRatedCategory -> repository.getTopMovies(nextPage)
+            is RecommendationCategory -> repository.getMovieRecommendations(category.movieId, nextPage)
+            is GenreCategory -> repository.searchMovies(category.genre.name, nextPage)
+            is QueryCategory -> repository.searchMovies(category.query, nextPage)
         }
         return MapperUI.toMovieItemPagingUI(api)
     }
