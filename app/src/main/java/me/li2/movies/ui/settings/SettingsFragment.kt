@@ -8,10 +8,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.PopupMenu
 import androidx.databinding.DataBindingUtil
+import com.jakewharton.rxbinding4.view.clicks
+import me.li2.android.common.rx.throttleFirstShort
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.SettingsFragmentBinding
+import me.li2.movies.util.ThemeHelper
 
 class SettingsFragment : BaseFragment() {
 
@@ -22,5 +26,27 @@ class SettingsFragment : BaseFragment() {
                               savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.settings_fragment, container, false)
         return binding.root
+    }
+
+    override fun initUi(view: View, savedInstanceState: Bundle?) {
+        binding.themeSettingLayout.root.clicks().throttleFirstShort().subscribe {
+            showThemeMenu(binding.themeSettingLayout.titleTextView)
+        }
+    }
+
+    private fun showThemeMenu(anchor: View) {
+        val popup = PopupMenu(requireContext(), anchor)
+        popup.menuInflater.inflate(R.menu.theme_menu, popup.menu)
+        popup.setOnMenuItemClickListener { menuItem ->
+            val mode = when (menuItem.itemId) {
+                R.id.themeLight -> ThemeHelper.LIGHT_MODE
+                R.id.themeDark -> ThemeHelper.DARK_MODE
+                else -> ThemeHelper.DEFAULT_MODE
+            }
+            binding.themeSettingLayout.valueTextView.text = mode
+            ThemeHelper.applyTheme(mode)
+            true
+        }
+        popup.show()
     }
 }
