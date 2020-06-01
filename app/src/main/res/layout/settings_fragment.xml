@@ -9,7 +9,8 @@
 
     <me.li2.android.view.list.VerticalScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -39,6 +40,15 @@
                 app:layout_constraintTop_toBottomOf="@id/titleTextView"
                 app:settingIcon="@{@drawable/ic_settings_24}"
                 app:settingTitle="@{`Choose theme`}" />
+
+            <include
+                layout="@layout/settings_footer_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/themeSettingLayout"
+                app:layout_constraintVertical_bias="1.0" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
