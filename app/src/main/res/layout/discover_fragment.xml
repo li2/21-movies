@@ -5,6 +5,13 @@
 
     <data>
 
+        <import type="java.util.List" />
+
+        <import type="me.li2.movies.data.model.GenreUI" />
+
+        <variable
+            name="genres"
+            type="List&lt;GenreUI&gt;" />
     </data>
 
     <me.li2.android.view.list.VerticalScrollView
@@ -24,6 +31,7 @@
                 android:gravity="center"
                 android:text="Discover"
                 android:textAppearance="?attr/textAppearanceHeadline4"
+                android:textColor="?android:attr/textColorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -58,6 +66,17 @@
                     android:padding="16dp" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <me.li2.movies.ui.widgets.GenresGroupView
+                android:id="@+id/genresGroupView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:visibility="@{genres.size() > 0}"
+                app:genres="@{genres}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/searchInputLayout" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -24,7 +24,8 @@ class GenresGroupView @JvmOverloads constructor(
 
     private var labelTextView: TextView
     private var chipGroup: ChipGroup
-    private val itemClicksSubject: PublishSubject<GenreUI> = PublishSubject.create()
+    private val _onGenreClicks: PublishSubject<GenreUI> = PublishSubject.create()
+    val onGenreClicks = _onGenreClicks.toFlowable(BackpressureStrategy.LATEST).toObservable()!!
 
     var label: String? = null
         set(value) {
@@ -50,16 +51,14 @@ class GenresGroupView @JvmOverloads constructor(
         showSampleData()
     }
 
-    fun genreClicks(): Observable<GenreUI> = itemClicksSubject.toFlowable(BackpressureStrategy.LATEST).toObservable()
-
     private fun createGenreChip(genre: GenreUI): Chip {
         return (LayoutInflater.from(context).inflate(R.layout.genre_chip_view, chipGroup, false) as Chip).apply {
             text = genre.name
             setOnCloseIconClickListener {
-                itemClicksSubject.onNext(genre)
+                _onGenreClicks.onNext(genre)
             }
             setOnClickListener {
-                itemClicksSubject.onNext(genre)
+                _onGenreClicks.onNext(genre)
             }
         }
     }

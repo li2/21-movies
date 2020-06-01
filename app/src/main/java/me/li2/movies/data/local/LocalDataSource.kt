@@ -5,6 +5,7 @@
 package me.li2.movies.data.local
 
 import me.li2.movies.App
+import me.li2.movies.data.model.GenreUI
 import me.li2.movies.data.model.MovieDetailUI
 import me.li2.movies.data.model.MovieReviewUI
 import me.li2.movies.data.model.Trailer
@@ -39,5 +40,13 @@ class LocalDataSource : KodeinAware {
 
     suspend fun getTrailers(movieId: Int): List<Trailer>? {
         return db.trailerDao().getTrailers(movieId)
+    }
+
+    suspend fun insertGenres(genres: List<GenreUI>): List<Long> {
+        return db.genresDao().insertGenres(genres)
+    }
+
+    suspend fun getGenres(): List<GenreUI>? {
+        return db.genresDao().getGenres()
     }
 }

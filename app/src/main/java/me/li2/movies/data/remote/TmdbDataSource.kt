@@ -39,4 +39,6 @@ class TmdbDataSource : KodeinAware {
 
     fun searchMoviesAsync(keyword: String, page: Int, year: Int? = null) =
             tmdbApi.searchMoviesAsync(keyword, page, year)
+
+    fun getGenresAsync() = tmdbApi.getGenresAsync()
 }

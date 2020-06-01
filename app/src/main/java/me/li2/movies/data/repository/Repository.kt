@@ -117,4 +117,18 @@ class Repository : KodeinAware {
 
     suspend fun searchMovies(keyword: String, page: Int, year: Int? = null) =
             tmdbDataSource.searchMoviesAsync(keyword, page, year).await()
+
+    suspend fun getGenres(result: MutableLiveData<Resource<List<GenreUI>>>) {
+        return object : NetworkBoundResource<List<GenreUI>>(result) {
+            override suspend fun loadFromDb() = localDataSource.getGenres()
+
+            override fun shouldFetch(data: List<GenreUI>?) = data.isNullOrEmpty()
+
+            override suspend fun fetch() =
+                    tmdbDataSource.getGenresAsync().await().genres.map { MapperUI.toGenreUI(it) }
+
+            override suspend fun saveFetchResult(data: List<GenreUI>) =
+                    localDataSource.insertGenres(data)
+        }.load()
+    }
 }

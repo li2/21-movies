@@ -49,6 +49,9 @@ interface TmdbApi {
                           @Query("page") page: Int,
                           @Query("year") year: Int? = null): Deferred<TmdbMovieListAPI>
 
+    @GET("genre/movie/list")
+    fun getGenresAsync(): Deferred<GenresAPI>
+
     companion object {
         const val TIMEOUT = 12L
         const val TMDB_STARTING_PAGE_INDEX = 1

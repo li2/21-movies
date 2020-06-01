@@ -53,7 +53,7 @@ object MapperUI {
             totalPages = api.totalPages,
             totalResults = api.totalResults)
 
-    private fun toGenreUI(api: Genre) = GenreUI(api.id, api.name)
+    fun toGenreUI(api: Genre) = GenreUI(api.id, api.name)
 
     fun toMovieDetailUI(api: TmdbMovieDetailAPI) = MovieDetailUI(
             id = api.id,

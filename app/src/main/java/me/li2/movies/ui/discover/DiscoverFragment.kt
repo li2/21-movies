@@ -9,12 +9,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.kotlin.plusAssign
+import me.li2.android.common.arch.observeOnView
 import me.li2.android.view.system.hideKeyboard
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.DiscoverFragmentBinding
+import me.li2.movies.ui.movies.GenreMovieList
 import me.li2.movies.ui.movies.SearchMovieList
 import me.li2.movies.util.endIconClicks
 import me.li2.movies.util.imeActionSearchClicks
@@ -23,6 +26,7 @@ import me.li2.movies.util.navigateSlideInOut
 class DiscoverFragment : BaseFragment() {
 
     private lateinit var binding: DiscoverFragmentBinding
+    private val viewModel by viewModels<DiscoverViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
@@ -43,6 +47,16 @@ class DiscoverFragment : BaseFragment() {
                     navigateSlideInOut(DiscoverFragmentDirections.showMoviesList(SearchMovieList(query)))
                 }
             }
+        }
+
+        binding.genresGroupView.onGenreClicks.subscribe {
+            navigateSlideInOut(DiscoverFragmentDirections.showMoviesList(GenreMovieList(it.name)))
+        }
+    }
+
+    override fun renderUI() = with(viewModel) {
+        observeOnView(genres) {
+            binding.genres = it.data
         }
     }
 }

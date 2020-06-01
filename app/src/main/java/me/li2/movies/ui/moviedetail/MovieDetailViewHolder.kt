@@ -52,7 +52,7 @@ class MovieDetailViewHolder(binding: MovieDetailViewBinding,
             binding.isOverviewExpanded = !binding.isOverviewExpanded.orFalse()
         }
 
-        binding.genresGroupView.genreClicks().throttleFirstShort().subscribe(onGenreClicks)
+        binding.genresGroupView.onGenreClicks.throttleFirstShort().subscribe(onGenreClicks)
     }
 
     companion object {

@@ -11,6 +11,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 import kotlinx.serialization.Serializable
+import me.li2.movies.data.local.AppDatabase
 import me.li2.movies.data.local.AppDatabase.Companion.TABLE_MOVIES
 import org.threeten.bp.LocalDate
 
@@ -40,10 +41,14 @@ data class MovieDetailUI(
         val voteAverageDisplay: String,
         val voteCount: Int,
         val voteCountDisplay: String
-) : Parcelable {
-    fun getDisplayGenres() = genres.joinToString(separator = ", ") { it.name }
-}
+) : Parcelable
 
 @Parcelize
 @Serializable
-data class GenreUI(val id: Int, val name: String) : Parcelable
+@Entity(tableName = AppDatabase.TABLE_GENRES,
+        indices = [Index(value = ["id"], unique = true)])
+data class GenreUI(
+        @PrimaryKey
+        val id: Int,
+        val name: String
+) : Parcelable

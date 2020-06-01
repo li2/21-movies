@@ -57,7 +57,7 @@ abstract class NetworkBoundResource<T>(private val result: MutableLiveData<Resou
     /**
      * Called to save the result of the API response into the database
      */
-    protected abstract suspend fun saveFetchResult(data: T)
+    protected abstract suspend fun saveFetchResult(data: T): Any
 
     /**
      * Called when fetch fails. The child class may want to reset components like rate limiter.
