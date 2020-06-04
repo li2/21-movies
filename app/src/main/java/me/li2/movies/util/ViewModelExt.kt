@@ -47,3 +47,9 @@ fun <T> ViewModel.ioWithLiveData(mutableLiveData: MutableLiveData<Resource<T>>,
         }
     }
 }
+
+fun <T> ViewModel.ui(uiHandler: CoroutineScope.() -> T) {
+    viewModelScope.launch(Dispatchers.Main) {
+        uiHandler()
+    }
+}

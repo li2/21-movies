@@ -1,3 +1,7 @@
+/*
+ * Created by Weiyi Li on 2020-06-04.
+ * https://github.com/li2
+ */
 package me.li2.movies.ui.settings.dependencies
 
 import android.view.LayoutInflater
@@ -6,20 +10,16 @@ import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.jakewharton.rxbinding4.view.clicks
-import com.mega4tech.linkpreview.GetLinkPreviewListener
-import com.mega4tech.linkpreview.LinkPreview
-import com.mega4tech.linkpreview.LinkUtil
 import me.li2.android.common.rx.throttleFirstShort
 import me.li2.movies.R
 import me.li2.movies.base.BaseViewHolder
 import me.li2.movies.databinding.DependencyItemViewBinding
-import timber.log.Timber.e
+import me.li2.movies.ui.settings.SettingsViewModel
 
 class DependenciesAdapter(private val items: List<DependencyItem>,
+                          private val viewModel: SettingsViewModel,
                           private val onLinkClick: (String) -> Unit)
     : RecyclerView.Adapter<DependenciesAdapter.DependencyItemViewHolder>() {
-
-    private val cachedLinkPreviewMap: MutableMap<String, LinkPreview> = mutableMapOf()
 
     init {
         setHasStableIds(true)
@@ -51,30 +51,10 @@ class DependenciesAdapter(private val items: List<DependencyItem>,
 
             binding.url = item.url
 
-            getLinkPreview(item.url) { linkPreview ->
+            viewModel.getLinkPreview(item.url) { linkPreview ->
                 binding.linkPreview = linkPreview
                 binding.imageUri = linkPreview.imageFile?.toUri().toString()
             }
-        }
-
-        private fun getLinkPreview(url: String, onSuccess: (LinkPreview) -> Unit) {
-            cachedLinkPreviewMap[url]?.let {
-                onSuccess(it)
-                return
-            }
-
-            LinkUtil.getInstance().getLinkPreview(binding.root.context, url, object : GetLinkPreviewListener {
-                override fun onSuccess(link: LinkPreview?) {
-                    if (link != null) {
-                        cachedLinkPreviewMap[url] = link
-                        onSuccess(link)
-                    }
-                }
-
-                override fun onFailed(exception: Exception?) {
-                    e(exception, "failed to load preview of $url")
-                }
-            })
         }
     }
 }
