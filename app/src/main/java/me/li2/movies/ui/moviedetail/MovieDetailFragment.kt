@@ -86,7 +86,7 @@ class MovieDetailFragment : BaseFragment(), RootViewStore {
         }
 
         compositeDisposable += detailAdapter.onTrailerClicks.subscribe { trailer ->
-            requireContext().watchYoutubeVideo(trailer.url)
+            requireContext().openUrl(trailer.url)
         }
 
         compositeDisposable += detailAdapter.onPosterClicks.subscribe { (view, posterUrl) ->

@@ -15,7 +15,7 @@
         tools:ignore="HardcodedText" />
 
     <item
-        android:id="@id/settingsFragment"
+        android:id="@id/settingsGraph"
         android:icon="@drawable/ic_menu_settings_24"
         android:title="Settings"
         tools:ignore="HardcodedText" />

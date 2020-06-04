@@ -70,10 +70,26 @@
             app:destination="@id/moviesFragment" />
     </fragment>
 
-    <fragment
-        android:id="@+id/settingsFragment"
-        android:name="me.li2.movies.ui.settings.SettingsFragment"
-        android:label="Settings"
-        tools:layout="@layout/settings_fragment" />
+    <navigation
+        android:id="@+id/settingsGraph"
+        app:startDestination="@id/settingsFragment">
+
+        <fragment
+            android:id="@+id/settingsFragment"
+            android:name="me.li2.movies.ui.settings.SettingsFragment"
+            android:label="Settings"
+            tools:layout="@layout/settings_fragment">
+            <action
+                android:id="@+id/showDependencies"
+                app:destination="@id/dependenciesFragment" />
+        </fragment>
+
+        <fragment
+            android:id="@+id/dependenciesFragment"
+            android:name="me.li2.movies.ui.settings.dependencies.DependenciesFragment"
+            android:label="Dependencies"
+            tools:layout="@layout/dependencies_fragment" />
+
+    </navigation>
 
 </navigation>

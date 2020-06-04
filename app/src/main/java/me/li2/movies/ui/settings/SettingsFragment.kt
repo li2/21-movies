@@ -16,6 +16,7 @@ import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.SettingsFragmentBinding
 import me.li2.movies.util.ThemeHelper
+import me.li2.movies.util.navigateSlideInOut
 
 class SettingsFragment : BaseFragment() {
 
@@ -31,6 +32,10 @@ class SettingsFragment : BaseFragment() {
     override fun initUi(view: View, savedInstanceState: Bundle?) {
         binding.themeSettingLayout.root.clicks().throttleFirstShort().subscribe {
             showThemeMenu(binding.themeSettingLayout.titleTextView)
+        }
+
+        binding.dependenciesLayout.root.clicks().throttleFirstShort().subscribe {
+            navigateSlideInOut(SettingsFragmentDirections.showDependencies())
         }
     }
 

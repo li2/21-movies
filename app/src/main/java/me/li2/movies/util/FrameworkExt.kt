@@ -27,7 +27,7 @@ fun reportException(exception: Exception) {
     FirebaseCrashlytics.getInstance().recordException(exception)
 }
 
-fun Context.watchYoutubeVideo(url: String) {
+fun Context.openUrl(url: String) {
     startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
 }
 
