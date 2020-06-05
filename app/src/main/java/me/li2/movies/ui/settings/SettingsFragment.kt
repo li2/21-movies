@@ -15,8 +15,10 @@ import me.li2.android.common.rx.throttleFirstShort
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.SettingsFragmentBinding
+import me.li2.movies.util.Constants
 import me.li2.movies.util.ThemeHelper
 import me.li2.movies.util.navigateSlideInOut
+import me.li2.movies.util.openUrl
 
 class SettingsFragment : BaseFragment() {
 
@@ -32,6 +34,10 @@ class SettingsFragment : BaseFragment() {
     override fun initUi(view: View, savedInstanceState: Bundle?) {
         binding.themeSettingItemView.clicks().throttleFirstShort().subscribe {
             showThemeMenu(binding.themeSettingItemView)
+        }
+
+        binding.codeSettingItemView.clicks().throttleFirstShort().subscribe {
+            requireContext().openUrl(Constants.SOURCE_CODE_URL)
         }
 
         binding.dependenciesSettingItemView.clicks().throttleFirstShort().subscribe {

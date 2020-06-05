@@ -11,11 +11,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/root"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="56dp">
+        android:layout_height="56dp">
 
         <ImageView
-            android:id="@+id/iconImageView"
+            android:id="@+id/startIconImageView"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
@@ -34,7 +33,7 @@
             android:gravity="start|center_vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/valueTextView"
-            app:layout_constraintStart_toEndOf="@id/iconImageView"
+            app:layout_constraintStart_toEndOf="@id/startIconImageView"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Title" />
 
@@ -43,12 +42,26 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="8dp"
             android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/endIconImageView"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Value" />
+
+        <ImageView
+            android:id="@+id/endIconImageView"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Value" />
+            tools:ignore="ContentDescription"
+            tools:srcCompat="@drawable/ic_navigate_next_24"
+            tools:visibility="visible" />
 
         <View
             android:layout_width="match_parent"

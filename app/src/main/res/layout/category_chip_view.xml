@@ -9,7 +9,7 @@
     android:textAppearance="?attr/textAppearanceBody2"
     android:textColor="?android:attr/textColorPrimary"
     app:chipBackgroundColor="?attr/colorSurface"
-    app:closeIcon="@drawable/ic_navigate_next"
+    app:closeIcon="@drawable/ic_navigate_next_24"
     app:closeIconEnabled="true"
     app:closeIconTint="?android:attr/textColorPrimary"
     tools:text="Drama" />

@@ -28,7 +28,9 @@
         <!--background-->
         <attr name="settingBackgroundColor" format="reference|color" />
         <!--icon-->
-        <attr name="settingIcon" format="reference" />
+        <attr name="settingStartIcon" format="reference" />
+        <attr name="settingEndIcon" format="reference" />
+        <attr name="settingIconTint" format="reference|color" />
         <!--title-->
         <attr name="settingTitle" format="string" />
         <attr name="settingTitleTextAppearance" format="reference" />

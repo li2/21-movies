@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isVisible
 import me.li2.movies.R
 
 class SettingItemView @JvmOverloads constructor(
@@ -18,7 +19,8 @@ class SettingItemView @JvmOverloads constructor(
         attrs: AttributeSet? = null,
         defStyleAttr: Int = 0) : ConstraintLayout(context, attrs, defStyleAttr) {
 
-    private var iconImageView: ImageView
+    private var startIconImageView: ImageView
+    private var endIconImageView: ImageView
     private var titleTextView: TextView
     private var valueTextView: TextView
 
@@ -27,7 +29,9 @@ class SettingItemView @JvmOverloads constructor(
 
         val attributes = context.theme.obtainStyledAttributes(attrs, R.styleable.SettingItemViewAttrs, 0, 0)
         val _backgroundColor = attributes.getColor(R.styleable.SettingItemViewAttrs_settingBackgroundColor, Color.WHITE)
-        val _icon = attributes.getDrawable(R.styleable.SettingItemViewAttrs_settingIcon)
+        val _startIcon = attributes.getDrawable(R.styleable.SettingItemViewAttrs_settingStartIcon)
+        val _endIcon = attributes.getDrawable(R.styleable.SettingItemViewAttrs_settingEndIcon)
+        val _iconTintColor = attributes.getColorStateList(R.styleable.SettingItemViewAttrs_settingIconTint)
         val _title = attributes.getString(R.styleable.SettingItemViewAttrs_settingTitle)
         val _titleTextAppearance = attributes.getResourceId(R.styleable.SettingItemViewAttrs_settingTitleTextAppearance, android.R.style.TextAppearance_Material_Title)
         val _titleTextColor = attributes.getColorStateList(R.styleable.SettingItemViewAttrs_settingTitleTextColor)
@@ -36,12 +40,19 @@ class SettingItemView @JvmOverloads constructor(
         val _valueTextColor = attributes.getColorStateList(R.styleable.SettingItemViewAttrs_settingValueTextColor)
         attributes.recycle()
 
-        iconImageView = findViewById(R.id.iconImageView)
+        startIconImageView = findViewById(R.id.startIconImageView)
+        endIconImageView = findViewById(R.id.endIconImageView)
         titleTextView = findViewById(R.id.titleTextView)
         valueTextView = findViewById(R.id.valueTextView)
 
         setBackgroundColor(_backgroundColor)
-        iconImageView.setImageDrawable(_icon)
+        startIconImageView.setImageDrawable(_startIcon)
+        endIconImageView.setImageDrawable(_endIcon)
+        endIconImageView.isVisible = _endIcon != null
+        _iconTintColor?.let {
+            startIconImageView.imageTintList = it
+            endIconImageView.imageTintList = it
+        }
         titleTextView.apply {
             text = _title
             setTextAppearance(context, _titleTextAppearance)
