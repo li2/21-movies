@@ -2,7 +2,8 @@
     <string name="movie_full_rate">/ 10</string>
     <string name="transition_name_movie" translatable="false">movie transition</string>
     <string name="rate_movie">Rate Movie</string>
-    
+    <string name="license">Copyright © 2020 Weiyi Li\nLicensed under the Apache License</string>
+
     <string-array name="filter_vote_array">
         <item>0</item>
         <item>1</item>
