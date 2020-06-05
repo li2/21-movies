@@ -15,10 +15,7 @@ import me.li2.android.common.rx.throttleFirstShort
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.SettingsFragmentBinding
-import me.li2.movies.util.Constants
-import me.li2.movies.util.ThemeHelper
-import me.li2.movies.util.navigateSlideInOut
-import me.li2.movies.util.openUrl
+import me.li2.movies.util.*
 
 class SettingsFragment : BaseFragment() {
 
@@ -43,6 +40,8 @@ class SettingsFragment : BaseFragment() {
         binding.dependenciesSettingItemView.clicks().throttleFirstShort().subscribe {
             navigateSlideInOut(SettingsFragmentDirections.showDependencies())
         }
+
+        binding.settingsFooterView.versionName = requireContext().getVersionName()
     }
 
     private fun showThemeMenu(anchor: View) {

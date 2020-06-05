@@ -105,7 +105,6 @@
             android:visibility="@{!TextUtils.isEmpty(movieDetail.productionCountry)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/posterImageView"
-            app:layout_constraintStart_toStartOf="@id/releaseDateTextView"
             app:layout_constraintTop_toBottomOf="@id/releaseDateTextView"
             tools:targetApi="lollipop"
             tools:text="New Zealand" />
