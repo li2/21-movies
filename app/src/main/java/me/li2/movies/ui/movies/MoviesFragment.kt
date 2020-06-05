@@ -77,7 +77,6 @@ class MoviesFragment : BaseFragment(), RootViewStore {
     override fun initUi(view: View, savedInstanceState: Bundle?) {
         initializeRootViewIfNeeded {
             fixContainerExitTransition()
-            activity?.setToolbar(binding.toolbar, title = args.moviesCategory.label)
             binding.executePendingBindings()
 
             binding.moviesRecyclerView.apply {
@@ -90,6 +89,8 @@ class MoviesFragment : BaseFragment(), RootViewStore {
                 addItemDecoration(DividerItemDecoration(requireContext(), RecyclerView.VERTICAL))
             }
         }
+
+        activity?.setToolbar(binding.toolbar, title = args.moviesCategory.label)
 
         compositeDisposable += moviesAdapter.onMovieClicks.throttleFirstShort().subscribe { (view, movieItem) ->
             val extras = FragmentNavigatorExtras(view to ViewCompat.getTransitionName(view).orEmpty())

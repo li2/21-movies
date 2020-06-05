@@ -13,10 +13,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/movieItemContainer"
         android:layout_width="match_parent"
-        android:layout_height="152dp"
+        android:layout_height="136dp"
         android:foreground="?attr/selectableItemBackground"
-        android:paddingTop="16dp"
-        android:paddingBottom="16dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
         tools:targetApi="m">
 
         <ImageView

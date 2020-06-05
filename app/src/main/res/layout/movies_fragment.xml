@@ -12,29 +12,31 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            style="?attr/toolbarStyle"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbarlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:elevation="0dp"
+            android:background="?attr/colorTransparent"
             android:fitsSystemWindows="true"
-            app:elevation="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:titleTextColor="?android:attr/textColorPrimary"
-            tools:targetApi="lollipop"
-            tools:title="Drama" />
+            app:elevation="0dp">
 
-        <!-- 21note: ?attr/actionBarSize + statusBar 24 dp.-->
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                style="?attr/toolbarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:titleTextColor="?android:attr/textColorPrimary"
+                tools:targetApi="lollipop"
+                tools:title="Drama" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/moviesRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="80dp"
             android:clipToPadding="false"
-            android:fitsSystemWindows="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:listitem="@layout/movie_item_vertical_view" />
 
         <include

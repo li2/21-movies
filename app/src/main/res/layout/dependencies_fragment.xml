@@ -19,15 +19,13 @@
             android:layout_height="wrap_content"
             android:background="?attr/colorTransparent"
             android:fitsSystemWindows="true"
-            app:liftOnScroll="true">
+            app:elevation="0dp">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
                 style="?attr/toolbarStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:elevation="0dp"
-                app:elevation="0dp"
                 app:titleTextColor="?android:attr/textColorPrimary"
                 tools:targetApi="lollipop"
                 tools:title="Dependencies" />
@@ -40,7 +38,7 @@
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:orientation="vertical"
-            android:paddingTop="16dp"
+            android:paddingTop="8dp"
             android:paddingBottom="16dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"

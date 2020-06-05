@@ -77,7 +77,7 @@
         <fragment
             android:id="@+id/settingsFragment"
             android:name="me.li2.movies.ui.settings.SettingsFragment"
-            android:label="Settings"
+            android:label=""
             tools:layout="@layout/settings_fragment">
             <action
                 android:id="@+id/showDependencies"
