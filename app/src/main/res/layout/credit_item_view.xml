@@ -15,7 +15,7 @@
         android:id="@+id/creditItemContainer"
         android:layout_width="128dp"
         android:layout_height="wrap_content"
-        android:foreground="?selectableItemBackground"
+        android:foreground="?attr/selectableItemBackground"
         tools:targetApi="m">
 
         <com.google.android.material.card.MaterialCardView

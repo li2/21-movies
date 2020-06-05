@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
 import androidx.databinding.DataBindingUtil
 import com.jakewharton.rxbinding4.view.clicks
+import me.li2.android.common.framework.openAppSettings
 import me.li2.android.common.rx.throttleFirstShort
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
@@ -29,23 +30,29 @@ class SettingsFragment : BaseFragment() {
     }
 
     override fun initUi(view: View, savedInstanceState: Bundle?) {
+        val context = view.context
+
         binding.themeSettingItemView.clicks().throttleFirstShort().subscribe {
             showThemeMenu(binding.themeSettingItemView)
         }
 
+        binding.appSettingItemView.clicks().throttleFirstShort().subscribe {
+            context.openAppSettings(context.packageName)
+        }
+
         binding.codeSettingItemView.clicks().throttleFirstShort().subscribe {
-            requireContext().openUrl(Constants.SOURCE_CODE_URL)
+            context.openUrl(Constants.SOURCE_CODE_URL)
         }
 
         binding.dependenciesSettingItemView.clicks().throttleFirstShort().subscribe {
             navigateSlideInOut(SettingsFragmentDirections.showDependencies())
         }
 
-        binding.settingsFooterView.versionName = requireContext().getVersionName()
+        binding.settingsFooterView.versionName = context.getVersionName()
     }
 
     private fun showThemeMenu(anchor: View) {
-        val popup = PopupMenu(requireContext(), anchor)
+        val popup = PopupMenu(anchor.context, anchor)
         popup.menuInflater.inflate(R.menu.theme_menu, popup.menu)
         popup.setOnMenuItemClickListener { menuItem ->
             val mode = when (menuItem.itemId) {

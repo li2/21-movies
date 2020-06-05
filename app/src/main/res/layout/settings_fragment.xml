@@ -42,12 +42,24 @@
                 app:settingTitle="Choose theme" />
 
             <me.li2.movies.ui.settings.SettingItemView
+                android:id="@+id/appSettingItemView"
+                style="?attr/settingItemViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                app:layout_constraintTop_toBottomOf="@id/themeSettingItemView"
+                app:settingEndIcon="@drawable/ic_open_in_browser_24"
+                app:settingIconTint="?android:attr/textColorPrimary"
+                app:settingStartIcon="@drawable/ic_settings_24"
+                app:settingTitle="App System Settings" />
+
+            <me.li2.movies.ui.settings.SettingItemView
                 android:id="@+id/codeSettingItemView"
                 style="?attr/settingItemViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:layout_constraintTop_toBottomOf="@id/themeSettingItemView"
+                app:layout_constraintTop_toBottomOf="@id/appSettingItemView"
                 app:settingEndIcon="@drawable/ic_open_in_browser_24"
                 app:settingIconTint="?android:attr/textColorLink"
                 app:settingStartIcon="@drawable/ic_code_24"

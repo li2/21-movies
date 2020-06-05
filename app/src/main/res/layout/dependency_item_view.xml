@@ -26,14 +26,15 @@
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
         android:background="?attr/colorSurface"
-        android:foreground="?selectableItemBackground"
+        android:foreground="?attr/selectableItemBackground"
         app:cardElevation="4dp"
         app:cardUseCompatPadding="true"
         tools:targetApi="m">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp">
+            android:layout_height="100dp"
+            android:background="?attr/colorSurface">
 
             <androidx.constraintlayout.widget.Group
                 android:layout_width="wrap_content"
