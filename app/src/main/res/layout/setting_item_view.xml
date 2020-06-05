@@ -6,26 +6,12 @@
 
     <data>
 
-        <import type="android.text.TextUtils" />
-
-        <variable
-            name="settingIcon"
-            type="android.graphics.drawable.Drawable" />
-
-        <variable
-            name="settingTitle"
-            type="String" />
-
-        <variable
-            name="settingValue"
-            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorSurface"
         android:minHeight="56dp">
 
         <ImageView
@@ -33,7 +19,6 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
-            android:src="@{settingIcon}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -47,9 +32,6 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="4dp"
             android:gravity="start|center_vertical"
-            android:text="@{settingTitle}"
-            android:textAppearance="?attr/textAppearanceSubtitle1"
-            android:textColor="?android:attr/textColorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/valueTextView"
             app:layout_constraintStart_toEndOf="@id/iconImageView"
@@ -63,10 +45,6 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:gravity="center"
-            android:text="@{settingValue}"
-            android:textAppearance="?attr/textAppearanceCaption"
-            android:textColor="?android:attr/textColorSecondary"
-            android:visibility="@{!TextUtils.isEmpty(settingValue)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

@@ -30,11 +30,11 @@ class SettingsFragment : BaseFragment() {
     }
 
     override fun initUi(view: View, savedInstanceState: Bundle?) {
-        binding.themeSettingLayout.root.clicks().throttleFirstShort().subscribe {
-            showThemeMenu(binding.themeSettingLayout.titleTextView)
+        binding.themeSettingItemView.clicks().throttleFirstShort().subscribe {
+            showThemeMenu(binding.themeSettingItemView)
         }
 
-        binding.dependenciesLayout.root.clicks().throttleFirstShort().subscribe {
+        binding.dependenciesSettingItemView.clicks().throttleFirstShort().subscribe {
             navigateSlideInOut(SettingsFragmentDirections.showDependencies())
         }
     }
@@ -48,7 +48,7 @@ class SettingsFragment : BaseFragment() {
                 R.id.themeDark -> ThemeHelper.DARK_MODE
                 else -> ThemeHelper.DEFAULT_MODE
             }
-            binding.themeSettingLayout.valueTextView.text = mode
+            binding.themeSettingItemView.setTitle(mode)
             ThemeHelper.applyTheme(mode)
             true
         }

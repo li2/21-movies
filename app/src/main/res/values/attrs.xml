@@ -21,4 +21,22 @@
         <attr name="initialView" format="integer" />
     </declare-styleable>
 
+
+    <attr name="settingItemViewStyle" format="reference" />
+
+    <declare-styleable name="SettingItemViewAttrs">
+        <!--background-->
+        <attr name="settingBackgroundColor" format="reference|color" />
+        <!--icon-->
+        <attr name="settingIcon" format="reference" />
+        <!--title-->
+        <attr name="settingTitle" format="string" />
+        <attr name="settingTitleTextAppearance" format="reference" />
+        <attr name="settingTitleTextColor" format="reference|color" />
+        <!--value-->
+        <attr name="settingValue" format="string" />
+        <attr name="settingValueTextAppearance" format="reference" />
+        <attr name="settingValueTextColor" format="reference|color" />
+    </declare-styleable>
+
 </resources>

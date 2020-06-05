@@ -42,6 +42,9 @@
 
         <item name="toolbarStyle">@style/AppToolbarStyle</item>
 
+        <!--Custom View Style-->
+        <item name="settingItemViewStyle">@style/SettingItemViewStyle</item>
+
     </style>
 
     <style name="SplashTheme" parent="AppTheme">
@@ -121,6 +124,14 @@
         <item name="cornerSizeTopLeft">16dp</item>
         <item name="cornerSizeBottomRight">0dp</item>
         <item name="cornerSizeBottomLeft">0dp</item>
+    </style>
+
+    <style name="SettingItemViewStyle">
+        <item name="settingBackgroundColor">?attr/colorSurface</item>
+        <item name="settingTitleTextAppearance">?attr/textAppearanceSubtitle1</item>
+        <item name="settingTitleTextColor">?android:attr/textColorPrimary</item>
+        <item name="settingValueTextAppearance">?attr/textAppearanceCaption</item>
+        <item name="settingValueTextColor">?android:attr/textColorSecondary</item>
     </style>
 
 </resources>
