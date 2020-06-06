@@ -38,10 +38,11 @@
             android:gravity="center"
             android:textAppearance="?attr/textAppearanceCaption"
             android:textColor="?android:attr/textColorSecondary"
+            android:textSize="8sp"
             app:html="@{@string/license_ic_popcorn}"
             app:layout_constraintBottom_toTopOf="@id/titleTextView"
             app:layout_constraintTop_toBottomOf="@id/iconImageView"
-            tools:ignore="HardcodedText,MissingPrefix"
+            tools:ignore="HardcodedText,SmallSp"
             tools:text="@string/license_ic_popcorn" />
 
         <TextView
@@ -51,10 +52,26 @@
             android:layout_marginTop="8dp"
             android:gravity="center"
             android:text="Ooops, no movies found"
-            android:textAppearance="?attr/textAppearanceHeadline5"
+            android:textAppearance="?attr/textAppearanceHeadline6"
             android:textColor="?android:attr/textColorPrimary"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/discoverButton"
             app:layout_constraintTop_toBottomOf="@id/iconLicenseTextView"
+            tools:ignore="HardcodedText" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/discoverButton"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="Discover"
+            app:icon="@drawable/ic_menu_explore_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleTextView"
             tools:ignore="HardcodedText" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,6 +15,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.MergeAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.jakewharton.rxbinding4.view.clicks
 import io.reactivex.rxjava3.kotlin.plusAssign
 import me.li2.android.common.arch.Resource.Status.LOADING
 import me.li2.android.common.arch.observeOnView
@@ -124,6 +125,10 @@ class MoviesFragment : BaseFragment(), RootViewStore {
                         }
                     }
                 }
+
+        binding.moviesEmptyView.discoverButton.clicks().throttleFirstShort().subscribe {
+            navController().navigate(MoviesFragmentDirections.discover())
+        }
     }
 
     override fun renderUI() = with(viewModel) {

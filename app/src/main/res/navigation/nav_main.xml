@@ -48,6 +48,11 @@
         <action
             android:id="@+id/showMovieDetail"
             app:destination="@id/movieDetailFragment" />
+        <action
+            android:id="@+id/discover"
+            app:destination="@id/discoverFragment"
+            app:popUpTo="@id/discoverFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment

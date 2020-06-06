@@ -21,6 +21,7 @@ import me.li2.android.common.number.dpToPx
 import me.li2.android.view.image.GlideRequestListener
 import me.li2.android.view.list.LinearSpacingDecoration
 import me.li2.android.view.navigation.setToolbar
+import me.li2.android.view.popup.toast
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.MovieDetailFragmentBinding
@@ -86,7 +87,13 @@ class MovieDetailFragment : BaseFragment(), RootViewStore {
         }
 
         compositeDisposable += detailAdapter.onSaveClicks.subscribe {
-            viewModel.toggleWatchlist(it)
+            viewModel.toggleWatchlist(it) { isInWatchlist ->
+                if (isInWatchlist) {
+                    toast("movie added in local database")
+                } else {
+                    toast("movie removed from local database")
+                }
+            }
         }
 
         compositeDisposable += detailAdapter.onTrailerClicks.subscribe { trailer ->

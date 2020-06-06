@@ -16,6 +16,7 @@ import me.li2.movies.base.BaseViewModel
 import me.li2.movies.data.model.*
 import me.li2.movies.util.distinctUntilChanged
 import me.li2.movies.util.io
+import me.li2.movies.util.ui
 
 class MovieDetailViewModel(movieItem: MovieItemUI) : BaseViewModel() {
 
@@ -110,7 +111,7 @@ class MovieDetailViewModel(movieItem: MovieItemUI) : BaseViewModel() {
         })
     }
 
-    fun toggleWatchlist(movieId: Int) {
+    fun toggleWatchlist(movieId: Int, onResult: (Boolean) -> Unit) {
         val isInWatchlist = _isInWatchlist.value.orFalse()
         io {
             if (isInWatchlist) {
@@ -119,6 +120,9 @@ class MovieDetailViewModel(movieItem: MovieItemUI) : BaseViewModel() {
                 repository.saveToWatchlist(movieId)
             }
             _isInWatchlist.postValue(!isInWatchlist)
+            ui {
+                onResult(!isInWatchlist)
+            }
         }
     }
 
