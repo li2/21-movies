@@ -14,16 +14,14 @@ import me.li2.movies.data.local.AppDatabase.Companion.DATABASE_VERSION
 import me.li2.movies.data.local.converters.GenreListConverter
 import me.li2.movies.data.local.converters.LocalDateConverter
 import me.li2.movies.data.local.converters.TrailerListConverter
-import me.li2.movies.data.model.GenreUI
-import me.li2.movies.data.model.MovieDetailUI
-import me.li2.movies.data.model.MovieReviewUI
-import me.li2.movies.data.model.Trailer
+import me.li2.movies.data.model.*
 
 @Database(entities = [
     MovieDetailUI::class,
     MovieReviewUI::class,
     Trailer::class,
-    GenreUI::class
+    GenreUI::class,
+    WatchlistMovieDB::class
 ], version = DATABASE_VERSION, exportSchema = false)
 @TypeConverters(
         GenreListConverter::class,
@@ -36,6 +34,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun reviewsDao(): ReviewDao
     abstract fun trailerDao(): TrailerDao
     abstract fun genresDao(): GenresDao
+    abstract fun watchlistDao(): WatchlistDao
 
     companion object {
         internal const val DATABASE_VERSION = 1
@@ -44,6 +43,7 @@ abstract class AppDatabase : RoomDatabase() {
         const val TABLE_REVIEWS = "ReviewsTable"
         const val TABLE_TRAILERS = "TrailersTable"
         const val TABLE_GENRES = "GenresTable"
+        const val TABLE_WATCHLIST = "WatchlistTable"
         private const val SELECT_FROM = "SELECT * FROM"
         private const val DELETE_FROM = "DELETE FROM"
         internal const val SELECT_FROM_MOVIES = "$SELECT_FROM $TABLE_MOVIES"
@@ -51,6 +51,8 @@ abstract class AppDatabase : RoomDatabase() {
         internal const val DELETE_FROM_REVIEWS = "$DELETE_FROM $TABLE_REVIEWS"
         internal const val SELECT_FROM_TRAILERS = "$SELECT_FROM $TABLE_TRAILERS"
         internal const val SELECT_FROM_GENRES = "$SELECT_FROM $TABLE_GENRES"
+        internal const val SELECT_FROM_WATCHLIST = "$SELECT_FROM $TABLE_WATCHLIST"
+        internal const val DELETE_FROM_WATCHLIST = "$DELETE_FROM $TABLE_WATCHLIST"
 
         /*it's MANDATORY to write test for migrations https://developer.android.com/training/data-storage/room/migrating-db-versions.html
         cause it can cause a crash loop

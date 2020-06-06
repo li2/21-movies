@@ -24,8 +24,8 @@ import me.li2.movies.ui.widgets.trailers.TrailerListViewHolder
 
 class MovieDetailAdapter : ListAdapter<BaseRowData, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
 
-    private val _onRateClicks = PublishSubject.create<Unit>()
-    val onRateClicks: Observable<Unit> = _onRateClicks.toFlowable(BackpressureStrategy.LATEST).toObservable()
+    private val _onSaveClicks = PublishSubject.create<Int>()
+    val onSaveClicks: Observable<Int> = _onSaveClicks.toFlowable(BackpressureStrategy.LATEST).toObservable()
 
     private val _onPosterClicks = PublishSubject.create<Pair<View, String>>()
     val onPosterClicks: Observable<Pair<View, String>> = _onPosterClicks.toFlowable(BackpressureStrategy.LATEST).toObservable()
@@ -51,7 +51,7 @@ class MovieDetailAdapter : ListAdapter<BaseRowData, RecyclerView.ViewHolder>(DIF
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            ROW_TYPE_DETAIL.ordinal -> MovieDetailViewHolder.create(parent, _onRateClicks, _onCategoryClicks, _onPosterClicks)
+            ROW_TYPE_DETAIL.ordinal -> MovieDetailViewHolder.create(parent, _onSaveClicks, _onCategoryClicks, _onPosterClicks)
             ROW_TYPE_TRAILERS.ordinal -> TrailerListViewHolder.create(parent, _onTrailerClicks)
             ROW_TYPE_CREDITS.ordinal -> CreditListViewHolder.create(parent, _onCreditClicks)
             ROW_TYPE_REVIEWS.ordinal -> ReviewListViewHolder.create(parent)

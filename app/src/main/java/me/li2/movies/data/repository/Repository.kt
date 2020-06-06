@@ -131,4 +131,10 @@ class Repository : KodeinAware {
                     localDataSource.insertGenres(data)
         }.load()
     }
+
+    suspend fun saveToWatchlist(movieId: Int): Long = localDataSource.saveToWatchlist(movieId)
+
+    fun removeFromWatchlist(movieId: Int) = localDataSource.removeFromWatchlist(movieId)
+
+    suspend fun isMovieInWatchlist(movieId: Int) = localDataSource.isMovieInWatchlist(movieId)
 }

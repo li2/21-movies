@@ -22,7 +22,7 @@ import me.li2.movies.databinding.MovieDetailViewBinding
 import me.li2.movies.ui.movies.MoviesCategory
 
 class MovieDetailViewHolder(binding: MovieDetailViewBinding,
-                            private val onRateClicks: PublishSubject<Unit>,
+                            private val onSaveClicks: PublishSubject<Int>,
                             private val onCategoryClicks: PublishSubject<MoviesCategory>,
                             private val onPosterClicks: PublishSubject<Pair<View, String>>)
     : BaseViewHolder<Resource<MovieDetailUI>, MovieDetailViewBinding>(binding) {
@@ -42,6 +42,10 @@ class MovieDetailViewHolder(binding: MovieDetailViewBinding,
                     .map { Pair(binding.posterImageView, url) }
                     .subscribe(onPosterClicks)
         }
+
+        item.data?.id?.let { movieId ->
+            binding.saveButton.clicks().throttleFirstShort().map { movieId }.subscribe(onSaveClicks)
+        }
     }
 
     @SuppressLint("CheckResult")
@@ -58,11 +62,11 @@ class MovieDetailViewHolder(binding: MovieDetailViewBinding,
 
     companion object {
         fun create(parent: ViewGroup,
-                   onRateClicks: PublishSubject<Unit>,
+                   onSaveClicks: PublishSubject<Int>,
                    onCategoryClicks: PublishSubject<MoviesCategory>,
                    onPosterClicks: PublishSubject<Pair<View, String>>): MovieDetailViewHolder {
             val binding = newBindingInstance(parent, R.layout.movie_detail_view) as MovieDetailViewBinding
-            return MovieDetailViewHolder(binding, onRateClicks, onCategoryClicks, onPosterClicks)
+            return MovieDetailViewHolder(binding, onSaveClicks, onCategoryClicks, onPosterClicks)
         }
     }
 }

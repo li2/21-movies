@@ -11,6 +11,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import me.li2.android.common.arch.*
+import me.li2.android.common.logic.orFalse
 import me.li2.movies.base.BaseViewModel
 import me.li2.movies.data.model.*
 import me.li2.movies.util.distinctUntilChanged
@@ -31,25 +32,30 @@ class MovieDetailViewModel(movieItem: MovieItemUI) : BaseViewModel() {
         get() = _credits.distinctUntilChanged()
 
     private val _movieReviews = MutableLiveData<Resource<List<MovieReviewUI>>>(Resource.loading(emptyList()))
-    internal val movieReviews: LiveData<Resource<List<MovieReviewUI>>>
+    private val movieReviews: LiveData<Resource<List<MovieReviewUI>>>
         get() = _movieReviews.distinctUntilChanged()
 
     private val _recommendations = MutableLiveData<Resource<List<MovieItemUI>>>(Resource.loading(emptyList()))
-    internal val recommendations: LiveData<Resource<List<MovieItemUI>>>
+    private val recommendations: LiveData<Resource<List<MovieItemUI>>>
         get() = _recommendations.distinctUntilChanged()
+
+    private val _isInWatchlist = MutableLiveData(false)
+    private val isInWatchlist: LiveData<Boolean>
+        get() = _isInWatchlist.distinctUntilChanged()
 
     internal var movieDetailRows: MediatorLiveData<List<BaseRowData>>
 
     init {
         @Suppress("UNCHECKED_CAST")
-        movieDetailRows = combineLatest(movieDetail, trailers, credits, movieReviews, recommendations) { results ->
+        movieDetailRows = combineLatest(movieDetail, trailers, credits, movieReviews, recommendations, isInWatchlist) { results ->
             val movieDetail = results[0] as Resource<MovieDetailUI>
             val trailers = results[1] as Resource<List<Trailer>>
             val credits = results[2] as Resource<CreditListUI>
             val reviews = results[3] as Resource<List<MovieReviewUI>>
             val recommendations = results[4] as Resource<List<MovieItemUI>>
+            val isInWatchlist = results[5] as Boolean
 
-            listOf(DetailRowData(movieDetail = movieDetail),
+            listOf(DetailRowData(movieDetail = movieDetail.copy(data = movieDetail.data?.copy(isSaved = isInWatchlist))),
                     TrailersRowData(trailers = trailers),
                     CreditsRowData(credits = credits),
                     ReviewsRowData(reviews = reviews),
@@ -63,6 +69,7 @@ class MovieDetailViewModel(movieItem: MovieItemUI) : BaseViewModel() {
         getMovieReviews(movieId)
         getMovieTrailers(movieId)
         getMovieRecommendations(movieId)
+        isMovieInWatchlist(movieId)
     }
 
     private fun getMovieDetail(movieId: Int) {
@@ -102,5 +109,23 @@ class MovieDetailViewModel(movieItem: MovieItemUI) : BaseViewModel() {
                     .map { MapperUI.toMovieItemUI(it) }
             _recommendations.postSuccess(movies)
         })
+    }
+
+    fun toggleWatchlist(movieId: Int) {
+        val isInWatchlist = _isInWatchlist.value.orFalse()
+        io {
+            if (isInWatchlist) {
+                repository.removeFromWatchlist(movieId)
+            } else {
+                repository.saveToWatchlist(movieId)
+            }
+            _isInWatchlist.postValue(!isInWatchlist)
+        }
+    }
+
+    private fun isMovieInWatchlist(movieId: Int) {
+        io {
+            _isInWatchlist.postValue(repository.isMovieInWatchlist(movieId))
+        }
     }
 }

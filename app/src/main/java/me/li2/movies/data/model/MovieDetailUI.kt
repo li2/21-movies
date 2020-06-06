@@ -41,7 +41,9 @@ data class MovieDetailUI(
         val voteAverage: Double,
         val voteAverageDisplay: String,
         val voteCount: Int,
-        val voteCountDisplay: String
+        val voteCountDisplay: String,
+        // this field is not from the server but stored locally.
+        val isSaved: Boolean = false
 ) : Parcelable {
 
     fun genresToCategories() = genres.map { GenreCategory(it) }

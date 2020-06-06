@@ -5,10 +5,7 @@
 package me.li2.movies.data.local
 
 import me.li2.movies.App
-import me.li2.movies.data.model.GenreUI
-import me.li2.movies.data.model.MovieDetailUI
-import me.li2.movies.data.model.MovieReviewUI
-import me.li2.movies.data.model.Trailer
+import me.li2.movies.data.model.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -48,5 +45,17 @@ class LocalDataSource : KodeinAware {
 
     suspend fun getGenres(): List<GenreUI>? {
         return db.genresDao().getGenres()
+    }
+
+    suspend fun saveToWatchlist(movieId: Int): Long {
+        return db.watchlistDao().insertMovie(WatchlistMovieDB(movieId))
+    }
+
+    fun removeFromWatchlist(movieId: Int) {
+        return db.watchlistDao().deleteMovie(movieId)
+    }
+
+    suspend fun isMovieInWatchlist(movieId: Int): Boolean {
+        return db.watchlistDao().getMovie(movieId) != null
     }
 }

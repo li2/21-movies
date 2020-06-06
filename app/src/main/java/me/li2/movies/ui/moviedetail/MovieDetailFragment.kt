@@ -85,6 +85,10 @@ class MovieDetailFragment : BaseFragment(), RootViewStore {
             }
         }
 
+        compositeDisposable += detailAdapter.onSaveClicks.subscribe {
+            viewModel.toggleWatchlist(it)
+        }
+
         compositeDisposable += detailAdapter.onTrailerClicks.subscribe { trailer ->
             requireContext().openUrl(trailer.url)
         }
