@@ -17,7 +17,7 @@ import me.li2.movies.util.releaseDateWithBestLocalPattern
 
 object MapperUI {
 
-    fun toMovieItemUI(api: TmdbMovieAPI) = MovieItemUI(
+    private fun toMovieItemUI(api: TmdbMovieAPI) = MovieItemUI(
             id = api.id,
             title = api.title,
             releaseDate = api.releaseDate?.parseLocalDate(),
@@ -31,6 +31,21 @@ object MapperUI {
             voteCount = api.voteCount,
             voteCountDisplay = formatVoteCount(api.voteCount),
             overview = api.overview)
+
+    private fun toMovieItemUI(movieDetailUI: MovieDetailUI) = MovieItemUI(
+            id = movieDetailUI.id,
+            title = movieDetailUI.title,
+            releaseDate = movieDetailUI.releaseDate,
+            releaseDateDisplay = movieDetailUI.releaseDateDisplay,
+            posterUrl = movieDetailUI.posterUrl,
+            posterOriginalUrl = movieDetailUI.posterUrl,
+            backdropUrl = movieDetailUI.backdropUrl,
+            popularity = movieDetailUI.popularity,
+            voteAverage = movieDetailUI.voteAverage,
+            voteAverageDisplay = movieDetailUI.voteAverageDisplay,
+            voteCount = movieDetailUI.voteCount,
+            voteCountDisplay = movieDetailUI.voteCountDisplay,
+            overview = movieDetailUI.overview)
 
     fun toMovieItemUI(api: MessageAPI) = MovieItemUI(
             id = api.id.toInt(),
@@ -52,6 +67,12 @@ object MapperUI {
             page = api.page,
             totalPages = api.totalPages,
             totalResults = api.totalResults)
+
+    fun toMovieItemPagingUI(watchlist: List<MovieDetailUI>) = MovieItemPagingUI(
+            results = watchlist.map { toMovieItemUI(it) }.toMutableList(),
+            page = 1,
+            totalPages = 1,
+            totalResults = watchlist.size)
 
     fun toGenreUI(api: Genre) = GenreUI(api.id, api.name)
 

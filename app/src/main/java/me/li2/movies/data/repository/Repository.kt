@@ -23,15 +23,30 @@ class Repository : KodeinAware {
     private val localDataSource by instance<LocalDataSource>()
     private val tmdbApiRateLimit: RateLimiter<String> = RateLimiter(2, TimeUnit.MINUTES)
 
-    suspend fun getTrendingMovies(timeWindow: TimeWindow) = tmdbDataSource.getTrendingMoviesAsync(timeWindow).await()
+    suspend fun getTrendingMovies(timeWindow: TimeWindow): MovieItemPagingUI {
+        val api = tmdbDataSource.getTrendingMoviesAsync(timeWindow).await()
+        return MapperUI.toMovieItemPagingUI(api)
+    }
 
-    suspend fun getTopMovies(page: Int) = tmdbDataSource.getTopMoviesAsync(page).await()
+    suspend fun getTopMovies(page: Int): MovieItemPagingUI {
+        val api = tmdbDataSource.getTopMoviesAsync(page).await()
+        return MapperUI.toMovieItemPagingUI(api)
+    }
 
-    suspend fun getNowPlayingMovies(page: Int) = tmdbDataSource.getNowPlayingMoviesAsync(page).await()
+    suspend fun getNowPlayingMovies(page: Int): MovieItemPagingUI {
+        val api = tmdbDataSource.getNowPlayingMoviesAsync(page).await()
+        return MapperUI.toMovieItemPagingUI(api)
+    }
 
-    suspend fun getUpcomingMovies(page: Int) = tmdbDataSource.getUpcomingMoviesAsync(page).await()
+    suspend fun getUpcomingMovies(page: Int): MovieItemPagingUI {
+        val api = tmdbDataSource.getUpcomingMoviesAsync(page).await()
+        return MapperUI.toMovieItemPagingUI(api)
+    }
 
-    suspend fun getPopularMovies(page: Int) = tmdbDataSource.getPopularMoviesAsync(page).await()
+    suspend fun getPopularMovies(page: Int): MovieItemPagingUI {
+        val api = tmdbDataSource.getPopularMoviesAsync(page).await()
+        return MapperUI.toMovieItemPagingUI(api)
+    }
 
     //suspend fun getMovieDetail(movieId: Int) = tmdbDataSource.getMovieDetailAsync(movieId).await()
 
@@ -112,11 +127,15 @@ class Repository : KodeinAware {
     suspend fun getMovieCredits(movieId: Int) =
             MapperUI.toCreditListUI(tmdbDataSource.getMovieCreditsAsync(movieId).await())
 
-    suspend fun getMovieRecommendations(movieId: Int, page: Int) =
-            tmdbDataSource.getMovieRecommendationsAsync(movieId, page).await()
+    suspend fun getMovieRecommendations(movieId: Int, page: Int): MovieItemPagingUI {
+        val api = tmdbDataSource.getMovieRecommendationsAsync(movieId, page).await()
+        return MapperUI.toMovieItemPagingUI(api)
+    }
 
-    suspend fun searchMovies(keyword: String, page: Int, year: Int? = null) =
-            tmdbDataSource.searchMoviesAsync(keyword, page, year).await()
+    suspend fun searchMovies(keyword: String, page: Int, year: Int? = null): MovieItemPagingUI {
+        val api = tmdbDataSource.searchMoviesAsync(keyword, page, year).await()
+        return MapperUI.toMovieItemPagingUI(api)
+    }
 
     suspend fun getGenres(result: MutableLiveData<Resource<List<GenreUI>>>) {
         return object : NetworkBoundResource<List<GenreUI>>(result) {
@@ -137,4 +156,9 @@ class Repository : KodeinAware {
     fun removeFromWatchlist(movieId: Int) = localDataSource.removeFromWatchlist(movieId)
 
     suspend fun isMovieInWatchlist(movieId: Int) = localDataSource.isMovieInWatchlist(movieId)
+
+    suspend fun getWatchlist(): MovieItemPagingUI {
+        val watchlist = localDataSource.getWatchlist()
+        return MapperUI.toMovieItemPagingUI(watchlist)
+    }
 }

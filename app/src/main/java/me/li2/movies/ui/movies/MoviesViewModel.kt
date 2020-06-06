@@ -56,7 +56,7 @@ class MoviesViewModel : BaseViewModel() {
     private suspend fun getMoviesByCategory(category: MoviesCategory,
                                             forceRefresh: Boolean): MovieItemPagingUI {
         val nextPage = if (forceRefresh) TMDB_STARTING_PAGE_INDEX else _movies.nextPage()
-        val api = when (category) {
+        return when (category) {
             is TrendingCategory -> repository.getTrendingMovies(category.timeWindow)
             NowPlayingCategory -> repository.getNowPlayingMovies(nextPage)
             UpcomingCategory -> repository.getUpcomingMovies(nextPage)
@@ -65,8 +65,8 @@ class MoviesViewModel : BaseViewModel() {
             is RecommendationCategory -> repository.getMovieRecommendations(category.movieId, nextPage)
             is GenreCategory -> repository.searchMovies(category.genre.name, nextPage)
             is QueryCategory -> repository.searchMovies(category.query, nextPage)
+            Watchlist -> repository.getWatchlist()
         }
-        return MapperUI.toMovieItemPagingUI(api)
     }
 
     fun filterMovies(updateFilter: MoviesFilter.() -> Unit = {}) {

@@ -44,9 +44,10 @@ class MoviesFragment : BaseFragment(), RootViewStore {
     private val args by navArgs<MoviesFragmentArgs>()
     private val viewModel by viewModels<MoviesViewModel>()
 
-    // trending movies list is not paging supported
+    // trending and watchlist movies list is not paging supported
     private val isPagingSupported: Boolean
         get() = args.moviesCategory !is TrendingCategory
+                && args.moviesCategory !is Watchlist
 
     private val moviesAdapter = MovieListAdapter(LINEAR_LAYOUT_VERTICAL)
     private val pagingAdapter = PagingItemAdapter()

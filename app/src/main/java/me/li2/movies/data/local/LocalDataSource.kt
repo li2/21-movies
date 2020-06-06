@@ -58,4 +58,8 @@ class LocalDataSource : KodeinAware {
     suspend fun isMovieInWatchlist(movieId: Int): Boolean {
         return db.watchlistDao().getMovie(movieId) != null
     }
+
+    suspend fun getWatchlist(): List<MovieDetailUI> {
+        return db.watchlistDao().getWatchlist()
+    }
 }

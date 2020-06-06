@@ -16,6 +16,7 @@ import me.li2.android.common.rx.throttleFirstShort
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.SettingsFragmentBinding
+import me.li2.movies.ui.movies.Watchlist
 import me.li2.movies.util.*
 
 class SettingsFragment : BaseFragment() {
@@ -32,6 +33,10 @@ class SettingsFragment : BaseFragment() {
     override fun initUi(view: View, savedInstanceState: Bundle?) {
         val context = view.context
 
+        binding.watchlistItemView.clicks().throttleFirstShort().subscribe {
+            navigateSlideInOut(SettingsFragmentDirections.showMoviesList(Watchlist))
+        }
+
         binding.themeSettingItemView.clicks().throttleFirstShort().subscribe {
             showThemeMenu(binding.themeSettingItemView)
         }
@@ -40,11 +45,11 @@ class SettingsFragment : BaseFragment() {
             context.openAppSettings(context.packageName)
         }
 
-        binding.codeSettingItemView.clicks().throttleFirstShort().subscribe {
+        binding.codeItemView.clicks().throttleFirstShort().subscribe {
             context.openUrl(Constants.SOURCE_CODE_URL)
         }
 
-        binding.dependenciesSettingItemView.clicks().throttleFirstShort().subscribe {
+        binding.dependenciesItemView.clicks().throttleFirstShort().subscribe {
             navigateSlideInOut(SettingsFragmentDirections.showDependencies())
         }
 

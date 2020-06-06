@@ -106,7 +106,6 @@ class MovieDetailViewModel(movieItem: MovieItemUI) : BaseViewModel() {
             _recommendations.postError(it)
         }, {
             val movies = repository.getMovieRecommendations(movieId, page).results
-                    .map { MapperUI.toMovieItemUI(it) }
             _recommendations.postSuccess(movies)
         })
     }

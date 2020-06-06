@@ -32,12 +32,23 @@
                 tools:ignore="HardcodedText" />
 
             <me.li2.movies.ui.settings.SettingItemView
-                android:id="@+id/themeSettingItemView"
+                android:id="@+id/watchlistItemView"
                 style="?attr/settingItemViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 app:layout_constraintTop_toBottomOf="@id/titleTextView"
+                app:settingEndIcon="@drawable/ic_navigate_next_24"
+                app:settingStartIcon="@drawable/ic_favorite_24"
+                app:settingTitle="Watchlist" />
+
+            <me.li2.movies.ui.settings.SettingItemView
+                android:id="@+id/themeSettingItemView"
+                style="?attr/settingItemViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                app:layout_constraintTop_toBottomOf="@id/watchlistItemView"
                 app:settingStartIcon="@drawable/ic_brightness_4_24"
                 app:settingTitle="Choose theme" />
 
@@ -54,7 +65,7 @@
                 app:settingTitle="App System Settings" />
 
             <me.li2.movies.ui.settings.SettingItemView
-                android:id="@+id/codeSettingItemView"
+                android:id="@+id/codeItemView"
                 style="?attr/settingItemViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -67,12 +78,12 @@
                 app:settingTitleTextColor="?android:attr/textColorLink" />
 
             <me.li2.movies.ui.settings.SettingItemView
-                android:id="@+id/dependenciesSettingItemView"
+                android:id="@+id/dependenciesItemView"
                 style="?attr/settingItemViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="0dp"
-                app:layout_constraintTop_toBottomOf="@id/codeSettingItemView"
+                app:layout_constraintTop_toBottomOf="@id/codeItemView"
                 app:settingEndIcon="@drawable/ic_navigate_next_24"
                 app:settingStartIcon="@drawable/ic_widgets_24"
                 app:settingTitle="Dependencies"
@@ -85,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/dependenciesSettingItemView"
+                app:layout_constraintTop_toBottomOf="@+id/dependenciesItemView"
                 app:layout_constraintVertical_bias="1.0" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

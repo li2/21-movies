@@ -34,3 +34,6 @@ data class GenreCategory(val genre: GenreUI) : MoviesCategory(genre.name)
 
 @Parcelize
 data class QueryCategory(val query: String) : MoviesCategory("")
+
+@Parcelize
+object Watchlist: MoviesCategory("Watchlist")

@@ -82,6 +82,9 @@
             <action
                 android:id="@+id/showDependencies"
                 app:destination="@id/dependenciesFragment" />
+            <action
+                android:id="@+id/showMoviesList"
+                app:destination="@id/moviesFragment" />
         </fragment>
 
         <fragment

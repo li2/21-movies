@@ -11,7 +11,6 @@ import me.li2.android.common.arch.Resource
 import me.li2.android.common.arch.Resource.Status.LOADING
 import me.li2.android.common.arch.combineLatest
 import me.li2.movies.base.BaseViewModel
-import me.li2.movies.data.model.MapperUI
 import me.li2.movies.data.model.MovieItemUI
 import me.li2.movies.data.model.TimeWindow
 import me.li2.movies.util.distinctUntilChanged
@@ -64,7 +63,6 @@ class HomeViewModel : BaseViewModel() {
                                   forceRefresh: Boolean = false) {
         ioWithLiveData(_trendingMovies, forceRefresh) {
             repository.getTrendingMovies(timeWindow).results
-                    .map { MapperUI.toMovieItemUI(it) }
                     .filter {
                         it.releaseDate != null && it.releaseDate.isAfter(LocalDate.now().minusYears(1))
                                 && it.voteCount > 20
@@ -77,33 +75,25 @@ class HomeViewModel : BaseViewModel() {
 
     private fun getNowPlayingMovies(page: Int, forceRefresh: Boolean = false) {
         ioWithLiveData(_nowPlayingMovies, forceRefresh) {
-            repository.getNowPlayingMovies(page).results.map {
-                MapperUI.toMovieItemUI(it)
-            }
+            repository.getNowPlayingMovies(page).results
         }
     }
 
     private fun getUpcomingMovies(page: Int, forceRefresh: Boolean = false) {
         ioWithLiveData(_upcomingMovies, forceRefresh) {
-            repository.getUpcomingMovies(page).results.map {
-                MapperUI.toMovieItemUI(it)
-            }
+            repository.getUpcomingMovies(page).results
         }
     }
 
     private fun getPopularMovies(page: Int, forceRefresh: Boolean = false) {
         ioWithLiveData(_popularMovies, forceRefresh) {
-            repository.getPopularMovies(page).results.map {
-                MapperUI.toMovieItemUI(it)
-            }
+            repository.getPopularMovies(page).results
         }
     }
 
     private fun getTopMovies(page: Int, forceRefresh: Boolean = false) {
         ioWithLiveData(_topMovies, forceRefresh) {
-            repository.getTopMovies(page).results.map {
-                MapperUI.toMovieItemUI(it)
-            }
+            repository.getTopMovies(page).results
         }
     }
 
