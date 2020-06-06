@@ -2,7 +2,8 @@
     <string name="movie_full_rate">/ 10</string>
     <string name="transition_name_movie" translatable="false">movie transition</string>
     <string name="rate_movie">Rate Movie</string>
-    <string name="license">Copyright © 2020 Weiyi Li\nLicensed under the Apache License</string>
+    <string name="license"><![CDATA[Copyright © 2020 <a href="https://github.com/li2" title="Weiyi Li">Weiyi Li</a><br/>Licensed under the Apache License]]></string>
+    <string name="license_ic_popcorn"><![CDATA[Icons made by <a href="https://www.flaticon.com/free-icon/popcorn_704939" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>]]></string>
 
     <string-array name="filter_vote_array">
         <item>0</item>

@@ -66,6 +66,14 @@ class MoviesFragment : BaseFragment(), RootViewStore {
         hideKeyboard()
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (args.moviesCategory is Watchlist) {
+            // watchlist can be changed when user remove movie
+            viewModel.getMovies(Watchlist, true)
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -128,6 +136,7 @@ class MoviesFragment : BaseFragment(), RootViewStore {
                 pagingAdapter.pagingState = MapperUI.toPagingState(it)
             }
             binding.shimmerContainer.shimmer.showAnimation(it.status == LOADING && it.data?.page == null)
+            binding.moviesEmptyView.isVisible = it.status != LOADING && it.data?.results.isNullOrEmpty()
         }
     }
 

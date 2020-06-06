@@ -44,7 +44,15 @@
             layout="@layout/movies_placeholder"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="80dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:visibility="gone" />
+
+        <include
+            android:id="@+id/moviesEmptyView"
+            layout="@layout/movies_empty_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:visibility="gone" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

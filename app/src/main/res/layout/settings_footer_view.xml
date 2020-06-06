@@ -51,14 +51,15 @@
             android:layout_marginTop="8dp"
             android:gravity="center"
             android:lineSpacingMultiplier="1.2"
-            android:text="@string/license"
             android:textAppearance="?textAppearanceBody2"
             android:textColor="?android:attr/textColorPrimary"
             android:visibility="@{!TextUtils.isEmpty(versionName)}"
+            app:html="@{@string/license}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/versionNameTextView"
-            tools:ignore="HardcodedText" />
+            tools:ignore="HardcodedText"
+            tools:text="@string/license" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
