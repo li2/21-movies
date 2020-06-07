@@ -4,11 +4,7 @@
  */
 package me.li2.movies.util
 
-import android.content.Context
-import android.content.Intent
-import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
@@ -19,7 +15,6 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import me.li2.android.common.arch.Resource
 import me.li2.android.common.logic.orFalse
 import me.li2.movies.R
-import timber.log.Timber.e
 
 fun doNothing() {
     // do nothing
@@ -27,19 +22,6 @@ fun doNothing() {
 
 fun reportException(exception: Exception) {
     FirebaseCrashlytics.getInstance().recordException(exception)
-}
-
-fun Context.openUrl(url: String) {
-    startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
-}
-
-fun Context.getVersionName(): String? {
-    return try {
-        packageManager.getPackageInfo(packageName, 0).versionName
-    } catch (exception: PackageManager.NameNotFoundException) {
-        e(exception, "failed to get version name")
-        null
-    }
 }
 
 /*

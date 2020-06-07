@@ -17,9 +17,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.rxjava3.kotlin.plusAssign
 import me.li2.android.common.arch.observeOnView
+import me.li2.android.common.framework.openUrl
 import me.li2.android.common.number.dpToPx
 import me.li2.android.view.image.GlideRequestListener
 import me.li2.android.view.list.LinearSpacingDecoration
+import me.li2.android.view.list.enforceSingleScrollDirection
 import me.li2.android.view.navigation.setToolbar
 import me.li2.android.view.popup.toast
 import me.li2.movies.R

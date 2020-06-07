@@ -5,7 +5,7 @@
 package me.li2.movies.data.repository
 
 import android.content.SharedPreferences
-import me.li2.movies.util.ThemeHelper
+import me.li2.android.view.theme.ThemeHelper
 
 class AppSettings(private val sp: SharedPreferences) {
 

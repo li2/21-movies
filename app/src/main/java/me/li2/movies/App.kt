@@ -6,6 +6,7 @@ package me.li2.movies
 
 import androidx.multidex.MultiDexApplication
 import com.jakewharton.threetenabp.AndroidThreeTen
+import me.li2.android.view.theme.ThemeHelper
 import me.li2.movies.AppBuildConfig.configCrashlytics
 import me.li2.movies.AppBuildConfig.configDebugLog
 import me.li2.movies.data.repository.AppSettings
@@ -13,7 +14,6 @@ import me.li2.movies.di.MainComponent.appModule
 import me.li2.movies.di.networkModule
 import me.li2.movies.fcm.NotificationUtil.createNotificationChannels
 import me.li2.movies.util.Constants
-import me.li2.movies.util.ThemeHelper
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule

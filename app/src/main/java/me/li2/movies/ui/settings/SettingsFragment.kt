@@ -11,8 +11,11 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
 import androidx.databinding.DataBindingUtil
 import com.jakewharton.rxbinding4.view.clicks
+import me.li2.android.common.framework.getVersionName
 import me.li2.android.common.framework.openAppSettings
+import me.li2.android.common.framework.openUrl
 import me.li2.android.common.rx.throttleFirstShort
+import me.li2.android.view.theme.ThemeHelper
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.data.repository.AppSettings

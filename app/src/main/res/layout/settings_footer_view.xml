@@ -52,7 +52,7 @@
             android:textAppearance="?textAppearanceBody2"
             android:textColor="?android:attr/textColorPrimary"
             android:visibility="@{!TextUtils.isEmpty(versionName)}"
-            app:html="@{@string/license}"
+            app:htmlText="@{@string/license}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/versionNameTextView"

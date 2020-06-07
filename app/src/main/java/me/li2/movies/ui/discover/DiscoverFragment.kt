@@ -8,17 +8,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import com.jakewharton.rxbinding4.widget.editorActionEvents
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.kotlin.plusAssign
 import me.li2.android.common.arch.observeOnView
+import me.li2.android.view.text.endIconClicks
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.DiscoverFragmentBinding
 import me.li2.movies.ui.movies.QueryCategory
-import me.li2.movies.util.endIconClicks
-import me.li2.movies.util.imeActionSearchClicks
 import me.li2.movies.util.navigateSlideInOut
 
 class DiscoverFragment : BaseFragment() {
@@ -37,7 +38,9 @@ class DiscoverFragment : BaseFragment() {
 
         compositeDisposable += Observable.merge(
                 binding.searchInputLayout.endIconClicks(),
-                binding.searchEditText.imeActionSearchClicks()
+                binding.searchEditText.editorActionEvents().flatMap {
+                    if (it.actionId == IME_ACTION_SEARCH) Observable.just(Unit) else Observable.empty()
+                }
         ).subscribe {
             binding.searchEditText.text.toString().let { query ->
                 if (query.isNotEmpty()) {

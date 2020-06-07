@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
+import me.li2.android.common.framework.openUrl
 import me.li2.android.common.number.dpToPx
 import me.li2.android.view.list.LinearSpacingDecoration
 import me.li2.android.view.navigation.setToolbar
@@ -18,7 +19,6 @@ import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.DependenciesFragmentBinding
 import me.li2.movies.ui.settings.SettingsViewModel
-import me.li2.movies.util.openUrl
 
 class DependenciesFragment : BaseFragment() {
 

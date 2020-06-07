@@ -100,7 +100,7 @@ android {
     configurations.all {
         // gradle promoted library version from a deleted tag, noteweiyi
         // com.github.li2:android-common:f06ad43e -> 0.1.7
-        //resolutionStrategy.force 'com.github.li2:android-common:628bb107'
+        //resolutionStrategy.force 'com.github.li2:android-common:3b9085fb'
     }
 }
 

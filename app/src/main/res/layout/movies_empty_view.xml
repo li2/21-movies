@@ -39,7 +39,7 @@
             android:textAppearance="?attr/textAppearanceCaption"
             android:textColor="?android:attr/textColorSecondary"
             android:textSize="8sp"
-            app:html="@{@string/license_ic_popcorn}"
+            app:htmlText="@{@string/license_ic_popcorn}"
             app:layout_constraintBottom_toTopOf="@id/titleTextView"
             app:layout_constraintTop_toBottomOf="@id/iconImageView"
             tools:ignore="HardcodedText,SmallSp"
