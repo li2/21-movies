@@ -15,13 +15,16 @@ import me.li2.android.common.framework.openAppSettings
 import me.li2.android.common.rx.throttleFirstShort
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
+import me.li2.movies.data.repository.AppSettings
 import me.li2.movies.databinding.SettingsFragmentBinding
 import me.li2.movies.ui.movies.Watchlist
 import me.li2.movies.util.*
+import org.kodein.di.generic.instance
 
 class SettingsFragment : BaseFragment() {
 
     private lateinit var binding: SettingsFragmentBinding
+    private val appSettings by instance<AppSettings>()
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
@@ -37,6 +40,7 @@ class SettingsFragment : BaseFragment() {
             navigateSlideInOut(SettingsFragmentDirections.showMoviesList(Watchlist))
         }
 
+        binding.themeSettingItemView.settingValue = appSettings.themePref
         binding.themeSettingItemView.clicks().throttleFirstShort().subscribe {
             showThemeMenu(binding.themeSettingItemView)
         }
@@ -69,7 +73,8 @@ class SettingsFragment : BaseFragment() {
                 R.id.themeDark -> ThemeHelper.DARK_MODE
                 else -> ThemeHelper.DEFAULT_MODE
             }
-            binding.themeSettingItemView.setTitle(mode)
+            binding.themeSettingItemView.settingValue = mode
+            appSettings.themePref = mode
             ThemeHelper.applyTheme(mode)
             true
         }

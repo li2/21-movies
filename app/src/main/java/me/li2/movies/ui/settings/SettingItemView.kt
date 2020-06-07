@@ -24,6 +24,18 @@ class SettingItemView @JvmOverloads constructor(
     private var titleTextView: TextView
     private var valueTextView: TextView
 
+    var settingTitle: String? = null
+        set(value) {
+            field = value
+            titleTextView.text = value
+        }
+
+    var settingValue: String? = null
+        set(value) {
+            field = value
+            valueTextView.text = value
+        }
+
     init {
         View.inflate(context, R.layout.setting_item_view, this)
 
@@ -63,13 +75,5 @@ class SettingItemView @JvmOverloads constructor(
             setTextAppearance(context, _valueTextAppearance)
             _valueTextColor?.let { setTextColor(it) }
         }
-    }
-
-    fun setTitle(title: String) {
-        titleTextView.text = title
-    }
-
-    fun setValue(value: String) {
-        valueTextView.text = value
     }
 }
