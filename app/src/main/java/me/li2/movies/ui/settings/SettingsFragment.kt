@@ -53,6 +53,10 @@ class SettingsFragment : BaseFragment() {
             navigateSlideInOut(SettingsFragmentDirections.showDependencies())
         }
 
+        binding.playstoreItemView.clicks().throttleFirstShort().subscribe {
+            context.openUrl(Constants.PLAYSTORE_URL)
+        }
+
         binding.settingsFooterView.versionName = context.getVersionName()
     }
 
