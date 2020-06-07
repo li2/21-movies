@@ -39,8 +39,8 @@ android {
         applicationId "me.li2.movies"
         minSdkVersion androidMinSdk_version
         targetSdkVersion androidTargetSdk_version
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "2.0"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
