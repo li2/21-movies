@@ -117,6 +117,7 @@ class MovieDetailFragment : BaseFragment(), RootViewStore {
         }
 
         compositeDisposable += detailAdapter.onCategoryClicks.subscribe {
+            removeContainerExitTransition()
             navigateSlideInOut(MovieDetailFragmentDirections.showMoviesList(it))
         }
 
@@ -127,6 +128,7 @@ class MovieDetailFragment : BaseFragment(), RootViewStore {
         }
 
         compositeDisposable += detailAdapter.onMoreRecClicks.subscribe {
+            removeContainerExitTransition()
             navigateSlideInOut(MovieDetailFragmentDirections.showMoviesList(RecommendationCategory(args.movieItem.id)))
         }
     }

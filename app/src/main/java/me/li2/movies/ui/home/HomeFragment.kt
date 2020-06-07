@@ -74,6 +74,7 @@ class HomeFragment : BaseFragment(), RootViewStore {
                 binding.popularMovieListView.onMoreClicks.map { PopularCategory },
                 binding.topRatedMovieListView.onMoreClicks.map { TopRatedCategory }
         ).subscribe {
+            removeContainerExitTransition()
             navigateSlideInOut(HomeFragmentDirections.showMoviesList(it))
         }
     }
