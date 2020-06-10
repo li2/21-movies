@@ -1,10 +1,12 @@
 # API
-#google-services.json
+google-services.json
+output.json
 tmdb_api_key.xml
 
 # Built application files
 *.apk
 *.ap_
+*.aab
 
 # Files for the ART/Dalvik VM
 *.dex
