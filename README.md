@@ -1,9 +1,8 @@
 # The 21 Movies App
 
-![.github/workflows/android.yml](https://github.com/li2/21-movies/workflows/.github/workflows/development.yml/badge.svg) ![.github/workflows/android.yml](https://github.com/li2/21-movies/workflows/.github/workflows/uat_release.yml/badge.svg) ![.github/workflows/android.yml](https://github.com/li2/21-movies/workflows/.github/workflows/production_release.yml/badge.svg)
+![UAT Release CI](https://github.com/li2/21-movies/workflows/UAT%20Release%20CI/badge.svg?branch=master) ![Production Release CI](https://github.com/li2/21-movies/workflows/Production%20Release%20CI/badge.svg?branch=master) ![Development CI](https://github.com/li2/21-movies/workflows/Development%20CI/badge.svg?branch=master)
 
-<img width="64" alt="" src="screenshots/21-movies-logo-launcher.png">
-<a href='https://play.google.com/store/apps/details?id=me.li2.movies'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' width="25%"/></a>
+<img width="64" alt="" src="screenshots/21-movies-logo-launcher.png"> <a href='https://play.google.com/store/apps/details?id=me.li2.movies'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' width="25%"/></a>
 
 This App is build on **Android Architecture Components (MVVM)** in **Kotlin**, contains the following features:
 
@@ -166,6 +165,28 @@ fun <T : Any, L : LiveData<T>> Fragment.observeOnView(liveData: L, body: (T) -> 
 }
 ```
 
+### DataBinding
+
+Almost all the views/layouts are updated through DataBinding, `Resource<T>` is passed directly to view, which allows view to handle loading state, error state, empty state and data by itself, which means a bunch of codes can be offload from Fragment:
+
+```xml
+    <data>
+        <import type="java.util.List" />
+        <import type="me.li2.android.common.arch.Resource" />
+        <import type="me.li2.movies.data.model.MovieItemUI" />
+        <variable
+            name="movies"
+            type="Resource&lt;List&lt;MovieItemUI>>" />
+    </data>
+    <me.li2.movies.ui.widgets.movies.MovieListView
+        android:id="@+id/movieListView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/movies_horizontal_list_height"
+        app:movies="@{movies}"
+        tools:text="Recommendations" />
+```
+
+
 ### ViewPager2 Auto-scroll & Carousel Effect
 
 Having the individual components store their own logic to react to changes of lifecycle status makes the fragment logic easier to manage.
@@ -213,9 +234,11 @@ Also support fastlane with 3 main lanes:
 - **productionRelease**: use `supply` to deploy signed App bundle file(.aab) to PlayStore. 
 
     KNOWN ISSUE: [fastlane #16593: Google Api Error: Invalid request - Access Not Configured](https://github.com/fastlane/fastlane/issues/16593)
+    
+
+<img width="600" alt="" src="screenshots/github-actions.jpg">
 
 Read more: https://github.com/li2/hello_fastlane
-<img width="700" alt="" src="screenshots/github-actions.jpg">
 
 
 

@@ -5,7 +5,7 @@
 # - junit tests.
 # - todo: code linters (which check style formatting), security checks, code coverage, instrumented unit tests, etc.
 #
-name: Android Development CI
+name: Development CI
 
 on:
   push:
