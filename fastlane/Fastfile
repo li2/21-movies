@@ -22,7 +22,7 @@ platform :android do
   end
 
   desc "Submit a new Beta Build to Firebase App Distribution"
-  lane :beta do
+  lane :uatRelease do
     gradle(
       task: "assemble",
       flavor: "Uat",
@@ -45,7 +45,7 @@ platform :android do
   end
 
   desc "Deploy a new bundle version to the Google Play Store"
-  lane :playstore do
+  lane :productionRelease do
     gradle(
       task: "clean bundle",
       flavor: "Production",
