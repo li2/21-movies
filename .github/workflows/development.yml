@@ -1,0 +1,50 @@
+# Development workflow
+#
+# workflow will be triggered on every new code commits on feature branches
+# jobs include:
+# - junit tests.
+# - todo: code linters (which check style formatting), security checks, code coverage, instrumented unit tests, etc.
+#
+name: Android Development CI
+
+on:
+  push:
+    branches:
+      - 'feature*'
+
+# Each workflow can have multiple jobs which by default are running in parallel, but
+# it could be changed to have specific sequence of them.
+jobs:
+  unitTest:
+    name: Run Unit Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
+      - name: Unit tests
+        run: bash ./gradlew test --stacktrace
+
+  danger:
+    name: Run Danger Checks
+    runs-on: ubuntu-latest
+    needs: unitTest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '2.6'
+      # https://github.com/marketplace/actions/danger-action
+      - uses: MeilCli/danger-action@v2
+        with:
+          plugins_file: 'Gemfile'
+          danger_file: 'Dangerfile'
+          danger_id: 'danger-pr'
+        env:
+          DANGER_GITHUB_API_TOKEN:
+            ${{ secrets.PUBLISH_GITHUB_ACTION_TOKEN }}

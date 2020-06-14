@@ -1,5 +1,7 @@
 # The 21 Movies App
 
+![.github/workflows/android.yml](https://github.com/li2/21-movies/workflows/.github/workflows/development.yml/badge.svg) ![.github/workflows/android.yml](https://github.com/li2/21-movies/workflows/.github/workflows/uat_release.yml/badge.svg) ![.github/workflows/android.yml](https://github.com/li2/21-movies/workflows/.github/workflows/production_release.yml/badge.svg)
+
 <img width="64" alt="" src="screenshots/21-movies-logo-launcher.png">
 <a href='https://play.google.com/store/apps/details?id=me.li2.movies'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' width="25%"/></a>
 
@@ -21,7 +23,7 @@ All movies data and images are from [The Movie Database (TMDb](https://www.themo
 ## Architecture
 
 - **MVVM**:
-    
+  
     App is highly rely on Android Architecture Components, `ViewModel` is used to fetch data from `Repository` and to expose data as well as status (loading, success, error) to UI through `LiveData`, `Fragment` observers on the LiveData then render UI through `DataBinding`.
     
 - **Remote Data Source**: Retrofit + Moshi(Json) + Coroutine
@@ -186,6 +188,34 @@ Although your data was stored in ViewModel and the Fragment view can be reconstr
 
 - load data in your ViewModel's init {} or Fragment's onCreate(), not in onViewCreated().
 - store the view in a variable and instead of inflating a new layout, just return the instance of pre-stored view on onCreateView()
+
+
+## CI/CD
+
+CI/CD using GitHub Actions, I added 3 workflows:
+
+- **Development workflow**
+
+    triggered on every new code commits on feature branches, jobs include junit test.
+- **UAT release workflow**
+
+    triggered on pushing commits or pull request to master (main trunk), jobs include junit test, deploy signed APK to Firebase App Distribution.
+- **Production release workflow**
+
+    triggered on Github tags created, jobs include: junit test, automatically bump version code (simply +1) and version name (from tag), deploy signed App bundle file(.aab) to PlayStore.
+
+Also support fastlane with 3 main lanes:
+
+- **test**
+
+- **uatRelease**: use `firebase_app_distribution` to deploy signed APK to Firebase App Distribution.
+
+- **productionRelease**: use `supply` to deploy signed App bundle file(.aab) to PlayStore. 
+
+    KNOWN ISSUE: [fastlane #16593: Google Api Error: Invalid request - Access Not Configured](https://github.com/fastlane/fastlane/issues/16593)
+
+Read more: https://github.com/li2/hello_fastlane
+<img width="700" alt="" src="screenshots/github-actions.jpg">
 
 
 

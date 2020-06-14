@@ -71,6 +71,43 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:xxxxxx:android:xxxxxx",
+        "android_client_info": {
+          "package_name": "me.li2.movies.uat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "xxxxxx.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "me.li2.movies.uat",
+            "certificate_hash": "xxxxxx"
+          }
+        },
+        {
+          "client_id": "xxxxxx.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "xxxxxx"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "xxxxxx.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"
