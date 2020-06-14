@@ -1,0 +1,2 @@
+json_key_file("fastlane/release-manager-api-key.json") # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
+package_name("me.li2.movies") # e.g. com.krausefx.app

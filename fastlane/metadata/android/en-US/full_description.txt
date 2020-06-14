@@ -1,0 +1,36 @@
+This App is built on Android Architecture Components (MVVM) in Kotlin, contains the following features:
+
+- Search Movies.
+- Discover movies list by categories and genres.
+- Save movie in watchlist locally.
+- View Movie detail, trailers, cast, crew, reviews, recommendations, etc.
+- Day and night theme.
+- Firebase Cloud Messaging and Crashlytics.
+
+All movies data and images are from The Movie Database (TMDb) API but is not endorsed or certified by it.
+
+## Architecture
+
+- **MVVM**:
+    App is highly rely on Android Architecture Components, `ViewModel` is used to fetch data from `Repository` and to expose data as well as status (loading, success, error) to UI through `LiveData`, `Fragment` observers on the LiveData then render UI through `DataBinding`.
+    
+- **Remote Data Source**: Retrofit + Moshi(Json) + Coroutine
+    to consume back-end services data.
+    
+- **Local Data Source** : Room
+    to support view some content offline.
+
+- **Navigation**:
+    Navigation graph, controller, safe arguments and auto generated directions classes are used to navigate between screens as well as passing data to screens, also support container explode animation from list to detail page.
+    
+- **Dependency Injection**:
+
+    use [Kodein-DI](https://github.com/Kodein-Framework/Kodein-DI) for DI because it's easy to set up and use.
+
+- **UI**
+    UIs are built on AndroidX and material components, support day and night theme, can also be changed to a new theme easily.
+
+
+Copyright (C) 2020 Weiyi Li
+
+Licensed under the Apache License, Version 2.0 (the "License").

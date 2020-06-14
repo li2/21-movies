@@ -1,0 +1,1 @@
+A sample App build on Architecture Components in Kotlin shows movies from TMDB.

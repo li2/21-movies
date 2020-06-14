@@ -1,0 +1,10 @@
+This App is built on Android Architecture Components (MVVM) in Kotlin, contains the following features:
+
+- Search Movies.
+- Discover movies list by categories and genres.
+- Save movie in Watchlist locally.
+- View Movie detail, trailers, cast, crew, reviews, recommendations, etc.
+- Day and night theme.
+- Firebase Cloud Messaging and Crashlytics.
+
+All movies data and images are from The Movie Database (TMDb) API but is not endorsed or certified by it.

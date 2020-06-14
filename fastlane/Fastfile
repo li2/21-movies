@@ -1,0 +1,67 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:android)
+
+platform :android do
+  desc "Runs all the tests"
+  lane :test do
+    gradle(task: "test")
+  end
+
+  desc "Submit a new Beta Build to Firebase App Distribution"
+  lane :beta do
+    gradle(
+      task: "assemble",
+      flavor: "Uat",
+      build_type: "Release",
+      print_command: true,
+      properties: {
+        "versionCode" => 2,
+        "versionName" => "2.0.0",
+        "android.injected.signing.store.file" => "/Users/weiyi.li/Develop/android-li2-upload-key.jks",
+        "android.injected.signing.store.password" => ENV["I21_MOVIES_STORE_PASSWORD"],
+        "android.injected.signing.key.alias" => ENV["I21_MOVIES_KEY_ALIAS"],
+        "android.injected.signing.key.password" => ENV["I21_MOVIES_KEY_PASSWORD"],
+      }
+    )
+    firebase_app_distribution(
+        app: ENV["FIREBASE_21MOVIES_ID"],
+        testers: "weiyi.just2@gmail.com",
+        release_notes: "Test for releasing App to Firebase by Fastlane",
+    )
+  end
+
+  desc "Deploy a new bundle version to the Google Play Store"
+  lane :playstore do
+    gradle(
+      task: "clean bundle",
+      flavor: "Production",
+      build_type: "Release",
+      print_command: false,
+      properties: {
+        "versionCode" => 2,
+        "versionName" => "2.0.0",
+        "android.injected.signing.store.file" => "/Users/weiyi.li/Develop/android-li2-upload-key.jks",
+        "android.injected.signing.store.password" => ENV["I21_MOVIES_STORE_PASSWORD"],
+        "android.injected.signing.key.alias" => ENV["I21_MOVIES_KEY_ALIAS"],
+        "android.injected.signing.key.password" => ENV["I21_MOVIES_KEY_PASSWORD"],
+      }
+    )
+    upload_to_play_store(
+      track: 'beta',
+    )
+  end
+end
