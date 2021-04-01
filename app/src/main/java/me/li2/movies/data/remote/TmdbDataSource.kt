@@ -15,30 +15,30 @@ class TmdbDataSource : KodeinAware {
     override val kodein by kodein(App.context)
     private val tmdbApi by instance<TmdbApi>()
 
-    fun getTrendingMoviesAsync(timeWindow: TimeWindow) = tmdbApi.getTrendingMoviesAsync(timeWindow.value)
+    suspend fun getTrendingMovies(timeWindow: TimeWindow) = tmdbApi.getTrendingMovies(timeWindow.value)
 
-    fun getTopMoviesAsync(page: Int) = tmdbApi.getTopMoviesAsync(page)
+    suspend fun getTopMovies(page: Int) = tmdbApi.getTopMovies(page)
 
-    fun getNowPlayingMoviesAsync(page: Int) = tmdbApi.getNowPlayingMoviesAsync(page)
+    suspend fun getNowPlayingMovies(page: Int) = tmdbApi.getNowPlayingMovies(page)
 
-    fun getUpcomingMoviesAsync(page: Int) = tmdbApi.getUpcomingMoviesAsync(page)
+    suspend fun getUpcomingMovies(page: Int) = tmdbApi.getUpcomingMovies(page)
 
-    fun getPopularMoviesAsync(page: Int) = tmdbApi.getPopularMoviesAsync(page)
+    suspend fun getPopularMovies(page: Int) = tmdbApi.getPopularMovies(page)
 
-    fun getMovieDetailAsync(movieId: Int) = tmdbApi.getMovieDetailAsync(movieId)
+    suspend fun getMovieDetail(movieId: Int) = tmdbApi.getMovieDetail(movieId)
 
-    fun getMovieVideosAsync(movieId: Int) = tmdbApi.getMovieVideosAsync(movieId)
+    suspend fun getMovieVideos(movieId: Int) = tmdbApi.getMovieVideos(movieId)
 
-    fun getMovieCreditsAsync(movieId: Int) =
-            tmdbApi.getMovieCreditsAsync(movieId)
+    suspend fun getMovieCredits(movieId: Int) =
+            tmdbApi.getMovieCredits(movieId)
 
-    fun getMovieReviewsAsync(movieId: Int, page: Int) = tmdbApi.getMovieReviewsAsync(movieId, page)
+    suspend fun getMovieReviews(movieId: Int, page: Int) = tmdbApi.getMovieReviews(movieId, page)
 
-    fun getMovieRecommendationsAsync(movieId: Int, page: Int) =
-            tmdbApi.getMovieRecommendationsAsync(movieId, page)
+    suspend fun getMovieRecommendations(movieId: Int, page: Int) =
+            tmdbApi.getMovieRecommendations(movieId, page)
 
-    fun searchMoviesAsync(keyword: String, page: Int, year: Int? = null) =
-            tmdbApi.searchMoviesAsync(keyword, page, year)
+    suspend fun searchMovies(keyword: String, page: Int, year: Int? = null) =
+            tmdbApi.searchMovies(keyword, page, year)
 
-    fun getGenresAsync() = tmdbApi.getGenresAsync()
+    suspend fun getGenres() = tmdbApi.getGenres()
 }

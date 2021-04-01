@@ -4,7 +4,6 @@
  */
 package me.li2.movies.data.remote
 
-import kotlinx.coroutines.Deferred
 import me.li2.movies.data.model.*
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -13,44 +12,44 @@ import retrofit2.http.Query
 interface TmdbApi {
 
     @GET("trending/movie/{timeWindow}")
-    fun getTrendingMoviesAsync(@Path("timeWindow") timeWindow: String): Deferred<TmdbMovieListAPI>
+    suspend fun getTrendingMovies(@Path("timeWindow") timeWindow: String): TmdbMovieListAPI
 
     @GET("movie/top_rated")
-    fun getTopMoviesAsync(@Query("page") page: Int): Deferred<TmdbMovieListAPI>
+    suspend fun getTopMovies(@Query("page") page: Int): TmdbMovieListAPI
 
     @GET("movie/now_playing")
-    fun getNowPlayingMoviesAsync(@Query("page") page: Int): Deferred<TmdbMovieListAPI>
+    suspend fun getNowPlayingMovies(@Query("page") page: Int): TmdbMovieListAPI
 
     @GET("movie/upcoming")
-    fun getUpcomingMoviesAsync(@Query("page") page: Int): Deferred<TmdbMovieListAPI>
+    suspend fun getUpcomingMovies(@Query("page") page: Int): TmdbMovieListAPI
 
     @GET("movie/popular")
-    fun getPopularMoviesAsync(@Query("page") page: Int): Deferred<TmdbMovieListAPI>
+    suspend fun getPopularMovies(@Query("page") page: Int): TmdbMovieListAPI
 
     @GET("movie/{movieId}")
-    fun getMovieDetailAsync(@Path("movieId") movieId: Int): Deferred<TmdbMovieDetailAPI>
+    suspend fun getMovieDetail(@Path("movieId") movieId: Int): TmdbMovieDetailAPI
 
     @GET("movie/{movieId}/videos")
-    fun getMovieVideosAsync(@Path("movieId") movieId: Int): Deferred<TmdbMovieVideoListAPI>
+    suspend fun getMovieVideos(@Path("movieId") movieId: Int): TmdbMovieVideoListAPI
 
     @GET("movie/{movieId}/credits")
-    fun getMovieCreditsAsync(@Path("movieId") movieId: Int): Deferred<TmdbMovieCreditListAPI>
+    suspend fun getMovieCredits(@Path("movieId") movieId: Int): TmdbMovieCreditListAPI
 
     @GET("movie/{movieId}/reviews")
-    fun getMovieReviewsAsync(@Path("movieId") movieId: Int,
-                             @Query("page") page: Int): Deferred<TmdbMovieReviewListAPI>
+    suspend fun getMovieReviews(@Path("movieId") movieId: Int,
+                                @Query("page") page: Int): TmdbMovieReviewListAPI
 
     @GET("movie/{movieId}/recommendations")
-    fun getMovieRecommendationsAsync(@Path("movieId") movieId: Int,
-                                     @Query("page") page: Int): Deferred<TmdbMovieListAPI>
+    suspend fun getMovieRecommendations(@Path("movieId") movieId: Int,
+                                        @Query("page") page: Int): TmdbMovieListAPI
 
     @GET("search/movie")
-    fun searchMoviesAsync(@Query("query") keyword: String,
-                          @Query("page") page: Int,
-                          @Query("year") year: Int? = null): Deferred<TmdbMovieListAPI>
+    suspend fun searchMovies(@Query("query") keyword: String,
+                             @Query("page") page: Int,
+                             @Query("year") year: Int? = null): TmdbMovieListAPI
 
     @GET("genre/movie/list")
-    fun getGenresAsync(): Deferred<GenresAPI>
+    suspend fun getGenres(): GenresAPI
 
     companion object {
         const val TIMEOUT = 12L

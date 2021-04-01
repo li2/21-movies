@@ -12,8 +12,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.MergeAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.jakewharton.rxbinding4.view.clicks
 import io.reactivex.rxjava3.kotlin.plusAssign
@@ -91,7 +91,7 @@ class MoviesFragment : BaseFragment(), RootViewStore {
 
             binding.moviesRecyclerView.apply {
                 adapter = if (isPagingSupported) {
-                    MergeAdapter(moviesAdapter, pagingAdapter)
+                    ConcatAdapter(moviesAdapter, pagingAdapter)
                 } else {
                     moviesAdapter
                 }

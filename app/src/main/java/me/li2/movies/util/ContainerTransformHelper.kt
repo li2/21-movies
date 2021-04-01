@@ -54,7 +54,7 @@ fun Fragment.removeContainerExitTransition() {
 fun Fragment.setUpContainerEnterTransitions(configuration: ContainerTransformConfiguration) {
     val transform = MaterialContainerTransform()
     if (configuration.isArcMotionEnabled) {
-        transform.pathMotion = MaterialArcMotion()
+        transform.setPathMotion(MaterialArcMotion())
     }
     sharedElementEnterTransition = transform
 }

@@ -24,31 +24,31 @@ class Repository : KodeinAware {
     private val tmdbApiRateLimit: RateLimiter<String> = RateLimiter(2, TimeUnit.MINUTES)
 
     suspend fun getTrendingMovies(timeWindow: TimeWindow): MovieItemPagingUI {
-        val api = tmdbDataSource.getTrendingMoviesAsync(timeWindow).await()
+        val api = tmdbDataSource.getTrendingMovies(timeWindow)
         return MapperUI.toMovieItemPagingUI(api)
     }
 
     suspend fun getTopMovies(page: Int): MovieItemPagingUI {
-        val api = tmdbDataSource.getTopMoviesAsync(page).await()
+        val api = tmdbDataSource.getTopMovies(page)
         return MapperUI.toMovieItemPagingUI(api)
     }
 
     suspend fun getNowPlayingMovies(page: Int): MovieItemPagingUI {
-        val api = tmdbDataSource.getNowPlayingMoviesAsync(page).await()
+        val api = tmdbDataSource.getNowPlayingMovies(page)
         return MapperUI.toMovieItemPagingUI(api)
     }
 
     suspend fun getUpcomingMovies(page: Int): MovieItemPagingUI {
-        val api = tmdbDataSource.getUpcomingMoviesAsync(page).await()
+        val api = tmdbDataSource.getUpcomingMovies(page)
         return MapperUI.toMovieItemPagingUI(api)
     }
 
     suspend fun getPopularMovies(page: Int): MovieItemPagingUI {
-        val api = tmdbDataSource.getPopularMoviesAsync(page).await()
+        val api = tmdbDataSource.getPopularMovies(page)
         return MapperUI.toMovieItemPagingUI(api)
     }
 
-    //suspend fun getMovieDetail(movieId: Int) = tmdbDataSource.getMovieDetailAsync(movieId).await()
+    //suspend fun getMovieDetail(movieId: Int) = tmdbDataSource.getMovieDetailAsync(movieId)
 
     suspend fun getMovieDetail(movieId: Int, result: MutableLiveData<Resource<MovieDetailUI>>) {
         val cacheKey = "getMovieDetail:$movieId"
@@ -62,7 +62,7 @@ class Repository : KodeinAware {
             }
 
             override suspend fun fetch(): MovieDetailUI {
-                val apiResponse = tmdbDataSource.getMovieDetailAsync(movieId).await()
+                val apiResponse = tmdbDataSource.getMovieDetail(movieId)
                 return MapperUI.toMovieDetailUI(apiResponse)
             }
 
@@ -87,7 +87,7 @@ class Repository : KodeinAware {
             }
 
             override suspend fun fetch(): List<Trailer> {
-                val apiResponse = tmdbDataSource.getMovieVideosAsync(movieId).await()
+                val apiResponse = tmdbDataSource.getMovieVideos(movieId)
                 return MapperUI.toTrailersUI(apiResponse)
             }
 
@@ -110,7 +110,7 @@ class Repository : KodeinAware {
             }
 
             override suspend fun fetch(): List<MovieReviewUI> {
-                val apiResponse = tmdbDataSource.getMovieReviewsAsync(movieId, TmdbApi.TMDB_STARTING_PAGE_INDEX).await()
+                val apiResponse = tmdbDataSource.getMovieReviews(movieId, TmdbApi.TMDB_STARTING_PAGE_INDEX)
                 return MapperUI.toMovieReviewsUI(apiResponse).reviews
             }
 
@@ -125,15 +125,15 @@ class Repository : KodeinAware {
     }
 
     suspend fun getMovieCredits(movieId: Int) =
-            MapperUI.toCreditListUI(tmdbDataSource.getMovieCreditsAsync(movieId).await())
+            MapperUI.toCreditListUI(tmdbDataSource.getMovieCredits(movieId))
 
     suspend fun getMovieRecommendations(movieId: Int, page: Int): MovieItemPagingUI {
-        val api = tmdbDataSource.getMovieRecommendationsAsync(movieId, page).await()
+        val api = tmdbDataSource.getMovieRecommendations(movieId, page)
         return MapperUI.toMovieItemPagingUI(api)
     }
 
     suspend fun searchMovies(keyword: String, page: Int, year: Int? = null): MovieItemPagingUI {
-        val api = tmdbDataSource.searchMoviesAsync(keyword, page, year).await()
+        val api = tmdbDataSource.searchMovies(keyword, page, year)
         return MapperUI.toMovieItemPagingUI(api)
     }
 
@@ -144,7 +144,7 @@ class Repository : KodeinAware {
             override fun shouldFetch(data: List<GenreUI>?) = data.isNullOrEmpty()
 
             override suspend fun fetch() =
-                    tmdbDataSource.getGenresAsync().await().genres.map { MapperUI.toGenreUI(it) }
+                    tmdbDataSource.getGenres().genres.map { MapperUI.toGenreUI(it) }
 
             override suspend fun saveFetchResult(data: List<GenreUI>) =
                     localDataSource.insertGenres(data)
