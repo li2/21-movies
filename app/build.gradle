@@ -128,7 +128,7 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoCore_version"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoCore_version"
     androidTestImplementation "androidx.test.espresso:espresso-intents:$espressoCore_version"
-
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.2'
 
     //MARK: The following are AndroidX libs -----------------------------------------------------------------
     //Core
