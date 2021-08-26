@@ -13,8 +13,10 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 
+//failed due to lateinit property context has not been initialized
+
 @RunWith(JUnit4::class)
-class TmdbDataSourceAndroidTest {
+class TmdbDataSourceTest {
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
