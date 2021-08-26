@@ -2,11 +2,14 @@ package me.li2.movies.ui.moviedetail
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import me.li2.android.common.arch.Resource
+import me.li2.movies.TestCoroutineRule
 import me.li2.movies.data.model.MovieItemPagingUI
 import me.li2.movies.data.model.MovieItemUI
 import me.li2.movies.data.repository.Repository
+import me.li2.movies.util.CoroutineContextProvider
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -14,9 +17,13 @@ import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 
+@ExperimentalCoroutinesApi
 class MovieDetailViewModel2Test {
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
+
+    @get:Rule
+    val testCoroutineRule = TestCoroutineRule()
 
     @Mock
     lateinit var movieItemUI: MovieItemUI
@@ -32,7 +39,7 @@ class MovieDetailViewModel2Test {
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
-        viewModel = MovieDetailViewModel2(movieItemUI, repository)
+        viewModel = MovieDetailViewModel2(movieItemUI, repository, CoroutineContextProvider())
         viewModel.recommendations.observeForever(observer)
     }
 
@@ -46,7 +53,7 @@ class MovieDetailViewModel2Test {
 
             viewModel.getMovieRecommendations()
 
-            verify(observer).onChanged(Resource.loading(emptyList()))
+            verify(observer).onChanged(Resource.loading())
             verify(observer).onChanged(Resource.success(movies))
         }
     }
@@ -59,7 +66,7 @@ class MovieDetailViewModel2Test {
 
             viewModel.getMovieRecommendations()
 
-            verify(observer).onChanged(Resource.loading(emptyList()))
+            verify(observer).onChanged(Resource.loading())
             verify(observer).onChanged(Resource.error(exception))
         }
     }
