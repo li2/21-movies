@@ -6,14 +6,10 @@ package me.li2.movies.base
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
+import dagger.android.support.DaggerFragment
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.x.kodein
 
-abstract class BaseFragment : Fragment(), KodeinAware {
-
-    override val kodein by kodein()
+abstract class BaseFragment : DaggerFragment() {
 
     protected val compositeDisposable = CompositeDisposable()
 

@@ -4,17 +4,14 @@
  */
 package me.li2.movies.data.remote
 
-import me.li2.movies.App
 import me.li2.movies.data.model.TimeWindow
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.kodein
-import org.kodein.di.generic.instance
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class TmdbDataSource : KodeinAware {
-
-    override val kodein by kodein(App.context)
-    private val tmdbApi by instance<TmdbApi>()
-
+@Singleton
+class TmdbDataSource @Inject constructor(
+    private val tmdbApi: TmdbApi
+) {
     suspend fun getTrendingMovies(timeWindow: TimeWindow) = tmdbApi.getTrendingMovies(timeWindow.value)
 
     suspend fun getTopMovies(page: Int) = tmdbApi.getTopMovies(page)
@@ -30,15 +27,15 @@ class TmdbDataSource : KodeinAware {
     suspend fun getMovieVideos(movieId: Int) = tmdbApi.getMovieVideos(movieId)
 
     suspend fun getMovieCredits(movieId: Int) =
-            tmdbApi.getMovieCredits(movieId)
+        tmdbApi.getMovieCredits(movieId)
 
     suspend fun getMovieReviews(movieId: Int, page: Int) = tmdbApi.getMovieReviews(movieId, page)
 
     suspend fun getMovieRecommendations(movieId: Int, page: Int) =
-            tmdbApi.getMovieRecommendations(movieId, page)
+        tmdbApi.getMovieRecommendations(movieId, page)
 
     suspend fun searchMovies(keyword: String, page: Int, year: Int? = null) =
-            tmdbApi.searchMovies(keyword, page, year)
+        tmdbApi.searchMovies(keyword, page, year)
 
     suspend fun getGenres() = tmdbApi.getGenres()
 }

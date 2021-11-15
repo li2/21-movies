@@ -18,23 +18,26 @@ import me.li2.android.common.arch.observeOnView
 import me.li2.movies.R
 import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.HomeFragmentBinding
-import me.li2.movies.ui.movies.NowPlayingCategory
-import me.li2.movies.ui.movies.PopularCategory
-import me.li2.movies.ui.movies.TopRatedCategory
-import me.li2.movies.ui.movies.UpcomingCategory
+import me.li2.movies.ui.movies.*
 import me.li2.movies.util.*
+import javax.inject.Inject
 
 class HomeFragment : BaseFragment(), RootViewStore {
     private lateinit var binding: HomeFragmentBinding
-    private val viewModel by activityViewModels<HomeViewModel>()
+
+    @Inject
+    lateinit var viewModelFactory: HomeViewModelFactory
+    private val viewModel by activityViewModels<HomeViewModel> { viewModelFactory }
 
     override var rootView: View? = null
     override var hasInitializedRootView: Boolean = false
     override var hasInitializedOptionsMenu: Boolean = false
 
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return createRootViewIfNeeded {
             binding = DataBindingUtil.inflate(inflater, R.layout.home_fragment, container, false)
             binding.root
@@ -58,10 +61,10 @@ class HomeFragment : BaseFragment(), RootViewStore {
         }
 
         compositeDisposable += Observable.mergeArray(
-                binding.nowPlayingMovieListView.onMovieClicks,
-                binding.upcomingMovieListView.onMovieClicks,
-                binding.popularMovieListView.onMovieClicks,
-                binding.topRatedMovieListView.onMovieClicks
+            binding.nowPlayingMovieListView.onMovieClicks,
+            binding.upcomingMovieListView.onMovieClicks,
+            binding.popularMovieListView.onMovieClicks,
+            binding.topRatedMovieListView.onMovieClicks
         ).subscribe { (view, movieItem) ->
             setUpContainerExitTransition(R.id.swipeRefreshLayout)
             val extras = FragmentNavigatorExtras(view to ViewCompat.getTransitionName(view).orEmpty())
@@ -69,10 +72,10 @@ class HomeFragment : BaseFragment(), RootViewStore {
         }
 
         compositeDisposable += Observable.mergeArray(
-                binding.nowPlayingMovieListView.onMoreClicks.map { NowPlayingCategory },
-                binding.upcomingMovieListView.onMoreClicks.map { UpcomingCategory },
-                binding.popularMovieListView.onMoreClicks.map { PopularCategory },
-                binding.topRatedMovieListView.onMoreClicks.map { TopRatedCategory }
+            binding.nowPlayingMovieListView.onMoreClicks.map { NowPlayingCategory },
+            binding.upcomingMovieListView.onMoreClicks.map { UpcomingCategory },
+            binding.popularMovieListView.onMoreClicks.map { PopularCategory },
+            binding.topRatedMovieListView.onMoreClicks.map { TopRatedCategory }
         ).subscribe {
             removeContainerExitTransition()
             navigateSlideInOut(HomeFragmentDirections.showMoviesList(it))

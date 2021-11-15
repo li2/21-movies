@@ -6,9 +6,13 @@ package me.li2.movies.data.repository
 
 import android.content.SharedPreferences
 import me.li2.android.view.theme.ThemeHelper
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class AppSettings(private val sp: SharedPreferences) {
-
+@Singleton
+class AppSettings @Inject constructor(
+    private val sp: SharedPreferences
+) {
     var themePref: String
         get() = getStringPref(SP_KEY_THEME, ThemeHelper.DARK_MODE)
         set(value) = setStringPref(SP_KEY_THEME, value)

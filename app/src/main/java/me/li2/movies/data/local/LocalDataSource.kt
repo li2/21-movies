@@ -4,16 +4,14 @@
  */
 package me.li2.movies.data.local
 
-import me.li2.movies.App
 import me.li2.movies.data.model.*
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.kodein
-import org.kodein.di.generic.instance
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class LocalDataSource : KodeinAware {
-    override val kodein by kodein(App.context)
-    private val db by instance<AppDatabase>()
-
+@Singleton
+class LocalDataSource @Inject constructor(
+    private val db: AppDatabase
+) {
     suspend fun saveMovieDetail(movieDetail: MovieDetailUI): Long {
         return db.movieDao().saveMovieDetail(movieDetail)
     }

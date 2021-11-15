@@ -6,20 +6,27 @@ package me.li2.movies.ui.movies
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import me.li2.android.common.arch.*
-import me.li2.movies.base.BaseViewModel
-import me.li2.movies.data.model.*
+import me.li2.movies.data.model.MovieItemPagingUI
+import me.li2.movies.data.model.isFirstPage
+import me.li2.movies.data.model.isLastPage
+import me.li2.movies.data.model.nextPage
 import me.li2.movies.data.remote.TmdbApi.Companion.TMDB_STARTING_PAGE_INDEX
+import me.li2.movies.data.repository.Repository
 import me.li2.movies.ui.filter.MoviesFilter
 import me.li2.movies.ui.sort.MoviesSort
 import me.li2.movies.ui.sort.MoviesSortType
 import me.li2.movies.util.distinctUntilChanged
 import me.li2.movies.util.doNothing
 import me.li2.movies.util.io
+import javax.inject.Inject
 
-class MoviesViewModel : BaseViewModel() {
+class MoviesViewModel @Inject constructor(
+    private val repository: Repository
+) : ViewModel() {
 
     private val _movies = MutableLiveData<Resource<MovieItemPagingUI>>()
     internal val movies: LiveData<Resource<MovieItemPagingUI>>
@@ -53,8 +60,10 @@ class MoviesViewModel : BaseViewModel() {
         })
     }
 
-    private suspend fun getMoviesByCategory(category: MoviesCategory,
-                                            forceRefresh: Boolean): MovieItemPagingUI {
+    private suspend fun getMoviesByCategory(
+        category: MoviesCategory,
+        forceRefresh: Boolean
+    ): MovieItemPagingUI {
         val nextPage = if (forceRefresh) TMDB_STARTING_PAGE_INDEX else _movies.nextPage()
         return when (category) {
             is TrendingCategory -> repository.getTrendingMovies(category.timeWindow)

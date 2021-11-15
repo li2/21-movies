@@ -7,20 +7,19 @@ package me.li2.movies.data.repository
 import androidx.lifecycle.MutableLiveData
 import me.li2.android.common.arch.RateLimiter
 import me.li2.android.common.arch.Resource
-import me.li2.movies.App
 import me.li2.movies.data.local.LocalDataSource
 import me.li2.movies.data.model.*
 import me.li2.movies.data.remote.TmdbApi
 import me.li2.movies.data.remote.TmdbDataSource
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.kodein
-import org.kodein.di.generic.instance
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class Repository : KodeinAware {
-    override val kodein by kodein(App.context)
-    private val tmdbDataSource by instance<TmdbDataSource>()
-    private val localDataSource by instance<LocalDataSource>()
+@Singleton
+class Repository @Inject constructor(
+    private val localDataSource: LocalDataSource,
+    private val tmdbDataSource: TmdbDataSource
+) {
     private val tmdbApiRateLimit: RateLimiter<String> = RateLimiter(2, TimeUnit.MINUTES)
 
     suspend fun getTrendingMovies(timeWindow: TimeWindow): MovieItemPagingUI {
@@ -97,8 +96,10 @@ class Repository : KodeinAware {
         }.load()
     }
 
-    suspend fun getMovieReviews(movieId: Int,
-                                result: MutableLiveData<Resource<List<MovieReviewUI>>>) {
+    suspend fun getMovieReviews(
+        movieId: Int,
+        result: MutableLiveData<Resource<List<MovieReviewUI>>>
+    ) {
         val cacheKey = "getMovieReviews:$movieId"
         object : NetworkBoundResource<List<MovieReviewUI>>(result) {
             override suspend fun loadFromDb(): List<MovieReviewUI>? {
@@ -125,7 +126,7 @@ class Repository : KodeinAware {
     }
 
     suspend fun getMovieCredits(movieId: Int) =
-            MapperUI.toCreditListUI(tmdbDataSource.getMovieCredits(movieId))
+        MapperUI.toCreditListUI(tmdbDataSource.getMovieCredits(movieId))
 
     suspend fun getMovieRecommendations(movieId: Int, page: Int): MovieItemPagingUI {
         val api = tmdbDataSource.getMovieRecommendations(movieId, page)
@@ -144,10 +145,10 @@ class Repository : KodeinAware {
             override fun shouldFetch(data: List<GenreUI>?) = data.isNullOrEmpty()
 
             override suspend fun fetch() =
-                    tmdbDataSource.getGenres().genres.map { MapperUI.toGenreUI(it) }
+                tmdbDataSource.getGenres().genres.map { MapperUI.toGenreUI(it) }
 
             override suspend fun saveFetchResult(data: List<GenreUI>) =
-                    localDataSource.insertGenres(data)
+                localDataSource.insertGenres(data)
         }.load()
     }
 

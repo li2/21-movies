@@ -21,15 +21,21 @@ import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.DiscoverFragmentBinding
 import me.li2.movies.ui.movies.QueryCategory
 import me.li2.movies.util.navigateSlideInOut
+import javax.inject.Inject
 
 class DiscoverFragment : BaseFragment() {
 
     private lateinit var binding: DiscoverFragmentBinding
-    private val viewModel by viewModels<DiscoverViewModel>()
 
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    @Inject
+    lateinit var viewModelFactory: DiscoverViewModelFactory
+    private val viewModel by viewModels<DiscoverViewModel> { viewModelFactory }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.discover_fragment, container, false)
         return binding.root
     }
@@ -37,10 +43,10 @@ class DiscoverFragment : BaseFragment() {
     override fun initUi(view: View, savedInstanceState: Bundle?) {
 
         compositeDisposable += Observable.merge(
-                binding.searchInputLayout.endIconClicks(),
-                binding.searchEditText.editorActionEvents().flatMap {
-                    if (it.actionId == IME_ACTION_SEARCH) Observable.just(Unit) else Observable.empty()
-                }
+            binding.searchInputLayout.endIconClicks(),
+            binding.searchEditText.editorActionEvents().flatMap {
+                if (it.actionId == IME_ACTION_SEARCH) Observable.just(Unit) else Observable.empty()
+            }
         ).subscribe {
             binding.searchEditText.text.toString().let { query ->
                 if (query.isNotEmpty()) {
@@ -50,8 +56,8 @@ class DiscoverFragment : BaseFragment() {
         }
 
         Observable.merge(
-                binding.genresCategoriesGroupView.onCategoryClicks,
-                binding.mainCategoriesGroupView.onCategoryClicks
+            binding.genresCategoriesGroupView.onCategoryClicks,
+            binding.mainCategoriesGroupView.onCategoryClicks
         ).subscribe {
             navigateSlideInOut(DiscoverFragmentDirections.showMoviesList(it))
         }

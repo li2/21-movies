@@ -21,17 +21,21 @@ import me.li2.movies.base.BaseFragment
 import me.li2.movies.data.repository.AppSettings
 import me.li2.movies.databinding.SettingsFragmentBinding
 import me.li2.movies.ui.movies.Watchlist
-import me.li2.movies.util.*
-import org.kodein.di.generic.instance
+import me.li2.movies.util.Constants
+import me.li2.movies.util.navigateSlideInOut
+import javax.inject.Inject
 
 class SettingsFragment : BaseFragment() {
-
     private lateinit var binding: SettingsFragmentBinding
-    private val appSettings by instance<AppSettings>()
 
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    @Inject
+    lateinit var appSettings: AppSettings
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.settings_fragment, container, false)
         return binding.root
     }

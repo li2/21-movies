@@ -18,13 +18,15 @@ import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.BigImageFragmentBinding
 import me.li2.movies.util.ContainerTransformConfiguration
 import me.li2.movies.util.setUpContainerEnterTransitions
-import org.kodein.di.generic.instance
+import javax.inject.Inject
 
 class BigImageFragment : BaseFragment() {
 
     private lateinit var binding: BigImageFragmentBinding
     private val args by navArgs<BigImageFragmentArgs>()
-    private val containerTransformConfiguration by instance<ContainerTransformConfiguration>()
+
+    @Inject
+    lateinit var containerTransformConfiguration: ContainerTransformConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,9 +34,11 @@ class BigImageFragment : BaseFragment() {
         postponeEnterTransition()
     }
 
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.big_image_fragment, container, false)
         return binding.root
     }

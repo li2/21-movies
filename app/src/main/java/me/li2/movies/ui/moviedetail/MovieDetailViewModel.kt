@@ -4,21 +4,21 @@
  */
 package me.li2.movies.ui.moviedetail
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import me.li2.android.common.arch.*
 import me.li2.android.common.logic.orFalse
-import me.li2.movies.base.BaseViewModel
 import me.li2.movies.data.model.*
+import me.li2.movies.data.repository.Repository
 import me.li2.movies.util.distinctUntilChanged
 import me.li2.movies.util.io
 import me.li2.movies.util.ui
 
-class MovieDetailViewModel(movieItem: MovieItemUI) : BaseViewModel() {
+class MovieDetailViewModel(
+    private val repository: Repository,
+    movieItem: MovieItemUI
+) : ViewModel() {
 
     private val _movieDetail = MutableLiveData(Resource.loading(MapperUI.toMovieDetailUI(movieItem)))
     internal val movieDetail: LiveData<Resource<MovieDetailUI>>
@@ -28,7 +28,15 @@ class MovieDetailViewModel(movieItem: MovieItemUI) : BaseViewModel() {
     internal val trailers: LiveData<Resource<List<Trailer>>>
         get() = _trailers.distinctUntilChanged()
 
-    private val _credits = MutableLiveData(Resource.loading(CreditListUI(movieId = movieItem.id, casts = emptyList(), crews = emptyList())))
+    private val _credits = MutableLiveData(
+        Resource.loading(
+            CreditListUI(
+                movieId = movieItem.id,
+                casts = emptyList(),
+                crews = emptyList()
+            )
+        )
+    )
     internal val credits: LiveData<Resource<CreditListUI>>
         get() = _credits.distinctUntilChanged()
 
@@ -48,20 +56,23 @@ class MovieDetailViewModel(movieItem: MovieItemUI) : BaseViewModel() {
 
     init {
         @Suppress("UNCHECKED_CAST")
-        movieDetailRows = combineLatest(movieDetail, trailers, credits, movieReviews, recommendations, isInWatchlist) { results ->
-            val movieDetail = results[0] as Resource<MovieDetailUI>
-            val trailers = results[1] as Resource<List<Trailer>>
-            val credits = results[2] as Resource<CreditListUI>
-            val reviews = results[3] as Resource<List<MovieReviewUI>>
-            val recommendations = results[4] as Resource<List<MovieItemUI>>
-            val isInWatchlist = results[5] as Boolean
+        movieDetailRows =
+            combineLatest(movieDetail, trailers, credits, movieReviews, recommendations, isInWatchlist) { results ->
+                val movieDetail = results[0] as Resource<MovieDetailUI>
+                val trailers = results[1] as Resource<List<Trailer>>
+                val credits = results[2] as Resource<CreditListUI>
+                val reviews = results[3] as Resource<List<MovieReviewUI>>
+                val recommendations = results[4] as Resource<List<MovieItemUI>>
+                val isInWatchlist = results[5] as Boolean
 
-            listOf(DetailRowData(movieDetail = movieDetail.copy(data = movieDetail.data?.copy(isSaved = isInWatchlist))),
+                listOf(
+                    DetailRowData(movieDetail = movieDetail.copy(data = movieDetail.data?.copy(isSaved = isInWatchlist))),
                     TrailersRowData(trailers = trailers),
                     CreditsRowData(credits = credits),
                     ReviewsRowData(reviews = reviews),
-                    RecMoviesRowData(movies = recommendations))
-        }
+                    RecMoviesRowData(movies = recommendations)
+                )
+            }
     }
 
     fun getMovieDetailScreenData(movieId: Int) {

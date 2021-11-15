@@ -7,17 +7,20 @@ package me.li2.movies.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import me.li2.android.common.arch.Resource
 import me.li2.android.common.arch.Resource.Status.LOADING
 import me.li2.android.common.arch.combineLatest
-import me.li2.movies.base.BaseViewModel
 import me.li2.movies.data.model.MovieItemUI
 import me.li2.movies.data.model.TimeWindow
+import me.li2.movies.data.repository.Repository
 import me.li2.movies.util.distinctUntilChanged
 import me.li2.movies.util.ioWithLiveData
 import org.threeten.bp.LocalDate
 
-class HomeViewModel : BaseViewModel() {
+class HomeViewModel(
+    private val repository: Repository
+) : ViewModel() {
 
     private val _trendingMovies = MutableLiveData<Resource<List<MovieItemUI>>>(Resource.loading(emptyList()))
     internal val trendingMovies: LiveData<Resource<List<MovieItemUI>>>
@@ -39,13 +42,14 @@ class HomeViewModel : BaseViewModel() {
     internal val topMovies: LiveData<Resource<List<MovieItemUI>>>
         get() = _topMovies.distinctUntilChanged()
 
-    internal var isLoading: MediatorLiveData<Boolean> = combineLatest(trendingMovies, nowPlaying, upcomingMovies, popularMovies, topMovies) { results ->
-        (results[0] as Resource<*>).status == LOADING
-                && (results[1] as Resource<*>).status == LOADING
-                && (results[2] as Resource<*>).status == LOADING
-                && (results[3] as Resource<*>).status == LOADING
-                && (results[4] as Resource<*>).status == LOADING
-    }
+    internal var isLoading: MediatorLiveData<Boolean> =
+        combineLatest(trendingMovies, nowPlaying, upcomingMovies, popularMovies, topMovies) { results ->
+            (results[0] as Resource<*>).status == LOADING
+                    && (results[1] as Resource<*>).status == LOADING
+                    && (results[2] as Resource<*>).status == LOADING
+                    && (results[3] as Resource<*>).status == LOADING
+                    && (results[4] as Resource<*>).status == LOADING
+        }
 
     init {
         getHomeScreenData(true)
@@ -59,17 +63,19 @@ class HomeViewModel : BaseViewModel() {
         getPopularMovies(1, forceRefresh)
     }
 
-    private fun getTrendingMovies(timeWindow: TimeWindow = TimeWindow.DAY,
-                                  forceRefresh: Boolean = false) {
+    private fun getTrendingMovies(
+        timeWindow: TimeWindow = TimeWindow.DAY,
+        forceRefresh: Boolean = false
+    ) {
         ioWithLiveData(_trendingMovies, forceRefresh) {
             repository.getTrendingMovies(timeWindow).results
-                    .filter {
-                        it.releaseDate != null && it.releaseDate.isAfter(LocalDate.now().minusYears(1))
-                                && it.voteCount > 20
-                                && it.voteAverage > 5.0
-                    }
-                    .sortedBy { it.popularity }
-                    .take(MAXIMUM_DISPLAY_MOVIES)
+                .filter {
+                    it.releaseDate != null && it.releaseDate.isAfter(LocalDate.now().minusYears(1))
+                            && it.voteCount > 20
+                            && it.voteAverage > 5.0
+                }
+                .sortedBy { it.popularity }
+                .take(MAXIMUM_DISPLAY_MOVIES)
         }
     }
 

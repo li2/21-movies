@@ -34,6 +34,7 @@ import me.li2.movies.ui.widgets.movies.MovieListAdapter
 import me.li2.movies.ui.widgets.movies.MovieListLayoutType.LINEAR_LAYOUT_VERTICAL
 import me.li2.movies.ui.widgets.paging.PagingItemAdapter
 import me.li2.movies.util.*
+import javax.inject.Inject
 
 class MoviesFragment : BaseFragment(), RootViewStore {
 
@@ -43,7 +44,10 @@ class MoviesFragment : BaseFragment(), RootViewStore {
 
     private lateinit var binding: MoviesFragmentBinding
     private val args by navArgs<MoviesFragmentArgs>()
-    private val viewModel by viewModels<MoviesViewModel>()
+
+    @Inject
+    lateinit var viewModelFactory: MoviesViewModelFactory
+    private val viewModel by viewModels<MoviesViewModel> { viewModelFactory }
 
     // trending and watchlist movies list is not paging supported
     private val isPagingSupported: Boolean
@@ -75,9 +79,11 @@ class MoviesFragment : BaseFragment(), RootViewStore {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return createRootViewIfNeeded {
             binding = DataBindingUtil.inflate(inflater, R.layout.movies_fragment, container, false)
             binding.root
@@ -112,19 +118,20 @@ class MoviesFragment : BaseFragment(), RootViewStore {
         }
 
         compositeDisposable += binding.moviesRecyclerView.onScrolledBottom()
-                .throttleFirstShort() // avoid duplicate API calls, 21note
-                .subscribe {
-                    // don't load next page if it's in requesting, or error, or already on the last page. 21note
-                    if (viewModel.canLoadMoreMovies && isPagingSupported) {
-                        if (args.moviesCategory is QueryCategory
-                                && this::searchView.isInitialized
-                                && this.searchView.query.isNotEmpty()) {
-                            viewModel.getMovies(QueryCategory(searchView.query.toString()))
-                        } else {
-                            viewModel.getMovies(args.moviesCategory)
-                        }
+            .throttleFirstShort() // avoid duplicate API calls, 21note
+            .subscribe {
+                // don't load next page if it's in requesting, or error, or already on the last page. 21note
+                if (viewModel.canLoadMoreMovies && isPagingSupported) {
+                    if (args.moviesCategory is QueryCategory
+                        && this::searchView.isInitialized
+                        && this.searchView.query.isNotEmpty()
+                    ) {
+                        viewModel.getMovies(QueryCategory(searchView.query.toString()))
+                    } else {
+                        viewModel.getMovies(args.moviesCategory)
                     }
                 }
+            }
 
         binding.moviesEmptyView.discoverButton.clicks().throttleFirstShort().subscribe {
             navController().navigate(MoviesFragmentDirections.discover())
@@ -179,20 +186,20 @@ class MoviesFragment : BaseFragment(), RootViewStore {
 
     private fun showFilterBottomSheet(): Boolean {
         FilterBottomSheet(requireContext(),
-                initialFilter = viewModel.filter,
-                onApplyClick = {
-                    viewModel.filterMovies { this.copy(it) }
-                }
+            initialFilter = viewModel.filter,
+            onApplyClick = {
+                viewModel.filterMovies { this.copy(it) }
+            }
         ).show()
         return true
     }
 
     private fun showSortBottomSheet(): Boolean {
         SortBottomSheet(requireContext(),
-                sortItems = viewModel.sort.buildSortItems(),
-                onSortChange = { sortType, descending ->
-                    viewModel.sortMovies(sortType, descending)
-                }
+            sortItems = viewModel.sort.buildSortItems(),
+            onSortChange = { sortType, descending ->
+                viewModel.sortMovies(sortType, descending)
+            }
         ).show()
         return true
     }

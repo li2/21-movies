@@ -198,11 +198,11 @@ dependencies {
     //MARK: The following are 3rd Utility libs --------------------------------------------------------------
     //Anko
     implementation "org.jetbrains.anko:anko-commons:$anko_version"
-    //Kotlin Dependency Injection
-    implementation "org.kodein.di:kodein-di-generic-jvm:$kodein_version"
-    implementation "org.kodein.di:kodein-di-conf-jvm:$kodein_version"
-    implementation "org.kodein.di:kodein-di-framework-android-x:$kodein_androidx_version"
-    implementation "org.kodein.di:kodein-di-framework-android-core:$kodein_androidx_version"
+    //Dependency Injection
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    implementation "com.google.dagger:dagger:$dagger_version"
+    implementation "com.google.dagger:dagger-android-support:$dagger_version"
     //Timber
     implementation "com.jakewharton.timber:timber:$timber_version"
     implementation 'com.romandanylyk:pageindicatorview:1.0.3'

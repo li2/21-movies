@@ -92,9 +92,8 @@ allprojects {
 
 
         //MARK: The following are 3rd Utility libs --------------------------------
-        //Kotlin Dependency Injection
-        kodein_version = "6.4.0"
-        kodein_androidx_version = "6.4.0"
+        //Dependency Injection
+        dagger_version = "2.37"
         //Anko: helpers for intents, dialogs, logging and so on
         anko_version = "0.10.8"
         //Logger

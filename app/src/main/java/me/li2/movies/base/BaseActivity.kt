@@ -4,13 +4,10 @@
  */
 package me.li2.movies.base
 
-import androidx.appcompat.app.AppCompatActivity
+import dagger.android.support.DaggerAppCompatActivity
 import io.reactivex.disposables.CompositeDisposable
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.kodein
 
-abstract class BaseActivity : AppCompatActivity(), KodeinAware {
-    override val kodein by kodein()
+abstract class BaseActivity : DaggerAppCompatActivity() {
     private val compositeDisposable = CompositeDisposable()
 
     override fun onDestroy() {

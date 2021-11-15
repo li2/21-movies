@@ -17,9 +17,10 @@ package me.li2.movies.util
 
 import android.view.animation.Interpolator
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
+import javax.inject.Inject
 
 /** Holds the default configurations for the container transform in demos and catalog navigation.  */
-class ContainerTransformConfiguration {
+class ContainerTransformConfiguration @Inject constructor() {
     val isArcMotionEnabled: Boolean
         get() = false
 

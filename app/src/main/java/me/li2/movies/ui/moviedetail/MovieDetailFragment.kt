@@ -29,20 +29,28 @@ import me.li2.movies.base.BaseFragment
 import me.li2.movies.databinding.MovieDetailFragmentBinding
 import me.li2.movies.ui.movies.RecommendationCategory
 import me.li2.movies.util.*
-import org.kodein.di.generic.instance
+import javax.inject.Inject
 
 class MovieDetailFragment : BaseFragment(), RootViewStore {
 
     private lateinit var binding: MovieDetailFragmentBinding
     private val args by navArgs<MovieDetailFragmentArgs>()
-    private val viewModel by viewModels<MovieDetailViewModel> { MovieDetailViewModelFactory(args.movieItem) }
+
+    @Inject
+    lateinit var viewModelAssistedFactory: MovieDetailViewModelAssistedFactory
+
+    private val viewModel by viewModels<MovieDetailViewModel> {
+        viewModelAssistedFactory.create(args.movieItem)
+    }
 
     override var rootView: View? = null
     override var hasInitializedRootView: Boolean = false
     override var hasInitializedOptionsMenu: Boolean = false
 
     private val detailAdapter = MovieDetailAdapter()
-    private val containerTransformConfiguration by instance<ContainerTransformConfiguration>()
+
+    @Inject
+    lateinit var containerTransformConfiguration: ContainerTransformConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,9 +61,11 @@ class MovieDetailFragment : BaseFragment(), RootViewStore {
         viewModel.getMovieDetailScreenData(args.movieItem.id)
     }
 
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return createRootViewIfNeeded {
             binding = DataBindingUtil.inflate(inflater, R.layout.movie_detail_fragment, container, false)
             binding.root
